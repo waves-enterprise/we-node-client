@@ -13,13 +13,13 @@ data class SendDataRequest(
     val senderAddress: Address,
     val policyId: PolicyId,
     val dataHash: Hash,
-    val data: ByteArray,
+    val data: Data,
     val info: PolicyItemFileInfo,
     val fee: Fee,
     val feeAssetId: FeeAssetId? = null,
     override val atomicBadge: AtomicBadge? = null,
     val password: Password? = null,
-    val hash: ByteArray,
+    val hash: Hash,
     val broadcastTx: Boolean,
 ) : HasAtomicBadge<SendDataRequest> {
     override fun withAtomicBadge(atomicBadge: AtomicBadge?): SendDataRequest =
