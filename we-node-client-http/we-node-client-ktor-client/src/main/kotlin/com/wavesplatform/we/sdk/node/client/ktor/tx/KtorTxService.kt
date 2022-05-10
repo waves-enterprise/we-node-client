@@ -1,5 +1,7 @@
-package com.wavesplatform.we.sdk.node.client.tx
+package com.wavesplatform.we.sdk.node.client.ktor.tx
 
+import com.wavesplatform.we.sdk.node.client.TxId
+import com.wavesplatform.we.sdk.node.client.coroutines.tx.TxService
 import com.wavesplatform.we.sdk.node.client.http.sign.AtomicSignRequestDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.sign.BurnSignRequestDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.sign.CallContractSignRequestDto.Companion.toDto
@@ -72,10 +74,13 @@ import com.wavesplatform.we.sdk.node.client.http.tx.SponsorFeeTxDto.Companion.to
 import com.wavesplatform.we.sdk.node.client.http.tx.TransferTxDto.Companion.toDomain
 import com.wavesplatform.we.sdk.node.client.http.tx.TransferTxDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.tx.TxDto
+import com.wavesplatform.we.sdk.node.client.http.tx.TxDto.Companion.toDomain
 import com.wavesplatform.we.sdk.node.client.http.tx.UpdateContractTxDto.Companion.toDomain
 import com.wavesplatform.we.sdk.node.client.http.tx.UpdateContractTxDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.tx.UpdatePolicyTxDto.Companion.toDomain
 import com.wavesplatform.we.sdk.node.client.http.tx.UpdatePolicyTxDto.Companion.toDto
+import com.wavesplatform.we.sdk.node.client.http.tx.UtxSizeDto
+import com.wavesplatform.we.sdk.node.client.http.tx.UtxSizeDto.Companion.toDomain
 import com.wavesplatform.we.sdk.node.client.sign.AtomicSignRequest
 import com.wavesplatform.we.sdk.node.client.sign.BurnSignRequest
 import com.wavesplatform.we.sdk.node.client.sign.CallContractSignRequest
@@ -99,9 +104,39 @@ import com.wavesplatform.we.sdk.node.client.sign.SponsorFeeSignRequest
 import com.wavesplatform.we.sdk.node.client.sign.TransferSignRequest
 import com.wavesplatform.we.sdk.node.client.sign.UpdateContractSignRequest
 import com.wavesplatform.we.sdk.node.client.sign.UpdatePolicySignRequest
+import com.wavesplatform.we.sdk.node.client.tx.AtomicTx
+import com.wavesplatform.we.sdk.node.client.tx.BurnTx
+import com.wavesplatform.we.sdk.node.client.tx.CallContractTx
+import com.wavesplatform.we.sdk.node.client.tx.CreateAliasTx
+import com.wavesplatform.we.sdk.node.client.tx.CreateContractTx
+import com.wavesplatform.we.sdk.node.client.tx.CreatePolicyTx
+import com.wavesplatform.we.sdk.node.client.tx.DataTx
+import com.wavesplatform.we.sdk.node.client.tx.DisableContractTx
+import com.wavesplatform.we.sdk.node.client.tx.ExecutedContractTx
+import com.wavesplatform.we.sdk.node.client.tx.GenesisPermitTx
+import com.wavesplatform.we.sdk.node.client.tx.GenesisRegisterNodeTx
+import com.wavesplatform.we.sdk.node.client.tx.GenesisTx
+import com.wavesplatform.we.sdk.node.client.tx.IssueTx
+import com.wavesplatform.we.sdk.node.client.tx.LeaseCancelTx
+import com.wavesplatform.we.sdk.node.client.tx.LeaseTx
+import com.wavesplatform.we.sdk.node.client.tx.MassTransferTx
+import com.wavesplatform.we.sdk.node.client.tx.PermitTx
+import com.wavesplatform.we.sdk.node.client.tx.PolicyDataHashTx
+import com.wavesplatform.we.sdk.node.client.tx.RegisterNodeTx
+import com.wavesplatform.we.sdk.node.client.tx.ReissueTx
+import com.wavesplatform.we.sdk.node.client.tx.SetAssetScriptTx
+import com.wavesplatform.we.sdk.node.client.tx.SetScriptTx
+import com.wavesplatform.we.sdk.node.client.tx.SponsorFeeTx
+import com.wavesplatform.we.sdk.node.client.tx.TransferTx
+import com.wavesplatform.we.sdk.node.client.tx.Tx
+import com.wavesplatform.we.sdk.node.client.tx.TxInfo
+import com.wavesplatform.we.sdk.node.client.tx.UpdateContractTx
+import com.wavesplatform.we.sdk.node.client.tx.UpdatePolicyTx
+import com.wavesplatform.we.sdk.node.client.tx.UtxSize
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.accept
+import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
@@ -142,7 +177,7 @@ class KtorTxService(
 
     private suspend inline fun <reified T : TxDto, reified R : SignRequestDto<T>> signDto(request: R): T =
         httpClient.post(nodeUrl) {
-            url.appendPathSegments(TRANSACTIONS, SIGN)
+            url.appendPathSegments(Transactions.PATH, Transactions.SIGN)
             contentType(ContentType.Application.Json)
             accept(ContentType.Any)
             setBody(request)
@@ -177,7 +212,7 @@ class KtorTxService(
 
     private suspend inline fun <reified T : TxDto, reified R : SignRequestDto<T>> signAndBroadcastDto(request: R): T =
         httpClient.post(nodeUrl) {
-            url.appendPathSegments(TRANSACTIONS, SIGN_AND_BROADCAST)
+            url.appendPathSegments(Transactions.PATH, Transactions.SIGN_AND_BROADCAST)
             contentType(ContentType.Application.Json)
             accept(ContentType.Any)
             setBody(request)
@@ -195,7 +230,7 @@ class KtorTxService(
             is DataTx -> broadcastDto(tx.toDto()).toDomain()
             is DisableContractTx -> broadcastDto(tx.toDto()).toDomain()
             is ExecutedContractTx -> broadcastDto(tx.toDto()).toDomain()
-            is GenesisPermissionTx -> broadcastDto(tx.toDto()).toDomain()
+            is GenesisPermitTx -> broadcastDto(tx.toDto()).toDomain()
             is GenesisRegisterNodeTx -> broadcastDto(tx.toDto()).toDomain()
             is GenesisTx -> broadcastDto(tx.toDto()).toDomain()
             is IssueTx -> broadcastDto(tx.toDto()).toDomain()
@@ -216,16 +251,41 @@ class KtorTxService(
 
     private suspend inline fun <reified T : TxDto> broadcastDto(tx: T): T =
         httpClient.post(nodeUrl) {
-            url.appendPathSegments(TRANSACTIONS, BROADCAST)
+            url.appendPathSegments(Transactions.PATH, Transactions.BROADCAST)
             contentType(ContentType.Application.Json)
             accept(ContentType.Any)
             setBody(tx)
         }.body()
 
+    override suspend fun utx(): List<Tx> =
+        httpClient.get(nodeUrl) {
+            url.appendPathSegments(Transactions.Utx.PATH)
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Any)
+        }.body<List<TxDto>>().map { it.toDomain() }
+
+    override suspend fun utxInfo(): UtxSize =
+        httpClient.get(nodeUrl) {
+            url.appendPathSegments(Transactions.Utx.PATH, Transactions.Utx.SIZE)
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Any)
+        }.body<UtxSizeDto>().toDomain()
+
+    override suspend fun txInfo(txId: TxId): TxInfo {
+        TODO("Not yet implemented")
+    }
+
     companion object {
-        const val TRANSACTIONS = "transactions"
-        const val SIGN = "sign"
-        const val BROADCAST = "broadcast"
-        const val SIGN_AND_BROADCAST = "signAndBroadcast"
+        object Transactions {
+            const val PATH = "transactions"
+            const val SIGN = "sign"
+            const val BROADCAST = "broadcast"
+            const val SIGN_AND_BROADCAST = "signAndBroadcast"
+
+            object Utx {
+                const val PATH = Transactions.PATH + "/" + "unconfirmed"
+                const val SIZE = "size"
+            }
+        }
     }
 }

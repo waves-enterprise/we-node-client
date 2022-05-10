@@ -1,38 +1,10 @@
 package com.wavesplatform.we.sdk.node.client.event
 
 import com.wavesplatform.we.sdk.node.client.ContractId
-import com.wavesplatform.we.sdk.node.client.Signature
 import com.wavesplatform.we.sdk.node.client.TxType
 
 @DslMarker
 annotation class BlockchainEventsDsl
-
-@BlockchainEventsDsl
-fun BlockchainEventsService.fromGenesis(filtersBuilder: EventsFilterContext.() -> Unit = {}) =
-    events(
-        SubscribeOnRequest(
-            startFrom = StartFrom.Genesis,
-            filters = EventsFilterContextImpl().apply(filtersBuilder).build(),
-        )
-    )
-
-@BlockchainEventsDsl
-fun BlockchainEventsService.fromBlock(signature: Signature, filtersBuilder: EventsFilterContext.() -> Unit = {}) =
-    events(
-        SubscribeOnRequest(
-            startFrom = StartFrom.BlockSignature(signature),
-            filters = EventsFilterContextImpl().apply(filtersBuilder).build(),
-        )
-    )
-
-@BlockchainEventsDsl
-fun BlockchainEventsService.fromCurrent(filtersBuilder: EventsFilterContext.() -> Unit = {}) =
-    events(
-        SubscribeOnRequest(
-            startFrom = StartFrom.Current,
-            filters = EventsFilterContextImpl().apply(filtersBuilder).build(),
-        )
-    )
 
 @BlockchainEventsDsl
 interface EventsFilterContext {
@@ -44,7 +16,7 @@ interface EventsFilterContext {
     fun excludeContracts(ids: List<ContractId>)
 }
 
-internal class EventsFilterContextImpl : EventsFilterContext {
+class EventsFilterContextImpl : EventsFilterContext {
     private val filters: MutableList<EventsFilter> = mutableListOf()
 
     override fun includeTypes(types: List<TxType>) {

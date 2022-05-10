@@ -33,6 +33,7 @@ rootProject.name = "we-node-client"
 
 include(
     "we-node-client-domain",
+    "we-node-client-blocking-client",
     "we-node-client-coroutines-client",
     "we-node-client-http:we-node-client-http-dto",
     "we-node-client-http:we-node-client-ktor-client",

@@ -7,7 +7,7 @@ import com.wavesplatform.we.sdk.node.client.Signature
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 
-data class GenesisPermissionTx(
+data class GenesisPermitTx(
     override val id: TxId,
     val target: Address,
     val role: Role,
