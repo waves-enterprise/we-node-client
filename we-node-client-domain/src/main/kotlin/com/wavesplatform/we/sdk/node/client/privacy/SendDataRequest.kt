@@ -7,6 +7,7 @@ import com.wavesplatform.we.sdk.node.client.FeeAssetId
 import com.wavesplatform.we.sdk.node.client.Hash
 import com.wavesplatform.we.sdk.node.client.Password
 import com.wavesplatform.we.sdk.node.client.PolicyId
+import com.wavesplatform.we.sdk.node.client.atomic.HasAtomicBadge
 
 data class SendDataRequest(
     val senderAddress: Address,
@@ -16,8 +17,11 @@ data class SendDataRequest(
     val info: PolicyItemFileInfo,
     val fee: Fee,
     val feeAssetId: FeeAssetId? = null,
-    val atomicBadge: AtomicBadge? = null,
+    override val atomicBadge: AtomicBadge? = null,
     val password: Password? = null,
     val hash: ByteArray,
     val broadcastTx: Boolean,
-)
+) : HasAtomicBadge<SendDataRequest> {
+    override fun withAtomicBadge(atomicBadge: AtomicBadge?): SendDataRequest =
+        copy(atomicBadge = atomicBadge)
+}

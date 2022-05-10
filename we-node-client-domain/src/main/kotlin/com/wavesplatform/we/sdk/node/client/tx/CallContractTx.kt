@@ -12,6 +12,7 @@ import com.wavesplatform.we.sdk.node.client.PublicKey
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxVersion
+import com.wavesplatform.we.sdk.node.client.atomic.HasAtomicBadge
 
 data class CallContractTx(
     override val id: TxId,
@@ -22,8 +23,11 @@ data class CallContractTx(
     override val timestamp: Timestamp,
     val contractVersion: ContractVersion,
     val feeAssetId: FeeAssetId? = null,
-    val atomicBadge: AtomicBadge? = null,
+    override val atomicBadge: AtomicBadge? = null,
     val proofs: List<Proof>? = null,
     val senderAddress: Address,
     val version: TxVersion,
-) : Tx, ExecutableTx, AtomicInnerTx
+) : Tx, ExecutableTx, AtomicInnerTx, HasAtomicBadge<CallContractTx> {
+    override fun withAtomicBadge(atomicBadge: AtomicBadge?): CallContractTx =
+        copy(atomicBadge = atomicBadge)
+}
