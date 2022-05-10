@@ -62,5 +62,8 @@ data class MassTransferTxDto(
                 senderAddress = Address.fromBase58(sender),
                 version = TxVersion(version),
             )
+
+        internal fun toDomainInternal(tx: MassTransferTxDto): MassTransferTx =
+            tx.toDomain()
     }
 }

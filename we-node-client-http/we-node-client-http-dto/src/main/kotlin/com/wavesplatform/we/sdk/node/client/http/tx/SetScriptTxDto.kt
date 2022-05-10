@@ -60,5 +60,8 @@ data class SetScriptTxDto(
                 senderAddress = Address.fromBase58(sender),
                 version = TxVersion(version),
             )
+
+        internal fun toDomainInternal(tx: SetScriptTxDto): SetScriptTx =
+            tx.toDomain()
     }
 }

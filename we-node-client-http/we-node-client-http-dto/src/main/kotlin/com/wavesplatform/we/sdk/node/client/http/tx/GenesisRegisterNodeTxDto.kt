@@ -36,5 +36,8 @@ data class GenesisRegisterNodeTxDto(
                 timestamp = Timestamp.fromUtcTimestamp(timestamp),
                 signature = Signature.fromBase58(signature),
             )
+
+        internal fun toDomainInternal(tx: GenesisRegisterNodeTxDto): GenesisRegisterNodeTx =
+            tx.toDomain()
     }
 }

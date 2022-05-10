@@ -10,6 +10,7 @@ import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxType
 import com.wavesplatform.we.sdk.node.client.TxVersion
+import com.wavesplatform.we.sdk.node.client.http.tx.TxDto.Companion.toDomain
 import com.wavesplatform.we.sdk.node.client.tx.LeaseTx
 
 data class LeaseTxDto(
@@ -55,5 +56,8 @@ data class LeaseTxDto(
                 senderAddress = Address.fromBase58(sender),
                 version = TxVersion(version),
             )
+
+        internal fun toDomainInternal(tx: LeaseTxDto): LeaseTx =
+            tx.toDomain()
     }
 }

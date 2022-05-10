@@ -51,5 +51,8 @@ data class SponsorFeeTxDto(
                 senderAddress = Address.fromBase58(sender),
                 version = TxVersion(version),
             )
+
+        internal fun toDomainInternal(tx: SponsorFeeTxDto): SponsorFeeTx =
+            tx.toDomain()
     }
 }

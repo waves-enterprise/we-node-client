@@ -59,5 +59,8 @@ data class RegisterNodeTxDto(
                 senderAddress = Address.fromBase58(sender),
                 version = TxVersion(version),
             )
+
+        internal fun toDomainInternal(tx: RegisterNodeTxDto): RegisterNodeTx =
+            tx.toDomain()
     }
 }

@@ -59,5 +59,8 @@ data class ReissueTxDto(
                 senderAddress = Address.fromBase58(sender),
                 version = TxVersion(version),
             )
+
+        internal fun toDomainInternal(tx: ReissueTxDto): ReissueTx =
+            tx.toDomain()
     }
 }

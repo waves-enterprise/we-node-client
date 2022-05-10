@@ -8,7 +8,7 @@ import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxType
 import com.wavesplatform.we.sdk.node.client.http.RoleConstants.fromRoleDtoToDomain
 import com.wavesplatform.we.sdk.node.client.http.RoleConstants.toDto
-import com.wavesplatform.we.sdk.node.client.tx.GenesisPermissionTx
+import com.wavesplatform.we.sdk.node.client.tx.GenesisPermitTx
 
 data class GenesisPermitTxDto(
     override val id: String,
@@ -21,7 +21,7 @@ data class GenesisPermitTxDto(
 ) : TxDto {
     companion object {
         @JvmStatic
-        fun GenesisPermissionTx.toDto(): GenesisPermitTxDto =
+        fun GenesisPermitTx.toDto(): GenesisPermitTxDto =
             GenesisPermitTxDto(
                 id = id.asBase58String(),
                 target = target.asBase58String(),
@@ -32,8 +32,8 @@ data class GenesisPermitTxDto(
             )
 
         @JvmStatic
-        fun GenesisPermitTxDto.toDomain(): GenesisPermissionTx =
-            GenesisPermissionTx(
+        fun GenesisPermitTxDto.toDomain(): GenesisPermitTx =
+            GenesisPermitTx(
                 id = TxId.fromBase58(id),
                 target = Address.fromBase58(target),
                 role = role.fromRoleDtoToDomain(),
@@ -41,5 +41,8 @@ data class GenesisPermitTxDto(
                 timestamp = Timestamp.fromUtcTimestamp(timestamp),
                 signature = Signature.fromBase58(signature),
             )
+
+        internal fun toDomainInternal(tx: GenesisPermitTxDto): GenesisPermitTx =
+            tx.toDomain()
     }
 }

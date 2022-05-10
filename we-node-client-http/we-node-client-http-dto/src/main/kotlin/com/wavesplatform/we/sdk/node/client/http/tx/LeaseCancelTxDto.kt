@@ -52,5 +52,8 @@ data class LeaseCancelTxDto(
                 senderAddress = Address.fromBase58(sender),
                 version = TxVersion(version),
             )
+
+        internal fun toDomainInternal(tx: LeaseCancelTxDto): LeaseCancelTx =
+            tx.toDomain()
     }
 }

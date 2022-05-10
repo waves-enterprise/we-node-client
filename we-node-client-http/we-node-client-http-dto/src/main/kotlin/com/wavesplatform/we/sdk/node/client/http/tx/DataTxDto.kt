@@ -60,5 +60,8 @@ data class DataTxDto(
                 senderAddress = Address.fromBase58(sender),
                 version = TxVersion(version),
             )
+
+        internal fun toDomainInternal(tx: DataTxDto): DataTx =
+            tx.toDomain()
     }
 }

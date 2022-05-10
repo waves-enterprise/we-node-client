@@ -52,5 +52,8 @@ data class CreateAliasTxDto(
                 senderAddress = Address.fromBase58(sender),
                 version = TxVersion(version),
             )
+
+        internal fun toDomainInternal(tx: CreateAliasTxDto): CreateAliasTx =
+            tx.toDomain()
     }
 }

@@ -56,5 +56,8 @@ data class BurnTxDto(
                 senderAddress = Address.fromBase58(sender),
                 version = TxVersion(version),
             )
+
+        internal fun toDomainInternal(tx: BurnTxDto): BurnTx =
+            tx.toDomain()
     }
 }

@@ -52,5 +52,8 @@ data class AtomicTxDto(
                 fee = Fee(fee),
                 version = TxVersion(version),
             )
+
+        internal fun toDomainInternal(tx: AtomicTxDto): AtomicTx =
+            tx.toDomain()
     }
 }
