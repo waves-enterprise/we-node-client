@@ -1,13 +1,11 @@
 package com.wavesplatform.we.sdk.node.client.blocking.event
 
 import com.wavesplatform.we.sdk.node.client.Signature
+import com.wavesplatform.we.sdk.node.client.event.BlockchainEventsDsl
 import com.wavesplatform.we.sdk.node.client.event.EventsFilterContext
 import com.wavesplatform.we.sdk.node.client.event.EventsFilterContextImpl
 import com.wavesplatform.we.sdk.node.client.event.StartFrom
 import com.wavesplatform.we.sdk.node.client.event.SubscribeOnRequest
-
-@DslMarker
-annotation class BlockchainEventsDsl
 
 @BlockchainEventsDsl
 fun BlockchainEventsService.fromGenesis(filtersBuilder: EventsFilterContext.() -> Unit = {}) =
