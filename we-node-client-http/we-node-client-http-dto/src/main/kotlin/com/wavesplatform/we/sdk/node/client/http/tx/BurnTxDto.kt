@@ -18,11 +18,11 @@ data class BurnTxDto(
     override val type: Int = TxType.BURN.code,
     val chainId: Byte,
     val senderPublicKey: String,
-    val assetId: String? = null,
+    val assetId: String?,
     val amount: Long,
     val fee: Long,
     override val timestamp: Long,
-    val proofs: List<String>? = null,
+    val proofs: List<String>?,
     val sender: String,
     val version: Int,
 ) : TxDto {

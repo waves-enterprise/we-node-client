@@ -28,9 +28,9 @@ data class CallContractTxDto(
     val fee: Long,
     override val timestamp: Long,
     val contractVersion: Int,
-    val feeAssetId: String? = null,
-    val atomicBadge: AtomicBadgeDto? = null,
-    val proofs: List<String>? = null,
+    val feeAssetId: String?,
+    val atomicBadge: AtomicBadgeDto?,
+    val proofs: List<String>?,
     val sender: String,
     val version: Int,
 ) : TxDto, ExecutableTxDto, AtomicInnerTxDto {

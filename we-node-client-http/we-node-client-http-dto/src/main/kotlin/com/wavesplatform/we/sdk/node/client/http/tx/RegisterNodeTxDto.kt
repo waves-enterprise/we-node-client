@@ -23,7 +23,7 @@ data class RegisterNodeTxDto(
     val opType: String,
     override val timestamp: Long,
     val fee: Long,
-    val proofs: List<String>? = null,
+    val proofs: List<String>?,
     val sender: String,
     val version: Int,
 ) : TxDto {

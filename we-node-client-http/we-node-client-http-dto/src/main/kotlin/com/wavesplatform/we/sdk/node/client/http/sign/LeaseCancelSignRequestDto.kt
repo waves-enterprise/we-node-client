@@ -6,9 +6,9 @@ import com.wavesplatform.we.sdk.node.client.sign.LeaseCancelSignRequest
 
 data class LeaseCancelSignRequestDto(
     override val type: Int = TxType.LEASE_CANCEL.code,
-    val version: Int? = null,
+    val version: Int?,
     val sender: String,
-    val password: String? = null,
+    val password: String?,
     val fee: Long,
     val leaseId: String,
 ) : SignRequestDto<LeaseCancelTxDto> {

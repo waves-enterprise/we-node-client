@@ -15,11 +15,11 @@ data class SponsorFeeTxDto(
     override val id: String,
     override val type: Int = TxType.SPONSOR_FEE.code,
     val senderPublicKey: String,
-    val assetId: String? = null,
+    val assetId: String?,
     val enabled: Boolean,
     val fee: Long,
     override val timestamp: Long,
-    val proofs: List<String>? = null,
+    val proofs: List<String>?,
     val sender: String,
     val version: Int,
 ) : TxDto {

@@ -19,8 +19,8 @@ data class CreateAliasTxDto(
     val alias: String,
     val fee: Long,
     override val timestamp: Long,
-    val feeAssetId: String? = null,
-    val proofs: List<String>? = null,
+    val feeAssetId: String?,
+    val proofs: List<String>?,
     val sender: String,
     val version: Int,
 ) : TxDto {

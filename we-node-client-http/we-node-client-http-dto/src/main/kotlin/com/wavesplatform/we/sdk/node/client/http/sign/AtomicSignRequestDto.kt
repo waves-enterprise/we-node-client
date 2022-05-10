@@ -8,9 +8,9 @@ import com.wavesplatform.we.sdk.node.client.sign.AtomicSignRequest
 
 data class AtomicSignRequestDto(
     override val type: Int = TxType.ATOMIC.code,
-    val version: Int? = null,
+    val version: Int?,
     val sender: String,
-    val password: String? = null,
+    val password: String?,
     val fee: Long,
     val txs: List<AtomicInnerTxDto>
 ) : SignRequestDto<AtomicTxDto> {

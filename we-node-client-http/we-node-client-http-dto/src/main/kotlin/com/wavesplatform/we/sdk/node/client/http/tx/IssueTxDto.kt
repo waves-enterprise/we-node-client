@@ -28,8 +28,8 @@ data class IssueTxDto(
     val reissuable: Boolean,
     val fee: Long,
     override val timestamp: Long,
-    val script: String? = null,
-    val proofs: List<String>? = null,
+    val script: String?,
+    val proofs: List<String>?,
     val sender: String,
     val version: Int,
 ) : TxDto {

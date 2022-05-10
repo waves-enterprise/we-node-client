@@ -6,12 +6,12 @@ import com.wavesplatform.we.sdk.node.client.sign.SetAssetScriptSignRequest
 
 data class SetAssetScriptSignRequestDto(
     override val type: Int = TxType.SET_ASSET_SCRIPT.code,
-    val version: Int? = null,
+    val version: Int?,
     val sender: String,
-    val password: String? = null,
+    val password: String?,
     val fee: Long,
-    val script: String? = null,
-    val assetId: String? = null,
+    val script: String?,
+    val assetId: String?,
 ) : SignRequestDto<SetAssetScriptTxDto> {
     companion object {
         @JvmStatic

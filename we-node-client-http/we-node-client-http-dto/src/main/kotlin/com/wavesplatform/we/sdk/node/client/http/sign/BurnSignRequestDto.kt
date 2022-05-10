@@ -6,13 +6,13 @@ import com.wavesplatform.we.sdk.node.client.sign.BurnSignRequest
 
 data class BurnSignRequestDto(
     override val type: Int = TxType.BURN.code,
-    val version: Int? = null,
+    val version: Int?,
     val sender: String,
-    val password: String? = null,
+    val password: String?,
     val fee: Long,
-    val assetId: String? = null,
+    val assetId: String?,
     val quantity: Long,
-    val attachment: String? = null,
+    val attachment: String?,
 ) : SignRequestDto<BurnTxDto> {
     companion object {
         @JvmStatic

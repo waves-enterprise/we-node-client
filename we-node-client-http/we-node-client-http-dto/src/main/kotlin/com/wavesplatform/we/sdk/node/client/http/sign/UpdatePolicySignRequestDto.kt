@@ -9,16 +9,16 @@ import com.wavesplatform.we.sdk.node.client.sign.UpdatePolicySignRequest
 
 data class UpdatePolicySignRequestDto(
     override val type: Int = TxType.UPDATE_POLICY.code,
-    val version: Int? = null,
+    val version: Int?,
     val sender: String,
-    val password: String? = null,
+    val password: String?,
     val fee: Long,
-    val feeAssetId: String? = null,
+    val feeAssetId: String?,
     val policyId: String,
     val opType: String,
     val recipients: List<String>,
     val owners: List<String>,
-    val atomicBadge: AtomicBadgeDto? = null,
+    val atomicBadge: AtomicBadgeDto?,
 ) : SignRequestDto<UpdatePolicyTxDto> {
     companion object {
         @JvmStatic

@@ -16,13 +16,13 @@ import com.wavesplatform.we.sdk.node.client.tx.LeaseTx
 data class LeaseTxDto(
     override val id: String,
     override val type: Int = TxType.LEASE.code,
-    val assetId: String? = null,
+    val assetId: String?,
     val senderPublicKey: String,
     val recipient: String,
     val amount: Long,
     val fee: Long,
     override val timestamp: Long,
-    val proofs: List<String>? = null,
+    val proofs: List<String>?,
     val sender: String,
     val version: Int,
 ) : TxDto {

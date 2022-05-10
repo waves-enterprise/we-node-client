@@ -8,13 +8,13 @@ import com.wavesplatform.we.sdk.node.client.sign.DisableContractSignRequest
 
 data class DisableContractSignRequestDto(
     override val type: Int = TxType.DISABLE_CONTRACT.code,
-    val version: Int? = null,
+    val version: Int?,
     val sender: String,
-    val password: String? = null,
+    val password: String?,
     val fee: Long,
     val contractId: String,
-    val feeAssetId: String? = null,
-    val atomicBadge: AtomicBadgeDto? = null,
+    val feeAssetId: String?,
+    val atomicBadge: AtomicBadgeDto?,
 ) : SignRequestDto<DisableContractTxDto> {
     companion object {
         @JvmStatic

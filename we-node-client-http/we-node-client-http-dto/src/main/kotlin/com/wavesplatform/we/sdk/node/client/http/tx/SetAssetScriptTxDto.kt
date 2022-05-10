@@ -17,10 +17,10 @@ data class SetAssetScriptTxDto(
     override val type: Int = TxType.SET_ASSET_SCRIPT.code,
     val chainId: Byte,
     val senderPublicKey: String,
-    val script: String? = null,
+    val script: String?,
     val fee: Long,
     override val timestamp: Long,
-    val proofs: List<String>? = null,
+    val proofs: List<String>?,
     val sender: String,
     val version: Int,
 ) : TxDto {

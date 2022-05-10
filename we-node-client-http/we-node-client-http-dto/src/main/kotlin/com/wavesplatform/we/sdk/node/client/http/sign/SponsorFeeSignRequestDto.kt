@@ -6,12 +6,12 @@ import com.wavesplatform.we.sdk.node.client.sign.SponsorFeeSignRequest
 
 data class SponsorFeeSignRequestDto(
     override val type: Int = TxType.SPONSOR_FEE.code,
-    val version: Int? = null,
+    val version: Int?,
     val sender: String,
-    val password: String? = null,
+    val password: String?,
     val fee: Long,
     val enabled: Boolean,
-    val assetId: String? = null,
+    val assetId: String?,
 ) : SignRequestDto<SponsorFeeTxDto> {
     companion object {
         @JvmStatic
