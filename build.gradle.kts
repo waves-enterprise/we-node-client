@@ -8,6 +8,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val kotlinVersion: String by project
 val kotlinCoroutinesVersion: String by project
+val reactorVersion: String by project
 val springBootVersion: String by project
 val springCloudVersion: String by project
 val jacocoToolVersion: String by project
@@ -102,6 +103,8 @@ subprojects {
             dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$kotlinCoroutinesVersion")
             dependency("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$kotlinCoroutinesVersion")
             dependency("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:$kotlinCoroutinesVersion")
+
+            dependency("io.projectreactor:reactor-core:$reactorVersion")
 
             dependency("ch.qos.logback:logback-classic:$logbackVersion")
 
