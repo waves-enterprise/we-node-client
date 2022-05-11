@@ -1,12 +1,12 @@
 package com.wavesplatform.we.sdk.node.client.privacy
 
 import com.wavesplatform.we.sdk.node.client.Address
-import com.wavesplatform.we.sdk.node.client.AtomicBadge
 import com.wavesplatform.we.sdk.node.client.Fee
 import com.wavesplatform.we.sdk.node.client.FeeAssetId
 import com.wavesplatform.we.sdk.node.client.Hash
 import com.wavesplatform.we.sdk.node.client.Password
 import com.wavesplatform.we.sdk.node.client.PolicyId
+import com.wavesplatform.we.sdk.node.client.atomic.AtomicBadge
 import com.wavesplatform.we.sdk.node.client.atomic.HasAtomicBadge
 
 data class SendDataRequest(
@@ -19,7 +19,6 @@ data class SendDataRequest(
     val feeAssetId: FeeAssetId? = null,
     override val atomicBadge: AtomicBadge? = null,
     val password: Password? = null,
-    val hash: Hash,
     val broadcastTx: Boolean,
 ) : HasAtomicBadge<SendDataRequest> {
     override fun withAtomicBadge(atomicBadge: AtomicBadge?): SendDataRequest =

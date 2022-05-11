@@ -1,7 +1,7 @@
-package com.wavesplatform.we.sdk.node.client.http
+package com.wavesplatform.we.sdk.node.client.http.atomic
 
 import com.wavesplatform.we.sdk.node.client.Address
-import com.wavesplatform.we.sdk.node.client.AtomicBadge
+import com.wavesplatform.we.sdk.node.client.atomic.AtomicBadge
 
 data class AtomicBadgeDto(val trustedSender: String? = null) {
     companion object {

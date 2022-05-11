@@ -12,9 +12,6 @@ import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxType
 import com.wavesplatform.we.sdk.node.client.TxVersion
-import com.wavesplatform.we.sdk.node.client.http.AtomicBadgeDto
-import com.wavesplatform.we.sdk.node.client.http.AtomicBadgeDto.Companion.toDomain
-import com.wavesplatform.we.sdk.node.client.http.AtomicBadgeDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.ContractApiVersionDto
 import com.wavesplatform.we.sdk.node.client.http.ContractApiVersionDto.Companion.toDomain
 import com.wavesplatform.we.sdk.node.client.http.ContractApiVersionDto.Companion.toDto
@@ -24,6 +21,9 @@ import com.wavesplatform.we.sdk.node.client.http.DataEntryDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.ValidationPolicyDto
 import com.wavesplatform.we.sdk.node.client.http.ValidationPolicyDto.Companion.toDomain
 import com.wavesplatform.we.sdk.node.client.http.ValidationPolicyDto.Companion.toDto
+import com.wavesplatform.we.sdk.node.client.http.atomic.AtomicBadgeDto
+import com.wavesplatform.we.sdk.node.client.http.atomic.AtomicBadgeDto.Companion.toDomain
+import com.wavesplatform.we.sdk.node.client.http.atomic.AtomicBadgeDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.tx.CreateContractTx
 
 data class CreateContractTxDto(

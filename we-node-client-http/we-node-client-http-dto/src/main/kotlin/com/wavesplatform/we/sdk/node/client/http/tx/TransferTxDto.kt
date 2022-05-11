@@ -12,9 +12,9 @@ import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxType
 import com.wavesplatform.we.sdk.node.client.TxVersion
-import com.wavesplatform.we.sdk.node.client.http.AtomicBadgeDto
-import com.wavesplatform.we.sdk.node.client.http.AtomicBadgeDto.Companion.toDomain
-import com.wavesplatform.we.sdk.node.client.http.AtomicBadgeDto.Companion.toDto
+import com.wavesplatform.we.sdk.node.client.http.atomic.AtomicBadgeDto
+import com.wavesplatform.we.sdk.node.client.http.atomic.AtomicBadgeDto.Companion.toDomain
+import com.wavesplatform.we.sdk.node.client.http.atomic.AtomicBadgeDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.tx.TransferTx
 
 data class TransferTxDto(

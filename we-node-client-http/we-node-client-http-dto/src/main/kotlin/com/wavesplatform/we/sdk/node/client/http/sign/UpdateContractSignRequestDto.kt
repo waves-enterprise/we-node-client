@@ -1,12 +1,12 @@
 package com.wavesplatform.we.sdk.node.client.http.sign
 
 import com.wavesplatform.we.sdk.node.client.TxType
-import com.wavesplatform.we.sdk.node.client.http.AtomicBadgeDto
-import com.wavesplatform.we.sdk.node.client.http.AtomicBadgeDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.ContractApiVersionDto
 import com.wavesplatform.we.sdk.node.client.http.ContractApiVersionDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.ValidationPolicyDto
 import com.wavesplatform.we.sdk.node.client.http.ValidationPolicyDto.Companion.toDto
+import com.wavesplatform.we.sdk.node.client.http.atomic.AtomicBadgeDto
+import com.wavesplatform.we.sdk.node.client.http.atomic.AtomicBadgeDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.tx.UpdateContractTxDto
 import com.wavesplatform.we.sdk.node.client.sign.UpdateContractSignRequest
 

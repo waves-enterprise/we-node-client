@@ -1,7 +1,6 @@
 package com.wavesplatform.we.sdk.node.client.tx
 
 import com.wavesplatform.we.sdk.node.client.Address
-import com.wavesplatform.we.sdk.node.client.AtomicBadge
 import com.wavesplatform.we.sdk.node.client.ContractApiVersion
 import com.wavesplatform.we.sdk.node.client.ContractId
 import com.wavesplatform.we.sdk.node.client.ContractImage
@@ -14,6 +13,7 @@ import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxVersion
 import com.wavesplatform.we.sdk.node.client.ValidationPolicy
+import com.wavesplatform.we.sdk.node.client.atomic.AtomicBadge
 
 data class UpdateContractTx(
     override val id: TxId,

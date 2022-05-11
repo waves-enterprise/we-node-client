@@ -1,8 +1,8 @@
 package com.wavesplatform.we.sdk.node.client.http.sign
 
 import com.wavesplatform.we.sdk.node.client.TxType
-import com.wavesplatform.we.sdk.node.client.http.AtomicBadgeDto
-import com.wavesplatform.we.sdk.node.client.http.AtomicBadgeDto.Companion.toDto
+import com.wavesplatform.we.sdk.node.client.http.atomic.AtomicBadgeDto
+import com.wavesplatform.we.sdk.node.client.http.atomic.AtomicBadgeDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.tx.CreatePolicyTxDto
 import com.wavesplatform.we.sdk.node.client.sign.CreatePolicySignRequest
 
