@@ -1,4 +1,4 @@
-package com.wavesplatform.we.sdk.node.client.blocking.event
+package com.wavesplatform.we.sdk.node.client.event
 
 import com.wavesplatform.we.sdk.node.client.Address
 import com.wavesplatform.we.sdk.node.client.BlockReference

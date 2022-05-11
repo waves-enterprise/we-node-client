@@ -1,14 +1,16 @@
-package com.wavesplatform.we.sdk.node.client.blocking.event
+package com.wavesplatform.we.sdk.node.client.coroutines.event
 
 import com.wavesplatform.we.sdk.node.client.Signature
+import com.wavesplatform.we.sdk.node.client.event.BlockchainEvent
 import com.wavesplatform.we.sdk.node.client.event.BlockchainEventsDsl
 import com.wavesplatform.we.sdk.node.client.event.EventsFilterContext
 import com.wavesplatform.we.sdk.node.client.event.EventsFilterContextImpl
 import com.wavesplatform.we.sdk.node.client.event.StartFrom
 import com.wavesplatform.we.sdk.node.client.event.SubscribeOnRequest
+import kotlinx.coroutines.flow.Flow
 
 @BlockchainEventsDsl
-fun BlockchainEventsService.fromGenesis(filtersBuilder: EventsFilterContext.() -> Unit = {}): BlockchainEventsIterator =
+fun BlockchainEventsService.fromGenesis(filtersBuilder: EventsFilterContext.() -> Unit = {}): Flow<BlockchainEvent> =
     events(
         SubscribeOnRequest(
             startFrom = StartFrom.Genesis,
@@ -17,7 +19,7 @@ fun BlockchainEventsService.fromGenesis(filtersBuilder: EventsFilterContext.() -
     )
 
 @BlockchainEventsDsl
-fun BlockchainEventsService.fromBlock(signature: Signature, filtersBuilder: EventsFilterContext.() -> Unit = {}): BlockchainEventsIterator =
+fun BlockchainEventsService.fromBlock(signature: Signature, filtersBuilder: EventsFilterContext.() -> Unit = {}): Flow<BlockchainEvent> =
     events(
         SubscribeOnRequest(
             startFrom = StartFrom.BlockSignature(signature),
@@ -26,7 +28,7 @@ fun BlockchainEventsService.fromBlock(signature: Signature, filtersBuilder: Even
     )
 
 @BlockchainEventsDsl
-fun BlockchainEventsService.fromCurrent(filtersBuilder: EventsFilterContext.() -> Unit = {}): BlockchainEventsIterator =
+fun BlockchainEventsService.fromCurrent(filtersBuilder: EventsFilterContext.() -> Unit = {}): Flow<BlockchainEvent> =
     events(
         SubscribeOnRequest(
             startFrom = StartFrom.Current,
