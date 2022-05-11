@@ -3,12 +3,9 @@ package com.wavesplatform.we.sdk.node.client
 import com.wavesplatform.we.sdk.node.client.base58.WeBase58
 
 @JvmInline
-value class TxId(private val bytes: ByteArray) {
+value class TxId(val bytes: ByteArray) {
     fun asBase58String(): String =
         WeBase58.encode(bytes)
-
-    fun asByteArray(): ByteArray =
-        bytes
 
     companion object {
         @JvmStatic
