@@ -27,7 +27,7 @@ data class DisableContractTxDto(
     val proofs: List<String>?,
     val sender: String,
     val version: Int,
-) : TxDto, AtomicInnerTxDto {
+) : TxDto, AtomicInnerTxDto, AtomicSignInnerTxDto {
     companion object {
         @JvmStatic
         fun DisableContractTx.toDto(): DisableContractTxDto =

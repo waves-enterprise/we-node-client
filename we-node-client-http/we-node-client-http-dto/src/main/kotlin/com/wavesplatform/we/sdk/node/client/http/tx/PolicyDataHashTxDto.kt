@@ -27,7 +27,7 @@ data class PolicyDataHashTxDto(
     val atomicBadge: AtomicBadgeDto?,
     val proofs: List<String>?,
     val sender: String,
-) : TxDto, AtomicInnerTxDto {
+) : TxDto, AtomicInnerTxDto, AtomicSignInnerTxDto {
     companion object {
         @JvmStatic
         fun PolicyDataHashTx.toDto(): PolicyDataHashTxDto =

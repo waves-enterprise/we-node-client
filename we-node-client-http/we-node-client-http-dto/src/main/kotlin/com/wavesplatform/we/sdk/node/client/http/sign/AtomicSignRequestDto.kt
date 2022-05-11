@@ -1,8 +1,8 @@
 package com.wavesplatform.we.sdk.node.client.http.sign
 
 import com.wavesplatform.we.sdk.node.client.TxType
-import com.wavesplatform.we.sdk.node.client.http.tx.AtomicInnerTxDto
-import com.wavesplatform.we.sdk.node.client.http.tx.AtomicInnerTxDto.Companion.toDto
+import com.wavesplatform.we.sdk.node.client.http.tx.AtomicSignInnerTxDto
+import com.wavesplatform.we.sdk.node.client.http.tx.AtomicSignInnerTxDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.tx.AtomicTxDto
 import com.wavesplatform.we.sdk.node.client.sign.AtomicSignRequest
 
@@ -12,7 +12,7 @@ data class AtomicSignRequestDto(
     val sender: String,
     val password: String?,
     val fee: Long,
-    val txs: List<AtomicInnerTxDto>
+    val txs: List<AtomicSignInnerTxDto>
 ) : SignRequestDto<AtomicTxDto> {
     companion object {
         @JvmStatic

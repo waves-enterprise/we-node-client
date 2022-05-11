@@ -11,7 +11,6 @@ import com.wavesplatform.we.sdk.node.client.PublicKey
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxVersion
-import com.wavesplatform.we.sdk.node.client.atomic.HasAtomicBadge
 
 data class CreatePolicyTx(
     override val id: TxId,
@@ -27,7 +26,7 @@ data class CreatePolicyTx(
     val proofs: List<Proof>? = null,
     val senderAddress: Address,
     val version: TxVersion,
-) : Tx, AtomicInnerTx, HasAtomicBadge<CreatePolicyTx> {
+) : Tx, AtomicInnerTx, AtomicSignInnerTx<CreatePolicyTx> {
     override fun withAtomicBadge(atomicBadge: AtomicBadge?): CreatePolicyTx =
         copy(atomicBadge = atomicBadge)
 }

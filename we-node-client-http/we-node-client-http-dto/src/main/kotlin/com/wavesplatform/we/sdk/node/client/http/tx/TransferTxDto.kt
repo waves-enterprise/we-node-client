@@ -32,7 +32,7 @@ data class TransferTxDto(
     val proofs: List<String>?,
     val sender: String,
     val version: Int,
-) : TxDto, AtomicInnerTxDto {
+) : TxDto, AtomicInnerTxDto, AtomicSignInnerTxDto {
     companion object {
         @JvmStatic
         fun TransferTx.toDto(): TransferTxDto =

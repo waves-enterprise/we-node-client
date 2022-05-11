@@ -4,7 +4,7 @@ import com.wavesplatform.we.sdk.node.client.Address
 import com.wavesplatform.we.sdk.node.client.Fee
 import com.wavesplatform.we.sdk.node.client.Password
 import com.wavesplatform.we.sdk.node.client.TxVersion
-import com.wavesplatform.we.sdk.node.client.tx.AtomicInnerTx
+import com.wavesplatform.we.sdk.node.client.tx.AtomicSignInnerTx
 import com.wavesplatform.we.sdk.node.client.tx.AtomicTx
 
 data class AtomicSignRequest(
@@ -12,5 +12,5 @@ data class AtomicSignRequest(
     val senderAddress: Address,
     val password: Password? = null,
     val fee: Fee,
-    val txs: List<AtomicInnerTx>
+    val txs: List<AtomicSignInnerTx<*>>
 ) : SignRequest<AtomicTx>

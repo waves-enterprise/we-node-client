@@ -31,7 +31,7 @@ data class CreatePolicyTxDto(
     val proofs: List<String>?,
     val sender: String,
     val version: Int,
-) : TxDto, AtomicInnerTxDto {
+) : TxDto, AtomicInnerTxDto, AtomicSignInnerTxDto {
     companion object {
         @JvmStatic
         fun CreatePolicyTx.toDto(): CreatePolicyTxDto =

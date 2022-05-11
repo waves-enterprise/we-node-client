@@ -33,7 +33,7 @@ data class CallContractTxDto(
     val proofs: List<String>?,
     val sender: String,
     val version: Int,
-) : TxDto, ExecutableTxDto, AtomicInnerTxDto {
+) : TxDto, ExecutableTxDto, AtomicInnerTxDto, AtomicSignInnerTxDto {
     companion object {
         @JvmStatic
         fun CallContractTx.toDto(): CallContractTxDto =

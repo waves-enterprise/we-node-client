@@ -14,7 +14,6 @@ import com.wavesplatform.we.sdk.node.client.http.AtomicBadgeDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.PermissionOpDto
 import com.wavesplatform.we.sdk.node.client.http.PermissionOpDto.Companion.toDomain
 import com.wavesplatform.we.sdk.node.client.http.PermissionOpDto.Companion.toDto
-import com.wavesplatform.we.sdk.node.client.http.tx.AtomicInnerTxDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.tx.PermitTx
 
 data class PermitTxDto(
@@ -29,7 +28,7 @@ data class PermitTxDto(
     val proofs: List<String>?,
     val sender: String,
     val version: Int,
-) : TxDto, AtomicInnerTxDto {
+) : TxDto, AtomicInnerTxDto, AtomicSignInnerTxDto {
     companion object {
         @JvmStatic
         fun PermitTx.toDto(): PermitTxDto =

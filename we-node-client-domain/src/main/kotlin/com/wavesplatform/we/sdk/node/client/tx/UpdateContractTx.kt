@@ -14,7 +14,6 @@ import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxVersion
 import com.wavesplatform.we.sdk.node.client.ValidationPolicy
-import com.wavesplatform.we.sdk.node.client.atomic.HasAtomicBadge
 
 data class UpdateContractTx(
     override val id: TxId,
@@ -31,7 +30,7 @@ data class UpdateContractTx(
     val proofs: List<Proof>? = null,
     val senderAddress: Address,
     val version: TxVersion,
-) : Tx, ExecutableTx, AtomicInnerTx, HasAtomicBadge<UpdateContractTx> {
+) : Tx, ExecutableTx, AtomicInnerTx, AtomicSignInnerTx<UpdateContractTx> {
     override fun withAtomicBadge(atomicBadge: AtomicBadge?): UpdateContractTx =
         copy(atomicBadge = atomicBadge)
 }
