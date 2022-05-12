@@ -81,14 +81,14 @@ object WeBase58 {
         val indexes = IntArray(128)
         Arrays.fill(indexes, -1)
         for (i in ALPHABET.indices) {
-            indexes[ALPHABET[i].toInt()] = i
+            indexes[ALPHABET[i].code] = i
         }
 
         // Convert the base58-encoded ASCII chars to a base58 byte sequence (base58 digits).
         val input58 = ByteArray(input.length)
         for (i in input.indices) {
             val c = input[i]
-            val digit = if (c.toInt() < 128) indexes[c.toInt()] else -1
+            val digit = if (c.code < 128) indexes[c.code] else -1
             if (digit < 0) {
                 throw UnsupportedEncodingException("Base58 decoding failed: $digit at $i")
             }

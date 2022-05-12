@@ -38,4 +38,5 @@ include(
     "we-node-client-coroutines-client",
     "we-node-client-http:we-node-client-http-dto",
     "we-node-client-http:we-node-client-ktor-client",
+    "we-node-client-grpc:we-node-client-grpc-proto",
 )

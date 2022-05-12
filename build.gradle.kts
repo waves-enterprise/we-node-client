@@ -13,6 +13,7 @@ val springBootVersion: String by project
 val springCloudVersion: String by project
 val jacocoToolVersion: String by project
 val logbackVersion: String by project
+val javaxAnnotationApiVersion: String by project
 
 val junitPlatformLauncherVersion: String by project
 val mockkVersion: String by project
@@ -104,6 +105,8 @@ subprojects {
             dependency("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$kotlinCoroutinesVersion")
             dependency("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:$kotlinCoroutinesVersion")
 
+            dependency("javax.annotation:javax.annotation-api:$javaxAnnotationApiVersion")
+
             dependency("io.projectreactor:reactor-core:$reactorVersion")
 
             dependency("ch.qos.logback:logback-classic:$logbackVersion")
@@ -123,7 +126,7 @@ subprojects {
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = JavaVersion.VERSION_1_8.toString()
+            jvmTarget = JavaVersion.VERSION_17.toString()
         }
     }
 
