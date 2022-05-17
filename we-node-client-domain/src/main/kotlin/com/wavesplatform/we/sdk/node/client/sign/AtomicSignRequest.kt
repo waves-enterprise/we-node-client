@@ -12,5 +12,5 @@ data class AtomicSignRequest(
     val senderAddress: Address,
     val password: Password? = null,
     val fee: Fee,
-    val txs: List<AtomicSignInnerTx<*>>
+    val txs: List<AtomicSignInnerTx<*>>,
 ) : SignRequest<AtomicTx>

@@ -2,11 +2,12 @@ package com.wavesplatform.we.sdk.node.client.http.tx
 
 import com.wavesplatform.we.sdk.node.client.Address
 import com.wavesplatform.we.sdk.node.client.Hash
-import com.wavesplatform.we.sdk.node.client.Proof
 import com.wavesplatform.we.sdk.node.client.PublicKey
+import com.wavesplatform.we.sdk.node.client.Signature
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxType
+import com.wavesplatform.we.sdk.node.client.TxVersion
 import com.wavesplatform.we.sdk.node.client.http.DataEntryDto
 import com.wavesplatform.we.sdk.node.client.http.DataEntryDto.Companion.toDomain
 import com.wavesplatform.we.sdk.node.client.http.DataEntryDto.Companion.toDto
@@ -28,6 +29,7 @@ data class ExecutedContractTxDto(
     override val timestamp: Long,
     val proofs: List<String>,
     val sender: String,
+    override val version: Int,
 ) : TxDto, AtomicInnerTxDto {
     companion object {
         @JvmStatic
@@ -42,6 +44,7 @@ data class ExecutedContractTxDto(
                 timestamp = timestamp.utcTimestampMillis,
                 proofs = proofs.map { it.asBase58String() },
                 sender = senderAddress.asBase58String(),
+                version = version.value,
             )
 
         @JvmStatic
@@ -54,8 +57,9 @@ data class ExecutedContractTxDto(
                 resultsHash = Hash.fromHexString(resultsHash),
                 validationProofs = validationProofs.map { it.toDomain() },
                 timestamp = Timestamp.fromUtcTimestamp(timestamp),
-                proofs = proofs.map { Proof.fromBase58(it) },
+                proofs = proofs.map { Signature.fromBase58(it) },
                 senderAddress = Address.fromBase58(sender),
+                version = TxVersion(version),
             )
 
         internal fun toDtoInternal(tx: ExecutedContractTx): ExecutedContractTxDto =

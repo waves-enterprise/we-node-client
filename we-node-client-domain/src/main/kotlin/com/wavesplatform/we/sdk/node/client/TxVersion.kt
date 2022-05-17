@@ -4,6 +4,7 @@ package com.wavesplatform.we.sdk.node.client
 value class TxVersion(val value: Int) {
     companion object {
         @JvmStatic
+        @JvmName("fromInt")
         fun fromInt(value: Int): TxVersion =
             TxVersion(value)
 

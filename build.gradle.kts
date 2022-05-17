@@ -15,6 +15,10 @@ val jacocoToolVersion: String by project
 val logbackVersion: String by project
 val javaxAnnotationApiVersion: String by project
 
+val ioGrpcVersion: String by project
+val ioGrpcKotlinVersion: String by project
+val protobufVersion: String by project
+
 val junitPlatformLauncherVersion: String by project
 val mockkVersion: String by project
 val springMockkVersion: String by project
@@ -108,6 +112,15 @@ subprojects {
             dependency("javax.annotation:javax.annotation-api:$javaxAnnotationApiVersion")
 
             dependency("io.projectreactor:reactor-core:$reactorVersion")
+
+            dependency("com.google.protobuf:protobuf-java:$protobufVersion")
+            dependency("io.grpc:grpc-core:$ioGrpcVersion")
+            dependency("io.grpc:grpc-stub:$ioGrpcVersion")
+            dependency("io.grpc:grpc-netty:$ioGrpcVersion")
+            dependency("io.grpc:grpc-protobuf:$ioGrpcVersion")
+
+            dependency("com.google.protobuf:protobuf-kotlin:$protobufVersion")
+            dependency("io.grpc:grpc-kotlin-stub:$ioGrpcKotlinVersion")
 
             dependency("ch.qos.logback:logback-classic:$logbackVersion")
 

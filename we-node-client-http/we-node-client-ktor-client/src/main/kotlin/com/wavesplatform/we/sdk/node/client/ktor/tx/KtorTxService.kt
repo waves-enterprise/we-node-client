@@ -1,5 +1,6 @@
 package com.wavesplatform.we.sdk.node.client.ktor.tx
 
+import com.wavesplatform.we.sdk.node.client.Height
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.coroutines.tx.TxService
 import com.wavesplatform.we.sdk.node.client.http.sign.AtomicSignRequestDto.Companion.toDto
@@ -75,6 +76,7 @@ import com.wavesplatform.we.sdk.node.client.http.tx.TransferTxDto.Companion.toDo
 import com.wavesplatform.we.sdk.node.client.http.tx.TransferTxDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.tx.TxDto
 import com.wavesplatform.we.sdk.node.client.http.tx.TxDto.Companion.toDomain
+import com.wavesplatform.we.sdk.node.client.http.tx.TxHeightDto
 import com.wavesplatform.we.sdk.node.client.http.tx.UpdateContractTxDto.Companion.toDomain
 import com.wavesplatform.we.sdk.node.client.http.tx.UpdateContractTxDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.tx.UpdatePolicyTxDto.Companion.toDomain
@@ -272,7 +274,17 @@ class KtorTxService(
         }.body<UtxSizeDto>().toDomain()
 
     override suspend fun txInfo(txId: TxId): TxInfo {
-        TODO("Not yet implemented")
+        val response = httpClient.get(nodeUrl) {
+            url.appendPathSegments(Transactions.Utx.PATH, Transactions.Utx.SIZE)
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Any)
+        }
+        val height = Height(response.body<TxHeightDto>().height)
+        val tx = response.body<TxDto>().toDomain()
+        return TxInfo(
+            height,
+            tx,
+        )
     }
 
     companion object {

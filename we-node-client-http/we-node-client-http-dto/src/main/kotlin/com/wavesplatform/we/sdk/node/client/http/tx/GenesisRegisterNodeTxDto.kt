@@ -6,6 +6,7 @@ import com.wavesplatform.we.sdk.node.client.Signature
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxType
+import com.wavesplatform.we.sdk.node.client.TxVersion
 import com.wavesplatform.we.sdk.node.client.tx.GenesisRegisterNodeTx
 
 data class GenesisRegisterNodeTxDto(
@@ -15,6 +16,7 @@ data class GenesisRegisterNodeTxDto(
     val fee: Long,
     override val timestamp: Long,
     val signature: String,
+    override val version: Int,
 ) : TxDto {
     companion object {
         @JvmStatic
@@ -25,6 +27,7 @@ data class GenesisRegisterNodeTxDto(
                 fee = fee.value,
                 timestamp = timestamp.utcTimestampMillis,
                 signature = signature.asBase58String(),
+                version = version.value,
             )
 
         @JvmStatic
@@ -35,6 +38,7 @@ data class GenesisRegisterNodeTxDto(
                 fee = Fee(fee),
                 timestamp = Timestamp.fromUtcTimestamp(timestamp),
                 signature = Signature.fromBase58(signature),
+                version = TxVersion(version),
             )
 
         internal fun toDomainInternal(tx: GenesisRegisterNodeTxDto): GenesisRegisterNodeTx =

@@ -5,12 +5,12 @@ import com.google.protobuf.gradle.plugins
 import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.protoc
 
-val ioGrpcVersion = "1.16.0"
-val ioGrpcKotlinVersion = "1.2.1"
-val protobufVersion = "3.20.1"
+val protobufVersion: String by project
+val ioGrpcVersion: String by project
+val ioGrpcKotlinVersion: String by project
 
 plugins {
-    id("com.google.protobuf") version "0.8.18"
+    id("com.google.protobuf")
 }
 
 dependencies {
@@ -19,15 +19,16 @@ dependencies {
 
     api(project(":we-node-client-domain"))
 
-    api("com.google.protobuf:protobuf-java:$protobufVersion")
-    api("io.grpc:grpc-stub:$ioGrpcVersion")
-    api("io.grpc:grpc-netty:$ioGrpcVersion")
-    api("io.grpc:grpc-protobuf:$ioGrpcVersion")
-
-    api("com.google.protobuf:protobuf-kotlin:$protobufVersion")
-    api("io.grpc:grpc-kotlin-stub:$ioGrpcKotlinVersion")
+    api("com.google.protobuf:protobuf-java")
+    api("com.google.protobuf:protobuf-kotlin")
+    api("io.grpc:grpc-stub")
+    api("io.grpc:grpc-kotlin-stub")
+    api("io.grpc:grpc-netty")
+    api("io.grpc:grpc-protobuf")
 
     api("javax.annotation:javax.annotation-api")
+
+    protobuf(files("../proto"))
 }
 
 val grpcJavaPlugin = "grpc"
@@ -67,8 +68,19 @@ sourceSets {
         java {
             srcDirs(
                 "$buildDir/generated-sources/main/java",
-                "$buildDir/generated-sources/main/grpc"
+                "$buildDir/generated-sources/main/grpc",
+                "$buildDir/generated-sources/main/kotlin",
+                "$buildDir/generated-sources/main/grpckt",
             )
         }
+        proto {
+            "$projectDir/../proto"
+        }
+    }
+}
+
+ktlint {
+    filter {
+        exclude { it.file.absolutePath.contains("${File.separator}generated-sources${File.separator}") }
     }
 }

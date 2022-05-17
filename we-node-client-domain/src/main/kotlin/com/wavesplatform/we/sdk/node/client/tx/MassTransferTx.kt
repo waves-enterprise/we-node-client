@@ -5,8 +5,8 @@ import com.wavesplatform.we.sdk.node.client.AssetId
 import com.wavesplatform.we.sdk.node.client.Attachment
 import com.wavesplatform.we.sdk.node.client.Fee
 import com.wavesplatform.we.sdk.node.client.FeeAssetId
-import com.wavesplatform.we.sdk.node.client.Proof
 import com.wavesplatform.we.sdk.node.client.PublicKey
+import com.wavesplatform.we.sdk.node.client.Signature
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.Transfer
 import com.wavesplatform.we.sdk.node.client.TxId
@@ -21,7 +21,7 @@ data class MassTransferTx(
     val fee: Fee,
     val attachment: Attachment? = null,
     val feeAssetId: FeeAssetId? = null,
-    val proofs: List<Proof>? = null,
+    val proofs: List<Signature>? = null,
     val senderAddress: Address,
-    val version: TxVersion,
+    override val version: TxVersion,
 ) : Tx

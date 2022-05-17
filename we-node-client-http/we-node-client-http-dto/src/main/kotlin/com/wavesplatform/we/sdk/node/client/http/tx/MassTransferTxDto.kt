@@ -5,8 +5,8 @@ import com.wavesplatform.we.sdk.node.client.AssetId
 import com.wavesplatform.we.sdk.node.client.Attachment
 import com.wavesplatform.we.sdk.node.client.Fee
 import com.wavesplatform.we.sdk.node.client.FeeAssetId
-import com.wavesplatform.we.sdk.node.client.Proof
 import com.wavesplatform.we.sdk.node.client.PublicKey
+import com.wavesplatform.we.sdk.node.client.Signature
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxType
@@ -28,7 +28,7 @@ data class MassTransferTxDto(
     val feeAssetId: String?,
     val proofs: List<String>?,
     val sender: String,
-    val version: Int,
+    override val version: Int,
 ) : TxDto {
     companion object {
         @JvmStatic
@@ -58,7 +58,7 @@ data class MassTransferTxDto(
                 fee = Fee(fee),
                 attachment = attachment?.let { Attachment.fromBase58(it) },
                 feeAssetId = feeAssetId?.let { FeeAssetId.fromBase58(it) },
-                proofs = proofs?.map { Proof.fromBase58(it) },
+                proofs = proofs?.map { Signature.fromBase58(it) },
                 senderAddress = Address.fromBase58(sender),
                 version = TxVersion(version),
             )

@@ -5,8 +5,8 @@ import com.wavesplatform.we.sdk.node.client.Fee
 import com.wavesplatform.we.sdk.node.client.FeeAssetId
 import com.wavesplatform.we.sdk.node.client.PolicyDescription
 import com.wavesplatform.we.sdk.node.client.PolicyName
-import com.wavesplatform.we.sdk.node.client.Proof
 import com.wavesplatform.we.sdk.node.client.PublicKey
+import com.wavesplatform.we.sdk.node.client.Signature
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxVersion
@@ -23,9 +23,9 @@ data class CreatePolicyTx(
     val fee: Fee,
     val feeAssetId: FeeAssetId? = null,
     override val atomicBadge: AtomicBadge? = null,
-    val proofs: List<Proof>? = null,
+    val proofs: List<Signature>? = null,
     val senderAddress: Address,
-    val version: TxVersion,
+    override val version: TxVersion,
 ) : Tx, AtomicInnerTx, AtomicSignInnerTx<CreatePolicyTx> {
     override fun withAtomicBadge(atomicBadge: AtomicBadge?): CreatePolicyTx =
         copy(atomicBadge = atomicBadge)

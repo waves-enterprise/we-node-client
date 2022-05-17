@@ -6,8 +6,8 @@ import com.wavesplatform.we.sdk.node.client.AssetId
 import com.wavesplatform.we.sdk.node.client.Attachment
 import com.wavesplatform.we.sdk.node.client.Fee
 import com.wavesplatform.we.sdk.node.client.FeeAssetId
-import com.wavesplatform.we.sdk.node.client.Proof
 import com.wavesplatform.we.sdk.node.client.PublicKey
+import com.wavesplatform.we.sdk.node.client.Signature
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxVersion
@@ -24,9 +24,9 @@ data class TransferTx(
     val recipient: Address,
     val attachment: Attachment? = null,
     override val atomicBadge: AtomicBadge? = null,
-    val proofs: List<Proof>? = null,
+    val proofs: List<Signature>? = null,
     val senderAddress: Address,
-    val version: TxVersion,
+    override val version: TxVersion,
 ) : Tx, AtomicInnerTx, AtomicSignInnerTx<TransferTx> {
     override fun withAtomicBadge(atomicBadge: AtomicBadge?): TransferTx =
         copy(atomicBadge = atomicBadge)

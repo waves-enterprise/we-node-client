@@ -24,7 +24,7 @@ data class DataEntryDto(
             val (type: String, value: Any) = when (val value = value) {
                 is DataValue.BinaryDataValue -> BINARY_TYPE to BASE_64_ENCODER.encodeToString(value.value)
                 is DataValue.BooleanDataValue -> BOOLEAN_TYPE to value.value
-                is DataValue.IntDataValue -> INTEGER_TYPE to value.value
+                is DataValue.IntegerDataValue -> INTEGER_TYPE to value.value
                 is DataValue.StringDataValue -> STRING_TYPE to value.value
             }
             return DataEntryDto(
@@ -41,7 +41,7 @@ data class DataEntryDto(
                 value = when (type) {
                     BINARY_TYPE -> DataValue.BinaryDataValue(BASE_64_DECODER.decode(value as String))
                     BOOLEAN_TYPE -> DataValue.BooleanDataValue(value as Boolean)
-                    INTEGER_TYPE -> DataValue.IntDataValue(value as Int)
+                    INTEGER_TYPE -> DataValue.IntegerDataValue((value as Number).toLong())
                     STRING_TYPE -> DataValue.StringDataValue(value as String)
                     else -> error("Unknown data type $type for key $key")
                 },

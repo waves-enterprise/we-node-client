@@ -2,14 +2,14 @@ package com.wavesplatform.we.sdk.node.client
 
 sealed interface DataValue {
     @JvmInline
-    value class IntDataValue(val value: Int) : DataValue {
+    value class IntegerDataValue(val value: Long) : DataValue {
         companion object {
             @JvmStatic
-            fun fromInt(value: Int): IntDataValue =
-                IntDataValue(value)
+            fun fromLong(value: Long): IntegerDataValue =
+                IntegerDataValue(value)
 
-            inline val Int.intDataValue: IntDataValue
-                get() = IntDataValue(this)
+            inline val Long.integerDataValue: IntegerDataValue
+                get() = IntegerDataValue(this)
         }
     }
 

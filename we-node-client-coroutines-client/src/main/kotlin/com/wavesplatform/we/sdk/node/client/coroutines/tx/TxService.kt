@@ -7,8 +7,8 @@ import com.wavesplatform.we.sdk.node.client.tx.TxInfo
 import com.wavesplatform.we.sdk.node.client.tx.UtxSize
 
 interface TxService {
-    suspend fun <T : Tx> sign(request: SignRequest<T>): Tx
-    suspend fun <T : Tx> signAndBroadcast(request: SignRequest<T>): Tx
+    suspend fun <T : Tx> sign(request: SignRequest<T>): T
+    suspend fun <T : Tx> signAndBroadcast(request: SignRequest<T>): T
     suspend fun <T : Tx> broadcast(tx: T): T
     suspend fun utx(): List<Tx>
     suspend fun utxInfo(): UtxSize

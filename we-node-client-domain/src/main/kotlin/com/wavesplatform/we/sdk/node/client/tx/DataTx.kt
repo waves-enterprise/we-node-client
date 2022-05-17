@@ -4,8 +4,8 @@ import com.wavesplatform.we.sdk.node.client.Address
 import com.wavesplatform.we.sdk.node.client.Fee
 import com.wavesplatform.we.sdk.node.client.FeeAssetId
 import com.wavesplatform.we.sdk.node.client.PermitDataEntry
-import com.wavesplatform.we.sdk.node.client.Proof
 import com.wavesplatform.we.sdk.node.client.PublicKey
+import com.wavesplatform.we.sdk.node.client.Signature
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxVersion
@@ -18,8 +18,8 @@ data class DataTx(
     override val timestamp: Timestamp,
     val fee: Fee,
     val feeAssetId: FeeAssetId? = null,
-    val proofs: List<Proof>? = null,
+    val proofs: List<Signature>? = null,
     val senderAddress: Address,
     val authorAddress: Address,
-    val version: TxVersion,
+    override val version: TxVersion,
 ) : Tx

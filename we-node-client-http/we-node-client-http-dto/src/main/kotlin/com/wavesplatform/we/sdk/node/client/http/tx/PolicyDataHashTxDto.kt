@@ -5,11 +5,12 @@ import com.wavesplatform.we.sdk.node.client.Fee
 import com.wavesplatform.we.sdk.node.client.FeeAssetId
 import com.wavesplatform.we.sdk.node.client.Hash
 import com.wavesplatform.we.sdk.node.client.PolicyId
-import com.wavesplatform.we.sdk.node.client.Proof
 import com.wavesplatform.we.sdk.node.client.PublicKey
+import com.wavesplatform.we.sdk.node.client.Signature
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxType
+import com.wavesplatform.we.sdk.node.client.TxVersion
 import com.wavesplatform.we.sdk.node.client.http.atomic.AtomicBadgeDto
 import com.wavesplatform.we.sdk.node.client.http.atomic.AtomicBadgeDto.Companion.toDomain
 import com.wavesplatform.we.sdk.node.client.http.atomic.AtomicBadgeDto.Companion.toDto
@@ -27,6 +28,7 @@ data class PolicyDataHashTxDto(
     val atomicBadge: AtomicBadgeDto?,
     val proofs: List<String>?,
     val sender: String,
+    override val version: Int,
 ) : TxDto, AtomicInnerTxDto, AtomicSignInnerTxDto {
     companion object {
         @JvmStatic
@@ -42,6 +44,7 @@ data class PolicyDataHashTxDto(
                 atomicBadge = atomicBadge?.toDto(),
                 proofs = proofs?.map { it.asBase58String() },
                 sender = senderAddress.asBase58String(),
+                version = version.value,
             )
 
         @JvmStatic
@@ -55,8 +58,9 @@ data class PolicyDataHashTxDto(
                 fee = Fee(fee),
                 feeAssetId = feeAssetId?.let { FeeAssetId.fromBase58(it) },
                 atomicBadge = atomicBadge?.toDomain(),
-                proofs = proofs?.map { Proof.fromBase58(it) },
+                proofs = proofs?.map { Signature.fromBase58(it) },
                 senderAddress = Address.fromBase58(sender),
+                version = TxVersion(version),
             )
 
         internal fun toDtoInternal(tx: PolicyDataHashTx): PolicyDataHashTxDto =

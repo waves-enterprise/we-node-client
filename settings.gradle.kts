@@ -7,6 +7,7 @@ pluginManagement {
     val gitPropertiesVersion: String by settings
     val palantirGitVersion: String by settings
     val jGitVerVersion: String by settings
+    val protobufPluginVersion: String by settings
 
     plugins {
         kotlin("jvm") version kotlinVersion apply false
@@ -20,6 +21,7 @@ pluginManagement {
         id("com.gorylenko.gradle-git-properties") version gitPropertiesVersion apply false
         id("jacoco")
         id("fr.brouillard.oss.gradle.jgitver") version jGitVerVersion
+        id("com.google.protobuf") version protobufPluginVersion apply false
     }
 
     repositories {
@@ -38,5 +40,8 @@ include(
     "we-node-client-coroutines-client",
     "we-node-client-http:we-node-client-http-dto",
     "we-node-client-http:we-node-client-ktor-client",
-    "we-node-client-grpc:we-node-client-grpc-proto",
+    "we-node-client-grpc:we-node-client-grpc-mapper",
+    "we-node-client-grpc:we-node-client-grpc-java",
+    "we-node-client-grpc:we-node-client-grpc-kotlin",
+    "we-node-client-grpc:we-node-client-grpc-coroutines-client",
 )

@@ -24,7 +24,7 @@ data class PermitDataEntryDto(
                         Pair(DataEntryDto.BINARY_TYPE, BASE_64_ENCODER.encodeToString(value.value))
                     }
                     is DataValue.BooleanDataValue -> Pair(DataEntryDto.BOOLEAN_TYPE, value.value)
-                    is DataValue.IntDataValue -> Pair(DataEntryDto.INTEGER_TYPE, value.value)
+                    is DataValue.IntegerDataValue -> Pair(DataEntryDto.INTEGER_TYPE, value.value)
                     is DataValue.StringDataValue -> Pair(DataEntryDto.STRING_TYPE, value.value)
                 }
             }
@@ -43,7 +43,7 @@ data class PermitDataEntryDto(
                     when (type) {
                         DataEntryDto.BINARY_TYPE -> DataValue.BinaryDataValue(BASE_64_DECODER.decode(value as String))
                         DataEntryDto.BOOLEAN_TYPE -> DataValue.BooleanDataValue(value as Boolean)
-                        DataEntryDto.INTEGER_TYPE -> DataValue.IntDataValue(value as Int)
+                        DataEntryDto.INTEGER_TYPE -> DataValue.IntegerDataValue((value as Number).toLong())
                         DataEntryDto.STRING_TYPE -> DataValue.StringDataValue(value as String)
                         else -> error("Unknown data type $type for key $key")
                     }

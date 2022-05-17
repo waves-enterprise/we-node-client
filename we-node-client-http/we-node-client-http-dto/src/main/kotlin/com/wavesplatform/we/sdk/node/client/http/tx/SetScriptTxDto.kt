@@ -3,11 +3,11 @@ package com.wavesplatform.we.sdk.node.client.http.tx
 import com.wavesplatform.we.sdk.node.client.Address
 import com.wavesplatform.we.sdk.node.client.ChainId
 import com.wavesplatform.we.sdk.node.client.Fee
-import com.wavesplatform.we.sdk.node.client.Proof
 import com.wavesplatform.we.sdk.node.client.PublicKey
 import com.wavesplatform.we.sdk.node.client.Script
 import com.wavesplatform.we.sdk.node.client.ScriptDescription
 import com.wavesplatform.we.sdk.node.client.ScriptName
+import com.wavesplatform.we.sdk.node.client.Signature
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxType
@@ -26,7 +26,7 @@ data class SetScriptTxDto(
     override val timestamp: Long,
     val proofs: List<String>?,
     val sender: String,
-    val version: Int,
+    override val version: Int,
 ) : TxDto {
     companion object {
         @JvmStatic
@@ -56,7 +56,7 @@ data class SetScriptTxDto(
                 description = description?.let { ScriptDescription.fromBase58(description) },
                 fee = Fee(fee),
                 timestamp = Timestamp.fromUtcTimestamp(timestamp),
-                proofs = proofs?.map { Proof.fromBase58(it) },
+                proofs = proofs?.map { Signature.fromBase58(it) },
                 senderAddress = Address.fromBase58(sender),
                 version = TxVersion(version),
             )

@@ -6,6 +6,7 @@ import com.wavesplatform.we.sdk.node.client.Role
 import com.wavesplatform.we.sdk.node.client.Signature
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
+import com.wavesplatform.we.sdk.node.client.TxVersion
 
 data class GenesisPermitTx(
     override val id: TxId,
@@ -14,4 +15,5 @@ data class GenesisPermitTx(
     val fee: Fee,
     override val timestamp: Timestamp,
     val signature: Signature,
+    override val version: TxVersion,
 ) : Tx

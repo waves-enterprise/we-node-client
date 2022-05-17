@@ -6,10 +6,10 @@ import com.wavesplatform.we.sdk.node.client.Decimals
 import com.wavesplatform.we.sdk.node.client.Fee
 import com.wavesplatform.we.sdk.node.client.IssueTxDescription
 import com.wavesplatform.we.sdk.node.client.IssueTxName
-import com.wavesplatform.we.sdk.node.client.Proof
 import com.wavesplatform.we.sdk.node.client.PublicKey
 import com.wavesplatform.we.sdk.node.client.Quantity
 import com.wavesplatform.we.sdk.node.client.Script
+import com.wavesplatform.we.sdk.node.client.Signature
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxType
@@ -31,7 +31,7 @@ data class IssueTxDto(
     val script: String?,
     val proofs: List<String>?,
     val sender: String,
-    val version: Int,
+    override val version: Int,
 ) : TxDto {
     companion object {
         @JvmStatic
@@ -67,7 +67,7 @@ data class IssueTxDto(
                 fee = Fee(fee),
                 timestamp = Timestamp.fromUtcTimestamp(timestamp),
                 script = script?.let { Script.fromBase64(it) },
-                proofs = proofs?.map { Proof.fromBase58(it) },
+                proofs = proofs?.map { Signature.fromBase58(it) },
                 senderAddress = Address.fromBase58(sender),
                 version = TxVersion(version),
             )

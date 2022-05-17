@@ -10,7 +10,7 @@ value class DataSize(val bytesCount: Long) {
 
     companion object {
         @JvmStatic
-        fun fromLong(bytesCount: Long): DataSize =
+        fun ofBytes(bytesCount: Long): DataSize =
             DataSize(bytesCount)
 
         inline val Long.bytes: DataSize get() = DataSize(this)

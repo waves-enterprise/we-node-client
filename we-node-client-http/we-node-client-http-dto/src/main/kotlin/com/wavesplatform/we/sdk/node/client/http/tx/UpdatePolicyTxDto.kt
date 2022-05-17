@@ -4,8 +4,8 @@ import com.wavesplatform.we.sdk.node.client.Address
 import com.wavesplatform.we.sdk.node.client.Fee
 import com.wavesplatform.we.sdk.node.client.FeeAssetId
 import com.wavesplatform.we.sdk.node.client.PolicyId
-import com.wavesplatform.we.sdk.node.client.Proof
 import com.wavesplatform.we.sdk.node.client.PublicKey
+import com.wavesplatform.we.sdk.node.client.Signature
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxType
@@ -31,7 +31,7 @@ data class UpdatePolicyTxDto(
     val atomicBadge: AtomicBadgeDto?,
     val proofs: List<String>?,
     val sender: String,
-    val version: Int,
+    override val version: Int,
 ) : TxDto, AtomicInnerTxDto, AtomicSignInnerTxDto {
     companion object {
         @JvmStatic
@@ -65,7 +65,7 @@ data class UpdatePolicyTxDto(
                 fee = Fee(fee),
                 feeAssetId = feeAssetId?.let { FeeAssetId.fromBase58(it) },
                 atomicBadge = atomicBadge?.toDomain(),
-                proofs = proofs?.map { Proof.fromBase58(it) },
+                proofs = proofs?.map { Signature.fromBase58(it) },
                 senderAddress = Address.fromBase58(sender),
                 version = TxVersion(version),
             )
