@@ -30,6 +30,7 @@ data class ExecutedContractTxDto(
     val proofs: List<String>,
     val sender: String,
     override val version: Int,
+    override val height: Long? = null,
 ) : TxDto, AtomicInnerTxDto {
     companion object {
         @JvmStatic

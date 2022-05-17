@@ -39,6 +39,7 @@ data class UpdateContractTxDto(
     val proofs: List<String>?,
     val sender: String,
     override val version: Int,
+    override val height: Long? = null,
 ) : TxDto, ExecutableTxDto, AtomicInnerTxDto, AtomicSignInnerTxDto {
     companion object {
         @JvmStatic

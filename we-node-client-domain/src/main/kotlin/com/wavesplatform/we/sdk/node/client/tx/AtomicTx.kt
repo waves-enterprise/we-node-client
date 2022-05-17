@@ -43,13 +43,15 @@ data class AtomicTx(
                     require(innerTxSenderAddress == senderAddress) {
                         "SenderAddress of inner tx must be equal to senderAddress of atomicTx" +
                             " when trustedSender is null" +
-                            " atomic tx: $this"
+                            " failed txId ${tx.id.asBase58String()}"
+                        " atomic tx $this"
                     }
                 else
                     require(innerTxTrustedSenderAddress == senderAddress) {
                         "Address of trustedSender must be equal to senderAddress of atomicTx" +
                             " when trustedSender is not null" +
-                            " atomic tx: $this"
+                            " failed txId ${tx.id.asBase58String()}"
+                        " atomic tx $this"
                     }
             }
     }

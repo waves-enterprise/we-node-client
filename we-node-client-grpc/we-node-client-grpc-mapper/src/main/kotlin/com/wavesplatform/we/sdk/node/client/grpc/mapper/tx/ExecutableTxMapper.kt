@@ -26,7 +26,7 @@ object ExecutableTxMapper {
         }
 
     @JvmStatic
-    fun ExecutableTransaction.domain():  ExecutableTx =
+    fun ExecutableTransaction.domain(): ExecutableTx =
         domainInternal(this)
 
     @JvmStatic

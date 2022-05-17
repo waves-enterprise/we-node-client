@@ -1,7 +1,7 @@
 package com.wavesplatform.we.sdk.node.client.grpc.mapper
 
-import com.wavesenterprise.transaction.protobuf.OpType as ProtoOpType
 import com.wavesplatform.we.sdk.node.client.OpType
+import com.wavesenterprise.transaction.protobuf.OpType as ProtoOpType
 
 object OpTypeMapper {
     @JvmStatic

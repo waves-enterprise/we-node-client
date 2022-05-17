@@ -21,11 +21,11 @@ class GrpcTxService(
 ) : TxService, AutoCloseable {
     val stub: TransactionPublicServiceCoroutineStub = TransactionPublicServiceCoroutineStub(channel)
 
-    override suspend fun <T : Tx> sign(request: SignRequest<T>): Tx {
+    override suspend fun <T : Tx> sign(request: SignRequest<T>): T {
         TODO("Not yet implemented")
     }
 
-    override suspend fun <T : Tx> signAndBroadcast(request: SignRequest<T>): Tx {
+    override suspend fun <T : Tx> signAndBroadcast(request: SignRequest<T>): T {
         TODO("Not yet implemented")
     }
 

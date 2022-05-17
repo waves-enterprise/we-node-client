@@ -1,8 +1,8 @@
 package com.wavesplatform.we.sdk.node.client.grpc.mapper
 
-import com.wavesenterprise.transaction.protobuf.Role as ProtoRole
 import com.wavesenterprise.transaction.protobuf.role
 import com.wavesplatform.we.sdk.node.client.Role
+import com.wavesenterprise.transaction.protobuf.Role as ProtoRole
 
 object RoleMapper {
     @JvmStatic

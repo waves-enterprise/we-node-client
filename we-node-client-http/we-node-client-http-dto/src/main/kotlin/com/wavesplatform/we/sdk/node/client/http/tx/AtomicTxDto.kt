@@ -23,6 +23,7 @@ data class AtomicTxDto(
     val sender: String,
     val fee: Long,
     override val version: Int,
+    override val height: Long? = null,
 ) : TxDto {
     companion object {
         @JvmStatic

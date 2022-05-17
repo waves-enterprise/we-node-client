@@ -17,6 +17,7 @@ sealed interface TxDto {
     val type: Int
     val timestamp: Long
     val version: Int
+    val height: Long?
 
     companion object {
         @JvmStatic

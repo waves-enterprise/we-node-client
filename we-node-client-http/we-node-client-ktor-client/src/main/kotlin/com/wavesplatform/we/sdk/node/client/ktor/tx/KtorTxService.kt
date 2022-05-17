@@ -76,7 +76,6 @@ import com.wavesplatform.we.sdk.node.client.http.tx.TransferTxDto.Companion.toDo
 import com.wavesplatform.we.sdk.node.client.http.tx.TransferTxDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.tx.TxDto
 import com.wavesplatform.we.sdk.node.client.http.tx.TxDto.Companion.toDomain
-import com.wavesplatform.we.sdk.node.client.http.tx.TxHeightDto
 import com.wavesplatform.we.sdk.node.client.http.tx.UpdateContractTxDto.Companion.toDomain
 import com.wavesplatform.we.sdk.node.client.http.tx.UpdateContractTxDto.Companion.toDto
 import com.wavesplatform.we.sdk.node.client.http.tx.UpdatePolicyTxDto.Companion.toDomain
@@ -275,15 +274,14 @@ class KtorTxService(
 
     override suspend fun txInfo(txId: TxId): TxInfo {
         val response = httpClient.get(nodeUrl) {
-            url.appendPathSegments(Transactions.Utx.PATH, Transactions.Utx.SIZE)
+            url.appendPathSegments(Transactions.PATH, Transactions.INFO, txId.asBase58String())
             contentType(ContentType.Application.Json)
             accept(ContentType.Any)
         }
-        val height = Height(response.body<TxHeightDto>().height)
-        val tx = response.body<TxDto>().toDomain()
+        val tx = response.body<TxDto>()
         return TxInfo(
-            height,
-            tx,
+            tx.height?.let { Height(it) } ?: error("Height not present, txId $txId"),
+            tx.toDomain(),
         )
     }
 
@@ -293,6 +291,7 @@ class KtorTxService(
             const val SIGN = "sign"
             const val BROADCAST = "broadcast"
             const val SIGN_AND_BROADCAST = "signAndBroadcast"
+            const val INFO = "info"
 
             object Utx {
                 const val PATH = Transactions.PATH + "/" + "unconfirmed"

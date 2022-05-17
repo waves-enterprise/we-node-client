@@ -1,12 +1,12 @@
 package com.wavesplatform.we.sdk.node.client.grpc.mapper
 
-import com.wavesenterprise.transaction.protobuf.ValidationPolicy as ProtoValidationPolicy
 import com.wavesenterprise.transaction.protobuf.ValidationPolicyKt.majorityWithOneOf
 import com.wavesenterprise.transaction.protobuf.validationPolicy
 import com.wavesplatform.we.sdk.node.client.Address
 import com.wavesplatform.we.sdk.node.client.ValidationPolicy
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.AddressMapper.byteString
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.GrpcTypesMapper.byteArray
+import com.wavesenterprise.transaction.protobuf.ValidationPolicy as ProtoValidationPolicy
 
 object ValidationPolicyMapper {
     @JvmStatic

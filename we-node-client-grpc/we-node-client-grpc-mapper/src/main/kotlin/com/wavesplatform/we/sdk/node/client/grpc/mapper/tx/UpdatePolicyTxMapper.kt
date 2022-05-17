@@ -3,12 +3,10 @@ package com.wavesplatform.we.sdk.node.client.grpc.mapper.tx
 import com.wavesenterprise.transaction.protobuf.UpdatePolicyTransaction
 import com.wavesenterprise.transaction.protobuf.atomicBadgeOrNull
 import com.wavesenterprise.transaction.protobuf.feeAssetIdOrNull
-import com.wavesenterprise.transaction.protobuf.policyDataHashTransaction
 import com.wavesenterprise.transaction.protobuf.updatePolicyTransaction
 import com.wavesplatform.we.sdk.node.client.Address
 import com.wavesplatform.we.sdk.node.client.Fee
 import com.wavesplatform.we.sdk.node.client.FeeAssetId
-import com.wavesplatform.we.sdk.node.client.Hash
 import com.wavesplatform.we.sdk.node.client.PolicyId
 import com.wavesplatform.we.sdk.node.client.PublicKey
 import com.wavesplatform.we.sdk.node.client.Signature

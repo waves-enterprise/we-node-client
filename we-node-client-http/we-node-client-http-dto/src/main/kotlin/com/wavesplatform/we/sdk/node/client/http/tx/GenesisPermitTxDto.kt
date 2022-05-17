@@ -20,6 +20,7 @@ data class GenesisPermitTxDto(
     override val timestamp: Long,
     val signature: String,
     override val version: Int,
+    override val height: Long? = null,
 ) : TxDto {
     companion object {
         @JvmStatic

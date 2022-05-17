@@ -4,6 +4,7 @@ import com.wavesenterprise.transaction.protobuf.TransactionOuterClass.Transactio
 import com.wavesenterprise.transaction.protobuf.transaction
 import com.wavesplatform.we.sdk.node.client.TxVersion
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.tx.AtomicTxMapper.domain
+import com.wavesplatform.we.sdk.node.client.grpc.mapper.tx.BurnTxMapper.domain
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.tx.CallContractTxMapper.domain
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.tx.CreateContractTxMapper.domain
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.tx.CreatePolicyTxMapper.domain
@@ -12,7 +13,6 @@ import com.wavesplatform.we.sdk.node.client.grpc.mapper.tx.ExecutedContractTxMap
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.tx.PermitTxMapper.domain
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.tx.PolicyDataHashTxMapper.domain
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.tx.TransferTxMapper.domain
-import com.wavesplatform.we.sdk.node.client.grpc.mapper.tx.TxMapper.domain
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.tx.UpdateContractTxMapper.domain
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.tx.UpdatePolicyTxMapper.domain
 import com.wavesplatform.we.sdk.node.client.tx.AtomicTx
@@ -65,7 +65,7 @@ object TxMapper {
                 is UpdatePolicyTx -> updatePolicyTransaction = UpdatePolicyTxMapper.dtoInternal(tx)
                 is AtomicTx -> atomicTransaction = AtomicTxMapper.dtoInternal(tx)
                 is BurnTx -> burnTransaction = BurnTxMapper.dtoInternal(tx)
-                is CreateAliasTx -> permitTransaction = CreateAliasTxMapper.dtoInternal(tx)
+                is CreateAliasTx -> createAliasTransaction = CreateAliasTxMapper.dtoInternal(tx)
                 is DataTx -> dataTransaction = DataTxMapper.dtoInternal(tx)
                 is GenesisPermitTx -> genesisPermitTransaction = GenesisPermitTxMapper.dtoInternal(tx)
                 is GenesisRegisterNodeTx -> genesisRegisterNodeTransaction = GenesisRegisterNodeTxMapper.dtoInternal(tx)
@@ -87,35 +87,35 @@ object TxMapper {
         val version = TxVersion(version)
         return when (transactionCase) {
             Transaction.TransactionCase.GENESIS_TRANSACTION,
-            -> genesisTransaction.domain(version)
+            -> TODO("Not yet implemented")
             Transaction.TransactionCase.GENESIS_PERMIT_TRANSACTION,
-            -> genesisPermitTransaction.domain(version)
+            -> TODO("Not yet implemented")
             Transaction.TransactionCase.GENESIS_REGISTER_NODE_TRANSACTION,
-            -> genesisRegisterNodeTransaction.domain(version)
+            -> TODO("Not yet implemented")
             Transaction.TransactionCase.REGISTER_NODE_TRANSACTION,
-            -> registerNodeTransaction.domain(version)
+            -> TODO("Not yet implemented")
             Transaction.TransactionCase.CREATE_ALIAS_TRANSACTION,
-            -> createAliasTransaction.domain(version)
+            -> TODO("Not yet implemented")
             Transaction.TransactionCase.ISSUE_TRANSACTION,
-            -> issueTransaction.domain(version)
+            -> TODO("Not yet implemented")
             Transaction.TransactionCase.REISSUE_TRANSACTION,
-            -> reissueTransaction.domain(version)
+            -> TODO("Not yet implemented")
             Transaction.TransactionCase.BURN_TRANSACTION,
             -> burnTransaction.domain(version)
             Transaction.TransactionCase.LEASE_TRANSACTION,
-            -> leaseTransaction.domain(version)
+            -> TODO("Not yet implemented")
             Transaction.TransactionCase.LEASE_CANCEL_TRANSACTION,
-            -> leaseCancelTransaction.domain(version)
+            -> TODO("Not yet implemented")
             Transaction.TransactionCase.SPONSOR_FEE_TRANSACTION,
-            -> sponsorFeeTransaction.domain(version)
+            -> TODO("Not yet implemented")
             Transaction.TransactionCase.SET_ASSET_SCRIPT_TRANSACTION,
-            -> setAssetScriptTransaction.domain(version)
+            -> TODO("Not yet implemented")
             Transaction.TransactionCase.DATA_TRANSACTION,
-            -> dataTransaction.domain(version)
+            -> TODO("Not yet implemented")
             Transaction.TransactionCase.TRANSFER_TRANSACTION,
             -> transferTransaction.domain(version)
             Transaction.TransactionCase.MASS_TRANSFER_TRANSACTION,
-            -> massTransferTransaction.domain(version)
+            -> TODO("Not yet implemented")
             Transaction.TransactionCase.PERMIT_TRANSACTION,
             -> permitTransaction.domain(version)
             Transaction.TransactionCase.CREATE_POLICY_TRANSACTION,
@@ -135,7 +135,7 @@ object TxMapper {
             Transaction.TransactionCase.UPDATE_CONTRACT_TRANSACTION,
             -> updateContractTransaction.domain(version)
             Transaction.TransactionCase.SET_SCRIPT_TRANSACTION,
-            -> setScriptTransaction.domain(version)
+            -> TODO("Not yet implemented")
             Transaction.TransactionCase.ATOMIC_TRANSACTION,
             -> atomicTransaction.domain(version)
             Transaction.TransactionCase.TRANSACTION_NOT_SET,

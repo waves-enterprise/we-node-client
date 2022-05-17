@@ -1,6 +1,5 @@
 package com.wavesplatform.we.sdk.node.client.grpc.mapper
 
-import com.wavesenterprise.transaction.protobuf.PermissionOp as ProtoPermissionOp
 import com.google.protobuf.Int64Value
 import com.wavesenterprise.transaction.protobuf.permissionOp
 import com.wavesplatform.we.sdk.node.client.PermissionOp
@@ -9,6 +8,7 @@ import com.wavesplatform.we.sdk.node.client.grpc.mapper.OpTypeMapper.domain
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.OpTypeMapper.dto
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.RoleMapper.domain
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.RoleMapper.dto
+import com.wavesenterprise.transaction.protobuf.PermissionOp as ProtoPermissionOp
 
 object PermissionOpMapper {
     @JvmStatic

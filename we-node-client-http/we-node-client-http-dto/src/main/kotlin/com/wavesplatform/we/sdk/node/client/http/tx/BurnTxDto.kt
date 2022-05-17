@@ -25,6 +25,7 @@ data class BurnTxDto(
     val proofs: List<String>?,
     val sender: String,
     override val version: Int,
+    override val height: Long? = null,
 ) : TxDto {
     companion object {
         @JvmStatic

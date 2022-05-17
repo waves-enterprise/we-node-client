@@ -29,6 +29,7 @@ data class PolicyDataHashTxDto(
     val proofs: List<String>?,
     val sender: String,
     override val version: Int,
+    override val height: Long? = null,
 ) : TxDto, AtomicInnerTxDto, AtomicSignInnerTxDto {
     companion object {
         @JvmStatic
