@@ -10,7 +10,32 @@ import com.wavesplatform.we.sdk.node.client.tx.Tx
     property = "type",
 )
 @JsonSubTypes(
+    JsonSubTypes.Type(value = GenesisTxDto::class, name = TxType.GENESIS_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = IssueTxDto::class, name = TxType.ISSUE_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = TransferTxDto::class, name = TxType.TRANSFER_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = ReissueTxDto::class, name = TxType.REISSUE_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = BurnTxDto::class, name = TxType.BURN_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = LeaseTxDto::class, name = TxType.LEASE_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = LeaseCancelTxDto::class, name = TxType.LEASE_CANCEL_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = CreateAliasTxDto::class, name = TxType.CREATE_ALIAS_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = MassTransferTxDto::class, name = TxType.MASS_TRANSFER_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = DataTxDto::class, name = TxType.DATA_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = SetScriptTxDto::class, name = TxType.SET_SCRIPT_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = SponsorFeeTxDto::class, name = TxType.SPONSOR_FEE_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = SetAssetScriptTxDto::class, name = TxType.SET_ASSET_SCRIPT_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = GenesisPermitTxDto::class, name = TxType.GENESIS_PERMIT_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = PermitTxDto::class, name = TxType.PERMIT_TX_TYPE_STRING),
     JsonSubTypes.Type(value = CreateContractTxDto::class, name = TxType.CREATE_CONTRACT_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = CallContractTxDto::class, name = TxType.CALL_CONTRACT_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = ExecutedContractTxDto::class, name = TxType.EXECUTED_CONTRACT_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = DisableContractTxDto::class, name = TxType.DISABLE_CONTRACT_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = UpdateContractTxDto::class, name = TxType.UPDATE_CONTRACT_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = GenesisRegisterNodeTxDto::class, name = TxType.GENESIS_REGISTER_NODE_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = RegisterNodeTxDto::class, name = TxType.REGISTER_NODE_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = CreatePolicyTxDto::class, name = TxType.CREATE_POLICY_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = UpdatePolicyTxDto::class, name = TxType.UPDATE_POLICY_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = PolicyDataHashTxDto::class, name = TxType.POLICY_DATA_HASH_TX_TYPE_STRING),
+    JsonSubTypes.Type(value = AtomicTxDto::class, name = TxType.ATOMIC_TX_TYPE_STRING),
 )
 sealed interface TxDto {
     val id: String
