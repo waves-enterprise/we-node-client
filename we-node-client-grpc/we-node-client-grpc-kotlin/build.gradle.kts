@@ -18,6 +18,7 @@ dependencies {
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core")
 
     api(project(":we-node-client-domain"))
+    api(project(":we-node-client-grpc:we-node-client-grpc-java"))
 
     api("com.google.protobuf:protobuf-java")
     api("com.google.protobuf:protobuf-kotlin")
@@ -42,9 +43,6 @@ protobuf {
     }
 
     plugins {
-        id(grpcJavaPlugin) {
-            artifact = "io.grpc:protoc-gen-grpc-java:$ioGrpcVersion"
-        }
         id(grpcKotlinPlugin) {
             artifact = "io.grpc:protoc-gen-grpc-kotlin:$ioGrpcKotlinVersion:jdk7@jar"
         }
@@ -53,11 +51,7 @@ protobuf {
     generateProtoTasks {
         ofSourceSet("main").forEach {
             it.plugins {
-                id(grpcJavaPlugin)
                 id(grpcKotlinPlugin)
-            }
-            it.builtins {
-                id("kotlin")
             }
         }
     }
@@ -67,8 +61,6 @@ sourceSets {
     main {
         java {
             srcDirs(
-                "$buildDir/generated-sources/main/java",
-                "$buildDir/generated-sources/main/grpc",
                 "$buildDir/generated-sources/main/kotlin",
                 "$buildDir/generated-sources/main/grpckt",
             )

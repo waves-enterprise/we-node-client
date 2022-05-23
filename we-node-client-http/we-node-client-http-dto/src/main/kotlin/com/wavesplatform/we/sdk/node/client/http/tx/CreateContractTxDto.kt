@@ -1,8 +1,6 @@
 package com.wavesplatform.we.sdk.node.client.http.tx
 
 import com.wavesplatform.we.sdk.node.client.Address
-import com.wavesplatform.we.sdk.node.client.ContractImage
-import com.wavesplatform.we.sdk.node.client.ContractName
 import com.wavesplatform.we.sdk.node.client.Fee
 import com.wavesplatform.we.sdk.node.client.FeeAssetId
 import com.wavesplatform.we.sdk.node.client.Hash
@@ -12,6 +10,8 @@ import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxType
 import com.wavesplatform.we.sdk.node.client.TxVersion
+import com.wavesplatform.we.sdk.node.client.contract.ContractImage
+import com.wavesplatform.we.sdk.node.client.contract.ContractName
 import com.wavesplatform.we.sdk.node.client.http.ContractApiVersionDto
 import com.wavesplatform.we.sdk.node.client.http.ContractApiVersionDto.Companion.toDomain
 import com.wavesplatform.we.sdk.node.client.http.ContractApiVersionDto.Companion.toDto

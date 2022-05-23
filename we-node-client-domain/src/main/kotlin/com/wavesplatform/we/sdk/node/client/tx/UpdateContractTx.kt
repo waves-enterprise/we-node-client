@@ -2,8 +2,6 @@ package com.wavesplatform.we.sdk.node.client.tx
 
 import com.wavesplatform.we.sdk.node.client.Address
 import com.wavesplatform.we.sdk.node.client.ContractApiVersion
-import com.wavesplatform.we.sdk.node.client.ContractId
-import com.wavesplatform.we.sdk.node.client.ContractImage
 import com.wavesplatform.we.sdk.node.client.Fee
 import com.wavesplatform.we.sdk.node.client.FeeAssetId
 import com.wavesplatform.we.sdk.node.client.Hash
@@ -14,6 +12,8 @@ import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxVersion
 import com.wavesplatform.we.sdk.node.client.ValidationPolicy
 import com.wavesplatform.we.sdk.node.client.atomic.AtomicBadge
+import com.wavesplatform.we.sdk.node.client.contract.ContractId
+import com.wavesplatform.we.sdk.node.client.contract.ContractImage
 
 data class UpdateContractTx(
     override val id: TxId,

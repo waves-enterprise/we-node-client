@@ -1,7 +1,6 @@
-package com.wavesplatform.we.sdk.node.client
+package com.wavesplatform.we.sdk.node.client.contract
 
-@JvmInline
-value class ContractImage(val value: String) {
+data class ContractImage(val value: String) {
     companion object {
         @JvmStatic
         fun fromString(value: String): ContractImage =

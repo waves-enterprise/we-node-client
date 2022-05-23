@@ -1,8 +1,7 @@
 package com.wavesplatform.we.sdk.node.client
 
 sealed interface DataValue {
-    @JvmInline
-    value class IntegerDataValue(val value: Long) : DataValue {
+    data class IntegerDataValue(val value: Long) : DataValue {
         companion object {
             @JvmStatic
             fun fromLong(value: Long): IntegerDataValue =
@@ -13,8 +12,7 @@ sealed interface DataValue {
         }
     }
 
-    @JvmInline
-    value class BooleanDataValue(val value: Boolean) : DataValue {
+    data class BooleanDataValue(val value: Boolean) : DataValue {
         companion object {
             @JvmStatic
             fun fromBoolean(value: Boolean): BooleanDataValue =
@@ -25,8 +23,7 @@ sealed interface DataValue {
         }
     }
 
-    @JvmInline
-    value class BinaryDataValue(val value: ByteArray) : DataValue {
+    data class BinaryDataValue(val value: ByteArray) : DataValue {
         companion object {
             @JvmStatic
             fun fromByteArray(value: ByteArray): BinaryDataValue =
@@ -35,10 +32,24 @@ sealed interface DataValue {
             inline val ByteArray.binaryDataValue: BinaryDataValue
                 get() = BinaryDataValue(this)
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as BinaryDataValue
+
+            if (!value.contentEquals(other.value)) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            return value.contentHashCode()
+        }
     }
 
-    @JvmInline
-    value class StringDataValue(val value: String) : DataValue {
+    data class StringDataValue(val value: String) : DataValue {
         companion object {
             @JvmStatic
             fun fromString(value: String): StringDataValue =

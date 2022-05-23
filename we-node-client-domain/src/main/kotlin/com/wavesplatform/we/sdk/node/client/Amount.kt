@@ -1,7 +1,6 @@
 package com.wavesplatform.we.sdk.node.client
 
-@JvmInline
-value class Amount(val value: Long) {
+data class Amount(val value: Long) {
     companion object {
         @JvmStatic
         fun fromLong(value: Long): Amount =

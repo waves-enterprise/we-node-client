@@ -3,8 +3,7 @@ package com.wavesplatform.we.sdk.node.client
 import com.wavesplatform.we.sdk.node.client.TxId.Companion.txId
 import com.wavesplatform.we.sdk.node.client.base58.WeBase58
 
-@JvmInline
-value class LeaseId(val txId: TxId) {
+data class LeaseId(val txId: TxId) {
     fun asBase58String(): String =
         txId.asBase58String()
 

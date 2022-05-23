@@ -1,7 +1,6 @@
 package com.wavesplatform.we.sdk.node.client
 
-@JvmInline
-value class Feature(val code: Int) {
+data class Feature(val code: Int) {
     companion object {
         @JvmStatic
         fun fromInt(code: Int): Feature =

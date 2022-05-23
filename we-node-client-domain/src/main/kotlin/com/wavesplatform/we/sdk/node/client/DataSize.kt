@@ -1,7 +1,6 @@
 package com.wavesplatform.we.sdk.node.client
 
-@JvmInline
-value class DataSize(val bytesCount: Long) {
+data class DataSize(val bytesCount: Long) {
     init {
         check(bytesCount >= 0) {
             "Data size should be a non-negative number"
@@ -15,10 +14,13 @@ value class DataSize(val bytesCount: Long) {
 
         inline val Long.bytes: DataSize get() = DataSize(this)
 
-        inline val Long.kilobytes: DataSize get() = DataSize(this * 1_000L)
+        const val DATA_SIZE_MULTIPLIER = 1_024L
 
-        inline val Long.megabytes: DataSize get() = DataSize(this * 1_000_000L)
+        // todo division instead of substraction?
+        inline val Long.kilobytes: DataSize get() = DataSize(this * DATA_SIZE_MULTIPLIER)
 
-        inline val Long.gigabytes: DataSize get() = DataSize(this * 1_000_000_000L)
+        inline val Long.megabytes: DataSize get() = DataSize(this.kilobytes.bytesCount * DATA_SIZE_MULTIPLIER)
+
+        inline val Long.gigabytes: DataSize get() = DataSize(this.megabytes.bytesCount * DATA_SIZE_MULTIPLIER)
     }
 }

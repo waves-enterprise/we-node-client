@@ -1,7 +1,6 @@
 package com.wavesplatform.we.sdk.node.client
 
-@JvmInline
-value class Fee(val value: Long) {
+data class Fee(val value: Long) {
     init {
         check(value >= 0) {
             "Fee value should be a non-negative number"

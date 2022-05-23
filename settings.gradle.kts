@@ -38,10 +38,13 @@ include(
     "we-node-client-blocking-client",
     "we-node-client-reactor-client",
     "we-node-client-coroutines-client",
+    
     "we-node-client-http:we-node-client-http-dto",
     "we-node-client-http:we-node-client-ktor-client",
+    
     "we-node-client-grpc:we-node-client-grpc-mapper",
     "we-node-client-grpc:we-node-client-grpc-java",
     "we-node-client-grpc:we-node-client-grpc-kotlin",
     "we-node-client-grpc:we-node-client-grpc-coroutines-client",
+    "we-node-client-grpc:we-node-client-grpc-blocking-client",
 )

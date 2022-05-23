@@ -1,8 +1,6 @@
 package com.wavesplatform.we.sdk.node.client.tx
 
 import com.wavesplatform.we.sdk.node.client.Address
-import com.wavesplatform.we.sdk.node.client.ContractId
-import com.wavesplatform.we.sdk.node.client.ContractVersion
 import com.wavesplatform.we.sdk.node.client.DataEntry
 import com.wavesplatform.we.sdk.node.client.Fee
 import com.wavesplatform.we.sdk.node.client.FeeAssetId
@@ -12,6 +10,8 @@ import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxVersion
 import com.wavesplatform.we.sdk.node.client.atomic.AtomicBadge
+import com.wavesplatform.we.sdk.node.client.contract.ContractId
+import com.wavesplatform.we.sdk.node.client.contract.ContractVersion
 
 data class CallContractTx(
     override val id: TxId,

@@ -1,7 +1,6 @@
 package com.wavesplatform.we.sdk.node.client
 
-@JvmInline
-value class Timestamp(val utcTimestampMillis: Long) {
+data class Timestamp(val utcTimestampMillis: Long) {
     companion object {
         @JvmStatic
         fun fromUtcTimestamp(utcTimestampMillis: Long): Timestamp =

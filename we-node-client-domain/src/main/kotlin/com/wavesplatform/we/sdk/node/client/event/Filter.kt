@@ -1,7 +1,7 @@
 package com.wavesplatform.we.sdk.node.client.event
 
-import com.wavesplatform.we.sdk.node.client.ContractId
 import com.wavesplatform.we.sdk.node.client.TxType
+import com.wavesplatform.we.sdk.node.client.contract.ContractId
 
 sealed interface Filter {
     data class TxTypeFilter(val txTypes: List<TxType>) : Filter {
