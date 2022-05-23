@@ -1,10 +1,10 @@
-package com.wavesplatform.we.sdk.node.client
+package com.wavesplatform.we.sdk.node.client.contract
 
+import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxId.Companion.txId
 import com.wavesplatform.we.sdk.node.client.base58.WeBase58
 
-@JvmInline
-value class ContractId(val txId: TxId) {
+data class ContractId(val txId: TxId) {
     fun asBase58String(): String =
         txId.asBase58String()
 

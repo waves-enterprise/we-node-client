@@ -2,8 +2,7 @@ package com.wavesplatform.we.sdk.node.client
 
 import com.wavesplatform.we.sdk.node.client.base58.WeBase58
 
-@JvmInline
-value class Signature(val bytes: ByteArray) {
+data class Signature(val bytes: ByteArray) {
     fun asBase58String(): String =
         WeBase58.encode(bytes)
 
@@ -20,5 +19,20 @@ value class Signature(val bytes: ByteArray) {
         inline val ByteArray.signature: Signature get() = Signature(this)
 
         inline val String.base58Signature: Signature get() = fromBase58(this)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Signature
+
+        if (!bytes.contentEquals(other.bytes)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return bytes.contentHashCode()
     }
 }

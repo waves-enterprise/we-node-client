@@ -2,8 +2,7 @@ package com.wavesplatform.we.sdk.node.client
 
 import java.util.Base64
 
-@JvmInline
-value class Script(val bytes: ByteArray) {
+data class Script(val bytes: ByteArray) {
     fun asBase64String(): String =
         BASE_64_ENCODER.encodeToString(bytes)
 
@@ -22,5 +21,20 @@ value class Script(val bytes: ByteArray) {
             )
 
         inline val ByteArray.script: Script get() = Script(this)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Script
+
+        if (!bytes.contentEquals(other.bytes)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return bytes.contentHashCode()
     }
 }

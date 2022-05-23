@@ -1,7 +1,6 @@
 package com.wavesplatform.we.sdk.node.client
 
-@JvmInline
-value class TxVersion(val value: Int) {
+data class TxVersion(val value: Int) {
     companion object {
         @JvmStatic
         @JvmName("fromInt")

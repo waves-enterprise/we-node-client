@@ -1,7 +1,6 @@
 package com.wavesplatform.we.sdk.node.client
 
-@JvmInline
-value class BlockVersion(val value: Int) {
+data class BlockVersion(val value: Int) {
     companion object {
         @JvmStatic
         fun fromInt(value: Int): BlockVersion =

@@ -2,8 +2,7 @@ package com.wavesplatform.we.sdk.node.client
 
 import java.util.Locale
 
-@JvmInline
-value class Hash(val bytes: ByteArray) {
+data class Hash(val bytes: ByteArray) {
     fun asHexString(): String =
         bytes.joinToString("") { byte: Byte ->
             "%02x".format(byte)
@@ -32,5 +31,20 @@ value class Hash(val bytes: ByteArray) {
         inline val ByteArray.hash: Hash get() = Hash(this)
 
         inline val String.hexStrHash: Hash get() = fromHexString(this)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Hash
+
+        if (!bytes.contentEquals(other.bytes)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return bytes.contentHashCode()
     }
 }

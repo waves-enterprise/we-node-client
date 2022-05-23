@@ -1,7 +1,7 @@
 package com.wavesplatform.we.sdk.node.client.event
 
-import com.wavesplatform.we.sdk.node.client.ContractId
 import com.wavesplatform.we.sdk.node.client.TxType
+import com.wavesplatform.we.sdk.node.client.contract.ContractId
 
 class EventsFilterContextImpl : EventsFilterContext {
     private val filters: MutableList<EventsFilter> = mutableListOf()

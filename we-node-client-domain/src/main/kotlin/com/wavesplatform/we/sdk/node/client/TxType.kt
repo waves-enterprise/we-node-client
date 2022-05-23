@@ -30,11 +30,15 @@ enum class TxType(val code: Int) {
     ;
 
     inline val Int.txType: TxType
-        get() = TxType.values().firstOrNull { txType ->
-            txType.code == this
-        } ?: error("TxType not found for code $this")
+        get() = fromInt(this)
 
     companion object {
+
+        @JvmStatic
+        fun fromInt(txType: Int): TxType = TxType.values().firstOrNull {
+            it.code == txType
+        } ?: error("TxType not found for code $this")
+
         const val GENESIS_TX_TYPE_STRING = "1"
         const val ISSUE_TX_TYPE_STRING = "3"
         const val TRANSFER_TX_TYPE_STRING = "4"

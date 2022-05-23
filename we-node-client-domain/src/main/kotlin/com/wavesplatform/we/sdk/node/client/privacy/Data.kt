@@ -2,8 +2,7 @@ package com.wavesplatform.we.sdk.node.client.privacy
 
 import java.util.Base64
 
-@JvmInline
-value class Data(val bytes: ByteArray) {
+data class Data(val bytes: ByteArray) {
     fun asBase64String(): String =
         BASE_64_ENCODER.encodeToString(bytes)
 
@@ -24,5 +23,20 @@ value class Data(val bytes: ByteArray) {
         inline val ByteArray.data: Data get() = Data(this)
 
         inline val String.base64Data: Data get() = fromBase64(this)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Data
+
+        if (!bytes.contentEquals(other.bytes)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return bytes.contentHashCode()
     }
 }

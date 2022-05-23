@@ -1,7 +1,6 @@
-package com.wavesplatform.we.sdk.node.client
+package com.wavesplatform.we.sdk.node.client.contract
 
-@JvmInline
-value class ContractVersion(val value: Int) {
+data class ContractVersion(val value: Int) {
     companion object {
         @JvmStatic
         fun fromInt(value: Int): ContractVersion =

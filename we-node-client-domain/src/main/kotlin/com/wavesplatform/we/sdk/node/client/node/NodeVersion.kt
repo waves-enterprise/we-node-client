@@ -1,7 +1,6 @@
 package com.wavesplatform.we.sdk.node.client.node
 
-@JvmInline
-value class NodeVersion(val value: String) {
+data class NodeVersion(val value: String) {
     companion object {
         @JvmStatic
         fun fromString(value: String): NodeVersion =

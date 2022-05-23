@@ -8,8 +8,6 @@ import com.wavesenterprise.transaction.protobuf.docker.createContractTransaction
 import com.wavesenterprise.transaction.protobuf.docker.feeAssetIdOrNull
 import com.wavesenterprise.transaction.protobuf.docker.validationPolicyOrNull
 import com.wavesplatform.we.sdk.node.client.Address
-import com.wavesplatform.we.sdk.node.client.ContractImage
-import com.wavesplatform.we.sdk.node.client.ContractName
 import com.wavesplatform.we.sdk.node.client.Fee
 import com.wavesplatform.we.sdk.node.client.FeeAssetId
 import com.wavesplatform.we.sdk.node.client.Hash
@@ -18,6 +16,8 @@ import com.wavesplatform.we.sdk.node.client.Signature
 import com.wavesplatform.we.sdk.node.client.Timestamp
 import com.wavesplatform.we.sdk.node.client.TxId
 import com.wavesplatform.we.sdk.node.client.TxVersion
+import com.wavesplatform.we.sdk.node.client.contract.ContractImage
+import com.wavesplatform.we.sdk.node.client.contract.ContractName
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.AddressMapper.byteString
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.AtomicBadgeMapper.domain
 import com.wavesplatform.we.sdk.node.client.grpc.mapper.AtomicBadgeMapper.dto

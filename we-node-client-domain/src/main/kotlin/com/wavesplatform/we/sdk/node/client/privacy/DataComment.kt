@@ -1,7 +1,6 @@
 package com.wavesplatform.we.sdk.node.client.privacy
 
-@JvmInline
-value class DataComment(val value: String) {
+data class DataComment(val value: String) {
     companion object {
         @JvmStatic
         fun fromString(value: String): DataComment =
