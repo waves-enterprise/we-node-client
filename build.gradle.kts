@@ -45,8 +45,8 @@ configure<JGitverPluginExtension> {
 }
 
 allprojects {
-    group = "com.wavesplatform.we.sdk.node.client"
-    version = "1.0-SNAPSHOT"
+    group = "com.wavesenterprise.sdk"
+    version = "-" // set by jgitver
 
     repositories {
         mavenCentral()
