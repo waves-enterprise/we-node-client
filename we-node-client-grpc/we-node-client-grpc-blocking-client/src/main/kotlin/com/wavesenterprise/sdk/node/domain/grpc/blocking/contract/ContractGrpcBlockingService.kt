@@ -16,12 +16,15 @@ import com.wavesenterprise.sdk.node.domain.grpc.mapper.contract.ContractKeysRequ
 import com.wavesenterprise.sdk.node.domain.grpc.mapper.contract.ContractTransactionResponseMapper.domain
 import com.wavesenterprise.sdk.node.domain.grpc.mapper.contract.ExecutionResultMapper.dto
 import io.grpc.Channel
+import io.grpc.ClientInterceptor
 
 class ContractGrpcBlockingService(
-    private val channel: Channel
-) : com.wavesenterprise.sdk.node.domain.blocking.contract.ContractService {
+    private val channel: Channel,
+    private val clientInterceptors: List<ClientInterceptor> = emptyList(),
+) : ContractService {
 
-    private val contractServiceStub: ContractServiceBlockingStub = ContractServiceGrpc.newBlockingStub(channel)
+    private val contractServiceStub: ContractServiceBlockingStub =
+        ContractServiceGrpc.newBlockingStub(channel).withInterceptors(*clientInterceptors.toTypedArray())
 
     override fun connect(connectionRequest: ConnectionRequest): Sequence<ContractTransactionResponse> =
         contractServiceStub.connect(connectionRequest.dto())

@@ -56,6 +56,7 @@ allprojects {
 subprojects {
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "kotlin")
+    apply(plugin = "maven-publish")
     apply(plugin = "io.gitlab.arturbosch.detekt")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "jacoco")
@@ -95,6 +96,47 @@ subprojects {
         config.setFrom(detektConfigFilePath)
         buildUponDefaultConfig = true
     }
+
+    val sourcesJar by tasks.creating(Jar::class) {
+        group = JavaBasePlugin.DOCUMENTATION_GROUP
+        description = "Assembles sources JAR"
+        archiveClassifier.set("sources")
+        from(project.the<SourceSetContainer>()["main"].allSource)
+    }
+
+    publishing {
+        publications {
+            create<MavenPublication>("mavenJava") {
+                from(components["java"])
+                afterEvaluate {
+                    artifact(sourcesJar)
+                }
+            }
+        }
+    }
+
+//    publishing {
+        //        repositories {
+        //            maven {
+        //                name = "WE"
+        //                afterEvaluate {
+        //                    url = uri("https://artifacts.wavesenterprise.com/repository/${if (project.version.toString().endsWith("-SNAPSHOT")) "maven-snapshots" else "maven-releases"}")
+        //                    credentials {
+        //                        username = mavenUser
+        //                        password = mavenPassword
+        //                    }
+        //                }
+        //            }
+        //        }
+//        publications {
+//            create<MavenPublication>("maven") {
+//                from(components["java"])
+//                afterEvaluate {
+//                    artifact(sourcesJar)
+//                }
+//            }
+//        }
+//    }
 
     the<DependencyManagementExtension>().apply {
         imports {
