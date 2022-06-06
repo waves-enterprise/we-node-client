@@ -42,6 +42,6 @@ class ContractGrpcBlockingService(
     override fun getContractKeys(contractKeysRequest: ContractKeysRequest): List<DataEntry> =
         contractServiceStub.getContractKeys(contractKeysRequest.dto()).entriesList.map { it.domain() }
 
-    override fun getContractKey(contractKeyRequest: ContractKeyRequest): DataEntry =
-        contractServiceStub.getContractKey(contractKeyRequest.dto()).entry.domain()
+    override fun getContractKey(contractKeyRequest: ContractKeyRequest): DataEntry? =
+        contractServiceStub.getContractKey(contractKeyRequest.dto())?.entry?.domain()
 }
