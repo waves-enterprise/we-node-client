@@ -1,5 +1,3 @@
-import fr.brouillard.oss.gradle.plugins.JGitverPluginExtension
-import fr.brouillard.oss.jgitver.Strategies.MAVEN
 import io.gitlab.arturbosch.detekt.Detekt
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
@@ -39,9 +37,11 @@ plugins {
     id("jacoco")
 }
 
-configure<JGitverPluginExtension> {
-    strategy = MAVEN
-    nonQualifierBranches = "master,dev"
+jgitver {
+    strategy = fr.brouillard.oss.jgitver.Strategies.PATTERN
+    versionPattern =
+        "\${M}.\${m}.\${meta.COMMIT_DISTANCE}-\${meta.GIT_SHA1_8}\${-~meta.QUALIFIED_BRANCH_NAME}-SNAPSHOT"
+    nonQualifierBranches = "master,dev,main"
 }
 
 allprojects {
@@ -108,6 +108,11 @@ subprojects {
         publications {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
+                versionMapping {
+                    allVariants {
+                        fromResolutionResult()
+                    }
+                }
                 afterEvaluate {
                     artifact(sourcesJar)
                 }
@@ -181,7 +186,7 @@ subprojects {
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = JavaVersion.VERSION_17.toString()
+            jvmTarget = JavaVersion.VERSION_1_8.toString()
         }
     }
 
