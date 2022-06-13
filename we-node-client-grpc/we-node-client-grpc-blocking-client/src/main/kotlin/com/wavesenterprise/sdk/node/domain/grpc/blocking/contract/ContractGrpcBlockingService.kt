@@ -19,7 +19,6 @@ import com.wavesenterprise.sdk.node.domain.grpc.mapper.contract.ExecutionResultM
 import io.grpc.Channel
 import io.grpc.ClientInterceptor
 import io.grpc.StatusRuntimeException
-import io.grpc.protobuf.StatusProto.fromThrowable
 
 class ContractGrpcBlockingService(
     private val channel: Channel,
@@ -51,12 +50,6 @@ class ContractGrpcBlockingService(
             statusRuntimeException.mapNotFoundToNullOrRethrow()
         }
 
-    private fun StatusRuntimeException.mapNotFoundToNullOrRethrow() = (fromThrowable(this) ?: throw this)
-        .let {
-            if (Code.forNumber(it.code) == Code.NOT_FOUND) {
-                null
-            } else {
-                throw this
-            }
-        }
+    private fun StatusRuntimeException.mapNotFoundToNullOrRethrow() =
+        if (Code.NOT_FOUND == Code.forNumber(status.code.value())) null else throw this
 }

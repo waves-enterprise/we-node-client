@@ -48,7 +48,7 @@ internal class ContractGrpcBlockingServiceTest {
     }
 
     @Test
-    fun `should propagate exception for null metadata leading to null status`() {
+    fun `should return null for not found with null metadata`() {
         val statusRuntimeExceptionNullMetadata = StatusRuntimeException(Status.NOT_FOUND)
         every { protoContractService.getContractKey(any()) } throws statusRuntimeExceptionNullMetadata
         val contractGrpcBlockingService = ContractGrpcBlockingService(
@@ -57,16 +57,14 @@ internal class ContractGrpcBlockingServiceTest {
             protoContractService
         )
 
-        val actualException = assertThrows<StatusRuntimeException> {
+        assertNull(
             contractGrpcBlockingService.getContractKey(
                 ContractKeyRequest(
                     contractId = ContractId.fromBase58("2nfSLahtZMk8wjD5fiPtfYiNYDKmyNpgSvB8bRgPSrQU"),
                     key = "notFoundKey"
                 )
             )
-        }
-
-        assertEquals(statusRuntimeExceptionNullMetadata, actualException)
+        )
     }
 
     @Test
