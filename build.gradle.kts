@@ -26,11 +26,16 @@ val ktorVersion: String by project
 val weMavenUser: String? by project
 val weMavenPassword: String? by project
 
+val sonaTypeMavenUser: String? by project
+val sonaTypeMavenPassword: String? by project
+
 val weMavenBasePath = "https://artifacts.wavesenterprise.com/repository/"
+val sonaTypeBasePath = "https://s01.oss.sonatype.org"
 
 plugins {
     kotlin("jvm") apply false
     `maven-publish`
+    signing
     kotlin("plugin.spring") apply false
     id("org.springframework.boot") apply false
     id("io.spring.dependency-management") apply false
@@ -63,6 +68,7 @@ subprojects {
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "kotlin")
     apply(plugin = "maven-publish")
+    apply(plugin = "signing")
     apply(plugin = "io.gitlab.arturbosch.detekt")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "jacoco")
@@ -122,27 +128,37 @@ subprojects {
 
     publishing {
         repositories {
+
             if (weMavenUser != null && weMavenPassword != null) {
                 maven {
-                    name = "WE-releases"
-                    url = uri("${weMavenBasePath}maven-releases")
+                    name = "WE-artifacts"
+                    afterEvaluate {
+                        url = uri("$weMavenBasePath${
+                            if (project.version.toString()
+                                    .endsWith("-SNAPSHOT")
+                            ) "maven-snapshots" else "maven-releases"
+                        }")
+                    }
                     credentials {
                         username = weMavenUser
-                        username = weMavenPassword
-                    }
-                    mavenContent {
-                        releasesOnly()
+                        password = weMavenPassword
                     }
                 }
+            }
+
+            if (sonaTypeMavenPassword != null && sonaTypeMavenUser != null) {
                 maven {
-                    name = "WE-snapshots"
-                    url = uri("${weMavenBasePath}maven-snapshots")
-                    credentials {
-                        username = weMavenUser
-                        username = weMavenPassword
+                    name = "SonaType-maven-central-staging"
+                    val releasesUrl = uri("$sonaTypeBasePath/service/local/staging/deploy/maven2/")
+                    val snapshotsUrl = uri("$sonaTypeBasePath/content/repositories/snapshots/")
+                    afterEvaluate {
+                        url = if (version.toString()
+                                .endsWith("SNAPSHOT")
+                        ) throw kotlin.Exception("shouldn't publish snapshot") else releasesUrl
                     }
-                    mavenContent {
-                        snapshotsOnly()
+                    credentials {
+                        username = sonaTypeMavenUser
+                        password = sonaTypeMavenPassword
                     }
                 }
             }
@@ -160,6 +176,14 @@ subprojects {
                     artifact(sourcesJar)
                     artifact(javadocJar)
                 }
+            }
+        }
+    }
+
+    signing {
+        afterEvaluate {
+            if (!project.version.toString().endsWith("SNAPSHOT")) {
+                sign(publishing.publications["mavenJava"])
             }
         }
     }
