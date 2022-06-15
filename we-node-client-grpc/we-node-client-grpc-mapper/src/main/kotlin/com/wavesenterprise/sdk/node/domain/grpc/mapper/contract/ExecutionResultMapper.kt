@@ -18,7 +18,7 @@ object ExecutionResultMapper {
         executionErrorRequest.let {
             executionErrorRequest {
                 txId = it.txId.asBase58String()
-                code = it.code
+                code = it.code.toIntCode()
                 message = it.message
             }
         }
@@ -34,4 +34,14 @@ object ExecutionResultMapper {
                 it.results.forEach { results.add(it.dto()) }
             }
         }
+
+    internal object ErrorCode {
+        const val FATAL_ERROR = 0
+        const val RECOVERABLE_ERROR = 1
+    }
+
+    fun ExecutionErrorRequest.ErrorCode.toIntCode() = when (this) {
+        ExecutionErrorRequest.ErrorCode.FATAL_ERROR -> ErrorCode.FATAL_ERROR
+        ExecutionErrorRequest.ErrorCode.RECOVERABLE_ERROR -> ErrorCode.RECOVERABLE_ERROR
+    }
 }

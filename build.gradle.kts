@@ -1,5 +1,3 @@
-import fr.brouillard.oss.gradle.plugins.JGitverPluginExtension
-import fr.brouillard.oss.jgitver.Strategies.MAVEN
 import io.gitlab.arturbosch.detekt.Detekt
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
@@ -25,6 +23,11 @@ val springMockkVersion: String by project
 
 val ktorVersion: String by project
 
+val weMavenUser: String? by project
+val weMavenPassword: String? by project
+
+val weMavenBasePath = "https://artifacts.wavesenterprise.com/repository/"
+
 plugins {
     kotlin("jvm") apply false
     `maven-publish`
@@ -36,16 +39,19 @@ plugins {
     id("com.palantir.git-version") apply false
     id("com.gorylenko.gradle-git-properties") apply false
     id("fr.brouillard.oss.gradle.jgitver")
+    id("org.jetbrains.dokka")
     id("jacoco")
 }
 
-configure<JGitverPluginExtension> {
-    strategy = MAVEN
-    nonQualifierBranches = "master,dev"
+jgitver {
+    strategy = fr.brouillard.oss.jgitver.Strategies.PATTERN
+    versionPattern =
+        "\${M}.\${m}.\${meta.COMMIT_DISTANCE}-\${meta.GIT_SHA1_8}\${-~meta.QUALIFIED_BRANCH_NAME}-SNAPSHOT"
+    nonQualifierBranches = "master,dev,main"
 }
 
 allprojects {
-    group = "com.wavesenterprise.sdk"
+    group = "com.wavesenterprise"
     version = "-" // set by jgitver
 
     repositories {
@@ -56,9 +62,11 @@ allprojects {
 subprojects {
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "kotlin")
+    apply(plugin = "maven-publish")
     apply(plugin = "io.gitlab.arturbosch.detekt")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "jacoco")
+    apply(plugin = "org.jetbrains.dokka")
 
     val jacocoCoverageFile = "$buildDir/jacocoReports/test/jacocoTestReport.xml"
 
@@ -94,6 +102,66 @@ subprojects {
         exclude("build/")
         config.setFrom(detektConfigFilePath)
         buildUponDefaultConfig = true
+    }
+
+    val sourcesJar by tasks.creating(Jar::class) {
+        group = JavaBasePlugin.DOCUMENTATION_GROUP
+        description = "Assembles sources JAR"
+        archiveClassifier.set("sources")
+        from(project.the<SourceSetContainer>()["main"].allSource)
+    }
+
+    val dokkaJavadoc by tasks.getting(org.jetbrains.dokka.gradle.DokkaTask::class)
+    val javadocJar by tasks.creating(Jar::class) {
+        dependsOn(dokkaJavadoc)
+        group = JavaBasePlugin.DOCUMENTATION_GROUP
+        description = "Assembles javadoc JAR"
+        archiveClassifier.set("javadoc")
+        from(dokkaJavadoc.outputDirectory)
+    }
+
+    publishing {
+        repositories {
+            if (weMavenUser != null && weMavenPassword != null) {
+                maven {
+                    name = "WE-releases"
+                    url = uri("${weMavenBasePath}maven-releases")
+                    credentials {
+                        username = weMavenUser
+                        username = weMavenPassword
+                    }
+                    mavenContent {
+                        releasesOnly()
+                    }
+                }
+                maven {
+                    name = "WE-snapshots"
+                    url = uri("${weMavenBasePath}maven-snapshots")
+                    credentials {
+                        username = weMavenUser
+                        username = weMavenPassword
+                    }
+                    mavenContent {
+                        snapshotsOnly()
+                    }
+                }
+            }
+        }
+
+        publications {
+            create<MavenPublication>("mavenJava") {
+                from(components["java"])
+                versionMapping {
+                    allVariants {
+                        fromResolutionResult()
+                    }
+                }
+                afterEvaluate {
+                    artifact(sourcesJar)
+                    artifact(javadocJar)
+                }
+            }
+        }
     }
 
     the<DependencyManagementExtension>().apply {
@@ -139,7 +207,7 @@ subprojects {
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = JavaVersion.VERSION_17.toString()
+            jvmTarget = JavaVersion.VERSION_1_8.toString()
         }
     }
 

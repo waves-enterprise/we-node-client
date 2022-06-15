@@ -11,6 +11,7 @@ import com.wavesenterprise.sdk.node.domain.Timestamp
 import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.TxType
 import com.wavesenterprise.sdk.node.domain.TxVersion
+import com.wavesenterprise.sdk.node.domain.contract.AuthToken
 import com.wavesenterprise.sdk.node.domain.contract.CallContractTransaction
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.ContractImage
@@ -36,7 +37,7 @@ object ContractTransactionResponseMapper {
     ): ContractTransactionResponse = contractTransactionResponse.run {
         ContractTransactionResponse(
             transaction = transaction.domain(),
-            authToken = authToken
+            authToken = AuthToken(authToken)
         )
     }
 

@@ -13,5 +13,5 @@ interface ContractService {
     fun commitExecutionSuccess(executionSuccessRequest: ExecutionSuccessRequest)
     fun commitExecutionError(executionErrorRequest: ExecutionErrorRequest)
     fun getContractKeys(contractKeysRequest: ContractKeysRequest): List<DataEntry>
-    fun getContractKey(contractKeyRequest: ContractKeyRequest): DataEntry
+    fun getContractKey(contractKeyRequest: ContractKeyRequest): DataEntry?
 }

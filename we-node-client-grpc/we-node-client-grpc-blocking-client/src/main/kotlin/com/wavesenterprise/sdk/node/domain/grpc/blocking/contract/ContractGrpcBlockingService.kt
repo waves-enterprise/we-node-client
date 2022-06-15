@@ -1,5 +1,6 @@
 package com.wavesenterprise.sdk.node.domain.grpc.blocking.contract
 
+import com.google.rpc.Code
 import com.wavesenterprise.protobuf.service.contract.ContractServiceGrpc
 import com.wavesenterprise.protobuf.service.contract.ContractServiceGrpc.ContractServiceBlockingStub
 import com.wavesenterprise.sdk.node.domain.DataEntry
@@ -16,12 +17,15 @@ import com.wavesenterprise.sdk.node.domain.grpc.mapper.contract.ContractKeysRequ
 import com.wavesenterprise.sdk.node.domain.grpc.mapper.contract.ContractTransactionResponseMapper.domain
 import com.wavesenterprise.sdk.node.domain.grpc.mapper.contract.ExecutionResultMapper.dto
 import io.grpc.Channel
+import io.grpc.ClientInterceptor
+import io.grpc.StatusRuntimeException
 
 class ContractGrpcBlockingService(
-    private val channel: Channel
-) : com.wavesenterprise.sdk.node.domain.blocking.contract.ContractService {
-
-    private val contractServiceStub: ContractServiceBlockingStub = ContractServiceGrpc.newBlockingStub(channel)
+    private val channel: Channel,
+    private val clientInterceptors: List<ClientInterceptor> = emptyList(),
+    private val contractServiceStub: ContractServiceBlockingStub =
+        ContractServiceGrpc.newBlockingStub(channel).withInterceptors(*clientInterceptors.toTypedArray()),
+) : ContractService {
 
     override fun connect(connectionRequest: ConnectionRequest): Sequence<ContractTransactionResponse> =
         contractServiceStub.connect(connectionRequest.dto())
@@ -39,6 +43,13 @@ class ContractGrpcBlockingService(
     override fun getContractKeys(contractKeysRequest: ContractKeysRequest): List<DataEntry> =
         contractServiceStub.getContractKeys(contractKeysRequest.dto()).entriesList.map { it.domain() }
 
-    override fun getContractKey(contractKeyRequest: ContractKeyRequest): DataEntry =
-        contractServiceStub.getContractKey(contractKeyRequest.dto()).entry.domain()
+    override fun getContractKey(contractKeyRequest: ContractKeyRequest): DataEntry? =
+        try {
+            contractServiceStub.getContractKey(contractKeyRequest.dto())?.entry?.domain()
+        } catch (statusRuntimeException: StatusRuntimeException) {
+            statusRuntimeException.mapNotFoundToNullOrRethrow()
+        }
+
+    private fun StatusRuntimeException.mapNotFoundToNullOrRethrow() =
+        if (Code.NOT_FOUND == Code.forNumber(status.code.value())) null else throw this
 }
