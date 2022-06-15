@@ -23,6 +23,11 @@ val springMockkVersion: String by project
 
 val ktorVersion: String by project
 
+val weMavenUser: String? by project
+val weMavenPassword: String? by project
+
+val weMavenBasePath = "https://artifacts.wavesenterprise.com/repository/"
+
 plugins {
     kotlin("jvm") apply false
     `maven-publish`
@@ -34,6 +39,7 @@ plugins {
     id("com.palantir.git-version") apply false
     id("com.gorylenko.gradle-git-properties") apply false
     id("fr.brouillard.oss.gradle.jgitver")
+    id("org.jetbrains.dokka")
     id("jacoco")
 }
 
@@ -45,7 +51,7 @@ jgitver {
 }
 
 allprojects {
-    group = "com.wavesenterprise.sdk"
+    group = "com.wavesenterprise"
     version = "-" // set by jgitver
 
     repositories {
@@ -60,6 +66,7 @@ subprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "jacoco")
+    apply(plugin = "org.jetbrains.dokka")
 
     val jacocoCoverageFile = "$buildDir/jacocoReports/test/jacocoTestReport.xml"
 
@@ -104,7 +111,43 @@ subprojects {
         from(project.the<SourceSetContainer>()["main"].allSource)
     }
 
+    val dokkaJavadoc by tasks.getting(org.jetbrains.dokka.gradle.DokkaTask::class)
+    val javadocJar by tasks.creating(Jar::class) {
+        dependsOn(dokkaJavadoc)
+        group = JavaBasePlugin.DOCUMENTATION_GROUP
+        description = "Assembles javadoc JAR"
+        archiveClassifier.set("javadoc")
+        from(dokkaJavadoc.outputDirectory)
+    }
+
     publishing {
+        repositories {
+            if (weMavenUser != null && weMavenPassword != null) {
+                maven {
+                    name = "WE-releases"
+                    url = uri("${weMavenBasePath}maven-releases")
+                    credentials {
+                        username = weMavenUser
+                        username = weMavenPassword
+                    }
+                    mavenContent {
+                        releasesOnly()
+                    }
+                }
+                maven {
+                    name = "WE-snapshots"
+                    url = uri("${weMavenBasePath}maven-snapshots")
+                    credentials {
+                        username = weMavenUser
+                        username = weMavenPassword
+                    }
+                    mavenContent {
+                        snapshotsOnly()
+                    }
+                }
+            }
+        }
+
         publications {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
@@ -115,6 +158,7 @@ subprojects {
                 }
                 afterEvaluate {
                     artifact(sourcesJar)
+                    artifact(javadocJar)
                 }
             }
         }
