@@ -120,29 +120,6 @@ subprojects {
         }
     }
 
-//    publishing {
-        //        repositories {
-        //            maven {
-        //                name = "WE"
-        //                afterEvaluate {
-        //                    url = uri("https://artifacts.wavesenterprise.com/repository/${if (project.version.toString().endsWith("-SNAPSHOT")) "maven-snapshots" else "maven-releases"}")
-        //                    credentials {
-        //                        username = mavenUser
-        //                        password = mavenPassword
-        //                    }
-        //                }
-        //            }
-        //        }
-//        publications {
-//            create<MavenPublication>("maven") {
-//                from(components["java"])
-//                afterEvaluate {
-//                    artifact(sourcesJar)
-//                }
-//            }
-//        }
-//    }
-
     the<DependencyManagementExtension>().apply {
         imports {
             mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootVersion")

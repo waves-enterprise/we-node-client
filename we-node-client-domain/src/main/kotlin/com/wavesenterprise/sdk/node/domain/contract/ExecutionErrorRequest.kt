@@ -7,8 +7,10 @@ data class ExecutionErrorRequest(
     val message: String,
     val code: Int,
 ) {
-    object ErrorCode {
-        const val FATAL_ERROR = 0
-        const val RECOVERABLE_ERROR = 1
+    enum class ErrorCode(
+        val code: Int,
+    ) {
+        FATAL_ERROR(0),
+        RECOVERABLE_ERROR(1)
     }
 }
