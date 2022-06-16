@@ -30,7 +30,10 @@ val sonaTypeMavenUser: String? by project
 val sonaTypeMavenPassword: String? by project
 
 val weMavenBasePath = "https://artifacts.wavesenterprise.com/repository/"
+
 val sonaTypeBasePath = "https://s01.oss.sonatype.org"
+val gitHubProject = "waves-enterprise/we-node-client"
+val githubUrl = "https://github.com/$gitHubProject"
 
 plugins {
     kotlin("jvm") apply false
@@ -128,7 +131,6 @@ subprojects {
 
     publishing {
         repositories {
-
             if (weMavenUser != null && weMavenPassword != null) {
                 maven {
                     name = "WE-artifacts"
@@ -150,7 +152,6 @@ subprojects {
                 maven {
                     name = "SonaType-maven-central-staging"
                     val releasesUrl = uri("$sonaTypeBasePath/service/local/staging/deploy/maven2/")
-                    val snapshotsUrl = uri("$sonaTypeBasePath/content/repositories/snapshots/")
                     afterEvaluate {
                         url = if (version.toString()
                                 .endsWith("SNAPSHOT")
@@ -175,6 +176,38 @@ subprojects {
                 afterEvaluate {
                     artifact(sourcesJar)
                     artifact(javadocJar)
+                }
+                pom {
+                    packaging = "jar"
+                    name.set(project.name)
+                    url.set(githubUrl)
+                    description.set("WE Node Client for Java/Kotlin")
+
+                    licenses {
+                        license {
+                            name.set("The Apache License, Version 2.0")
+                            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                        }
+                    }
+
+                    scm {
+                        connection.set("scm:$githubUrl")
+                        developerConnection.set("scm:git@github.com:$gitHubProject.git")
+                        url.set(githubUrl)
+                    }
+
+                    developers {
+                        developer {
+                            id.set("kt3")
+                            name.set("Stepan Kashintsev")
+                            email.set("kpote3@gmail.com")
+                        }
+                        developer {
+                            id.set("bekirev")
+                            name.set("Artem Bekirev")
+                            email.set("abekirev@gmail.com")
+                        }
+                    }
                 }
             }
         }
