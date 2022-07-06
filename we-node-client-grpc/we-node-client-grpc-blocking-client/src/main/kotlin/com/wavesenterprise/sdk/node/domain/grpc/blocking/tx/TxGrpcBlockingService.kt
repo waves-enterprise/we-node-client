@@ -7,6 +7,7 @@ import com.wavesenterprise.sdk.node.domain.tx.Tx
 import com.wavesenterprise.sdk.node.domain.tx.TxInfo
 import com.wavesenterprise.sdk.node.domain.tx.UtxSize
 import io.grpc.ManagedChannel
+import java.util.Optional
 
 class TxGrpcBlockingService(
     private val channel: ManagedChannel,
@@ -15,7 +16,7 @@ class TxGrpcBlockingService(
         TODO("Not yet implemented")
     }
 
-    override fun <T : Tx> signAndBroadcast(request: SignRequest<T>): Tx {
+    override fun <T : Tx> signAndBroadcast(request: SignRequest<T>): T {
         TODO("Not yet implemented")
     }
 
@@ -27,7 +28,7 @@ class TxGrpcBlockingService(
         TODO("Not yet implemented")
     }
 
-    override fun txInfo(txId: TxId): TxInfo {
+    override fun txInfo(txId: TxId): Optional<TxInfo> {
         TODO("Not yet implemented")
     }
 

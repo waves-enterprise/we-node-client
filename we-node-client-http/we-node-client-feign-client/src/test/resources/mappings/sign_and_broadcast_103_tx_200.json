@@ -1,0 +1,67 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/transactions/signAndBroadcast",
+    "bodyPatterns": [
+      {
+        "equalToJson": {
+          "image": "registry.weintegrator.com/icore-sc/we-contract-sdk/samples/demo-example:1.0.1",
+          "fee": 0,
+          "imageHash": "586d70cb288e82198a924871d75849c263c51b205764fa3e51755e54fcde18e8",
+          "type": 103,
+          "params": [
+            {
+              "type": "string",
+              "value": "createContractWithInitialValue",
+              "key": "action"
+            },
+            {
+              "type": "string",
+              "value": "ID_1",
+              "key": "createContract"
+            }
+          ],
+          "version": 2,
+          "sender": "3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX",
+          "feeAssetId": null,
+          "atomicBadge": null,
+          "apiVersion": null,
+          "validationPolicy": null,
+          "password": null,
+          "contractName": "java-contract"
+        }
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "senderPublicKey": "4L4XEpNpesX9r6rVJ8hW1TrMiNCZ6SMvRuWPKB7T47wKfnp4D84XBUv7xsa36CGwoyK3fzfojivwonHNrsX2fLBL",
+      "image": "registry.weintegrator.com/icore-sc/we-contract-sdk/samples/demo-example:1.0.1",
+      "fee": 0,
+      "imageHash": "586d70cb288e82198a924871d75849c263c51b205764fa3e51755e54fcde18e8",
+      "type": 103,
+      "params": [
+        {
+          "type": "string",
+          "value": "createContractWithInitialValue",
+          "key": "action"
+        },
+        {
+          "type": "string",
+          "value": "ID_1",
+          "key": "createContract"
+        }
+      ],
+      "version": 2,
+      "sender": "3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX",
+      "feeAssetId": null,
+      "proofs": [
+        "3EzuFWF5P8mPLzeaahfBgkucNdxD8jPgv4a3bLH61hNePYmYENM8rfTJr1WVGURsieYtRAVeHs2jcURXndJ2wSR1"
+      ],
+      "contractName": "java-sample-demo-contract",
+      "id": "5inUANAmDzRfq5f1Yv7HBTm8G4AREPfeKCntaEDDqVbU",
+      "timestamp": 1657185519754
+    }
+  }
+}

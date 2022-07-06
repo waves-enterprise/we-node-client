@@ -8,6 +8,7 @@ import com.wavesenterprise.sdk.node.domain.Password
 import com.wavesenterprise.sdk.node.domain.TxVersion
 import com.wavesenterprise.sdk.node.domain.atomic.AtomicBadge
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
+import com.wavesenterprise.sdk.node.domain.contract.ContractVersion
 import com.wavesenterprise.sdk.node.domain.tx.CallContractTx
 
 data class CallContractSignRequest(
@@ -16,6 +17,7 @@ data class CallContractSignRequest(
     val password: Password? = null,
     val fee: Fee,
     val feeAssetId: FeeAssetId? = null,
+    val contractVersion: ContractVersion,
     val contractId: ContractId,
     val params: List<DataEntry>,
     val atomicBadge: AtomicBadge? = null,
