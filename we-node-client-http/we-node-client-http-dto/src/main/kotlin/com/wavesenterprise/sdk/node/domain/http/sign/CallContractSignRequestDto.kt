@@ -5,7 +5,7 @@ import com.wavesenterprise.sdk.node.domain.http.DataEntryDto
 import com.wavesenterprise.sdk.node.domain.http.DataEntryDto.Companion.toDto
 import com.wavesenterprise.sdk.node.domain.http.atomic.AtomicBadgeDto
 import com.wavesenterprise.sdk.node.domain.http.atomic.AtomicBadgeDto.Companion.toDto
-import com.wavesenterprise.sdk.node.domain.http.tx.CreateContractTxDto
+import com.wavesenterprise.sdk.node.domain.http.tx.CallContractTxDto
 import com.wavesenterprise.sdk.node.domain.sign.CallContractSignRequest
 
 data class CallContractSignRequestDto(
@@ -14,11 +14,12 @@ data class CallContractSignRequestDto(
     val sender: String,
     val password: String?,
     val fee: Long,
+    val contractVersion: Int,
     val feeAssetId: String?,
     val contractId: String,
     val params: List<DataEntryDto>,
     val atomicBadge: AtomicBadgeDto?,
-) : SignRequestDto<CreateContractTxDto> {
+) : SignRequestDto<CallContractTxDto> {
     companion object {
         @JvmStatic
         fun CallContractSignRequest.toDto(): CallContractSignRequestDto =
@@ -28,6 +29,7 @@ data class CallContractSignRequestDto(
                 password = password?.value,
                 fee = fee.value,
                 feeAssetId = feeAssetId?.asBase58String(),
+                contractVersion = contractVersion.value,
                 contractId = contractId.asBase58String(),
                 params = params.map { it.toDto() },
                 atomicBadge = atomicBadge?.toDto(),

@@ -1,4 +1,4 @@
-package com.wavesenterprise.sdk.node.domain.ktor.tx
+package com.wavesenterprise.sdk.node.client.ktor.tx
 
 import com.wavesenterprise.sdk.node.domain.Height
 import com.wavesenterprise.sdk.node.domain.TxId

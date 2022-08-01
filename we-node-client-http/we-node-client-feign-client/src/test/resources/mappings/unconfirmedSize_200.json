@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/transactions/unconfirmed/size"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "size": 10,
+      "sizeInBytes": 250
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

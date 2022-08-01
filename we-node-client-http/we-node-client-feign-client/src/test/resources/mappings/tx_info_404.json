@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/transactions/info/df"
+  },
+  "response": {
+    "status": 404,
+    "jsonBody": {
+      "status": "error",
+      "details": "Transaction is not in blockchain"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
