@@ -20,9 +20,9 @@ sealed interface ContractTransaction {
     val params: List<DataEntry>
     val fee: Fee
     val version: TxVersion
-    val proof: Signature
+    val proof: Signature?
     val timestamp: Timestamp
-    val feeAssetId: AssetId
+    val feeAssetId: AssetId?
 }
 
 data class CreateContractTransaction(
@@ -34,9 +34,9 @@ data class CreateContractTransaction(
     override val params: List<DataEntry>,
     override val fee: Fee,
     override val version: TxVersion,
-    override val proof: Signature,
+    override val proof: Signature?,
     override val timestamp: Timestamp,
-    override val feeAssetId: AssetId,
+    override val feeAssetId: AssetId?,
     val image: ContractImage,
     val imageHash: ContractImageHash,
     val contractName: ContractName,
@@ -51,8 +51,8 @@ data class CallContractTransaction(
     override val params: List<DataEntry>,
     override val fee: Fee,
     override val version: TxVersion,
-    override val proof: Signature,
+    override val proof: Signature?,
     override val timestamp: Timestamp,
-    override val feeAssetId: AssetId,
+    override val feeAssetId: AssetId?,
     val contractVersion: ContractVersion,
 ) : ContractTransaction

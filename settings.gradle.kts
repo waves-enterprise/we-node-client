@@ -49,4 +49,6 @@ include(
     "we-node-client-grpc:we-node-client-grpc-kotlin",
     "we-node-client-grpc:we-node-client-grpc-coroutines-client",
     "we-node-client-grpc:we-node-client-grpc-blocking-client",
+
+    "we-node-domain-test",
 )
