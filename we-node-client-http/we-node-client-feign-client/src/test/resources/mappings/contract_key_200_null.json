@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/contracts/5inUANAmDzRfq5f1Yv7HBTm8G4AREPfeKCntaEDDqVbU/KEY"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": null,
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
