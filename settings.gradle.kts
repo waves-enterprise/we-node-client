@@ -51,4 +51,7 @@ include(
     "we-node-client-grpc:we-node-client-grpc-blocking-client",
 
     "we-node-domain-test",
+
+    "we-tx-signer:we-tx-signer-api",
+    "we-tx-signer:we-tx-signer-node",
 )

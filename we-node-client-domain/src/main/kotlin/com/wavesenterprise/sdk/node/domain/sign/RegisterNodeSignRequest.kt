@@ -11,11 +11,15 @@ import com.wavesenterprise.sdk.node.domain.tx.RegisterNodeTx
 
 data class RegisterNodeSignRequest(
     val version: TxVersion? = null,
-    val senderAddress: Address,
-    val password: Password? = null,
+    override val senderAddress: Address,
+    override val password: Password? = null,
     val fee: Fee,
     val opType: OpType,
     val target: Address,
     val targetPublicKey: PublicKey,
     val nodeName: NodeName,
-) : SignRequest<RegisterNodeTx>
+) : SignRequest<RegisterNodeTx> {
+    override fun withAddress(address: Address) = copy(senderAddress = address)
+
+    override fun withPassword(password: Password) = copy(password = password)
+}
