@@ -11,10 +11,14 @@ import com.wavesenterprise.sdk.node.domain.tx.BurnTx
 
 data class BurnSignRequest(
     val version: TxVersion? = null,
-    val senderAddress: Address,
-    val password: Password? = null,
+    override val senderAddress: Address,
+    override val password: Password? = null,
     val fee: Fee,
     val assetId: AssetId? = null,
     val quantity: Quantity,
     val attachment: Attachment? = null,
-) : SignRequest<BurnTx>
+) : SignRequest<BurnTx> {
+    override fun withAddress(address: Address) = copy(senderAddress = address)
+
+    override fun withPassword(password: Password) = copy(password = password)
+}

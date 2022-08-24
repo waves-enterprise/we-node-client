@@ -10,9 +10,13 @@ import com.wavesenterprise.sdk.node.domain.tx.SetScriptTx
 
 data class SetScriptSignRequest(
     val version: TxVersion? = null,
-    val senderAddress: Address,
-    val password: Password? = null,
+    override val senderAddress: Address,
+    override val password: Password? = null,
     val fee: Fee,
     val name: ScriptName,
     val script: Script? = null,
-) : SignRequest<SetScriptTx>
+) : SignRequest<SetScriptTx> {
+    override fun withAddress(address: Address) = copy(senderAddress = address)
+
+    override fun withPassword(password: Password) = copy(password = password)
+}

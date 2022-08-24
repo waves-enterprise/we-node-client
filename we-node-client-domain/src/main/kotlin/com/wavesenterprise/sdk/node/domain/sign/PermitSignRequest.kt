@@ -11,11 +11,15 @@ import com.wavesenterprise.sdk.node.domain.tx.PermitTx
 
 data class PermitSignRequest(
     val version: TxVersion? = null,
-    val senderAddress: Address,
-    val password: Password? = null,
+    override val senderAddress: Address,
+    override val password: Password? = null,
     val fee: Fee,
     val target: Address,
     val opType: OpType,
     val dueTimestamp: Timestamp,
     val atomicBadge: AtomicBadge? = null,
-) : SignRequest<PermitTx>
+) : SignRequest<PermitTx> {
+    override fun withAddress(address: Address) = copy(senderAddress = address)
+
+    override fun withPassword(password: Password) = copy(password = password)
+}

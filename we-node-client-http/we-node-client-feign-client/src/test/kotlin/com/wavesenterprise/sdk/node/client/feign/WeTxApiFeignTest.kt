@@ -25,10 +25,7 @@ internal class WeTxApiFeignTest {
     fun init(wireMockRuntimeInfo: WireMockRuntimeInfo) {
         weTxApi = FeignWeApiFactory.createClient(
             WeTxApiFeign::class.java,
-            object : FeignProperties {
-                override val url: String
-                    get() = wireMockRuntimeInfo.httpBaseUrl
-            }
+            FeignNodeClientParams(url = wireMockRuntimeInfo.httpBaseUrl)
         )
     }
 

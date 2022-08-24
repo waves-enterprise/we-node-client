@@ -19,10 +19,7 @@ internal class WeContractServiceApiFeignTest {
     fun init(wireMockRuntimeInfo: WireMockRuntimeInfo) {
         weContractServiceApiFeign = FeignWeApiFactory.createClient(
             WeContractServiceApiFeign::class.java,
-            object : FeignProperties {
-                override val url: String
-                    get() = wireMockRuntimeInfo.httpBaseUrl
-            }
+            FeignNodeClientParams(url = wireMockRuntimeInfo.httpBaseUrl)
         )
     }
 
