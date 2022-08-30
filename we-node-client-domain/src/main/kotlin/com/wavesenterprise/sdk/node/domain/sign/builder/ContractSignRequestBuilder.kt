@@ -19,9 +19,31 @@ import com.wavesenterprise.sdk.node.domain.sign.CallContractSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.ContractSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CreateContractSignRequest
 import com.wavesenterprise.sdk.node.domain.tx.ContractTx
+import kotlin.reflect.KMutableProperty0
 
 class ContractSignRequestBuilder {
     private var builderProperties: BuilderProperties = BuilderProperties()
+
+    val NOT_NULLABLE_FOR_CREATE = with(builderProperties) {
+        listOf(
+            ::senderAddress,
+            ::fee,
+            ::image,
+            ::imageHash,
+            ::contractName,
+            ::params,
+        )
+    }
+
+    val NOT_NULLABLE_FOR_CALL = with(builderProperties) {
+        listOf(
+            ::senderAddress,
+            ::fee,
+            ::params,
+            ::contractId,
+            ::contractVersion,
+        )
+    }
 
     fun version(version: TxVersion) = this.apply { builderProperties.version = version }
 
@@ -62,25 +84,8 @@ class ContractSignRequestBuilder {
     fun build(txType: TxType): ContractSignRequest<out ContractTx> {
         return when (txType) {
             TxType.CREATE_CONTRACT -> {
-                val notNullableProperties =
-                    with(builderProperties) {
-                        listOf(
-                            ::senderAddress,
-                            ::fee,
-                            ::image,
-                            ::imageHash,
-                            ::contractName,
-                            ::params,
-                        )
-                    }
-                val variablesNotNullable = buildList {
-                    notNullableProperties.forEach {
-                        if (it.get() == null) {
-                            this.add(it.name)
-                        }
-                    }
-                }
-                if (variablesNotNullable.isEmpty()) {
+                val variablesIsEqualsNull = getVariablesIsEqualsNull(NOT_NULLABLE_FOR_CREATE)
+                if (variablesIsEqualsNull.isEmpty()) {
                     with(builderProperties) {
                         CreateContractSignRequest(
                             version = version,
@@ -99,31 +104,15 @@ class ContractSignRequestBuilder {
                     }
                 } else {
                     throw IllegalStateException(
-                        "Fields: " + variablesNotNullable.toString() +
+                        "Fields: " + variablesIsEqualsNull.toString() +
                             " can not be null - for CreateContractSignRequest"
                     )
                 }
             }
 
             TxType.CALL_CONTRACT -> {
-                val notNullableProperties =
-                    with(builderProperties) {
-                        listOf(
-                            ::senderAddress,
-                            ::fee,
-                            ::params,
-                            ::contractId,
-                            ::contractVersion,
-                        )
-                    }
-                val variablesNotNullable = buildList {
-                    notNullableProperties.forEach {
-                        if ((it.get() == null)) {
-                            this.add(it.name)
-                        }
-                    }
-                }
-                if (variablesNotNullable.isEmpty()) {
+                val variablesIsEqualsNull = getVariablesIsEqualsNull(NOT_NULLABLE_FOR_CALL)
+                if (variablesIsEqualsNull.isEmpty()) {
                     with(builderProperties) {
                         CallContractSignRequest(
                             version = version,
@@ -139,14 +128,24 @@ class ContractSignRequestBuilder {
                     }
                 } else {
                     throw IllegalStateException(
-                        "Fields: " + variablesNotNullable.toString() +
+                        "Fields: " + variablesIsEqualsNull.toString() +
                             " can not be null - for CallContractSignRequest"
                     )
                 }
             }
+
             else -> throw IllegalStateException("Shouldn't be here")
         }
     }
+
+    private fun getVariablesIsEqualsNull(notNullableProperties: List<KMutableProperty0<out Any?>>) =
+        buildList {
+            notNullableProperties.forEach {
+                if ((it.get() == null)) {
+                    this.add(it.name)
+                }
+            }
+        }
 
     class BuilderProperties {
         var version: TxVersion? = null
