@@ -107,9 +107,7 @@ fun <T : Tx, D : TxDto> mapDto(request: SignRequest<T>): SignRequestDto<D> =
     when (request) {
         is AtomicSignRequest -> request.toDto() // todo extract lambda for reuse?
         is BurnSignRequest -> request.toDto()
-        is CallContractSignRequest -> request.toDto()
         is CreateAliasSignRequest -> request.toDto()
-        is CreateContractSignRequest -> request.toDto()
         is CreatePolicySignRequest -> request.toDto()
         is DataSignRequest -> request.toDto()
         is DisableContractSignRequest -> request.toDto()
@@ -127,7 +125,10 @@ fun <T : Tx, D : TxDto> mapDto(request: SignRequest<T>): SignRequestDto<D> =
         is TransferSignRequest -> request.toDto()
         is UpdateContractSignRequest -> request.toDto()
         is UpdatePolicySignRequest -> request.toDto()
-        is ContractSignRequest -> throw IllegalStateException("Shouldn't be here")
+        is ContractSignRequest -> when (request) {
+            is CallContractSignRequest -> request.toDto()
+            is CreateContractSignRequest -> request.toDto()
+        }
     } as SignRequestDto<D>
 
 fun <T : Tx, D : TxDto> mapDto(tx: T): D =

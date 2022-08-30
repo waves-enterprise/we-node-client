@@ -1,5 +1,5 @@
 package com.wavesenterprise.sdk.node.domain.sign
 
-import com.wavesenterprise.sdk.node.domain.tx.Tx
+import com.wavesenterprise.sdk.node.domain.tx.ContractTx
 
-interface ContractSignRequest<T : Tx> : SignRequest<T>
+sealed interface ContractSignRequest<T : ContractTx> : SignRequest<T>
