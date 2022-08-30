@@ -27,7 +27,7 @@ data class CreateContractSignRequest(
     val apiVersion: ContractApiVersion? = null,
     val validationPolicy: ValidationPolicy? = null,
     val atomicBadge: AtomicBadge? = null,
-) : SignRequest<CreateContractTx> {
+) : SignRequest<CreateContractTx>, ContractSignRequest<CreateContractTx> {
 
     override fun withAddress(address: Address) = copy(senderAddress = address)
 

@@ -54,6 +54,7 @@ import com.wavesenterprise.sdk.node.domain.http.tx.UpdatePolicyTxDto.Companion.t
 import com.wavesenterprise.sdk.node.domain.sign.AtomicSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.BurnSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CallContractSignRequest
+import com.wavesenterprise.sdk.node.domain.sign.ContractSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CreateAliasSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CreateContractSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CreatePolicySignRequest
@@ -126,6 +127,7 @@ fun <T : Tx, D : TxDto> mapDto(request: SignRequest<T>): SignRequestDto<D> =
         is TransferSignRequest -> request.toDto()
         is UpdateContractSignRequest -> request.toDto()
         is UpdatePolicySignRequest -> request.toDto()
+        is ContractSignRequest -> throw IllegalStateException("Shouldn't be here")
     } as SignRequestDto<D>
 
 fun <T : Tx, D : TxDto> mapDto(tx: T): D =

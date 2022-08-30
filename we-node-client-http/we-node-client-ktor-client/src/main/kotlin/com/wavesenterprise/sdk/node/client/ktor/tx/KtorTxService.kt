@@ -85,6 +85,7 @@ import com.wavesenterprise.sdk.node.domain.http.tx.UtxSizeDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.sign.AtomicSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.BurnSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CallContractSignRequest
+import com.wavesenterprise.sdk.node.domain.sign.ContractSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CreateAliasSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CreateContractSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CreatePolicySignRequest
@@ -174,6 +175,7 @@ class KtorTxService(
             is TransferSignRequest -> signDto(request.toDto()).toDomain()
             is UpdateContractSignRequest -> signDto(request.toDto()).toDomain()
             is UpdatePolicySignRequest -> signDto(request.toDto()).toDomain()
+            is ContractSignRequest -> throw IllegalStateException("Shouldn't be here")
         } as T
 
     private suspend inline fun <reified T : TxDto, reified R : SignRequestDto<T>> signDto(request: R): T =
@@ -209,6 +211,7 @@ class KtorTxService(
             is TransferSignRequest -> signAndBroadcastDto(request.toDto()).toDomain()
             is UpdateContractSignRequest -> signAndBroadcastDto(request.toDto()).toDomain()
             is UpdatePolicySignRequest -> signAndBroadcastDto(request.toDto()).toDomain()
+            is ContractSignRequest -> throw IllegalStateException("Shouldn't be here")
         } as T
 
     private suspend inline fun <reified T : TxDto, reified R : SignRequestDto<T>> signAndBroadcastDto(request: R): T =
