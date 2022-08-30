@@ -21,7 +21,7 @@ data class CallContractSignRequest(
     val contractId: ContractId,
     val params: List<DataEntry>,
     val atomicBadge: AtomicBadge? = null,
-) : SignRequest<CallContractTx> {
+) : SignRequest<CallContractTx>, ContractSignRequest<CallContractTx> {
     override fun withAddress(address: Address) = copy(senderAddress = address)
 
     override fun withPassword(password: Password) = copy(password = password)
