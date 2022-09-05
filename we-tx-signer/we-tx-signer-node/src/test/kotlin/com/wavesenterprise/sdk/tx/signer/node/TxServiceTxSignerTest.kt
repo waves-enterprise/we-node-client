@@ -6,6 +6,8 @@ import com.wavesenterprise.sdk.node.test.data.TestDataFactory.Companion.address
 import com.wavesenterprise.sdk.node.test.data.TestDataFactory.Companion.createContractSignRequest
 import com.wavesenterprise.sdk.node.test.data.TestDataFactory.Companion.createContractTx
 import com.wavesenterprise.sdk.node.test.data.TestDataFactory.Companion.password
+import com.wavesenterprise.sdk.tx.signer.node.credentials.Credentials
+import com.wavesenterprise.sdk.tx.signer.node.credentials.SignCredentialsProvider
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
@@ -21,19 +23,18 @@ internal class TxServiceTxSignerTest {
     lateinit var txServiceTxSigner: TxServiceTxSigner
 
     @MockK
-    lateinit var signCredentialsService: SignCredentialsService
+    lateinit var signCredentialsProvider: SignCredentialsProvider
 
     @MockK
     lateinit var txService: TxService
 
     @BeforeEach
     fun initMocks() {
-        every { signCredentialsService.senderAddress() } returns senderAddress
-        every { signCredentialsService.password() } returns password
+        every { signCredentialsProvider.credentials() } returns credentials
 
         txServiceTxSigner = TxServiceTxSigner(
             txService = txService,
-            signCredentialsService = signCredentialsService,
+            signCredentialsProvider = signCredentialsProvider,
         )
     }
 
@@ -51,7 +52,9 @@ internal class TxServiceTxSignerTest {
     }
 
     companion object {
-        val senderAddress = address()
-        val password = password()
+        private val senderAddress = address()
+        private val password = password()
+
+        val credentials = Credentials(senderAddress, password)
     }
 }
