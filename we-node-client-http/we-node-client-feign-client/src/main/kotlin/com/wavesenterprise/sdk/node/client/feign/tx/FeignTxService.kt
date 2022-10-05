@@ -29,7 +29,7 @@ class FeignTxService(
     override fun txInfo(txId: TxId): Optional<TxInfo> =
         weTxApiFeign.txInfo(txId.asBase58String()).map {
             TxInfo(
-                height = Height(requireNotNull(it.height) { "Height should be present when getting txInfo" }),
+                height = Height(checkNotNull(it.height) { "Height should be present when getting txInfo" }),
                 tx = it.toDomain()
             )
         }
