@@ -8,6 +8,7 @@ import com.google.protobuf.gradle.protoc
 val protobufVersion: String by project
 val ioGrpcVersion: String by project
 val ioGrpcKotlinVersion: String by project
+val osxArch: String? by project
 
 plugins {
     id("com.google.protobuf")
@@ -34,13 +35,15 @@ val grpcJavaPlugin = "grpc"
 protobuf {
     generatedFilesBaseDir = "$buildDir/generated-sources"
 
+    val archPostFix = if (osxArch == "m1") ":osx-x86_64" else ""
+
     protoc {
-        artifact = "com.google.protobuf:protoc:$protobufVersion"
+        artifact = "com.google.protobuf:protoc:$protobufVersion$archPostFix"
     }
 
     plugins {
         id(grpcJavaPlugin) {
-            artifact = "io.grpc:protoc-gen-grpc-java:$ioGrpcVersion"
+            artifact = "io.grpc:protoc-gen-grpc-java:$ioGrpcVersion$archPostFix"
         }
     }
 
