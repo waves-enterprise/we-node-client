@@ -11,10 +11,14 @@ import com.wavesenterprise.sdk.node.domain.tx.DisableContractTx
 
 data class DisableContractSignRequest(
     val version: TxVersion? = null,
-    val senderAddress: Address,
-    val password: Password? = null,
+    override val senderAddress: Address,
+    override val password: Password? = null,
     val fee: Fee,
     val contractId: ContractId,
     val feeAssetId: FeeAssetId? = null,
     val atomicBadge: AtomicBadge? = null,
-) : SignRequest<DisableContractTx>
+) : SignRequest<DisableContractTx> {
+    override fun withAddress(address: Address) = copy(senderAddress = address)
+
+    override fun withPassword(password: Password) = copy(password = password)
+}

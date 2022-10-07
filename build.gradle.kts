@@ -20,6 +20,7 @@ val protobufVersion: String by project
 val junitPlatformLauncherVersion: String by project
 val mockkVersion: String by project
 val springMockkVersion: String by project
+val wireMockVersion: String by project
 
 val ktorVersion: String by project
 
@@ -34,6 +35,9 @@ val weMavenBasePath = "https://artifacts.wavesenterprise.com/repository/"
 val sonaTypeBasePath = "https://s01.oss.sonatype.org"
 val gitHubProject = "waves-enterprise/we-node-client"
 val githubUrl = "https://github.com/$gitHubProject"
+
+val feignVersion: String by project
+val jacksonModuleKotlin: String by project
 
 plugins {
     kotlin("jvm") apply false
@@ -255,9 +259,14 @@ subprojects {
             dependency("io.ktor:ktor-client-content-negotiation:$ktorVersion")
             dependency("io.ktor:ktor-serialization-jackson:$ktorVersion")
 
+            dependency("io.github.openfeign:feign-core:$feignVersion")
+            dependency("io.github.openfeign:feign-jackson:$feignVersion")
+            dependency("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonModuleKotlin")
+
             dependency("org.junit.platform:junit-platform-launcher:$junitPlatformLauncherVersion")
             dependency("io.mockk:mockk:$mockkVersion")
             dependency("com.ninja-squad:springmockk:$springMockkVersion")
+            dependency("com.github.tomakehurst:wiremock-jre8:$wireMockVersion")
         }
     }
 

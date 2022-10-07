@@ -1,4 +1,4 @@
-package com.wavesenterprise.sdk.node.domain.ktor.tx
+package com.wavesenterprise.sdk.node.client.ktor.tx
 
 import com.wavesenterprise.sdk.node.domain.Height
 import com.wavesenterprise.sdk.node.domain.TxId
@@ -85,6 +85,7 @@ import com.wavesenterprise.sdk.node.domain.http.tx.UtxSizeDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.sign.AtomicSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.BurnSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CallContractSignRequest
+import com.wavesenterprise.sdk.node.domain.sign.ContractSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CreateAliasSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CreateContractSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CreatePolicySignRequest
@@ -154,9 +155,7 @@ class KtorTxService(
         when (request) {
             is AtomicSignRequest -> signDto(request.toDto()).toDomain()
             is BurnSignRequest -> signDto(request.toDto()).toDomain()
-            is CallContractSignRequest -> signDto(request.toDto()).toDomain()
             is CreateAliasSignRequest -> signDto(request.toDto()).toDomain()
-            is CreateContractSignRequest -> signDto(request.toDto()).toDomain()
             is CreatePolicySignRequest -> signDto(request.toDto()).toDomain()
             is DataSignRequest -> signDto(request.toDto()).toDomain()
             is DisableContractSignRequest -> signDto(request.toDto()).toDomain()
@@ -174,6 +173,10 @@ class KtorTxService(
             is TransferSignRequest -> signDto(request.toDto()).toDomain()
             is UpdateContractSignRequest -> signDto(request.toDto()).toDomain()
             is UpdatePolicySignRequest -> signDto(request.toDto()).toDomain()
+            is ContractSignRequest -> when (request) {
+                is CallContractSignRequest -> signDto(request.toDto()).toDomain()
+                is CreateContractSignRequest -> signDto(request.toDto()).toDomain()
+            }
         } as T
 
     private suspend inline fun <reified T : TxDto, reified R : SignRequestDto<T>> signDto(request: R): T =
@@ -189,9 +192,7 @@ class KtorTxService(
         when (request) {
             is AtomicSignRequest -> signAndBroadcastDto(request.toDto()).toDomain()
             is BurnSignRequest -> signAndBroadcastDto(request.toDto()).toDomain()
-            is CallContractSignRequest -> signAndBroadcastDto(request.toDto()).toDomain()
             is CreateAliasSignRequest -> signAndBroadcastDto(request.toDto()).toDomain()
-            is CreateContractSignRequest -> signAndBroadcastDto(request.toDto()).toDomain()
             is CreatePolicySignRequest -> signAndBroadcastDto(request.toDto()).toDomain()
             is DataSignRequest -> signAndBroadcastDto(request.toDto()).toDomain()
             is DisableContractSignRequest -> signAndBroadcastDto(request.toDto()).toDomain()
@@ -209,6 +210,10 @@ class KtorTxService(
             is TransferSignRequest -> signAndBroadcastDto(request.toDto()).toDomain()
             is UpdateContractSignRequest -> signAndBroadcastDto(request.toDto()).toDomain()
             is UpdatePolicySignRequest -> signAndBroadcastDto(request.toDto()).toDomain()
+            is ContractSignRequest -> when (request) {
+                is CallContractSignRequest -> signDto(request.toDto()).toDomain()
+                is CreateContractSignRequest -> signDto(request.toDto()).toDomain()
+            }
         } as T
 
     private suspend inline fun <reified T : TxDto, reified R : SignRequestDto<T>> signAndBroadcastDto(request: R): T =

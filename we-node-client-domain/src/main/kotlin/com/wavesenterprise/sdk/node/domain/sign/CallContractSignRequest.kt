@@ -8,15 +8,21 @@ import com.wavesenterprise.sdk.node.domain.Password
 import com.wavesenterprise.sdk.node.domain.TxVersion
 import com.wavesenterprise.sdk.node.domain.atomic.AtomicBadge
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
+import com.wavesenterprise.sdk.node.domain.contract.ContractVersion
 import com.wavesenterprise.sdk.node.domain.tx.CallContractTx
 
 data class CallContractSignRequest(
     val version: TxVersion? = null,
-    val senderAddress: Address,
-    val password: Password? = null,
+    override val senderAddress: Address,
+    override val password: Password? = null,
     val fee: Fee,
     val feeAssetId: FeeAssetId? = null,
+    val contractVersion: ContractVersion,
     val contractId: ContractId,
     val params: List<DataEntry>,
     val atomicBadge: AtomicBadge? = null,
-) : SignRequest<CallContractTx>
+) : ContractSignRequest<CallContractTx> {
+    override fun withAddress(address: Address) = copy(senderAddress = address)
+
+    override fun withPassword(password: Password) = copy(password = password)
+}

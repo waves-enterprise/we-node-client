@@ -19,6 +19,7 @@ import com.wavesenterprise.sdk.node.domain.grpc.mapper.contract.ExecutionResultM
 import io.grpc.Channel
 import io.grpc.ClientInterceptor
 import io.grpc.StatusRuntimeException
+import java.util.Optional
 
 class ContractGrpcBlockingService(
     private val channel: Channel,
@@ -43,12 +44,14 @@ class ContractGrpcBlockingService(
     override fun getContractKeys(contractKeysRequest: ContractKeysRequest): List<DataEntry> =
         contractServiceStub.getContractKeys(contractKeysRequest.dto()).entriesList.map { it.domain() }
 
-    override fun getContractKey(contractKeyRequest: ContractKeyRequest): DataEntry? =
-        try {
-            contractServiceStub.getContractKey(contractKeyRequest.dto())?.entry?.domain()
-        } catch (statusRuntimeException: StatusRuntimeException) {
-            statusRuntimeException.mapNotFoundToNullOrRethrow()
-        }
+    override fun getContractKey(contractKeyRequest: ContractKeyRequest): Optional<DataEntry> =
+        Optional.ofNullable(
+            try {
+                contractServiceStub.getContractKey(contractKeyRequest.dto())?.entry?.domain()
+            } catch (statusRuntimeException: StatusRuntimeException) {
+                statusRuntimeException.mapNotFoundToNullOrRethrow()
+            }
+        )
 
     private fun StatusRuntimeException.mapNotFoundToNullOrRethrow() =
         if (Code.NOT_FOUND == Code.forNumber(status.code.value())) null else throw this

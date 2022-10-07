@@ -16,8 +16,8 @@ import com.wavesenterprise.sdk.node.domain.tx.CreateContractTx
 
 data class CreateContractSignRequest(
     val version: TxVersion? = null,
-    val senderAddress: Address,
-    val password: Password? = null,
+    override val senderAddress: Address,
+    override val password: Password? = null,
     val fee: Fee,
     val feeAssetId: FeeAssetId? = null,
     val image: ContractImage,
@@ -27,4 +27,9 @@ data class CreateContractSignRequest(
     val apiVersion: ContractApiVersion? = null,
     val validationPolicy: ValidationPolicy? = null,
     val atomicBadge: AtomicBadge? = null,
-) : SignRequest<CreateContractTx>
+) : ContractSignRequest<CreateContractTx> {
+
+    override fun withAddress(address: Address) = copy(senderAddress = address)
+
+    override fun withPassword(password: Password) = copy(password = password)
+}

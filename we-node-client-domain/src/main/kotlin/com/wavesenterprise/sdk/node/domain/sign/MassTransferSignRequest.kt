@@ -9,8 +9,12 @@ import com.wavesenterprise.sdk.node.domain.tx.MassTransferTx
 
 data class MassTransferSignRequest(
     val version: TxVersion? = null,
-    val senderAddress: Address,
-    val password: Password? = null,
+    override val senderAddress: Address,
+    override val password: Password? = null,
     val fee: Fee,
     val transfers: List<Transfer>,
-) : SignRequest<MassTransferTx>
+) : SignRequest<MassTransferTx> {
+    override fun withAddress(address: Address) = copy(senderAddress = address)
+
+    override fun withPassword(password: Password) = copy(password = password)
+}

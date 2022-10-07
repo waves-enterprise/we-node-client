@@ -10,10 +10,14 @@ import com.wavesenterprise.sdk.node.domain.tx.ReissueTx
 
 data class ReissueSignRequest(
     val version: TxVersion? = null,
-    val senderAddress: Address,
-    val password: Password? = null,
+    override val senderAddress: Address,
+    override val password: Password? = null,
     val fee: Fee,
     val quantity: Quantity,
     val assetId: AssetId? = null,
     val reissuable: Boolean,
-) : SignRequest<ReissueTx>
+) : SignRequest<ReissueTx> {
+    override fun withAddress(address: Address) = copy(senderAddress = address)
+
+    override fun withPassword(password: Password) = copy(password = password)
+}

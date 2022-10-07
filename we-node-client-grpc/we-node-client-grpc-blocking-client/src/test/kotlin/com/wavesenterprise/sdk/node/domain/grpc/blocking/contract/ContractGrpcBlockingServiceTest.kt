@@ -13,8 +13,8 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
@@ -37,13 +37,13 @@ internal class ContractGrpcBlockingServiceTest {
             protoContractService
         )
 
-        assertNull(
+        assertFalse(
             contractGrpcBlockingService.getContractKey(
                 ContractKeyRequest(
                     contractId = ContractId.fromBase58("2nfSLahtZMk8wjD5fiPtfYiNYDKmyNpgSvB8bRgPSrQU"),
                     key = "notFoundKey"
                 )
-            )
+            ).isPresent
         )
     }
 
@@ -57,13 +57,13 @@ internal class ContractGrpcBlockingServiceTest {
             protoContractService
         )
 
-        assertNull(
+        assertFalse(
             contractGrpcBlockingService.getContractKey(
                 ContractKeyRequest(
                     contractId = ContractId.fromBase58("2nfSLahtZMk8wjD5fiPtfYiNYDKmyNpgSvB8bRgPSrQU"),
                     key = "notFoundKey"
                 )
-            )
+            ).isPresent
         )
     }
 
@@ -109,10 +109,10 @@ internal class ContractGrpcBlockingServiceTest {
                 contractId = ContractId.fromBase58("2nfSLahtZMk8wjD5fiPtfYiNYDKmyNpgSvB8bRgPSrQU"),
                 key = "notFoundKey"
             )
-        )
+        ).get()
 
         assertNotNull(contractKeyResponse)
-        contractKeyResponse!!.also {
+        contractKeyResponse.also {
             assertEquals(key, it.key.value)
             assertEquals(value, (it.value as DataValue.StringDataValue).value)
         }

@@ -1,0 +1,31 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/contracts/8mYpzj5rVVQSp2DgsyMvoMSViHtX94dJHkPyX2xo855y"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody":
+      [
+        {
+          "key": "KEY_BOOLEAN",
+          "type": "boolean",
+          "value": true
+        },
+        {
+          "key": "KEY_INT",
+          "type": "integer",
+          "value": 1
+        },
+        {
+          "key": "KEY_STRING",
+          "type": "string",
+          "value": "value"
+        }
+      ]
+    ,
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
