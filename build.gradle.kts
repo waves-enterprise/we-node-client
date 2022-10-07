@@ -43,6 +43,7 @@ plugins {
     kotlin("jvm") apply false
     `maven-publish`
     signing
+    id("io.codearte.nexus-staging")
     kotlin("plugin.spring") apply false
     id("org.springframework.boot") apply false
     id("io.spring.dependency-management") apply false
@@ -53,6 +54,12 @@ plugins {
     id("fr.brouillard.oss.gradle.jgitver")
     id("org.jetbrains.dokka")
     id("jacoco")
+}
+
+nexusStaging {
+    serverUrl = "$sonaTypeBasePath/service/local/"
+    username = sonaTypeMavenUser
+    password = sonaTypeMavenPassword
 }
 
 jgitver {
