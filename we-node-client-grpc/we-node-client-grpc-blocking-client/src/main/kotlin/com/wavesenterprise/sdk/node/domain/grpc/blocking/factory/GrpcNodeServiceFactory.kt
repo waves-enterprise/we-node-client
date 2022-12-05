@@ -1,8 +1,11 @@
 package com.wavesenterprise.sdk.node.domain.grpc.blocking.factory
 
 import com.wavesenterprise.protobuf.service.contract.ContractServiceGrpc
+import com.wavesenterprise.sdk.node.domain.blocking.address.AddressService
 import com.wavesenterprise.sdk.node.domain.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.domain.blocking.node.NodeBlockingServiceFactory
+import com.wavesenterprise.sdk.node.domain.blocking.node.NodeInfoService
+import com.wavesenterprise.sdk.node.domain.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.domain.blocking.tx.TxService
 import com.wavesenterprise.sdk.node.domain.grpc.blocking.contract.ContractGrpcBlockingService
 import com.wavesenterprise.sdk.node.domain.grpc.blocking.tx.TxGrpcBlockingService
@@ -26,5 +29,17 @@ class GrpcNodeServiceFactory(
             clientInterceptors = clientInterceptors,
             contractServiceStub = ContractServiceGrpc.newBlockingStub(channel).withInterceptors(*clientInterceptors.toTypedArray()),
         )
+    }
+
+    override fun addressService(): AddressService {
+        TODO("Not yet implemented")
+    }
+
+    override fun nodeInfoService(): NodeInfoService {
+        TODO("Not yet implemented")
+    }
+
+    override fun privacyService(): PrivacyService {
+        TODO("Not yet implemented")
     }
 }
