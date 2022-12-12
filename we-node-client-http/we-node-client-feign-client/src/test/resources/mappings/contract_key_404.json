@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/contracts/C2HM9q3QzGSBydnCA4GMcf3cFnTaSuwaWXVtsCSTSmZW/KEY"
+  },
+  "response": {
+    "status": 404,
+    "jsonBody": {
+      "error": 600,
+      "message": "Contract is not found"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

@@ -5,6 +5,7 @@ import com.wavesenterprise.protobuf.service.contract.ContractServiceGrpc
 import com.wavesenterprise.sdk.node.domain.DataValue
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
+import com.wavesenterprise.sdk.node.exception.NodeException
 import io.grpc.Metadata
 import io.grpc.Status
 import io.grpc.StatusRuntimeException
@@ -71,6 +72,8 @@ internal class ContractGrpcBlockingServiceTest {
     fun `should propagate exception for other errors`() {
         val internalErrorStatus = Status.INTERNAL
         val metadata: Metadata = mockedMetadata(internalErrorStatus)
+        every { metadata.get(Metadata.Key.of("error-code", Metadata.ASCII_STRING_MARSHALLER)) } returns null
+        every { metadata.get(Metadata.Key.of("error-message", Metadata.ASCII_STRING_MARSHALLER)) } returns null
         val statusRuntimeException = StatusRuntimeException(internalErrorStatus, metadata)
         every { protoContractService.getContractKey(any()) } throws statusRuntimeException
         val contractGrpcBlockingService = ContractGrpcBlockingService(
@@ -78,8 +81,7 @@ internal class ContractGrpcBlockingServiceTest {
             mockk(),
             protoContractService
         )
-
-        val actualException = assertThrows<StatusRuntimeException> {
+        assertThrows<NodeException> {
             contractGrpcBlockingService.getContractKey(
                 ContractKeyRequest(
                     contractId = ContractId.fromBase58("2nfSLahtZMk8wjD5fiPtfYiNYDKmyNpgSvB8bRgPSrQU"),
@@ -87,8 +89,6 @@ internal class ContractGrpcBlockingServiceTest {
                 )
             )
         }
-
-        assertEquals(statusRuntimeException, actualException)
     }
 
     @Test

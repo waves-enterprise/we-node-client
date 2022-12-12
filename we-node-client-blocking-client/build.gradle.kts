@@ -4,6 +4,7 @@ dependencies {
     implementation("io.github.openfeign:feign-core")
 
     api(project(":we-node-client-domain"))
+    api(project(":we-node-client-error"))
 
     testImplementation("ch.qos.logback:logback-classic")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
