@@ -10,6 +10,7 @@ import java.lang.reflect.Proxy
 
 class LoadBalancingServiceFactory(
     private val strategy: LoadBalanceStrategy,
+    private val retryStrategy: RetryStrategy,
 ) : NodeBlockingServiceFactory {
 
     override fun txService() =
@@ -36,6 +37,7 @@ class LoadBalancingServiceFactory(
                 strategy = strategy,
                 minQuarantineDelay = 1L,
                 maxQuarantineDelay = 1L,
+                retryStrategy = retryStrategy,
             ),
         ) as T
 }

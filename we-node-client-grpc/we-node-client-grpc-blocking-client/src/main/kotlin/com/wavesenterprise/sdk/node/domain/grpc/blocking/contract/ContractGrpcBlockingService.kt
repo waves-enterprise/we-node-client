@@ -11,6 +11,7 @@ import com.wavesenterprise.sdk.node.domain.contract.ExecutionErrorRequest
 import com.wavesenterprise.sdk.node.domain.contract.ExecutionSuccessRequest
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeysRequest
+import com.wavesenterprise.sdk.node.domain.grpc.blocking.GrpcNodeErrorMapper
 import com.wavesenterprise.sdk.node.domain.grpc.mapper.DataEntryMapper.domain
 import com.wavesenterprise.sdk.node.domain.grpc.mapper.contract.ConnectionRequestMapper.dto
 import com.wavesenterprise.sdk.node.domain.grpc.mapper.contract.ContractKeysRequestMapper.dto
@@ -46,13 +47,21 @@ class ContractGrpcBlockingService(
 
     override fun getContractKey(contractKeyRequest: ContractKeyRequest): Optional<DataEntry> =
         Optional.ofNullable(
-            try {
+            catchingNodeCall {
                 contractServiceStub.getContractKey(contractKeyRequest.dto())?.entry?.domain()
-            } catch (statusRuntimeException: StatusRuntimeException) {
-                statusRuntimeException.mapNotFoundToNullOrRethrow()
             }
         )
 
+    private inline fun <T> catchingNodeCall(nodeCall: () -> T): T? =
+        try {
+            nodeCall()
+        } catch (ex: StatusRuntimeException) {
+            ex.mapNotFoundToNullOrRethrow()
+        }
+
     private fun StatusRuntimeException.mapNotFoundToNullOrRethrow() =
-        if (Code.NOT_FOUND == Code.forNumber(status.code.value())) null else throw this
+        if (Code.NOT_FOUND == Code.forNumber(status.code.value()))
+            null
+        else
+            throw GrpcNodeErrorMapper.mapToGeneralException(this)
 }

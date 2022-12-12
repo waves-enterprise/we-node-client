@@ -1,19 +1,24 @@
-package com.wavesenterprise.sdk.node.client.feign
+package com.wavesenterprise.sdk.node.client.feign.tx
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
-import com.wavesenterprise.sdk.node.client.feign.tx.WeTxApiFeign
+import com.wavesenterprise.sdk.node.client.feign.FeignNodeClientParams
+import com.wavesenterprise.sdk.node.client.feign.FeignNodeErrorDecoder
+import com.wavesenterprise.sdk.node.client.feign.FeignNodeErrorMapper
+import com.wavesenterprise.sdk.node.client.feign.FeignWeApiFactory
 import com.wavesenterprise.sdk.node.domain.http.DataEntryDto
 import com.wavesenterprise.sdk.node.domain.http.sign.CallContractSignRequestDto
 import com.wavesenterprise.sdk.node.domain.http.sign.CreateContractSignRequestDto
 import com.wavesenterprise.sdk.node.domain.http.tx.CallContractTxDto
 import com.wavesenterprise.sdk.node.domain.http.tx.CreateContractTxDto
+import com.wavesenterprise.sdk.node.exception.NodeNotFoundException
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.assertThrows
 
 @WireMockTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -25,7 +30,8 @@ internal class WeTxApiFeignTest {
     fun init(wireMockRuntimeInfo: WireMockRuntimeInfo) {
         weTxApi = FeignWeApiFactory.createClient(
             WeTxApiFeign::class.java,
-            FeignNodeClientParams(url = wireMockRuntimeInfo.httpBaseUrl)
+            FeignNodeClientParams(url = wireMockRuntimeInfo.httpBaseUrl),
+            FeignNodeErrorDecoder(FeignNodeErrorMapper(jacksonObjectMapper()))
         )
     }
 
@@ -110,8 +116,8 @@ internal class WeTxApiFeignTest {
 
     @Test
     fun `should get Optional empty for not found tx info`() {
-        val notFoundTxInfo = weTxApi.txInfo("df")
-
-        assertFalse(notFoundTxInfo.isPresent)
+        assertThrows<NodeNotFoundException> {
+            weTxApi.txInfo("df")
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.wavesenterprise.sdk.node.client.feign.contract
 
+import com.wavesenterprise.sdk.node.domain.DataEntry
 import com.wavesenterprise.sdk.node.domain.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.domain.contract.ConnectionRequest
 import com.wavesenterprise.sdk.node.domain.contract.ContractTransactionResponse
@@ -8,6 +9,8 @@ import com.wavesenterprise.sdk.node.domain.contract.ExecutionSuccessRequest
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeysRequest
 import com.wavesenterprise.sdk.node.domain.http.DataEntryDto.Companion.toDomain
+import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistsException
+import java.util.Optional
 
 class FeignContractService(
     private val weContractServiceApiFeign: WeContractServiceApiFeign
@@ -24,7 +27,7 @@ class FeignContractService(
         TODO("Not yet implemented")
     }
 
-    override fun getContractKeys(contractKeysRequest: ContractKeysRequest) =
+    override fun getContractKeys(contractKeysRequest: ContractKeysRequest): List<DataEntry> =
         weContractServiceApiFeign.contractKeys(
             contractId = contractKeysRequest.contractId.asBase58String(),
             limit = contractKeysRequest.limit,
@@ -32,9 +35,13 @@ class FeignContractService(
             matches = contractKeysRequest.matches,
         ).map { it.toDomain() }
 
-    override fun getContractKey(contractKeyRequest: ContractKeyRequest) =
-        weContractServiceApiFeign.contractKey(
-            contractId = contractKeyRequest.contractId.asBase58String(),
-            key = contractKeyRequest.key,
-        ).map { it.toDomain() }
+    override fun getContractKey(contractKeyRequest: ContractKeyRequest): Optional<DataEntry> =
+        try {
+            weContractServiceApiFeign.contractKey(
+                contractId = contractKeyRequest.contractId.asBase58String(),
+                key = contractKeyRequest.key,
+            ).map { it.toDomain() }
+        } catch (ex: DataKeyNotExistsException) {
+            Optional.empty()
+        }
 }

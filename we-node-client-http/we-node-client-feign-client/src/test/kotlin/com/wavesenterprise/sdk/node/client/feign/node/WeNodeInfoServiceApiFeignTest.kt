@@ -1,8 +1,9 @@
-package com.wavesenterprise.sdk.node.client.feign
+package com.wavesenterprise.sdk.node.client.feign.node
 
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
-import com.wavesenterprise.sdk.node.client.feign.node.WeNodeInfoServiceApiFeign
+import com.wavesenterprise.sdk.node.client.feign.FeignNodeClientParams
+import com.wavesenterprise.sdk.node.client.feign.FeignWeApiFactory
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test

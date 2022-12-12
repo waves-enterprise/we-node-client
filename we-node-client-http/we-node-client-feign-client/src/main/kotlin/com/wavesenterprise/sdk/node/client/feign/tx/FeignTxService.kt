@@ -9,6 +9,7 @@ import com.wavesenterprise.sdk.node.domain.sign.SignRequest
 import com.wavesenterprise.sdk.node.domain.tx.Tx
 import com.wavesenterprise.sdk.node.domain.tx.TxInfo
 import com.wavesenterprise.sdk.node.domain.tx.UtxSize
+import com.wavesenterprise.sdk.node.exception.NodeNotFoundException
 import java.util.Optional
 
 @Suppress("UNCHECKED_CAST")
@@ -27,10 +28,14 @@ class FeignTxService(
     override fun utxInfo(): UtxSize = weTxApiFeign.utxInfo().toDomain()
 
     override fun txInfo(txId: TxId): Optional<TxInfo> =
-        weTxApiFeign.txInfo(txId.asBase58String()).map {
-            TxInfo(
-                height = Height(checkNotNull(it.height) { "Height should be present when getting txInfo" }),
-                tx = it.toDomain()
-            )
+        try {
+            weTxApiFeign.txInfo(txId.asBase58String()).map {
+                TxInfo(
+                    height = Height(checkNotNull(it.height) { "Height should be present when getting txInfo" }),
+                    tx = it.toDomain()
+                )
+            }
+        } catch (ex: NodeNotFoundException) {
+            Optional.empty()
         }
 }

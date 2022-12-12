@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import feign.Feign
 import feign.Request
+import feign.codec.ErrorDecoder
 import feign.jackson.JacksonDecoder
 import feign.jackson.JacksonEncoder
 import feign.optionals.OptionalDecoder
@@ -18,11 +19,12 @@ object FeignWeApiFactory {
     fun <T> createClient(
         clientClass: Class<T>,
         feignProperties: FeignProperties,
+        errorDecoder: ErrorDecoder? = null,
     ): T = Feign.builder()
         .encoder(JacksonEncoder(objectMapper))
         .decoder(OptionalDecoder(JacksonDecoder(objectMapper)))
+        .errorDecoder(errorDecoder ?: ErrorDecoder.Default())
         .logLevel(feignProperties.loggerLevel)
-        .dismiss404()
         .options(
             Request.Options(
                 feignProperties.connectTimeout,

@@ -1,9 +1,7 @@
 package com.wavesenterprise.sdk.node.domain.blocking.lb
 
 import com.wavesenterprise.sdk.node.domain.blocking.lb.exception.NoNodesToHandleRequestException
-import com.wavesenterprise.sdk.node.domain.blocking.lb.exception.NodeApiRetryableException
-import com.wavesenterprise.sdk.node.domain.blocking.lb.exception.TooManyRequestsException
-import feign.FeignException
+import com.wavesenterprise.sdk.node.exception.NodeErrorInfoHolder
 import org.slf4j.LoggerFactory
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.InvocationTargetException
@@ -13,6 +11,7 @@ class LoadBalancingNodeServiceHandler(
     private val strategy: LoadBalanceStrategy,
     private val minQuarantineDelay: Long,
     private val maxQuarantineDelay: Long,
+    private val retryStrategy: RetryStrategy,
 ) : InvocationHandler {
 
     private val LOG = LoggerFactory.getLogger(LoadBalancingNodeServiceHandler::class.java)
@@ -74,17 +73,16 @@ class LoadBalancingNodeServiceHandler(
                 val e = ex.targetException
                 LOG.debug("Invocation failed: ${e.message}", e)
                 when (e) {
-                    // Todo: add throwing of general exceptions (for gprs and http) and add their handling here
-                    is NodeApiRetryableException -> if (e.quarantine) onException(e.cause) else retry(e.cause)
-                    is FeignException -> when {
-                        e.status().is5xxError() -> onException(e)
-                        else -> {
-                            LOG.debug("Returning error ${e.javaClass.simpleName}: ${e.message}, code ${e.status()}")
-                            throw e
-                        }
+                    is NodeErrorInfoHolder -> {
+                        if (retryStrategy.isRetryable(e as Exception))
+                            onException(e)
+                        else
+                            LOG.debug(
+                                "Returning error ${e.javaClass.simpleName}: ${e.message}, code ${e.nodeError?.error}"
+                            )
+                        throw e
                     }
-
-                    is TooManyRequestsException -> throw e
+//                    is TooManyRequestsException -> throw e
                     is Exception -> onException(e)
                 }
             } catch (e: Exception) {
@@ -104,6 +102,7 @@ class LoadBalancingNodeServiceHandler(
         }
     }
 
+    // TODO: Move quarantine logic
     private fun invocationFailed(nodeServiceFactoryWrapper: NodeServiceFactoryWrapper, index: Int) {
         with(nodeServiceFactoryWrapper) {
             LOG.warn(
@@ -117,9 +116,5 @@ class LoadBalancingNodeServiceHandler(
                 )
             }
         }
-        // TODO: Move quarantine logic
     }
-
-    // TODO: Move to util
-    private fun Int.is5xxError() = this / 500 == 1
 }
