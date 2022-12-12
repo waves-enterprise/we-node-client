@@ -14,17 +14,16 @@ class DefaultNodeServiceFactoryWrapper(
     override var quarantineUntil: OffsetDateTime = OffsetDateTime.MIN,
 ) : NodeServiceFactoryWrapper, NodeBlockingServiceFactory by nodeBlockingServiceFactory {
 
+    private val addresses: List<Address> = nodeBlockingServiceFactory.addressService().getAddresses()
+    private val nodeOwner: NodeOwner = nodeBlockingServiceFactory.nodeInfoService().getNodeOwner()
+
     override fun status(): WeNodeApiWrapperStatus =
         if (sequentialErrorCount == 0L || OffsetDateTime.now().isAfter(quarantineUntil)) WeNodeApiWrapperStatus.ALIVE
         else WeNodeApiWrapperStatus.QUARANTINE
 
-    override fun getAddresses(): List<Address> =
-        nodeBlockingServiceFactory.addressService().getAddresses()
-    // TODO: Lazy for caching
+    override fun getAddresses(): List<Address> = addresses
 
-    override fun getNodeOwnerAddress(): NodeOwner =
-        nodeBlockingServiceFactory.nodeInfoService().getNodeOwner()
-    // TODO: Lazy for caching
+    override fun getNodeOwnerAddress(): NodeOwner = nodeOwner
 
     override fun tryReturnIntoRotation(): Boolean =
         synchronized(this) {
