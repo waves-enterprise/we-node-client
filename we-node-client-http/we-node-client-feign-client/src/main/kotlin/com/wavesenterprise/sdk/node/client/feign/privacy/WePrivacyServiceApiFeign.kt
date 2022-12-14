@@ -3,12 +3,19 @@ package com.wavesenterprise.sdk.node.client.feign.privacy
 import com.wavesenterprise.sdk.node.domain.http.tx.PolicyDataHashTxDto
 import com.wavesenterprise.sdk.node.domain.privacy.SendDataRequest
 import feign.Headers
+import feign.Param
 import feign.RequestLine
 
 interface WePrivacyServiceApiFeign {
     @Headers("Content-Type: application/json")
     @RequestLine("POST /privacy/sendData")
     fun sendDataToPrivacy(request: SendDataRequest): PolicyDataHashTxDto
+
+    @Headers("Content-Type: application/json")
+    @RequestLine("GET /privacy/{policyId}/recipients")
+    fun getPolicyRecipients(
+        @Param("policyId") policyId: String
+    ): List<String>
 
 //    @Headers("Content-Type: application/json")
 //    @RequestLine("POST /privacy/sendData?broadcast={broadcast}")

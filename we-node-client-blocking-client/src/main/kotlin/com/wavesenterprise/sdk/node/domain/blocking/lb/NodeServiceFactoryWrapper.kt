@@ -2,10 +2,14 @@ package com.wavesenterprise.sdk.node.domain.blocking.lb
 
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.NodeOwner
+import com.wavesenterprise.sdk.node.domain.Password
+import com.wavesenterprise.sdk.node.domain.PolicyId
 import java.time.OffsetDateTime
 
 interface NodeServiceFactoryWrapper {
     val name: String
+    val nodeOwnerAddress: Address
+    val keyStorePassword: Password
     val sequentialErrorCount: Long
     val quarantineUntil: OffsetDateTime
 
@@ -13,7 +17,9 @@ interface NodeServiceFactoryWrapper {
 
     fun getAddresses(): List<Address>
 
-    fun getNodeOwnerAddress(): NodeOwner
+    fun getNodeOwner(): NodeOwner
+
+    fun getPolicyRecipients(policyId: PolicyId): List<Address>
 
     fun tryReturnIntoRotation(): Boolean
 

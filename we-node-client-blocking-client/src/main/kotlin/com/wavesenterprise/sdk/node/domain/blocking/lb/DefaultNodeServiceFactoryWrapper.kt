@@ -2,6 +2,8 @@ package com.wavesenterprise.sdk.node.domain.blocking.lb
 
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.NodeOwner
+import com.wavesenterprise.sdk.node.domain.Password
+import com.wavesenterprise.sdk.node.domain.PolicyId
 import com.wavesenterprise.sdk.node.domain.blocking.node.NodeBlockingServiceFactory
 import java.time.OffsetDateTime
 import kotlin.math.min
@@ -12,6 +14,8 @@ class DefaultNodeServiceFactoryWrapper(
     override val name: String,
     override var sequentialErrorCount: Long = 0,
     override var quarantineUntil: OffsetDateTime = OffsetDateTime.MIN,
+    override val nodeOwnerAddress: Address,
+    override val keyStorePassword: Password,
 ) : NodeServiceFactoryWrapper, NodeBlockingServiceFactory by nodeBlockingServiceFactory {
 
     private val addresses: List<Address> = nodeBlockingServiceFactory.addressService().getAddresses()
@@ -23,7 +27,9 @@ class DefaultNodeServiceFactoryWrapper(
 
     override fun getAddresses(): List<Address> = addresses
 
-    override fun getNodeOwnerAddress(): NodeOwner = nodeOwner
+    override fun getNodeOwner(): NodeOwner = nodeOwner
+    override fun getPolicyRecipients(policyId: PolicyId): List<Address> =
+        nodeBlockingServiceFactory.privacyService().recipients(policyId = policyId)
 
     override fun tryReturnIntoRotation(): Boolean =
         synchronized(this) {
