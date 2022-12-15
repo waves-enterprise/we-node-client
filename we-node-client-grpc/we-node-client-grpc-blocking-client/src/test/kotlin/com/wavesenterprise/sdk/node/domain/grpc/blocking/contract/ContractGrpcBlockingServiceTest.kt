@@ -5,6 +5,7 @@ import com.wavesenterprise.protobuf.service.contract.ContractServiceGrpc
 import com.wavesenterprise.sdk.node.domain.DataValue
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
+import com.wavesenterprise.sdk.node.exception.NodeErrorCode
 import com.wavesenterprise.sdk.node.exception.NodeException
 import io.grpc.Metadata
 import io.grpc.Status
@@ -32,6 +33,14 @@ internal class ContractGrpcBlockingServiceTest {
         val metadata: Metadata = mockedMetadata(status)
         every { protoContractService.getContractKey(any()) } throws
             StatusRuntimeException(status, metadata)
+        every {
+            metadata.get(Metadata.Key.of("error-code", Metadata.ASCII_STRING_MARSHALLER))
+        } returns NodeErrorCode.DATA_KEY_NOT_EXISTS.code.toString()
+        every {
+            metadata.get(
+                Metadata.Key.of("error-message", Metadata.ASCII_STRING_MARSHALLER)
+            )
+        } returns "no data for this key"
         val contractGrpcBlockingService = ContractGrpcBlockingService(
             mockk(),
             mockk(),

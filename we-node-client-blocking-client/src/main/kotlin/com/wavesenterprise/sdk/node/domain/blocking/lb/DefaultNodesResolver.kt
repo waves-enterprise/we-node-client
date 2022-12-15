@@ -7,6 +7,7 @@ import com.wavesenterprise.sdk.node.domain.tx.Tx
 
 class DefaultNodesResolver(
     private val nodeServiceFactoryWrappers: List<NodeServiceFactoryWrapper>,
+    private val circuitBreaker: CircuitBreaker,
 ) : NodesResolver {
 
     override fun getOrderedAliveNodes(): List<NodeServiceFactoryWrapper> = orderedClientsWithProperties
@@ -45,5 +46,7 @@ class DefaultNodesResolver(
         }.getOrDefault(false)
 
     private val orderedClientsWithProperties
-        get() = nodeServiceFactoryWrappers.filter { it.isAlive() }.shuffled()
+        get() = nodeServiceFactoryWrappers.filter {
+            circuitBreaker.isClosed(it)
+        }.shuffled()
 }

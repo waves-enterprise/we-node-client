@@ -89,8 +89,9 @@ object GrpcNodeErrorMapper {
             else -> null
         }
 
-    private fun tryParseError(trailers: Metadata): NodeError? {
+    private fun tryParseError(trailers: Metadata?): NodeError? {
         return try {
+            if (trailers == null) return null
             val errorCode = trailers.get(Metadata.Key.of(ERROR_CODE_KEY, Metadata.ASCII_STRING_MARSHALLER))
             val errorMessage = trailers.get(Metadata.Key.of(ERROR_MESSAGE_KEY, Metadata.ASCII_STRING_MARSHALLER))
             if (errorCode != null && errorMessage != null) {
