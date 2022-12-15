@@ -9,8 +9,7 @@ import java.lang.reflect.Method
 
 class LoadBalancingNodeServiceHandler(
     private val strategy: LoadBalanceStrategy,
-    private val minQuarantineDelay: Long,
-    private val maxQuarantineDelay: Long,
+    private val circuitBreaker: CircuitBreaker,
     private val retryStrategy: RetryStrategy,
 ) : InvocationHandler {
 
@@ -47,7 +46,7 @@ class LoadBalancingNodeServiceHandler(
             val args = nodeWithArgs.methodCallArgs
             val onException: (e: Exception) -> Unit by lazy {
                 { e: Exception ->
-                    invocationFailed(nodeServiceFactoryWrapper, index)
+                    circuitBreaker.invocationFailed(nodeServiceFactoryWrapper.name, index)
                     retry(e)
                 }
             }
@@ -61,13 +60,7 @@ class LoadBalancingNodeServiceHandler(
                     } as T
                     ).also {
                     LOG.debug("Invocation successful")
-                    val sequentialErrorCountBefore = nodeServiceFactoryWrapper.sequentialErrorCount
-                    if (nodeServiceFactoryWrapper.tryReturnIntoRotation()) {
-                        LOG.info(
-                            "Node with index $index, name ${nodeServiceFactoryWrapper.name}" +
-                                " return into rotation, sequentialErrorCount before $sequentialErrorCountBefore",
-                        )
-                    }
+                    circuitBreaker.tryReturnIntoRotation(nodeServiceFactoryWrapper.name)
                 }
             } catch (ex: InvocationTargetException) {
                 val e = ex.targetException
@@ -99,22 +92,6 @@ class LoadBalancingNodeServiceHandler(
             val error = "No nodes for executing method ${method.name}"
             LOG.error(error)
             throw IllegalStateException(error)
-        }
-    }
-
-    // TODO: Move quarantine logic
-    private fun invocationFailed(nodeServiceFactoryWrapper: NodeServiceFactoryWrapper, index: Int) {
-        with(nodeServiceFactoryWrapper) {
-            LOG.warn(
-                "Node with index $index, name $name will try to remove from rotation until $quarantineUntil," +
-                    " sequentialErrorCount $sequentialErrorCount"
-            )
-            if (invocationFailed(minQuarantineDelay, maxQuarantineDelay)) {
-                LOG.warn(
-                    "Node with index $index, name $name successfully removed from rotation until $quarantineUntil," +
-                        " sequentialErrorCount $sequentialErrorCount"
-                )
-            }
         }
     }
 }
