@@ -19,8 +19,8 @@ class DefaultLoadBalanceStrategy(
                         client = client,
                         methodCallArgs = args.patch { methodCallArgs ->
                             methodCallArgs[0] = firstArg.copy(
-                                senderAddress = client.nodeOwnerAddress,
-                                password = client.keyStorePassword,
+                                senderAddress = client.nodeCredentials.address,
+                                password = client.nodeCredentials.keyStorePassword,
                             )
                         }
                     )
