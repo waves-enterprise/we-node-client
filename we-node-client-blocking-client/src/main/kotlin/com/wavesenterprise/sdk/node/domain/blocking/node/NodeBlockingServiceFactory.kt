@@ -11,6 +11,4 @@ interface NodeBlockingServiceFactory {
     fun addressService(): AddressService
     fun nodeInfoService(): NodeInfoService
     fun privacyService(): PrivacyService
-
-    // TODO: Add privacy services
 }

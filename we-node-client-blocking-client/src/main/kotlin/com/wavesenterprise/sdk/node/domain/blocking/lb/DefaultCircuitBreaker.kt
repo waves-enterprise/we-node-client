@@ -3,8 +3,7 @@ package com.wavesenterprise.sdk.node.domain.blocking.lb
 import org.slf4j.LoggerFactory
 
 class DefaultCircuitBreaker(
-    private val minDelay: Long,
-    private val maxDelay: Long,
+    private val circuitBreakerProperties: CircuitBreakerProperties,
     override val nodeCircuitBreakers: Map<String, NodeCircuitBreaker>,
 ) : CircuitBreaker {
 
@@ -17,7 +16,7 @@ class DefaultCircuitBreaker(
                     "to remove from rotation until $breakUntil," +
                     " sequentialErrorCount $sequentialErrorCount"
             )
-            if (this.invocationFailed(minDelay, maxDelay)) {
+            if (this.invocationFailed(circuitBreakerProperties.minDelay, circuitBreakerProperties.maxDelay)) {
                 LOG.warn(
                     "Node with index $index, name $nodeName " +
                         "successfully removed from rotation until $breakUntil," +

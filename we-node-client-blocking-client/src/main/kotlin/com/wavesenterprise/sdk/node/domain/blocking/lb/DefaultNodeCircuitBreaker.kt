@@ -7,8 +7,8 @@ import kotlin.math.min
 import kotlin.math.pow
 
 class DefaultNodeCircuitBreaker(
-    override var sequentialErrorCount: Long,
-    override var breakUntil: OffsetDateTime,
+    override var sequentialErrorCount: Long = 0L,
+    override var breakUntil: OffsetDateTime = OffsetDateTime.MIN,
 ) : NodeCircuitBreaker {
 
     override fun invocationFailed(minDelay: Long, maxDelay: Long): Boolean =
