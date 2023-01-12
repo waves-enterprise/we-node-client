@@ -1,5 +1,6 @@
 package com.wavesenterprise.sdk.node.domain.blocking.lb
 
+import com.wavesenterprise.sdk.node.domain.blocking.credentials.NodeCredentialsProvider
 import com.wavesenterprise.sdk.node.domain.blocking.node.NodeBlockingServiceFactory
 
 class LbServiceFactoryBuilder {
@@ -8,7 +9,7 @@ class LbServiceFactoryBuilder {
     private var retryStrategy: RetryStrategy? = null
     private var circuitBreaker: CircuitBreaker? = null
     private var circuitBreakerProperties: CircuitBreakerProperties? = null
-    private var nodeCredentials: NodeCredentials? = null
+    private var nodeCredentialsProvider: NodeCredentialsProvider? = null
 
     fun nodesResolver(nodesResolver: NodesResolver): LbServiceFactoryBuilder =
         this.apply {
@@ -30,25 +31,32 @@ class LbServiceFactoryBuilder {
             this.circuitBreaker = circuitBreaker
         }
 
+    fun nodeCredentialsProvider(nodeCredentialsProvider: NodeCredentialsProvider) =
+        this.apply {
+            this.nodeCredentialsProvider = nodeCredentialsProvider
+        }
+
     /**
      * Builds [NodeBlockingServiceFactory] implementation with load balancing logic.
      * It will balance between passed nodeBlockingServiceFactories.
-     * @param nodeAliasedServiceFactories map of name to [NodeBlockingServiceFactory]
+     * @param nodeAliasedServiceFactories map of node alias to [NodeBlockingServiceFactory]
      * @return NodeBlockingServiceFactory implementation with load balancing logic ([LoadBalancingServiceFactory])
      */
     fun build(
-        nodeAliasedServiceFactories: Map<NodeIdentity, NodeBlockingServiceFactory>,
+        nodeAliasedServiceFactories: Map<String, NodeBlockingServiceFactory>,
     ): LoadBalancingServiceFactory {
+        val actualNodeCredentialsProvider = requireNotNull(nodeCredentialsProvider) {
+            "NodeCredentialsProvider can not be null"
+        }
         val circuitBreakerProperties = circuitBreakerProperties ?: CircuitBreakerProperties()
         val nodeServiceFactoryWrappers = nodeAliasedServiceFactories.map {
             DefaultNodeServiceFactoryWrapper(
                 nodeBlockingServiceFactory = it.value,
-                name = it.key.nodeAlias,
-                nodeCredentials = it.key.credentials,
+                name = it.key,
             )
         }
         val nodeCircuitBreakers = nodeAliasedServiceFactories.map {
-            it.key.nodeAlias to DefaultNodeCircuitBreaker(
+            it.key to DefaultNodeCircuitBreaker(
                 sequentialErrorCount = circuitBreakerProperties.sequentialErrorCount,
                 breakUntil = circuitBreakerProperties.breakUntil,
             )
@@ -63,6 +71,7 @@ class LbServiceFactoryBuilder {
         )
         val actualStrategy = strategy ?: DefaultLoadBalanceStrategy(
             nodesResolver = actualNodesResolver,
+            nodeCredentialsProvider = actualNodeCredentialsProvider,
         )
         val actualRetryStrategy = retryStrategy ?: DefaultRetryStrategy()
         return LoadBalancingServiceFactory(

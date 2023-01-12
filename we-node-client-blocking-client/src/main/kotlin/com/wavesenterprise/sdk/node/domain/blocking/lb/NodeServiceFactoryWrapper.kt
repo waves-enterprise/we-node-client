@@ -8,7 +8,6 @@ import com.wavesenterprise.sdk.node.domain.blocking.node.NodeBlockingServiceFact
 interface NodeServiceFactoryWrapper {
     val nodeBlockingServiceFactory: NodeBlockingServiceFactory
     val name: String
-    val nodeCredentials: NodeCredentials
 
     fun getAddresses(): List<Address>
 
