@@ -4,7 +4,6 @@ import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.PolicyId
 import com.wavesenterprise.sdk.node.domain.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.domain.http.tx.PolicyDataHashTxDto.Companion.toDomain
-import com.wavesenterprise.sdk.node.domain.http.tx.TxDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.privacy.Data
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemInfoResponse
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemRequest

@@ -47,6 +47,6 @@ class DefaultNodesResolver(
 
     private val orderedClientsWithProperties
         get() = nodeServiceFactoryWrappers.filter {
-            circuitBreaker.isClosed(it)
+            circuitBreaker.isClosed(it.name)
         }.shuffled()
 }
