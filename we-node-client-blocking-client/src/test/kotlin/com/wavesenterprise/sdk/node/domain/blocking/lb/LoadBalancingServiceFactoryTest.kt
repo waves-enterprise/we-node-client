@@ -32,20 +32,19 @@ class LoadBalancingServiceFactoryTest {
                 it.getAddresses()
             } returns listOf()
         }
-        val client1 =
-            nodeIdentity(nodeAlias = "1") to mockkNodeBlockingServiceFactory(addressService = mockkAddressService1)
+        val client1 = "1" to mockkNodeBlockingServiceFactory(addressService = mockkAddressService1)
         val mockkAddressService2 = mockkAddressService().also {
             every {
                 it.getAddresses()
             } returns listOf()
         }
-        val client2 =
-            nodeIdentity(nodeAlias = "2") to mockkNodeBlockingServiceFactory(addressService = mockkAddressService2)
+        val client2 = "2" to mockkNodeBlockingServiceFactory(addressService = mockkAddressService2)
 
-        val lb = lbServiceFactoryBuilder.build(mapOf(client1, client2))
-        repeat(TESTS) {
-            lb.addressService().getAddresses()
-        }
+        val lb = lbServiceFactoryBuilder
+            .nodeCredentialsProvider(nodeCredentialsProvider())
+            .build(mapOf(client1, client2))
+
+        repeat(TESTS) { lb.addressService().getAddresses() }
 
         verify(atLeast = 50) { mockkAddressService1.getAddresses() }
         verify(atLeast = 50) { mockkAddressService2.getAddresses() }
@@ -58,17 +57,17 @@ class LoadBalancingServiceFactoryTest {
                 it.getContractKey(any())
             } returns Optional.empty()
         }
-        val client1 =
-            nodeIdentity(nodeAlias = "1") to mockkNodeBlockingServiceFactory(contractService = mockkContractService1)
+        val client1 = "1" to mockkNodeBlockingServiceFactory(contractService = mockkContractService1)
         val mockkContractService2 = mockkContractService().also {
             every {
                 it.getContractKey(any())
             } returns Optional.empty()
         }
-        val client2 =
-            nodeIdentity(nodeAlias = "2") to mockkNodeBlockingServiceFactory(contractService = mockkContractService2)
+        val client2 = "2" to mockkNodeBlockingServiceFactory(contractService = mockkContractService2)
 
-        val lb = lbServiceFactoryBuilder.build(mapOf(client1, client2))
+        val lb = lbServiceFactoryBuilder
+            .nodeCredentialsProvider(nodeCredentialsProvider())
+            .build(mapOf(client1, client2))
         val contractKeyRequest = (ContractKeyRequest(contractId = ContractId.fromBase58(""), key = ""))
         repeat(TESTS) {
             lb.contractService().getContractKey(contractKeyRequest)
@@ -85,16 +84,15 @@ class LoadBalancingServiceFactoryTest {
                 it.getContractKey(any())
             } returns Optional.empty()
         }
-        val client1 =
-            nodeIdentity(nodeAlias = "1") to mockkNodeBlockingServiceFactory(contractService = mockkContractService1)
-        val client2 = nodeIdentity(nodeAlias = "2") to systemFailingMockClient()
+        val client1 = "1" to mockkNodeBlockingServiceFactory(contractService = mockkContractService1)
+        val client2 = "2" to systemFailingMockClient()
 
-        val lb = lbServiceFactoryBuilder.build(mapOf(client1, client2))
+        val lb = lbServiceFactoryBuilder
+            .nodeCredentialsProvider(nodeCredentialsProvider())
+            .build(mapOf(client1, client2))
 
         val contractKeyRequest = ContractKeyRequest(contractId = ContractId.fromBase58(""), key = "")
-        repeat(TESTS) {
-            lb.contractService().getContractKey(contractKeyRequest)
-        }
+        repeat(TESTS) { lb.contractService().getContractKey(contractKeyRequest) }
 
         verify(atLeast = TESTS) { mockkContractService1.getContractKey(contractKeyRequest) }
     }
@@ -106,42 +104,42 @@ class LoadBalancingServiceFactoryTest {
                 it.getContractKey(any())
             } returns Optional.empty()
         }
-        val client1 = nodeIdentity(nodeAlias = "1") to mockkNodeBlockingServiceFactory(
-            contractService = mockkContractService1,
-        )
-        val client2 = nodeIdentity(nodeAlias = "2") to retryableFailingMockClient()
+        val client1 = "1" to mockkNodeBlockingServiceFactory(contractService = mockkContractService1,)
+        val client2 = "2" to retryableFailingMockClient()
 
-        val lb = lbServiceFactoryBuilder.build(mapOf(client1, client2))
+        val lb = lbServiceFactoryBuilder
+            .nodeCredentialsProvider(nodeCredentialsProvider())
+            .build(mapOf(client1, client2))
 
         val contractKeyRequest = ContractKeyRequest(contractId = ContractId.fromBase58(""), key = "")
-        repeat(TESTS) {
-            lb.contractService().getContractKey(contractKeyRequest)
-        }
+        repeat(TESTS) { lb.contractService().getContractKey(contractKeyRequest) }
+
         verify(atLeast = TESTS) { mockkContractService1.getContractKey(contractKeyRequest) }
     }
 
     @Test
     fun `should propagate fail when both clients fail`() {
-        val client1 = nodeIdentity(nodeAlias = "1") to systemFailingMockClient()
-        val client2 = nodeIdentity(nodeAlias = "2") to systemFailingMockClient()
+        val client1 = "1" to systemFailingMockClient()
+        val client2 = "2" to systemFailingMockClient()
 
-        val lb = lbServiceFactoryBuilder.build(mapOf(client1, client2))
+        val lb = lbServiceFactoryBuilder
+            .nodeCredentialsProvider(nodeCredentialsProvider())
+            .build(mapOf(client1, client2))
+
         val contractKeyRequest = ContractKeyRequest(contractId = ContractId.fromBase58(""), key = "")
-        assertThrows<NodeNotImplementedException> {
-            lb.contractService().getContractKey(contractKeyRequest)
-        }
+        assertThrows<NodeNotImplementedException> { lb.contractService().getContractKey(contractKeyRequest) }
     }
 
     @Test
     fun `should propagate fail when client fails with business error`() {
-        val client1 = nodeIdentity(nodeAlias = "1") to businessFailingMockClient()
+        val client1 = "1" to businessFailingMockClient()
 
-        val lb = lbServiceFactoryBuilder.build(mapOf(client1))
+        val lb = lbServiceFactoryBuilder
+            .nodeCredentialsProvider(nodeCredentialsProvider())
+            .build(mapOf(client1))
 
         val contractKeyRequest = ContractKeyRequest(contractId = ContractId.fromBase58(""), key = "")
-        val ex = assertThrows<ContractNotFoundException> {
-            lb.contractService().getContractKey(contractKeyRequest)
-        }
+        val ex = assertThrows<ContractNotFoundException> { lb.contractService().getContractKey(contractKeyRequest) }
         assertEquals(600, ex.nodeError.error)
     }
 
@@ -157,30 +155,30 @@ class LoadBalancingServiceFactoryTest {
                 it.recipients(any())
             } returns policies["AB"]!!
         }
-        val client1 = nodeIdentity(nodeAlias = "1") to mockkNodeBlockingServiceFactory(
+        val client1 = "1" to mockkNodeBlockingServiceFactory(
             addresses = listOf("A", "B"),
             privacyService = mockkPrivacyService1,
         )
-        val client2 = nodeIdentity(nodeAlias = "2") to mockkNodeBlockingServiceFactory(
+        val client2 = "2" to mockkNodeBlockingServiceFactory(
             addresses = listOf("B", "C"),
             privacyService = mockkPrivacyService2,
         )
-        val client3 = nodeIdentity(nodeAlias = "3") to mockkNodeBlockingServiceFactory(
+        val (nodeAlis3, client3) = "3" to mockkNodeBlockingServiceFactory(
             addresses = listOf("C", "D")
         )
 
-        val lb = lbServiceFactoryBuilder.build(mapOf(client1, client2, client3))
+        val lb = lbServiceFactoryBuilder
+            .nodeCredentialsProvider(nodeCredentialsProvider())
+            .build(mapOf(client1, client2, nodeAlis3 to client3))
 
         val policyId = "AB"
         val dataHash = "dataHash"
         val policyItemRequest = PolicyItemRequest(PolicyId(TxId.fromBase58(policyId)), Hash(dataHash.toByteArray()))
-        repeat(TESTS) {
-            lb.privacyService().info(policyItemRequest)
-        }
+        repeat(TESTS) { lb.privacyService().info(policyItemRequest) }
 
         verify(atLeast = 50) { mockkPrivacyService1.info(policyItemRequest) }
         verify(atLeast = 50) { mockkPrivacyService2.info(policyItemRequest) }
-        verify { client3.second.privacyService() wasNot Called }
+        verify { client3.privacyService() wasNot Called }
     }
 
     @Test
@@ -190,7 +188,7 @@ class LoadBalancingServiceFactoryTest {
                 it.recipients(any())
             } returns policies["AB"]!!
         }
-        val client1 = nodeIdentity(nodeAlias = "1") to mockkNodeBlockingServiceFactory(
+        val client1 = "1" to mockkNodeBlockingServiceFactory(
             addresses = listOf("A", "B"),
             privacyService = mockkPrivacyService1,
         )
@@ -199,7 +197,7 @@ class LoadBalancingServiceFactoryTest {
                 it.recipients(any())
             } returns policies["AB"]!!
         }
-        val client2 = nodeIdentity(nodeAlias = "2") to mockkNodeBlockingServiceFactory(
+        val client2 = "2" to mockkNodeBlockingServiceFactory(
             addresses = listOf("B", "C"),
             privacyService = mockkPrivacyService2,
         )
@@ -208,12 +206,14 @@ class LoadBalancingServiceFactoryTest {
                 it.info(any())
             } throws RuntimeException()
         }
-        val client3 = nodeIdentity(nodeAlias = "3") to mockkNodeBlockingServiceFactory(
+        val client3 = "3" to mockkNodeBlockingServiceFactory(
             addresses = listOf("C", "D"),
             privacyService = mockkPrivacyService3,
         )
 
-        val lb = lbServiceFactoryBuilder.build(mapOf(client1, client2, client3))
+        val lb = lbServiceFactoryBuilder
+            .nodeCredentialsProvider(nodeCredentialsProvider())
+            .build(mapOf(client1, client2, client3))
 
         val policyItemRequest = PolicyItemRequest(PolicyId(TxId.fromBase58("ABC")), Hash("dataHash".toByteArray()))
         repeat(TESTS) {
@@ -228,32 +228,32 @@ class LoadBalancingServiceFactoryTest {
 
     @Test
     fun `should balance send data calls to clients with correct owner despite system failure`() {
-        val client1 = nodeIdentity(nodeAlias = "1") to systemFailingMockClient(
-            addresses = listOf("A", "B")
+        val (nodeAlis1, client1) = "1" to systemFailingMockClient(
+            addresses = listOf("A", "B"),
         )
         val mockkPrivacyService2 = mockkPrivacyService().also {
             every {
                 it.recipients(any())
             } returns policies["AB"]!!
         }
-        val client2 = nodeIdentity(nodeAlias = "2") to mockkNodeBlockingServiceFactory(
+        val client2 = "2" to mockkNodeBlockingServiceFactory(
             addresses = listOf("B", "C"),
             privacyService = mockkPrivacyService2,
         )
-        val client3 = nodeIdentity(nodeAlias = "3") to mockkNodeBlockingServiceFactory(
-            addresses = listOf("C", "D")
+        val (nodeAlis3, client3) = "3" to mockkNodeBlockingServiceFactory(
+            addresses = listOf("C", "D"),
         )
 
-        val lb = lbServiceFactoryBuilder.build(mapOf(client1, client2, client3))
+        val lb = lbServiceFactoryBuilder
+            .nodeCredentialsProvider(nodeCredentialsProvider(mapOf(Address.fromBase58("B") to "password")))
+            .build(mapOf(nodeAlis1 to client1, client2, nodeAlis3 to client3))
 
         val dto = sendDataRequest()
-        repeat(TESTS) {
-            lb.privacyService().sendData(dto)
-        }
+        repeat(TESTS) { lb.privacyService().sendData(dto) }
 
-        verify { client1.second.privacyService() wasNot Called }
+        verify { client1.privacyService() wasNot Called }
         verify(atLeast = 50) { mockkPrivacyService2.sendData(any()) }
-        verify { client3.second.privacyService() wasNot Called }
+        verify { client3.privacyService() wasNot Called }
     }
 
     @Test
@@ -263,7 +263,7 @@ class LoadBalancingServiceFactoryTest {
                 it.info(any())
             } returns policyItemInfoResponse()
         }
-        val client1 = nodeIdentity(nodeAlias = "1") to mockkNodeBlockingServiceFactory(
+        val client1 = "1" to mockkNodeBlockingServiceFactory(
             addresses = listOf("A", "B"),
             privacyService = mockkPrivacyService1,
         )
@@ -272,27 +272,27 @@ class LoadBalancingServiceFactoryTest {
                 it.info(any())
             } returns policyItemInfoResponse()
         }
-        val client2 = nodeIdentity(nodeAlias = "2") to mockkNodeBlockingServiceFactory(
+        val client2 = "2" to mockkNodeBlockingServiceFactory(
             addresses = listOf("B", "C"),
             privacyService = mockkPrivacyService2,
         )
-        val client3 = nodeIdentity(nodeAlias = "3") to mockkNodeBlockingServiceFactory(
+        val (nodeAlis3, client3) = "3" to mockkNodeBlockingServiceFactory(
             addresses = listOf("C", "D"),
         )
 
-        val lb = lbServiceFactoryBuilder.build(mapOf(client1, client2, client3))
+        val lb = lbServiceFactoryBuilder
+            .nodeCredentialsProvider(nodeCredentialsProvider())
+            .build(mapOf(client1, client2, nodeAlis3 to client3))
 
         val policyItemRequest = PolicyItemRequest(
             policyId = PolicyId(TxId.fromBase58("AB")),
             dataHash = Hash("dataHash".toByteArray()),
         )
-        repeat(TESTS) {
-            lb.privacyService().info(policyItemRequest)
-        }
+        repeat(TESTS) { lb.privacyService().info(policyItemRequest) }
 
         verify(atLeast = 50) { mockkPrivacyService1.info(policyItemRequest) }
         verify(atLeast = 50) { mockkPrivacyService2.info(policyItemRequest) }
-        verify { client3.second.privacyService() wasNot Called }
+        verify { client3.privacyService() wasNot Called }
     }
 
     @Test
@@ -305,15 +305,13 @@ class LoadBalancingServiceFactoryTest {
                 it.getAddressValues(any())
             } returns listOf()
         }
-        val client1 =
-            nodeIdentity(nodeAlias = "1") to mockkNodeBlockingServiceFactory(addressService = mockkAddressService1)
+        val client1 = "1" to mockkNodeBlockingServiceFactory(addressService = mockkAddressService1)
         val mockkAddressService2 = mockkAddressService().also {
             every {
                 it.getAddresses()
             } returns listOf()
         }
-        val client2 =
-            nodeIdentity(nodeAlias = "2") to mockkNodeBlockingServiceFactory(addressService = mockkAddressService2)
+        val (nodeAlias2, client2) = "2" to mockkNodeBlockingServiceFactory(addressService = mockkAddressService2)
 
         val defaultNodeCircuitBreaker1 = DefaultNodeCircuitBreaker()
         val defaultNodeCircuitBreaker2 = DefaultNodeCircuitBreaker()
@@ -322,15 +320,16 @@ class LoadBalancingServiceFactoryTest {
             nodeCircuitBreakers = mapOf("1" to defaultNodeCircuitBreaker1, "2" to defaultNodeCircuitBreaker2)
         )
         val lb = lbServiceFactoryBuilder
+            .nodeCredentialsProvider(nodeCredentialsProvider())
             .circuitBreaker(circuitBreaker)
-            .build(mapOf(client1, client2))
+            .build(mapOf(client1, nodeAlias2 to client2))
 
         repeat(TESTS) { lb.addressService().getAddresses() }
 
         verify(atLeast = 50) { mockkAddressService1.getAddresses() }
         verify(atLeast = 50) { mockkAddressService2.getAddresses() }
 
-        assertTrue(circuitBreaker.isClosed(client2.first.nodeAlias))
+        assertTrue(circuitBreaker.isClosed(nodeAlias2))
 
         every {
             mockkAddressService2.getAddressValues(any())
@@ -340,15 +339,15 @@ class LoadBalancingServiceFactoryTest {
         repeat(TESTS) { lb.addressService().getAddressValues(address) }
         verify(atLeast = 50) { mockkAddressService1.getAddressValues(address) }
         verify(atLeast = 1) { mockkAddressService2.getAddressValues(address) }
-        assertFalse(circuitBreaker.isClosed(client2.first.nodeAlias))
+        assertFalse(circuitBreaker.isClosed(nodeAlias2))
 
         defaultNodeCircuitBreaker2.breakUntil = OffsetDateTime.MIN
-        assertTrue(circuitBreaker.isClosed(client2.first.nodeAlias))
+        assertTrue(circuitBreaker.isClosed(nodeAlias2))
 
         repeat(TESTS) { lb.addressService().getAddresses() }
         verify(atLeast = 50) { mockkAddressService1.getAddresses() }
         verify(atLeast = 50) { mockkAddressService2.getAddresses() }
-        assertTrue(circuitBreaker.isClosed(client2.first.nodeAlias))
+        assertTrue(circuitBreaker.isClosed(nodeAlias2))
     }
 
     @Test
@@ -362,15 +361,13 @@ class LoadBalancingServiceFactoryTest {
                     it.getAddresses()
                 } returns listOf()
             }
-            val client1 =
-                nodeIdentity(nodeAlias = "1") to mockkNodeBlockingServiceFactory(addressService = mockkAddressService1)
+            val client1 = "1" to mockkNodeBlockingServiceFactory(addressService = mockkAddressService1)
             val mockkAddressService2 = mockkAddressService().also {
                 every {
                     it.getAddresses()
                 } throws NodeInternalServerErrorException(cause = Exception())
             }
-            val client2 =
-                nodeIdentity(nodeAlias = "2") to mockkNodeBlockingServiceFactory(addressService = mockkAddressService2)
+            val client2 = "2" to mockkNodeBlockingServiceFactory(addressService = mockkAddressService2)
 
             val defaultNodeCircuitBreaker1 = DefaultNodeCircuitBreaker()
             val defaultNodeCircuitBreaker2 = DefaultNodeCircuitBreaker()
@@ -379,6 +376,7 @@ class LoadBalancingServiceFactoryTest {
                 nodeCircuitBreakers = mapOf("1" to defaultNodeCircuitBreaker1, "2" to defaultNodeCircuitBreaker2)
             )
             val lb = lbServiceFactoryBuilder
+                .nodeCredentialsProvider(nodeCredentialsProvider())
                 .circuitBreaker(circuitBreaker)
                 .build(mapOf(client1, client2))
 

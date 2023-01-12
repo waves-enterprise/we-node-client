@@ -5,7 +5,6 @@ import com.wavesenterprise.sdk.node.domain.DataSize
 import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.FileName
 import com.wavesenterprise.sdk.node.domain.Hash
-import com.wavesenterprise.sdk.node.domain.Password
 import com.wavesenterprise.sdk.node.domain.PolicyId
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.Timestamp
@@ -18,22 +17,6 @@ import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemFileInfo
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemInfoResponse
 import com.wavesenterprise.sdk.node.domain.privacy.SendDataRequest
 import com.wavesenterprise.sdk.node.domain.tx.PolicyDataHashTx
-
-fun nodeIdentity(
-    nodeCredentials: NodeCredentials = nodeCredentials(),
-    nodeAlias: String = "nodeAlias",
-) = NodeIdentity(
-    credentials = nodeCredentials,
-    nodeAlias = nodeAlias,
-)
-
-fun nodeCredentials(
-    address: Address = Address.fromBase58("address"),
-    password: Password = Password.fromString("password"),
-) = NodeCredentials(
-    address = address,
-    keyStorePassword = password,
-)
 
 fun policyDataHashTx() = PolicyDataHashTx(
     id = TxId("".toByteArray()),

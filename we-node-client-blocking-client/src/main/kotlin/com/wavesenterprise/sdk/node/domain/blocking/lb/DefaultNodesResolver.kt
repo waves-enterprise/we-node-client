@@ -32,7 +32,6 @@ class DefaultNodesResolver(
         policyId: PolicyId,
         dataHash: Hash,
     ): List<NodeServiceFactoryWrapper> = getOrderedAliveNodesForPrivacy(policyId)
-    // TODO: Add PrivacyDataHashesCache
 
     private fun getOrderedAliveNodesForPrivacy(policyId: PolicyId): List<NodeServiceFactoryWrapper> =
         getOrderedAliveNodes().filter {

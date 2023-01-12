@@ -1,7 +1,9 @@
 package com.wavesenterprise.sdk.node.domain.blocking.lb
 
 import com.wavesenterprise.sdk.node.domain.Hash
+import com.wavesenterprise.sdk.node.domain.Password
 import com.wavesenterprise.sdk.node.domain.PolicyId
+import com.wavesenterprise.sdk.node.domain.blocking.credentials.NodeCredentialsProvider
 import com.wavesenterprise.sdk.node.domain.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.domain.privacy.SendDataRequest
 import com.wavesenterprise.sdk.node.domain.sign.SignRequest
@@ -9,18 +11,20 @@ import java.lang.reflect.Method
 
 class DefaultLoadBalanceStrategy(
     private val nodesResolver: NodesResolver,
+    private val nodeCredentialsProvider: NodeCredentialsProvider,
 ) : LoadBalanceStrategy {
 
     override fun resolve(method: Method, args: Array<out Any>?): List<ClientWithArgs> =
         when (val firstArg = args?.firstOrNull()) {
             is SendDataRequest ->
                 nodesResolver.getOrderedAliveNodesWithCredsForPrivacy(firstArg.policyId).map { client ->
+                    val senderAddress = client.getNodeOwner().address
                     ClientWithArgs(
                         client = client,
                         methodCallArgs = args.patch { methodCallArgs ->
                             methodCallArgs[0] = firstArg.copy(
-                                senderAddress = client.nodeCredentials.address,
-                                password = client.nodeCredentials.keyStorePassword,
+                                senderAddress = senderAddress,
+                                password = Password(nodeCredentialsProvider.getPassword(senderAddress)),
                             )
                         }
                     )

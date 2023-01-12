@@ -11,6 +11,7 @@ import com.wavesenterprise.sdk.node.domain.Timestamp
 import com.wavesenterprise.sdk.node.domain.TxCount
 import com.wavesenterprise.sdk.node.domain.blocking.address.AddressService
 import com.wavesenterprise.sdk.node.domain.blocking.contract.ContractService
+import com.wavesenterprise.sdk.node.domain.blocking.credentials.DefaultNodeCredentialsProvider
 import com.wavesenterprise.sdk.node.domain.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.domain.blocking.node.NodeInfoService
 import com.wavesenterprise.sdk.node.domain.blocking.privacy.PrivacyService
@@ -187,3 +188,6 @@ fun businessFailingMockClient(): NodeBlockingServiceFactory {
     )
     return nodeBlockingServiceFactory
 }
+
+fun nodeCredentialsProvider(nodeCredentials: Map<Address, String> = mapOf()) =
+    DefaultNodeCredentialsProvider(nodeCredentials)
