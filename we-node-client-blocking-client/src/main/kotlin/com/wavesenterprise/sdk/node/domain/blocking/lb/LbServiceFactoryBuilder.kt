@@ -30,11 +30,6 @@ class LbServiceFactoryBuilder {
             this.circuitBreaker = circuitBreaker
         }
 
-    fun nodeCredentials(nodeCredentials: NodeCredentials): LbServiceFactoryBuilder =
-        this.apply {
-            this.nodeCredentials = nodeCredentials
-        }
-
     /**
      * Builds [NodeBlockingServiceFactory] implementation with load balancing logic.
      * It will balance between passed nodeBlockingServiceFactories.
@@ -42,21 +37,18 @@ class LbServiceFactoryBuilder {
      * @return NodeBlockingServiceFactory implementation with load balancing logic ([LoadBalancingServiceFactory])
      */
     fun build(
-        nodeAliasedServiceFactories: Map<String, NodeBlockingServiceFactory>,
+        nodeAliasedServiceFactories: Map<NodeIdentity, NodeBlockingServiceFactory>,
     ): LoadBalancingServiceFactory {
-        val actualNodeCredentials = requireNotNull(nodeCredentials) {
-            "NodeCredentials can not be null"
-        }
         val circuitBreakerProperties = circuitBreakerProperties ?: CircuitBreakerProperties()
         val nodeServiceFactoryWrappers = nodeAliasedServiceFactories.map {
             DefaultNodeServiceFactoryWrapper(
                 nodeBlockingServiceFactory = it.value,
-                name = it.key,
-                nodeCredentials = actualNodeCredentials,
+                name = it.key.nodeAlias,
+                nodeCredentials = it.key.credentials,
             )
         }
         val nodeCircuitBreakers = nodeAliasedServiceFactories.map {
-            it.key to DefaultNodeCircuitBreaker(
+            it.key.nodeAlias to DefaultNodeCircuitBreaker(
                 sequentialErrorCount = circuitBreakerProperties.sequentialErrorCount,
                 breakUntil = circuitBreakerProperties.breakUntil,
             )

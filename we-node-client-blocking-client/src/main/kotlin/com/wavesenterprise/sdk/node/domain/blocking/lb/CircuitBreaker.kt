@@ -5,5 +5,5 @@ interface CircuitBreaker {
 
     fun invocationFailed(nodeName: String, index: Int)
     fun tryReturnIntoRotation(nodeName: String)
-    fun isClosed(nodeServiceFactoryWrapper: NodeServiceFactoryWrapper): Boolean
+    fun isClosed(nodeName: String): Boolean
 }

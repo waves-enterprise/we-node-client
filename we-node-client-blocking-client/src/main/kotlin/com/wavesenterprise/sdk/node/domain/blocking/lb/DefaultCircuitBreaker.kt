@@ -32,8 +32,8 @@ class DefaultCircuitBreaker(
     }
 
     override fun isClosed(
-        nodeServiceFactoryWrapper: NodeServiceFactoryWrapper
-    ): Boolean = nodeCircuitBreakers[nodeServiceFactoryWrapper.name] != null
+        nodeName: String
+    ): Boolean = getCircuitBreakerHandler(nodeName).status() == CircuitBreakerStatus.CLOSED
 
     private fun getCircuitBreakerHandler(nodeName: String) =
         requireNotNull(nodeCircuitBreakers[nodeName]) {

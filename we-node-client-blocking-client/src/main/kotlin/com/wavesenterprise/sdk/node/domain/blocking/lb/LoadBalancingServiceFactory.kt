@@ -15,29 +15,43 @@ class LoadBalancingServiceFactory(
 ) : NodeBlockingServiceFactory {
 
     override fun txService() =
-        createService(TxService::class.java)
+        createService(TxService::class.java) {
+            it.txService()
+        }
 
     override fun contractService(): ContractService =
-        createService(ContractService::class.java)
+        createService(ContractService::class.java) {
+            it.contractService()
+        }
 
     override fun addressService(): AddressService =
-        createService(AddressService::class.java)
+        createService(AddressService::class.java) {
+            it.addressService()
+        }
 
     override fun nodeInfoService(): NodeInfoService =
-        createService(NodeInfoService::class.java)
+        createService(NodeInfoService::class.java) {
+            it.nodeInfoService()
+        }
 
     override fun privacyService(): PrivacyService =
-        createService(PrivacyService::class.java)
+        createService(PrivacyService::class.java) {
+            it.privacyService()
+        }
 
     @Suppress("UNCHECKED_CAST")
-    private fun <T> createService(clazz: Class<T>): T =
+    private fun <T> createService(
+        clazz: Class<T>,
+        fnServiceResolver: (NodeBlockingServiceFactory) -> (Any),
+    ): T =
         Proxy.newProxyInstance(
-            clazz::class.java.classLoader,
-            arrayOf(clazz::class.java),
+            clazz.classLoader,
+            arrayOf(clazz),
             LoadBalancingNodeServiceHandler(
                 strategy = strategy,
                 circuitBreaker = circuitBreaker,
                 retryStrategy = retryStrategy,
+                fnServiceResolver = fnServiceResolver
             ),
         ) as T
 }

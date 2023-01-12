@@ -1,6 +1,7 @@
 package com.wavesenterprise.sdk.node.domain.blocking.lb
 
 import com.wavesenterprise.sdk.node.domain.blocking.lb.exception.NoNodesToHandleRequestException
+import com.wavesenterprise.sdk.node.domain.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.exception.NodeErrorInfoHolder
 import org.slf4j.LoggerFactory
 import java.lang.reflect.InvocationHandler
@@ -11,6 +12,7 @@ class LoadBalancingNodeServiceHandler(
     private val strategy: LoadBalanceStrategy,
     private val circuitBreaker: CircuitBreaker,
     private val retryStrategy: RetryStrategy,
+    private val fnServiceResolver: (NodeBlockingServiceFactory) -> (Any),
 ) : InvocationHandler {
 
     private val LOG = LoggerFactory.getLogger(LoadBalancingNodeServiceHandler::class.java)
@@ -52,11 +54,12 @@ class LoadBalancingNodeServiceHandler(
             }
             LOG.debug("Attempt ${index + 1}/$size handling ${method.name}")
             try {
+                val service = resolveService(nodeServiceFactoryWrapper)
                 return (
                     if (args == null) {
-                        method.invoke(nodeServiceFactoryWrapper)
+                        method.invoke(service)
                     } else {
-                        method.invoke(nodeServiceFactoryWrapper, *args)
+                        method.invoke(service, *args)
                     } as T
                     ).also {
                     LOG.debug("Invocation successful")
@@ -75,7 +78,7 @@ class LoadBalancingNodeServiceHandler(
                             )
                         throw e
                     }
-//                    is TooManyRequestsException -> throw e
+
                     is Exception -> onException(e)
                 }
             } catch (e: Exception) {
@@ -94,4 +97,6 @@ class LoadBalancingNodeServiceHandler(
             throw IllegalStateException(error)
         }
     }
+
+    private fun resolveService(client: NodeServiceFactoryWrapper) = fnServiceResolver(client.nodeBlockingServiceFactory)
 }
