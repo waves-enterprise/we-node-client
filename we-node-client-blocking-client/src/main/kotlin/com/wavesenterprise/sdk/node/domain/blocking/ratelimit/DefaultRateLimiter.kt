@@ -1,6 +1,6 @@
 package com.wavesenterprise.sdk.node.domain.blocking.ratelimit
 
-import com.wavesenterprise.sdk.node.domain.blocking.lb.exception.TooManyRequestsException
+import com.wavesenterprise.sdk.node.domain.blocking.ratelimit.exception.TooManyRequestsException
 
 class DefaultRateLimiter(
     private val strategy: RateLimitingStrategy,
