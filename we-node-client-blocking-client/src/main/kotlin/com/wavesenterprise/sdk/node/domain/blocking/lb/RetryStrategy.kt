@@ -1,5 +1,5 @@
 package com.wavesenterprise.sdk.node.domain.blocking.lb
 
 fun interface RetryStrategy {
-    fun isRetryable(ex: Exception): Boolean
+    fun isRetryable(ex: Throwable): Boolean
 }

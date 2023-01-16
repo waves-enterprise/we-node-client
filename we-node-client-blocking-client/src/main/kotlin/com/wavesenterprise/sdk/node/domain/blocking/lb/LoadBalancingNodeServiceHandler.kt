@@ -2,7 +2,6 @@ package com.wavesenterprise.sdk.node.domain.blocking.lb
 
 import com.wavesenterprise.sdk.node.domain.blocking.lb.exception.NoNodesToHandleRequestException
 import com.wavesenterprise.sdk.node.domain.blocking.node.NodeBlockingServiceFactory
-import com.wavesenterprise.sdk.node.exception.NodeErrorInfoHolder
 import org.slf4j.LoggerFactory
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.InvocationTargetException
@@ -15,7 +14,7 @@ class LoadBalancingNodeServiceHandler(
     private val fnServiceResolver: (NodeBlockingServiceFactory) -> (Any),
 ) : InvocationHandler {
 
-    private val LOG = LoggerFactory.getLogger(LoadBalancingNodeServiceHandler::class.java)
+    private val logger = LoggerFactory.getLogger(LoadBalancingNodeServiceHandler::class.java)
 
     override fun invoke(
         proxy: Any,
@@ -23,13 +22,13 @@ class LoadBalancingNodeServiceHandler(
         args: Array<out Any>?,
     ): Any {
         val methodName = method.name
-        LOG.debug("Invoking ${proxy.javaClass} method $methodName")
+        logger.debug("Invoking ${proxy.javaClass} method $methodName")
         val clientsWithArgs = strategy.resolve(method, args)
         if (clientsWithArgs.isEmpty())
             throw NoNodesToHandleRequestException(
                 "No LoadBalancingServiceFactory is configured to handle request $methodName"
             )
-        LOG.debug("Got ${clientsWithArgs.size} nodes to handle invocation of method $methodName")
+        logger.debug("Got ${clientsWithArgs.size} nodes to handle invocation of method $methodName")
         return clientsWithArgs.dispatch(method)
     }
 
@@ -37,22 +36,15 @@ class LoadBalancingNodeServiceHandler(
     private fun <T> List<ClientWithArgs>.dispatch(
         method: Method,
     ): T {
-        var lastException: Exception? = null
-        val retry = { e: Exception ->
-            LOG.warn("Error: ${e.javaClass.simpleName} : ${e.message}, retrying operation")
+        var lastException: Throwable? = null
+        fun retry(e: Throwable) {
+            logger.warn("Error: ${e.javaClass.simpleName} : ${e.message}, retrying operation")
             lastException = e
         }
-
         forEachIndexed { index, nodeWithArgs ->
             val nodeServiceFactoryWrapper = nodeWithArgs.client
             val args = nodeWithArgs.methodCallArgs
-            val onException: (e: Exception) -> Unit by lazy {
-                { e: Exception ->
-                    circuitBreaker.invocationFailed(nodeServiceFactoryWrapper.name, index)
-                    retry(e)
-                }
-            }
-            LOG.debug("Attempt ${index + 1}/$size handling ${method.name}")
+            logger.debug("Attempt ${index + 1}/$size handling ${method.name}")
             try {
                 val service = resolveService(nodeServiceFactoryWrapper)
                 return (
@@ -62,38 +54,31 @@ class LoadBalancingNodeServiceHandler(
                         method.invoke(service, *args)
                     } as T
                     ).also {
-                    LOG.debug("Invocation successful")
+                    logger.debug("Invocation successful")
                     circuitBreaker.tryReturnIntoRotation(nodeServiceFactoryWrapper.name)
                 }
-            } catch (ex: InvocationTargetException) {
-                val e = ex.targetException
-                LOG.debug("Invocation failed: ${e.message}", e)
-                when (e) {
-                    is NodeErrorInfoHolder -> {
-                        if (retryStrategy.isRetryable(e as Exception))
-                            onException(e)
-                        else
-                            LOG.debug(
-                                "Returning error ${e.javaClass.simpleName}: ${e.message}, code ${e.nodeError?.error}"
-                            )
-                        throw e
-                    }
-
-                    is Exception -> onException(e)
+            } catch (ex: Exception) {
+                val resultingEx = when (ex) {
+                    is InvocationTargetException -> ex.targetException
+                    else -> ex
                 }
-            } catch (e: Exception) {
-                LOG.warn("Invocation failed: ${e.message}", e)
-                onException(e)
+                if (retryStrategy.isRetryable(resultingEx)) {
+                    circuitBreaker.invocationFailed(nodeServiceFactoryWrapper.name, index)
+                    retry(resultingEx)
+                } else {
+                    throw resultingEx
+                }
+                logger.debug("Invocation failed: ${resultingEx.message}", resultingEx)
             }
         }
 
         if (lastException != null) {
             val e = lastException!!
-            LOG.error("Exception executing method ${method.name}, error ${e.javaClass.simpleName}: ${e.message}", e)
+            logger.error("Exception executing method ${method.name}, error ${e.javaClass.simpleName}: ${e.message}", e)
             throw e
         } else {
             val error = "No nodes for executing method ${method.name}"
-            LOG.error(error)
+            logger.error(error)
             throw IllegalStateException(error)
         }
     }

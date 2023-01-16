@@ -23,13 +23,11 @@ import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemFileInfo
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemInfoResponse
 import com.wavesenterprise.sdk.node.domain.tx.UtxSize
 import com.wavesenterprise.sdk.node.exception.NodeError
-import com.wavesenterprise.sdk.node.exception.NodeNotImplementedException
+import com.wavesenterprise.sdk.node.exception.NodeServiceUnavailableException
 import com.wavesenterprise.sdk.node.exception.specific.ContractNotFoundException
-import com.wavesenterprise.sdk.node.exception.specific.PolicyItemDataIsMissingException
 import io.mockk.every
 import io.mockk.mockk
 import java.util.Optional
-import kotlin.Exception
 
 private val policies = mapOf(
     "AB" to listOf(Address.fromBase58("A"), Address.fromBase58("B")),
@@ -127,11 +125,11 @@ fun mockkPrivacyService(): PrivacyService {
     return privacyService
 }
 
-fun systemFailingMockClient(addresses: List<String> = listOf()): NodeBlockingServiceFactory {
+fun nodeNotAvailableFailingMockClient(addresses: List<String> = listOf()): NodeBlockingServiceFactory {
     val nodeBlockingServiceFactory: NodeBlockingServiceFactory = mockk()
     every {
         nodeBlockingServiceFactory.contractService()
-    } throws NodeNotImplementedException(cause = Exception())
+    } throws NodeServiceUnavailableException(cause = Exception())
     every {
         nodeBlockingServiceFactory.addressService()
     } returns mockkAddressService()
@@ -140,13 +138,13 @@ fun systemFailingMockClient(addresses: List<String> = listOf()): NodeBlockingSer
     } returns mockkNodeInfoService()
     every {
         nodeBlockingServiceFactory.privacyService()
-    } throws NodeNotImplementedException(cause = Exception())
+    } throws NodeServiceUnavailableException(cause = Exception())
     every {
         nodeBlockingServiceFactory.contractService().getContractKey(any())
-    } throws NodeNotImplementedException(cause = Exception())
+    } throws NodeServiceUnavailableException(cause = Exception())
     every {
         nodeBlockingServiceFactory.txService()
-    } throws NodeNotImplementedException(cause = Exception())
+    } throws NodeServiceUnavailableException(cause = Exception())
     return nodeBlockingServiceFactory
 }
 
@@ -160,7 +158,7 @@ fun retryableFailingMockClient(): NodeBlockingServiceFactory {
     } returns mockkNodeInfoService()
     every {
         nodeBlockingServiceFactory.contractService()
-    } throws PolicyItemDataIsMissingException(nodeError = NodeError(1, ""), cause = Exception())
+    } throws NodeServiceUnavailableException(Exception())
     return nodeBlockingServiceFactory
 }
 
