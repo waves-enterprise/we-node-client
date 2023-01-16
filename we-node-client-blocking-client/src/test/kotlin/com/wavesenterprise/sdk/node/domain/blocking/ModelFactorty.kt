@@ -8,6 +8,7 @@ import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.PolicyId
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.Timestamp
+import com.wavesenterprise.sdk.node.domain.TxCount
 import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.TxVersion
 import com.wavesenterprise.sdk.node.domain.privacy.Data
@@ -17,6 +18,7 @@ import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemFileInfo
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemInfoResponse
 import com.wavesenterprise.sdk.node.domain.privacy.SendDataRequest
 import com.wavesenterprise.sdk.node.domain.tx.PolicyDataHashTx
+import com.wavesenterprise.sdk.node.domain.tx.UtxSize
 
 fun policyDataHashTx() = PolicyDataHashTx(
     id = TxId("".toByteArray()),
@@ -56,4 +58,24 @@ fun sendDataRequest() = SendDataRequest(
         comment = DataComment(""),
     ),
     broadcastTx = true,
+)
+
+fun utxSize(
+    txCount: TxCount = txCount(),
+    size: DataSize = dataSize(),
+) = UtxSize(
+    txCount = txCount,
+    size = size,
+)
+
+fun txCount(
+    value: Int = 0,
+) = TxCount(
+    value = value,
+)
+
+fun dataSize(
+    bytesCount: Long = 0,
+) = DataSize(
+    bytesCount = bytesCount,
 )
