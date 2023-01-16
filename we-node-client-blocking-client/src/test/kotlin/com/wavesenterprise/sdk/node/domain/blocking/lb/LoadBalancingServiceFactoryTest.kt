@@ -7,9 +7,12 @@ import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemRequest
+import com.wavesenterprise.sdk.node.exception.NodeError
+import com.wavesenterprise.sdk.node.exception.NodeErrorCode
 import com.wavesenterprise.sdk.node.exception.NodeInternalServerErrorException
-import com.wavesenterprise.sdk.node.exception.NodeNotImplementedException
+import com.wavesenterprise.sdk.node.exception.NodeServiceUnavailableException
 import com.wavesenterprise.sdk.node.exception.specific.ContractNotFoundException
+import com.wavesenterprise.sdk.node.exception.specific.PolicyItemDataIsMissingException
 import io.mockk.Called
 import io.mockk.every
 import io.mockk.verify
@@ -21,6 +24,10 @@ import org.junit.jupiter.api.assertThrows
 import java.time.OffsetDateTime
 import java.util.Optional
 
+/**
+ * Tests LoadBalancingServiceFactory built with [DefaultRetryStrategy] so the exceptions thrown by mocked
+ * services are chosen according to the [DefaultRetryStrategy] implementation.
+ */
 class LoadBalancingServiceFactoryTest {
 
     private val lbServiceFactoryBuilder: LbServiceFactoryBuilder = LbServiceFactoryBuilder.builder()
@@ -85,7 +92,7 @@ class LoadBalancingServiceFactoryTest {
             } returns Optional.empty()
         }
         val client1 = "1" to mockkNodeBlockingServiceFactory(contractService = mockkContractService1)
-        val client2 = "2" to systemFailingMockClient()
+        val client2 = "2" to nodeNotAvailableFailingMockClient()
 
         val lb = lbServiceFactoryBuilder
             .nodeCredentialsProvider(nodeCredentialsProvider())
@@ -119,15 +126,15 @@ class LoadBalancingServiceFactoryTest {
 
     @Test
     fun `should propagate fail when both clients fail`() {
-        val client1 = "1" to systemFailingMockClient()
-        val client2 = "2" to systemFailingMockClient()
+        val client1 = "1" to nodeNotAvailableFailingMockClient()
+        val client2 = "2" to nodeNotAvailableFailingMockClient()
 
         val lb = lbServiceFactoryBuilder
             .nodeCredentialsProvider(nodeCredentialsProvider())
             .build(mapOf(client1, client2))
 
         val contractKeyRequest = ContractKeyRequest(contractId = ContractId.fromBase58(""), key = "")
-        assertThrows<NodeNotImplementedException> { lb.contractService().getContractKey(contractKeyRequest) }
+        assertThrows<NodeServiceUnavailableException> { lb.contractService().getContractKey(contractKeyRequest) }
     }
 
     @Test
@@ -204,7 +211,13 @@ class LoadBalancingServiceFactoryTest {
         val mockkPrivacyService3 = mockkPrivacyService().also {
             every {
                 it.info(any())
-            } throws RuntimeException()
+            } throws PolicyItemDataIsMissingException(
+                nodeError = NodeError(
+                    NodeErrorCode.POLICY_ITEM_DATA_IS_MISSING.code,
+                    ""
+                ),
+                cause = Exception()
+            )
         }
         val client3 = "3" to mockkNodeBlockingServiceFactory(
             addresses = listOf("C", "D"),
@@ -228,7 +241,7 @@ class LoadBalancingServiceFactoryTest {
 
     @Test
     fun `should balance send data calls to clients with correct owner despite system failure`() {
-        val (nodeAlis1, client1) = "1" to systemFailingMockClient(
+        val (nodeAlis1, client1) = "1" to nodeNotAvailableFailingMockClient(
             addresses = listOf("A", "B"),
         )
         val mockkPrivacyService2 = mockkPrivacyService().also {
@@ -333,7 +346,7 @@ class LoadBalancingServiceFactoryTest {
 
         every {
             mockkAddressService2.getAddressValues(any())
-        } throws NodeNotImplementedException(cause = Exception())
+        } throws NodeServiceUnavailableException(cause = Exception())
 
         val address = "address"
         repeat(TESTS) { lb.addressService().getAddressValues(address) }
