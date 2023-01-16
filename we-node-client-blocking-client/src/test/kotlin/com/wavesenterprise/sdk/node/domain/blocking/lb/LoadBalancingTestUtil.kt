@@ -67,11 +67,6 @@ fun mockkNodeBlockingServiceFactory(
     return nodeBlockingServiceFactory
 }
 
-// fun halfPartRetryableFailingClient(): NodeBlockingServiceFactory {
-//    val nodeBlockingServiceFactory: NodeBlockingServiceFactory = mockk()
-//
-// }
-
 fun mockkTxService(): TxService {
     val txService: TxService = mockk()
     every {
