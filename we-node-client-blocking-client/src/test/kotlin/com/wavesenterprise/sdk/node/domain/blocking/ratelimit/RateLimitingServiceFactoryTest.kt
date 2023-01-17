@@ -1,11 +1,11 @@
 package com.wavesenterprise.sdk.node.domain.blocking.ratelimit
 
-import com.wavesenterprise.sdk.node.domain.blocking.lb.exception.TooManyRequestsException
 import com.wavesenterprise.sdk.node.domain.blocking.lb.mockkNodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.domain.blocking.lb.mockkPrivacyService
 import com.wavesenterprise.sdk.node.domain.blocking.lb.mockkTxService
 import com.wavesenterprise.sdk.node.domain.blocking.lb.sendDataRequest
 import com.wavesenterprise.sdk.node.domain.blocking.node.NodeBlockingServiceFactory
+import com.wavesenterprise.sdk.node.domain.blocking.ratelimit.exception.TooManyRequestsException
 import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk
