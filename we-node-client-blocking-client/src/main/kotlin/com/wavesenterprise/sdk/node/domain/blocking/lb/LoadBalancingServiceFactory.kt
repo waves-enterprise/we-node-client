@@ -1,6 +1,7 @@
 package com.wavesenterprise.sdk.node.domain.blocking.lb
 
 import com.wavesenterprise.sdk.node.domain.blocking.address.AddressService
+import com.wavesenterprise.sdk.node.domain.blocking.blocks.BlocksService
 import com.wavesenterprise.sdk.node.domain.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.domain.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.domain.blocking.node.NodeInfoService
@@ -37,6 +38,11 @@ class LoadBalancingServiceFactory(
     override fun privacyService(): PrivacyService =
         createService(PrivacyService::class.java) {
             it.privacyService()
+        }
+
+    override fun blocksService(): BlocksService =
+        createService(BlocksService::class.java) {
+            it.blocksService()
         }
 
     @Suppress("UNCHECKED_CAST")

@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/blocks/height"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "height": 11111
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

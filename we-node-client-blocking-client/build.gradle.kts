@@ -1,7 +1,6 @@
 dependencies {
     implementation(kotlin("stdlib"))
     implementation("ch.qos.logback:logback-classic")
-    implementation("io.github.openfeign:feign-core")
 
     api(project(":we-node-client-domain"))
     api(project(":we-node-client-error"))

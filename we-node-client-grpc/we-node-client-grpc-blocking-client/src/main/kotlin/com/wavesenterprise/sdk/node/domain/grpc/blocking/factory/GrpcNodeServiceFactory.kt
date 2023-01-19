@@ -2,6 +2,7 @@ package com.wavesenterprise.sdk.node.domain.grpc.blocking.factory
 
 import com.wavesenterprise.protobuf.service.contract.ContractServiceGrpc
 import com.wavesenterprise.sdk.node.domain.blocking.address.AddressService
+import com.wavesenterprise.sdk.node.domain.blocking.blocks.BlocksService
 import com.wavesenterprise.sdk.node.domain.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.domain.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.domain.blocking.node.NodeInfoService
@@ -41,5 +42,9 @@ class GrpcNodeServiceFactory(
 
     override fun privacyService(): PrivacyService {
         TODO("Not yet implemented")
+    }
+
+    override fun blocksService(): BlocksService {
+        throw IllegalArgumentException("Not implemented in grpc")
     }
 }
