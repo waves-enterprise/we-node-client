@@ -1,6 +1,7 @@
 dependencies {
     implementation(kotlin("stdlib"))
     implementation("ch.qos.logback:logback-classic")
+    implementation("com.github.ben-manes.caffeine:caffeine")
 
     api(project(":we-node-client-domain"))
     api(project(":we-node-client-error"))
