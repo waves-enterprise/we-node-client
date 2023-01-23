@@ -14,6 +14,7 @@ import com.wavesenterprise.sdk.node.domain.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.domain.blocking.credentials.DefaultNodeCredentialsProvider
 import com.wavesenterprise.sdk.node.domain.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.domain.blocking.node.NodeInfoService
+import com.wavesenterprise.sdk.node.domain.blocking.policyDataHashTx
 import com.wavesenterprise.sdk.node.domain.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.domain.blocking.tx.TxService
 import com.wavesenterprise.sdk.node.domain.privacy.Data
