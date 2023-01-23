@@ -8,6 +8,7 @@ dependencies {
 
     implementation("io.github.openfeign:feign-core")
     implementation("io.github.openfeign:feign-jackson")
+    implementation("io.github.openfeign:feign-slf4j")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     testImplementation("ch.qos.logback:logback-classic")

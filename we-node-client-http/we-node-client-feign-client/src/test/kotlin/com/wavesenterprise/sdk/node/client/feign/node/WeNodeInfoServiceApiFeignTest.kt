@@ -1,8 +1,11 @@
 package com.wavesenterprise.sdk.node.client.feign.node
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.wavesenterprise.sdk.node.client.feign.FeignNodeClientParams
+import com.wavesenterprise.sdk.node.client.feign.FeignNodeErrorDecoder
+import com.wavesenterprise.sdk.node.client.feign.FeignNodeErrorMapper
 import com.wavesenterprise.sdk.node.client.feign.FeignWeApiFactory
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll
@@ -18,8 +21,9 @@ class WeNodeInfoServiceApiFeignTest {
     @BeforeAll
     fun init(wireMockRuntimeInfo: WireMockRuntimeInfo) {
         weNodeInfoServiceApiFeign = FeignWeApiFactory.createClient(
-            WeNodeInfoServiceApiFeign::class.java,
-            FeignNodeClientParams(url = wireMockRuntimeInfo.httpBaseUrl)
+            clientClass = WeNodeInfoServiceApiFeign::class.java,
+            feignProperties = FeignNodeClientParams(url = wireMockRuntimeInfo.httpBaseUrl),
+            errorDecoder = FeignNodeErrorDecoder(FeignNodeErrorMapper(jacksonObjectMapper())),
         )
     }
 

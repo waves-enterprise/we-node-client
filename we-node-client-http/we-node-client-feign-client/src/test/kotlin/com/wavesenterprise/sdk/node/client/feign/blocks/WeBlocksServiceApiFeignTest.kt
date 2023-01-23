@@ -29,9 +29,9 @@ class WeBlocksServiceApiFeignTest {
     @BeforeAll
     fun init(wireMockRuntimeInfo: WireMockRuntimeInfo) {
         weBlocksApi = FeignWeApiFactory.createClient(
-            WeBlocksServiceApiFeign::class.java,
-            FeignNodeClientParams(url = wireMockRuntimeInfo.httpBaseUrl),
-            FeignNodeErrorDecoder(FeignNodeErrorMapper(jacksonObjectMapper()))
+            clientClass = WeBlocksServiceApiFeign::class.java,
+            feignProperties = FeignNodeClientParams(url = wireMockRuntimeInfo.httpBaseUrl),
+            errorDecoder = FeignNodeErrorDecoder(FeignNodeErrorMapper(jacksonObjectMapper())),
         )
     }
 

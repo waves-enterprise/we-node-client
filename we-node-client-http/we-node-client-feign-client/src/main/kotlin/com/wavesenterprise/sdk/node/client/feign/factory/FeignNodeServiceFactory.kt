@@ -23,53 +23,59 @@ import com.wavesenterprise.sdk.node.domain.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.domain.blocking.tx.TxService
 
 class FeignNodeServiceFactory(
-    private val params: FeignNodeClientParams
+    private val params: FeignNodeClientParams,
 ) : NodeBlockingServiceFactory {
 
     override fun txService(): TxService {
         val weTxApi = FeignWeApiFactory.createClient(
-            WeTxApiFeign::class.java,
-            params,
+            clientClass = WeTxApiFeign::class.java,
+            loggerName = TxService::class.java.name,
+            feignProperties = params,
         )
         return FeignTxService(weTxApi)
     }
 
     override fun contractService(): ContractService {
         val weContractServiceApiFeign = FeignWeApiFactory.createClient(
-            WeContractServiceApiFeign::class.java,
-            params,
+            clientClass = WeContractServiceApiFeign::class.java,
+            loggerName = ContractService::class.java.name,
+            feignProperties = params,
         )
         return FeignContractService(weContractServiceApiFeign)
     }
 
     override fun addressService(): AddressService {
         val weAddressServiceApiFeign = FeignWeApiFactory.createClient(
-            WeAddressServiceApiFeign::class.java,
-            params,
+            clientClass = WeAddressServiceApiFeign::class.java,
+            loggerName = AddressService::class.java.name,
+            feignProperties = params,
         )
         return FeignAddressService(weAddressServiceApiFeign)
     }
 
     override fun nodeInfoService(): NodeInfoService {
         val weNodeInfoServiceApiFeign = FeignWeApiFactory.createClient(
-            WeNodeInfoServiceApiFeign::class.java,
-            params,
+            clientClass = WeNodeInfoServiceApiFeign::class.java,
+            loggerName = NodeInfoService::class.java.name,
+            feignProperties = params,
         )
         return FeignNodeInfoService(weNodeInfoServiceApiFeign)
     }
 
     override fun privacyService(): PrivacyService {
         val wePrivacyServiceApiFeign = FeignWeApiFactory.createClient(
-            WePrivacyServiceApiFeign::class.java,
-            params,
+            clientClass = WePrivacyServiceApiFeign::class.java,
+            loggerName = PrivacyService::class.java.name,
+            feignProperties = params,
         )
         return FeignPrivacyService(wePrivacyServiceApiFeign)
     }
 
     override fun blocksService(): BlocksService {
         val weBlocksServiceApiFeign = FeignWeApiFactory.createClient(
-            WeBlocksServiceApiFeign::class.java,
-            params,
+            clientClass = WeBlocksServiceApiFeign::class.java,
+            loggerName = BlocksService::class.java.name,
+            feignProperties = params,
         )
         return FeignBlocksService(weBlocksServiceApiFeign)
     }

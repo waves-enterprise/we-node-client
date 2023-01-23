@@ -29,9 +29,9 @@ internal class WeTxApiFeignTest {
     @BeforeAll
     fun init(wireMockRuntimeInfo: WireMockRuntimeInfo) {
         weTxApi = FeignWeApiFactory.createClient(
-            WeTxApiFeign::class.java,
-            FeignNodeClientParams(url = wireMockRuntimeInfo.httpBaseUrl),
-            FeignNodeErrorDecoder(FeignNodeErrorMapper(jacksonObjectMapper()))
+            clientClass = WeTxApiFeign::class.java,
+            feignProperties = FeignNodeClientParams(url = wireMockRuntimeInfo.httpBaseUrl),
+            errorDecoder = FeignNodeErrorDecoder(FeignNodeErrorMapper(jacksonObjectMapper())),
         )
     }
 
