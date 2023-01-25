@@ -1,8 +1,8 @@
 package com.wavesenterprise.sdk.node.client.feign.blocks
 
-import com.wavesenterprise.sdk.node.domain.http.HeightDto
-import com.wavesenterprise.sdk.node.domain.http.blocks.BlockAtHeightDto
-import com.wavesenterprise.sdk.node.domain.http.blocks.BlockHeadersDto
+import com.wavesenterprise.sdk.node.client.http.HeightDto
+import com.wavesenterprise.sdk.node.client.http.blocks.BlockAtHeightDto
+import com.wavesenterprise.sdk.node.client.http.blocks.BlockHeadersDto
 import feign.Headers
 import feign.Param
 import feign.RequestLine

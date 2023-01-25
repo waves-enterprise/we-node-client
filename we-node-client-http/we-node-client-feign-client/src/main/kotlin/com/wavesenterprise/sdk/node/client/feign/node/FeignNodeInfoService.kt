@@ -1,8 +1,8 @@
 package com.wavesenterprise.sdk.node.client.feign.node
 
+import com.wavesenterprise.sdk.node.client.blocking.node.NodeInfoService
+import com.wavesenterprise.sdk.node.client.http.node.NodeOwnerDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.NodeOwner
-import com.wavesenterprise.sdk.node.domain.blocking.node.NodeInfoService
-import com.wavesenterprise.sdk.node.domain.http.node.NodeOwnerDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.node.NodeConfig
 
 class FeignNodeInfoService(

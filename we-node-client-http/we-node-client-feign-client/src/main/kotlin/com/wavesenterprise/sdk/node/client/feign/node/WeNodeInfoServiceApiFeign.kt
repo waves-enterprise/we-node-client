@@ -1,6 +1,6 @@
 package com.wavesenterprise.sdk.node.client.feign.node
 
-import com.wavesenterprise.sdk.node.domain.http.node.NodeOwnerDto
+import com.wavesenterprise.sdk.node.client.http.node.NodeOwnerDto
 import com.wavesenterprise.sdk.node.domain.node.NodeConfig
 import feign.Headers
 import feign.RequestLine

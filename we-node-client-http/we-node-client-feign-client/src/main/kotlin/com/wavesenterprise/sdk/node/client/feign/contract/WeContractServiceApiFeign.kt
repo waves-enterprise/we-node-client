@@ -1,6 +1,6 @@
 package com.wavesenterprise.sdk.node.client.feign.contract
 
-import com.wavesenterprise.sdk.node.domain.http.DataEntryDto
+import com.wavesenterprise.sdk.node.client.http.DataEntryDto
 import feign.Param
 import feign.RequestLine
 import java.util.Optional

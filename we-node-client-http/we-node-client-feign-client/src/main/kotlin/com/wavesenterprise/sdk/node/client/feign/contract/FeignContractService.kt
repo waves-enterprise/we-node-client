@@ -1,14 +1,14 @@
 package com.wavesenterprise.sdk.node.client.feign.contract
 
+import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
+import com.wavesenterprise.sdk.node.client.http.DataEntryDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.DataEntry
-import com.wavesenterprise.sdk.node.domain.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.domain.contract.ConnectionRequest
 import com.wavesenterprise.sdk.node.domain.contract.ContractTransactionResponse
 import com.wavesenterprise.sdk.node.domain.contract.ExecutionErrorRequest
 import com.wavesenterprise.sdk.node.domain.contract.ExecutionSuccessRequest
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeysRequest
-import com.wavesenterprise.sdk.node.domain.http.DataEntryDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistsException
 import java.util.Optional
 

@@ -1,8 +1,8 @@
 package com.wavesenterprise.sdk.node.client.feign.node
 
+import com.wavesenterprise.sdk.node.client.blocking.address.AddressService
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.DataEntry
-import com.wavesenterprise.sdk.node.domain.blocking.address.AddressService
 
 class FeignAddressService(
     private val weAddressServiceApiFeign: WeAddressServiceApiFeign,

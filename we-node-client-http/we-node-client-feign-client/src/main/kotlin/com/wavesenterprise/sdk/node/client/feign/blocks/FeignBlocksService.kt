@@ -1,14 +1,14 @@
 package com.wavesenterprise.sdk.node.client.feign.blocks
 
+import com.wavesenterprise.sdk.node.client.blocking.blocks.BlocksService
+import com.wavesenterprise.sdk.node.client.http.HeightDto.Companion.toDomain
+import com.wavesenterprise.sdk.node.client.http.blocks.BlockAtHeightDto.Companion.toDomain
+import com.wavesenterprise.sdk.node.client.http.blocks.BlockHeadersDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.Height
 import com.wavesenterprise.sdk.node.domain.Signature
-import com.wavesenterprise.sdk.node.domain.blocking.blocks.BlocksService
 import com.wavesenterprise.sdk.node.domain.blocks.BlockAtHeight
 import com.wavesenterprise.sdk.node.domain.blocks.BlockHeaders
-import com.wavesenterprise.sdk.node.domain.http.HeightDto.Companion.toDomain
-import com.wavesenterprise.sdk.node.domain.http.blocks.BlockAtHeightDto.Companion.toDomain
-import com.wavesenterprise.sdk.node.domain.http.blocks.BlockHeadersDto.Companion.toDomain
 
 class FeignBlocksService(
     private val weBlocksServiceApiFeign: WeBlocksServiceApiFeign,

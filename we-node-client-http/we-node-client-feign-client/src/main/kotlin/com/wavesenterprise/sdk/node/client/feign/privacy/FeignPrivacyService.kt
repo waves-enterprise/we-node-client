@@ -1,9 +1,9 @@
 package com.wavesenterprise.sdk.node.client.feign.privacy
 
+import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
+import com.wavesenterprise.sdk.node.client.http.tx.PolicyDataHashTxDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.PolicyId
-import com.wavesenterprise.sdk.node.domain.blocking.privacy.PrivacyService
-import com.wavesenterprise.sdk.node.domain.http.tx.PolicyDataHashTxDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.privacy.Data
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemInfoResponse
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemRequest

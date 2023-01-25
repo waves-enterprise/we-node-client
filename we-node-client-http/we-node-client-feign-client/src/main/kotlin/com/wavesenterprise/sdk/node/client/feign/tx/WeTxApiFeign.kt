@@ -1,8 +1,8 @@
 package com.wavesenterprise.sdk.node.client.feign.tx
 
-import com.wavesenterprise.sdk.node.domain.http.sign.SignRequestDto
-import com.wavesenterprise.sdk.node.domain.http.tx.TxDto
-import com.wavesenterprise.sdk.node.domain.http.tx.UtxSizeDto
+import com.wavesenterprise.sdk.node.client.http.sign.SignRequestDto
+import com.wavesenterprise.sdk.node.client.http.tx.TxDto
+import com.wavesenterprise.sdk.node.client.http.tx.UtxSizeDto
 import feign.Headers
 import feign.Param
 import feign.RequestLine
