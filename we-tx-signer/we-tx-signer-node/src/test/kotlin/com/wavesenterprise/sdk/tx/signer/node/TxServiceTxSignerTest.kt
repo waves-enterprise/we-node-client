@@ -1,6 +1,6 @@
 package com.wavesenterprise.sdk.tx.signer.node
 
-import com.wavesenterprise.sdk.node.domain.blocking.tx.TxService
+import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
 import com.wavesenterprise.sdk.node.domain.sign.CreateContractSignRequest
 import com.wavesenterprise.sdk.node.test.data.TestDataFactory.Companion.address
 import com.wavesenterprise.sdk.node.test.data.TestDataFactory.Companion.createContractSignRequest

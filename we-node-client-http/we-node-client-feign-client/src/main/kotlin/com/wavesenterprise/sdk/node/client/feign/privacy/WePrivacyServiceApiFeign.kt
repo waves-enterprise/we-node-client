@@ -1,6 +1,6 @@
 package com.wavesenterprise.sdk.node.client.feign.privacy
 
-import com.wavesenterprise.sdk.node.domain.http.tx.PolicyDataHashTxDto
+import com.wavesenterprise.sdk.node.client.http.tx.PolicyDataHashTxDto
 import com.wavesenterprise.sdk.node.domain.privacy.SendDataRequest
 import feign.Headers
 import feign.Param

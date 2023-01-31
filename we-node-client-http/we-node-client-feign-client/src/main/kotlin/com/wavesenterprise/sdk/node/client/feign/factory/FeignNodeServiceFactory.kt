@@ -1,5 +1,12 @@
 package com.wavesenterprise.sdk.node.client.feign.factory
 
+import com.wavesenterprise.sdk.node.client.blocking.address.AddressService
+import com.wavesenterprise.sdk.node.client.blocking.blocks.BlocksService
+import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
+import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
+import com.wavesenterprise.sdk.node.client.blocking.node.NodeInfoService
+import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
+import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
 import com.wavesenterprise.sdk.node.client.feign.FeignNodeClientParams
 import com.wavesenterprise.sdk.node.client.feign.FeignWeApiFactory
 import com.wavesenterprise.sdk.node.client.feign.blocks.FeignBlocksService
@@ -14,13 +21,6 @@ import com.wavesenterprise.sdk.node.client.feign.privacy.FeignPrivacyService
 import com.wavesenterprise.sdk.node.client.feign.privacy.WePrivacyServiceApiFeign
 import com.wavesenterprise.sdk.node.client.feign.tx.FeignTxService
 import com.wavesenterprise.sdk.node.client.feign.tx.WeTxApiFeign
-import com.wavesenterprise.sdk.node.domain.blocking.address.AddressService
-import com.wavesenterprise.sdk.node.domain.blocking.blocks.BlocksService
-import com.wavesenterprise.sdk.node.domain.blocking.contract.ContractService
-import com.wavesenterprise.sdk.node.domain.blocking.node.NodeBlockingServiceFactory
-import com.wavesenterprise.sdk.node.domain.blocking.node.NodeInfoService
-import com.wavesenterprise.sdk.node.domain.blocking.privacy.PrivacyService
-import com.wavesenterprise.sdk.node.domain.blocking.tx.TxService
 
 class FeignNodeServiceFactory(
     private val params: FeignNodeClientParams

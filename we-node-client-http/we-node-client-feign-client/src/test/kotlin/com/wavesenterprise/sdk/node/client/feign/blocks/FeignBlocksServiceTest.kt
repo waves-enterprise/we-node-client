@@ -1,18 +1,18 @@
 package com.wavesenterprise.sdk.node.client.feign.blocks
 
+import com.wavesenterprise.sdk.node.client.http.DataEntryDto
+import com.wavesenterprise.sdk.node.client.http.HeightDto
+import com.wavesenterprise.sdk.node.client.http.blocks.BlockAtHeightDto
+import com.wavesenterprise.sdk.node.client.http.blocks.BlockHeadersDto
+import com.wavesenterprise.sdk.node.client.http.blocks.PoaConsensusDto
+import com.wavesenterprise.sdk.node.client.http.blocks.PosConsensusDto
+import com.wavesenterprise.sdk.node.client.http.tx.CreateContractTxDto
+import com.wavesenterprise.sdk.node.client.http.tx.TxDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.BlockVersion
 import com.wavesenterprise.sdk.node.domain.Feature
 import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.Height
 import com.wavesenterprise.sdk.node.domain.Signature
-import com.wavesenterprise.sdk.node.domain.http.DataEntryDto
-import com.wavesenterprise.sdk.node.domain.http.HeightDto
-import com.wavesenterprise.sdk.node.domain.http.blocks.BlockAtHeightDto
-import com.wavesenterprise.sdk.node.domain.http.blocks.BlockHeadersDto
-import com.wavesenterprise.sdk.node.domain.http.blocks.PoaConsensusDto
-import com.wavesenterprise.sdk.node.domain.http.blocks.PosConsensusDto
-import com.wavesenterprise.sdk.node.domain.http.tx.CreateContractTxDto
-import com.wavesenterprise.sdk.node.domain.http.tx.TxDto.Companion.toDomain
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals

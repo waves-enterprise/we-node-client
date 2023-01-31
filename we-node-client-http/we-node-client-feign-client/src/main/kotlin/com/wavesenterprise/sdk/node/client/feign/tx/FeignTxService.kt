@@ -1,10 +1,10 @@
 package com.wavesenterprise.sdk.node.client.feign.tx
 
+import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
+import com.wavesenterprise.sdk.node.client.http.tx.TxDto.Companion.toDomain
+import com.wavesenterprise.sdk.node.client.http.tx.UtxSizeDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.Height
 import com.wavesenterprise.sdk.node.domain.TxId
-import com.wavesenterprise.sdk.node.domain.blocking.tx.TxService
-import com.wavesenterprise.sdk.node.domain.http.tx.TxDto.Companion.toDomain
-import com.wavesenterprise.sdk.node.domain.http.tx.UtxSizeDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.sign.SignRequest
 import com.wavesenterprise.sdk.node.domain.tx.Tx
 import com.wavesenterprise.sdk.node.domain.tx.TxInfo

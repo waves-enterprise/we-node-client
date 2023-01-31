@@ -7,11 +7,11 @@ import com.wavesenterprise.sdk.node.client.feign.FeignNodeClientParams
 import com.wavesenterprise.sdk.node.client.feign.FeignNodeErrorDecoder
 import com.wavesenterprise.sdk.node.client.feign.FeignNodeErrorMapper
 import com.wavesenterprise.sdk.node.client.feign.FeignWeApiFactory
-import com.wavesenterprise.sdk.node.domain.http.DataEntryDto
-import com.wavesenterprise.sdk.node.domain.http.sign.CallContractSignRequestDto
-import com.wavesenterprise.sdk.node.domain.http.sign.CreateContractSignRequestDto
-import com.wavesenterprise.sdk.node.domain.http.tx.CallContractTxDto
-import com.wavesenterprise.sdk.node.domain.http.tx.CreateContractTxDto
+import com.wavesenterprise.sdk.node.client.http.DataEntryDto
+import com.wavesenterprise.sdk.node.client.http.sign.CallContractSignRequestDto
+import com.wavesenterprise.sdk.node.client.http.sign.CreateContractSignRequestDto
+import com.wavesenterprise.sdk.node.client.http.tx.CallContractTxDto
+import com.wavesenterprise.sdk.node.client.http.tx.CreateContractTxDto
 import com.wavesenterprise.sdk.node.exception.NodeNotFoundException
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
