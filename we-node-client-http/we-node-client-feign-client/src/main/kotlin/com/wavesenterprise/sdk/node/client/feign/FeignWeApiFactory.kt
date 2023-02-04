@@ -8,6 +8,7 @@ import feign.codec.ErrorDecoder
 import feign.jackson.JacksonDecoder
 import feign.jackson.JacksonEncoder
 import feign.optionals.OptionalDecoder
+import feign.slf4j.Slf4jLogger
 import java.util.concurrent.TimeUnit
 
 object FeignWeApiFactory {
@@ -18,6 +19,7 @@ object FeignWeApiFactory {
 
     fun <T> createClient(
         clientClass: Class<T>,
+        loggerName: String = clientClass.simpleName,
         feignProperties: FeignProperties,
         errorDecoder: ErrorDecoder? = null,
     ): T = Feign.builder()
@@ -25,6 +27,7 @@ object FeignWeApiFactory {
         .decoder(OptionalDecoder(JacksonDecoder(objectMapper)))
         .errorDecoder(errorDecoder ?: ErrorDecoder.Default())
         .logLevel(feignProperties.loggerLevel)
+        .logger(Slf4jLogger(loggerName))
         .options(
             Request.Options(
                 feignProperties.connectTimeout,

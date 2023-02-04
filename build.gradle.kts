@@ -269,6 +269,7 @@ subprojects {
 
             dependency("io.github.openfeign:feign-core:$feignVersion")
             dependency("io.github.openfeign:feign-jackson:$feignVersion")
+            dependency("io.github.openfeign:feign-slf4j:$feignVersion")
             dependency("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonModuleKotlin")
             dependency("com.github.ben-manes.caffeine:caffeine:$caffeineCacheVersion")
 
