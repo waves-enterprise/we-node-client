@@ -12,6 +12,7 @@ import com.wavesenterprise.sdk.node.domain.DataSize
 import com.wavesenterprise.sdk.node.domain.FileName
 import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.NodeOwner
+import com.wavesenterprise.sdk.node.domain.Password
 import com.wavesenterprise.sdk.node.domain.PolicyId
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.Timestamp
@@ -183,5 +184,5 @@ fun businessFailingMockClient(): NodeBlockingServiceFactory {
     return nodeBlockingServiceFactory
 }
 
-fun nodeCredentialsProvider(nodeCredentials: Map<Address, String> = mapOf()) =
+fun nodeCredentialsProvider(nodeCredentials: Map<Address, Password> = mapOf()) =
     DefaultNodeCredentialsProvider(nodeCredentials)

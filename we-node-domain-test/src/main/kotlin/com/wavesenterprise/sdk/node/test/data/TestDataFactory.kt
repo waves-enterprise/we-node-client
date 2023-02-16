@@ -121,11 +121,13 @@ class TestDataFactory private constructor() {
         )
 
         @JvmStatic
-        fun createContractSignRequest() = CreateContractSignRequest(
+        fun createContractSignRequest(
+            senderAddress: Address = Address.fromBase58("3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX"),
+        ) = CreateContractSignRequest(
             version = TxVersion(2),
 
             // sender specific
-            senderAddress = Address.fromBase58("3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX"),
+            senderAddress = senderAddress,
             password = Password("bla"), // only for signature by node
             // ---------------
 
