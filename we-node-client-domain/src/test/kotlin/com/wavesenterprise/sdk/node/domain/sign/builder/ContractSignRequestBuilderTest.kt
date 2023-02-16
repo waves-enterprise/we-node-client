@@ -1,12 +1,10 @@
 package com.wavesenterprise.sdk.node.domain.sign.builder
 
-import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.DataEntry
 import com.wavesenterprise.sdk.node.domain.DataKey
 import com.wavesenterprise.sdk.node.domain.DataValue
 import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.Hash
-import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.TxType
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.ContractImage
@@ -29,7 +27,6 @@ internal class ContractSignRequestBuilderTest {
     @Test
     fun `should build create contract sign request`() {
         contractSignRequestBuilder
-            .senderAddress(Address(TxId.fromBase58("d").bytes))
             .fee(Fee(0L))
             .image(ContractImage(""))
             .imageHash(Hash(ByteArray(1)))
@@ -41,7 +38,6 @@ internal class ContractSignRequestBuilderTest {
     @Test
     fun `should build call contract sign request`() {
         contractSignRequestBuilder
-            .senderAddress(Address(TxId.fromBase58("d").bytes))
             .fee(Fee(0L))
             .contractId(ContractId.fromBase58(""))
             .contractVersion(ContractVersion(0))
@@ -60,7 +56,6 @@ internal class ContractSignRequestBuilderTest {
     fun `should throw IllegalArgumentException when not nullable fields is null for create contract sign request`() {
         assertThrows<IllegalStateException> {
             contractSignRequestBuilder
-                .senderAddress(Address(TxId.fromBase58("d").bytes))
                 .build(txType = TxType.CREATE_CONTRACT)
         }.apply {
             assertEquals(
@@ -74,7 +69,6 @@ internal class ContractSignRequestBuilderTest {
     fun `should throw IllegalArgumentException when not nullable fields is null for call contract sign request`() {
         assertThrows<IllegalStateException> {
             contractSignRequestBuilder
-                .senderAddress(Address(TxId.fromBase58("d").bytes))
                 .build(txType = TxType.CALL_CONTRACT)
         }.apply {
             assertEquals(

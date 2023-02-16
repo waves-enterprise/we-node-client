@@ -1,6 +1,7 @@
 package com.wavesenterprise.sdk.tx.signer.node
 
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
+import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.sign.CreateContractSignRequest
 import com.wavesenterprise.sdk.node.test.data.TestDataFactory.Companion.address
 import com.wavesenterprise.sdk.node.test.data.TestDataFactory.Companion.createContractSignRequest
@@ -15,6 +16,7 @@ import io.mockk.slot
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
@@ -30,8 +32,6 @@ internal class TxServiceTxSignerTest {
 
     @BeforeEach
     fun initMocks() {
-        every { signCredentialsProvider.credentials() } returns credentials
-
         txServiceTxSigner = TxServiceTxSigner(
             txService = txService,
             signCredentialsProvider = signCredentialsProvider,
@@ -40,6 +40,7 @@ internal class TxServiceTxSignerTest {
 
     @Test
     fun `should set client credentials in sign request`() {
+        every { signCredentialsProvider.credentials() } returns credentials
         val signRequestCaptor = slot<CreateContractSignRequest>()
         every { txService.sign(capture(signRequestCaptor)) } returns createContractTx()
 
@@ -48,6 +49,22 @@ internal class TxServiceTxSignerTest {
         signRequestCaptor.captured.apply {
             assertEquals(senderAddress, this.senderAddress)
             assertEquals(password, this.password)
+        }
+    }
+
+    @Test
+    fun `should throw exception when senderAddress is EMPTY`() {
+        every { signCredentialsProvider.credentials() } returns Credentials(Address.EMPTY, password)
+        val signRequestCaptor = slot<CreateContractSignRequest>()
+        every { txService.sign(capture(signRequestCaptor)) } returns createContractTx()
+
+        assertThrows<IllegalArgumentException> {
+            txServiceTxSigner.sign(createContractSignRequest(senderAddress = Address.EMPTY))
+        }.apply {
+            assertEquals(
+                "Sender address can not be empty [senderAddress = `${Address.EMPTY}`",
+                this.message
+            )
         }
     }
 

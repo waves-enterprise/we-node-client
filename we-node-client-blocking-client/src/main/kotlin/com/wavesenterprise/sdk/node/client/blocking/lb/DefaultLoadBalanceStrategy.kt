@@ -3,7 +3,6 @@ package com.wavesenterprise.sdk.node.client.blocking.lb
 import com.wavesenterprise.sdk.node.client.blocking.credentials.NodeCredentialsProvider
 import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.domain.Hash
-import com.wavesenterprise.sdk.node.domain.Password
 import com.wavesenterprise.sdk.node.domain.PolicyId
 import com.wavesenterprise.sdk.node.domain.privacy.SendDataRequest
 import com.wavesenterprise.sdk.node.domain.sign.SignRequest
@@ -24,7 +23,7 @@ class DefaultLoadBalanceStrategy(
                         methodCallArgs = args.patch { methodCallArgs ->
                             methodCallArgs[0] = firstArg.copy(
                                 senderAddress = senderAddress,
-                                password = Password(nodeCredentialsProvider.getPassword(senderAddress)),
+                                password = nodeCredentialsProvider.getPassword(senderAddress),
                             )
                         }
                     )

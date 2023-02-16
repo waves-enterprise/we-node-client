@@ -2,6 +2,7 @@ package com.wavesenterprise.sdk.node.client.blocking.lb
 
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.Hash
+import com.wavesenterprise.sdk.node.domain.Password
 import com.wavesenterprise.sdk.node.domain.PolicyId
 import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.blocking.policyItemInfoResponse
@@ -113,7 +114,7 @@ class LoadBalancingServiceFactoryTest {
                 it.getContractKey(any())
             } returns Optional.empty()
         }
-        val client1 = "1" to mockkNodeBlockingServiceFactory(contractService = mockkContractService1,)
+        val client1 = "1" to mockkNodeBlockingServiceFactory(contractService = mockkContractService1)
         val client2 = "2" to retryableFailingMockClient()
 
         val lb = lbServiceFactoryBuilder
@@ -260,7 +261,11 @@ class LoadBalancingServiceFactoryTest {
         )
 
         val lb = lbServiceFactoryBuilder
-            .nodeCredentialsProvider(nodeCredentialsProvider(mapOf(Address.fromBase58("B") to "password")))
+            .nodeCredentialsProvider(
+                nodeCredentialsProvider(
+                    mapOf(Address.fromBase58("B") to Password("password"))
+                )
+            )
             .build(mapOf(nodeAlis1 to client1, client2, nodeAlis3 to client3))
 
         val dto = sendDataRequest()
