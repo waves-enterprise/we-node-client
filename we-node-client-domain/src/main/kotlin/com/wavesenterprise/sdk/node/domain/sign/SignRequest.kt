@@ -9,5 +9,5 @@ sealed interface SignRequest<T : Tx> {
     val password: Password?
 
     fun withAddress(address: Address): SignRequest<T>
-    fun withPassword(password: Password): SignRequest<T>
+    fun withPassword(password: Password?): SignRequest<T>
 }

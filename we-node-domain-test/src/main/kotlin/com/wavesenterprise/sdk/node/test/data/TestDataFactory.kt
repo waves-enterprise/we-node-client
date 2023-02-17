@@ -5,7 +5,6 @@ import com.wavesenterprise.sdk.node.domain.AssetId
 import com.wavesenterprise.sdk.node.domain.DataEntry
 import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.FeeAssetId
-import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.Password
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.Signature
@@ -114,7 +113,7 @@ class TestDataFactory private constructor() {
             timestamp = Timestamp(1L),
             feeAssetId = null,
             image = ContractImage("ContractImage"),
-            imageHash = Hash(ByteArray(1)),
+            imageHash = ContractImageHash("ContractImageHash"),
             contractName = ContractName("ContractName"),
             atomicBadge = null,
             senderAddress = Address(ByteArray(1)),
@@ -139,7 +138,7 @@ class TestDataFactory private constructor() {
             // contract specific
             contractName = ContractName("bla"),
             image = ContractImage("image"),
-            imageHash = Hash(ByteArray(2)),
+            imageHash = ContractImageHash("ContractImageHash"),
             params = listOf(),
             // -----------------
         )

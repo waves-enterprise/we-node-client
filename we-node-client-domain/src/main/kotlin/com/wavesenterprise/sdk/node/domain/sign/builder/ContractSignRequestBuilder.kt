@@ -5,13 +5,13 @@ import com.wavesenterprise.sdk.node.domain.ContractApiVersion
 import com.wavesenterprise.sdk.node.domain.DataEntry
 import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.FeeAssetId
-import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.TxType
 import com.wavesenterprise.sdk.node.domain.TxVersion
 import com.wavesenterprise.sdk.node.domain.ValidationPolicy
 import com.wavesenterprise.sdk.node.domain.atomic.AtomicBadge
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.ContractImage
+import com.wavesenterprise.sdk.node.domain.contract.ContractImageHash
 import com.wavesenterprise.sdk.node.domain.contract.ContractName
 import com.wavesenterprise.sdk.node.domain.contract.ContractVersion
 import com.wavesenterprise.sdk.node.domain.sign.CallContractSignRequest
@@ -50,7 +50,7 @@ class ContractSignRequestBuilder {
 
     fun image(image: ContractImage) = this.apply { builderProperties.image = image }
 
-    fun imageHash(imageHash: Hash) = this.apply { builderProperties.imageHash = imageHash }
+    fun imageHash(imageHash: ContractImageHash) = this.apply { builderProperties.imageHash = imageHash }
 
     fun contractName(contractName: ContractName) = this.apply { builderProperties.contractName = contractName }
 
@@ -143,7 +143,7 @@ class ContractSignRequestBuilder {
         var fee: Fee? = null
         var feeAssetId: FeeAssetId? = null
         var image: ContractImage? = null
-        var imageHash: Hash? = null
+        var imageHash: ContractImageHash? = null
         var contractName: ContractName? = null
         var params: List<DataEntry>? = null
         var apiVersion: ContractApiVersion? = null

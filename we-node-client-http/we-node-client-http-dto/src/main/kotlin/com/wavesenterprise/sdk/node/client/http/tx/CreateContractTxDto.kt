@@ -15,7 +15,6 @@ import com.wavesenterprise.sdk.node.client.http.atomic.AtomicBadgeDto.Companion.
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.FeeAssetId
-import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.Signature
 import com.wavesenterprise.sdk.node.domain.Timestamp
@@ -23,6 +22,7 @@ import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.TxType
 import com.wavesenterprise.sdk.node.domain.TxVersion
 import com.wavesenterprise.sdk.node.domain.contract.ContractImage
+import com.wavesenterprise.sdk.node.domain.contract.ContractImageHash
 import com.wavesenterprise.sdk.node.domain.contract.ContractName
 import com.wavesenterprise.sdk.node.domain.tx.CreateContractTx
 
@@ -52,7 +52,7 @@ data class CreateContractTxDto(
                 id = id.asBase58String(),
                 senderPublicKey = senderPublicKey.asBase58String(),
                 image = image.value,
-                imageHash = imageHash.asHexString(),
+                imageHash = imageHash.value,
                 contractName = contractName.value,
                 params = params.map { it.toDto() },
                 fee = fee.value,
@@ -72,7 +72,7 @@ data class CreateContractTxDto(
                 id = TxId.fromBase58(id),
                 senderPublicKey = PublicKey.fromBase58(senderPublicKey),
                 image = ContractImage(image),
-                imageHash = Hash.fromHexString(imageHash),
+                imageHash = ContractImageHash(imageHash),
                 contractName = ContractName(contractName),
                 params = params.map { it.toDomain() },
                 fee = Fee(fee),

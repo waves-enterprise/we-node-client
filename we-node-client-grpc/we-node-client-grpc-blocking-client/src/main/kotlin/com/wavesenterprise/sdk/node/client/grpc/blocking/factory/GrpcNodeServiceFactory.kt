@@ -28,7 +28,8 @@ class GrpcNodeServiceFactory(
         return ContractGrpcBlockingService(
             channel = channel,
             clientInterceptors = clientInterceptors,
-            contractServiceStub = ContractServiceGrpc.newBlockingStub(channel).withInterceptors(*clientInterceptors.toTypedArray()),
+            contractServiceStub = ContractServiceGrpc
+                .newBlockingStub(channel).withInterceptors(*clientInterceptors.toTypedArray()),
         )
     }
 

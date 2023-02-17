@@ -18,13 +18,13 @@ import com.wavesenterprise.sdk.node.client.grpc.mapper.ValidationPolicyMapper.dt
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.FeeAssetId
-import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.Signature
 import com.wavesenterprise.sdk.node.domain.Timestamp
 import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.TxVersion
 import com.wavesenterprise.sdk.node.domain.contract.ContractImage
+import com.wavesenterprise.sdk.node.domain.contract.ContractImageHash
 import com.wavesenterprise.sdk.node.domain.contract.ContractName
 import com.wavesenterprise.sdk.node.domain.tx.CreateContractTx
 import com.wavesenterprise.transaction.protobuf.DataEntry
@@ -46,7 +46,7 @@ object CreateContractTxMapper {
             id = tx.id.byteString()
             senderPublicKey = tx.senderPublicKey.byteString()
             image = tx.image.value
-            imageHash = tx.imageHash.asHexString()
+            imageHash = tx.imageHash.value
             contractName = tx.contractName.value
             params.addAll(tx.params.map { it.dto() })
             fee = tx.fee.value
@@ -71,7 +71,7 @@ object CreateContractTxMapper {
             id = TxId(tx.id.byteArray()),
             senderPublicKey = PublicKey(tx.senderPublicKey.toByteArray()),
             image = ContractImage(tx.image),
-            imageHash = Hash.fromHexString(tx.imageHash),
+            imageHash = ContractImageHash(tx.imageHash),
             contractName = ContractName(tx.contractName),
             params = tx.paramsList.map { param: DataEntry ->
                 param.domain()

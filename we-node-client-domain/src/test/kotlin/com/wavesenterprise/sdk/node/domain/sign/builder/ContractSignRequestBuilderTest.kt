@@ -4,10 +4,10 @@ import com.wavesenterprise.sdk.node.domain.DataEntry
 import com.wavesenterprise.sdk.node.domain.DataKey
 import com.wavesenterprise.sdk.node.domain.DataValue
 import com.wavesenterprise.sdk.node.domain.Fee
-import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.TxType
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.ContractImage
+import com.wavesenterprise.sdk.node.domain.contract.ContractImageHash
 import com.wavesenterprise.sdk.node.domain.contract.ContractName
 import com.wavesenterprise.sdk.node.domain.contract.ContractVersion
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -29,7 +29,7 @@ internal class ContractSignRequestBuilderTest {
         contractSignRequestBuilder
             .fee(Fee(0L))
             .image(ContractImage(""))
-            .imageHash(Hash(ByteArray(1)))
+            .imageHash(ContractImageHash(""))
             .contractName(ContractName(""))
             .params(listOf(DataEntry(DataKey(""), DataValue.StringDataValue(""))))
             .build(txType = TxType.CREATE_CONTRACT)

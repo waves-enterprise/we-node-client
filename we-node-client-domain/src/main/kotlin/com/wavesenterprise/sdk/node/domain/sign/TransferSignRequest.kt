@@ -19,5 +19,5 @@ data class TransferSignRequest(
 ) : SignRequest<TransferTx> {
     override fun withAddress(address: Address) = copy(senderAddress = address)
 
-    override fun withPassword(password: Password) = copy(password = password)
+    override fun withPassword(password: Password?) = copy(password = password)
 }
