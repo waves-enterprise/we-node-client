@@ -4,7 +4,7 @@ import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.Password
 
 class DefaultNodeCredentialsProvider(
-    private val credentialsMap: Map<Address, Password>,
+    private val credentialsMap: Map<Address, Password?>,
 ) : NodeCredentialsProvider {
-    override fun getPassword(address: Address): Password = requireNotNull(credentialsMap[address])
+    override fun getPassword(address: Address): Password? = credentialsMap[address]
 }

@@ -184,5 +184,5 @@ fun businessFailingMockClient(): NodeBlockingServiceFactory {
     return nodeBlockingServiceFactory
 }
 
-fun nodeCredentialsProvider(nodeCredentials: Map<Address, Password> = mapOf()) =
+fun nodeCredentialsProvider(nodeCredentials: Map<Address, Password?> = mapOf()) =
     DefaultNodeCredentialsProvider(nodeCredentials)
