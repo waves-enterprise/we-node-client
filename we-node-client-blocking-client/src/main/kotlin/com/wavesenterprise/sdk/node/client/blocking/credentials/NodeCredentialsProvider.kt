@@ -4,5 +4,5 @@ import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.Password
 
 interface NodeCredentialsProvider {
-    fun getPassword(address: Address): Password
+    fun getPassword(address: Address): Password?
 }
