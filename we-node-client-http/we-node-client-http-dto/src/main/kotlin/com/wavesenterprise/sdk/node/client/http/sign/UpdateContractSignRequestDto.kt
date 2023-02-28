@@ -35,7 +35,7 @@ data class UpdateContractSignRequestDto(
                 feeAssetId = feeAssetId?.asBase58String(),
                 contractId = contractId.asBase58String(),
                 image = image.value,
-                imageHash = imageHash.asHexString(),
+                imageHash = imageHash.value,
                 apiVersion = apiVersion?.toDto(),
                 validationPolicy = validationPolicy?.toDto(),
                 atomicBadge = atomicBadge?.toDto(),

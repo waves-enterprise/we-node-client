@@ -4,6 +4,7 @@ import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
 import com.wavesenterprise.sdk.node.exception.NodeError
+import com.wavesenterprise.sdk.node.exception.specific.ContractNotFoundException
 import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistsException
 import io.mockk.every
 import io.mockk.mockk
@@ -21,11 +22,14 @@ class FeignContractServiceTest {
 
     private lateinit var contractKeyRequest: ContractKeyRequest
 
+    private lateinit var contractId: ContractId
+
     @BeforeEach
     fun init() {
         feignContractService = FeignContractService(weContractServiceApiFeign)
+        contractId = ContractId(TxId.fromBase58("C2HM9q3QzGSBydnCA4GMcf3cFnTaSuwaWXVtsCSTSmZW"))
         contractKeyRequest = ContractKeyRequest(
-            contractId = ContractId(TxId.fromBase58("C2HM9q3QzGSBydnCA4GMcf3cFnTaSuwaWXVtsCSTSmZW")),
+            contractId = contractId,
             key = "KEY",
         )
     }
@@ -43,5 +47,22 @@ class FeignContractServiceTest {
         )
         val dataEntry = feignContractService.getContractKey(contractKeyRequest)
         assertFalse(dataEntry.isPresent)
+    }
+
+    @Test
+    fun `should return null when catch ContractNotFoundException`() {
+        every {
+            weContractServiceApiFeign.contractInfo(
+                contractId = contractId.asBase58String(),
+            )
+        } throws ContractNotFoundException(
+            nodeError = NodeError(
+                error = 600,
+                message = "Contract '$contractId' is not found",
+            ),
+            cause = Exception(),
+        )
+        val contractInfo = feignContractService.getContractInfo(contractId)
+        assertFalse(contractInfo.isPresent)
     }
 }

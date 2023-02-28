@@ -96,4 +96,33 @@ internal class WeContractServiceApiFeignTest {
             )
         }
     }
+
+    @Test
+    fun `should get contract info`() {
+        val contractInfoDto =
+            weContractServiceApiFeign.contractInfo("5inUANAmDzRfq5f1Yv7HBTm8G4AREPfeKCntaEDDqVbU")
+        contractInfoDto.apply {
+            assertEquals("5inUANAmDzRfq5f1Yv7HBTm8G4AREPfeKCntaEDDqVbU", contractInfoDto.contractId)
+            assertEquals("image", contractInfoDto.image)
+            assertEquals(
+                "b48d1de58c39d2160a4b8a5a9cae90818da1212742ec1f11fba1209bed0a212c",
+                contractInfoDto.imageHash
+            )
+            assertEquals(1, contractInfoDto.version)
+            assertEquals(true, contractInfoDto.active)
+        }
+    }
+
+    @Test
+    fun `shouldn't get contractInfo because status not found`() {
+        assertThrows<ContractNotFoundException> {
+            weContractServiceApiFeign.contractInfo("CgqRPcPnexY533gCh2SSvBXh5bca1qMs7KFGntawHGww")
+        }.apply {
+            assertEquals("600", this.nodeError.error.toString())
+            assertEquals(
+                "Contract 'CgqRPcPnexY533gCh2SSvBXh5bca1qMs7KFGntawHGww' is not found",
+                this.nodeError.message
+            )
+        }
+    }
 }

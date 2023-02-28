@@ -5,5 +5,5 @@ import com.wavesenterprise.sdk.node.domain.Password
 
 data class Credentials(
     val senderAddress: Address,
-    val password: Password,
+    val password: Password?,
 )

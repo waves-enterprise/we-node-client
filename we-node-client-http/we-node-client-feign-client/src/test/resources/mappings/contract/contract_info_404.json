@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/contracts/info/CgqRPcPnexY533gCh2SSvBXh5bca1qMs7KFGntawHGww"
+  },
+  "response": {
+    "status": 404,
+    "jsonBody": {
+      "error": 600,
+      "message": "Contract 'CgqRPcPnexY533gCh2SSvBXh5bca1qMs7KFGntawHGww' is not found"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

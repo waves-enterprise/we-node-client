@@ -12,6 +12,8 @@ import com.wavesenterprise.sdk.node.client.grpc.mapper.contract.ContractTransact
 import com.wavesenterprise.sdk.node.client.grpc.mapper.contract.ExecutionResultMapper.dto
 import com.wavesenterprise.sdk.node.domain.DataEntry
 import com.wavesenterprise.sdk.node.domain.contract.ConnectionRequest
+import com.wavesenterprise.sdk.node.domain.contract.ContractId
+import com.wavesenterprise.sdk.node.domain.contract.ContractInfo
 import com.wavesenterprise.sdk.node.domain.contract.ContractTransactionResponse
 import com.wavesenterprise.sdk.node.domain.contract.ExecutionErrorRequest
 import com.wavesenterprise.sdk.node.domain.contract.ExecutionSuccessRequest
@@ -70,4 +72,8 @@ class ContractGrpcBlockingService(
                 }
             }
         )
+
+    override fun getContractInfo(contractId: ContractId): Optional<ContractInfo> {
+        throw IllegalArgumentException("Not implemented in grpc")
+    }
 }

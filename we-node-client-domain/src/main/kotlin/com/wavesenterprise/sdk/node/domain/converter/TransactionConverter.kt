@@ -2,11 +2,9 @@ package com.wavesenterprise.sdk.node.domain.converter
 
 import com.wavesenterprise.sdk.node.domain.AssetId
 import com.wavesenterprise.sdk.node.domain.FeeAssetId
-import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.TxType
 import com.wavesenterprise.sdk.node.domain.contract.CallContractTransaction
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
-import com.wavesenterprise.sdk.node.domain.contract.ContractImageHash
 import com.wavesenterprise.sdk.node.domain.contract.CreateContractTransaction
 import com.wavesenterprise.sdk.node.domain.tx.CallContractTx
 import com.wavesenterprise.sdk.node.domain.tx.ContractTx
@@ -26,7 +24,7 @@ fun ContractTx.toContractTransaction() = when (this) {
         timestamp = timestamp,
         feeAssetId = feeAssetId?.toContractTransaction(),
         image = image,
-        imageHash = imageHash.toContractTransaction(),
+        imageHash = imageHash,
         contractName = contractName
     )
     is CallContractTx -> CallContractTransaction(
@@ -47,8 +45,4 @@ fun ContractTx.toContractTransaction() = when (this) {
 
 fun FeeAssetId.toContractTransaction() = AssetId(
     bytes = this.txId.bytes,
-)
-
-fun Hash.toContractTransaction() = ContractImageHash(
-    imageHash = this.asHexString()
 )

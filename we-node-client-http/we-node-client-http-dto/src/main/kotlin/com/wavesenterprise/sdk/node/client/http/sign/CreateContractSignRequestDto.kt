@@ -37,7 +37,7 @@ data class CreateContractSignRequestDto(
                 fee = fee.value,
                 feeAssetId = feeAssetId?.asBase58String(),
                 image = image.value,
-                imageHash = imageHash.asHexString(),
+                imageHash = imageHash.value,
                 contractName = contractName.value,
                 params = params.map { it.toDto() },
                 apiVersion = apiVersion?.toDto(),
