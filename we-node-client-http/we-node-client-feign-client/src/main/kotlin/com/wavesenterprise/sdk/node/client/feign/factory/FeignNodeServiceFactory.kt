@@ -3,6 +3,7 @@ package com.wavesenterprise.sdk.node.client.feign.factory
 import com.wavesenterprise.sdk.node.client.blocking.address.AddressService
 import com.wavesenterprise.sdk.node.client.blocking.blocks.BlocksService
 import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
+import com.wavesenterprise.sdk.node.client.blocking.event.BlockchainEventsService
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeInfoService
 import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
@@ -78,5 +79,9 @@ class FeignNodeServiceFactory(
             feignProperties = params,
         )
         return FeignBlocksService(weBlocksServiceApiFeign)
+    }
+
+    override fun blockchainEventsService(): BlockchainEventsService {
+        TODO("Not yet implemented")
     }
 }

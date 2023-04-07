@@ -12,6 +12,11 @@ class CaffeineLoadingCache<K : Any, V : Any>(
         }
     }
 
+    override fun loadNotNull(key: K, loader: () -> V): V =
+        cache.getIfPresent(key) ?: loader().also { value ->
+            cache.put(key, value)
+        }
+
     override fun put(key: K, value: V) {
         cache.put(key, value)
     }

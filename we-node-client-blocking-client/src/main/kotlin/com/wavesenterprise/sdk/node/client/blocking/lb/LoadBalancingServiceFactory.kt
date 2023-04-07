@@ -3,6 +3,7 @@ package com.wavesenterprise.sdk.node.client.blocking.lb
 import com.wavesenterprise.sdk.node.client.blocking.address.AddressService
 import com.wavesenterprise.sdk.node.client.blocking.blocks.BlocksService
 import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
+import com.wavesenterprise.sdk.node.client.blocking.event.BlockchainEventsService
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeInfoService
 import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
@@ -43,6 +44,11 @@ class LoadBalancingServiceFactory(
     override fun blocksService(): BlocksService =
         createService(BlocksService::class.java) {
             it.blocksService()
+        }
+
+    override fun blockchainEventsService(): BlockchainEventsService =
+        createService(BlockchainEventsService::class.java) {
+            it.blockchainEventsService()
         }
 
     @Suppress("UNCHECKED_CAST")

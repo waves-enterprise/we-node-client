@@ -45,13 +45,15 @@ class CachingNodeBlockingServiceFactory(
     override fun privacyService(): PrivacyService {
         val privacyService: PrivacyService = nodeBlockingServiceFactory.privacyService()
         return object : PrivacyService by privacyService {
-            override fun info(request: PolicyItemRequest): PolicyItemInfoResponse =
-                requireNotNull(
-                    policyItemInfoCache.load(
-                        "${request.policyId.asBase58String()}_${request.dataHash.asHexString()}"
-                    ) {
-                        privacyService.info(request)
-                    }
+            override fun info(request: PolicyItemRequest): Optional<PolicyItemInfoResponse> =
+                Optional.of(
+                    requireNotNull(
+                        policyItemInfoCache.load(
+                            "${request.policyId.asBase58String()}_${request.dataHash.asHexString()}"
+                        ) {
+                            privacyService.info(request).orElseGet(null)
+                        }
+                    )
                 )
         }
     }

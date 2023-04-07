@@ -27,7 +27,7 @@ class UtxPoolSizeLimitingStrategyTest {
     @Test
     fun `should return false when utxSize less than maxUtx`() {
         every {
-            txService.utxInfo()
+            txService.utxSize()
         } returns utxSize(txCount = txCount(MAX_UTX - 1))
 
         assertFalse(utxPoolSizeLimitingStrategy.isLimitExceeded())
@@ -36,7 +36,7 @@ class UtxPoolSizeLimitingStrategyTest {
     @Test
     fun `should return true when utxSize more than maxUtx`() {
         every {
-            txService.utxInfo()
+            txService.utxSize()
         } returns utxSize(txCount = txCount(MAX_UTX + 1))
 
         assertTrue(utxPoolSizeLimitingStrategy.isLimitExceeded())

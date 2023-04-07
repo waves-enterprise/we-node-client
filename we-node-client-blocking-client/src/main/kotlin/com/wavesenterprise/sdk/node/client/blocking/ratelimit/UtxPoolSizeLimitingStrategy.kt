@@ -6,5 +6,5 @@ class UtxPoolSizeLimitingStrategy(
     private val txService: TxService,
     private val maxUtx: Int,
 ) : RateLimitingStrategy {
-    override fun isLimitExceeded() = txService.utxInfo().txCount.value >= maxUtx
+    override fun isLimitExceeded() = txService.utxSize().txCount.value >= maxUtx
 }

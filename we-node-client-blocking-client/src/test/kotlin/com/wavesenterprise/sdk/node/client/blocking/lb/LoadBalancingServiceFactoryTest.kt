@@ -281,7 +281,7 @@ class LoadBalancingServiceFactoryTest {
         val mockkPrivacyService1 = mockkPrivacyService().also {
             every {
                 it.info(any())
-            } returns policyItemInfoResponse()
+            } returns Optional.of(policyItemInfoResponse())
         }
         val client1 = "1" to mockkNodeBlockingServiceFactory(
             addresses = listOf("A", "B"),
@@ -290,7 +290,7 @@ class LoadBalancingServiceFactoryTest {
         val mockkPrivacyService2 = mockkPrivacyService().also {
             every {
                 it.info(any())
-            } returns policyItemInfoResponse()
+            } returns Optional.of(policyItemInfoResponse())
         }
         val client2 = "2" to mockkNodeBlockingServiceFactory(
             addresses = listOf("B", "C"),

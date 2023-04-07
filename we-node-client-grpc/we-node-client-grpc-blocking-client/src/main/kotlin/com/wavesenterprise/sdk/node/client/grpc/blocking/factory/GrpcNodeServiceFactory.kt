@@ -4,6 +4,7 @@ import com.wavesenterprise.protobuf.service.contract.ContractServiceGrpc
 import com.wavesenterprise.sdk.node.client.blocking.address.AddressService
 import com.wavesenterprise.sdk.node.client.blocking.blocks.BlocksService
 import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
+import com.wavesenterprise.sdk.node.client.blocking.event.BlockchainEventsService
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeInfoService
 import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
@@ -46,6 +47,10 @@ class GrpcNodeServiceFactory(
     }
 
     override fun blocksService(): BlocksService {
-        throw IllegalArgumentException("Not implemented in grpc")
+        TODO("Not yet implemented")
+    }
+
+    override fun blockchainEventsService(): BlockchainEventsService {
+        TODO("Not yet implemented")
     }
 }

@@ -124,7 +124,7 @@ class CachingNodeBlockingServiceFactoryTest {
     fun `should cache policy item info response`() {
         val policyItemRequest = policyItemRequest()
         val policyItemInfoResponse = policyItemInfoResponse()
-        every { mockkPrivacyService.info(policyItemRequest) } returns policyItemInfoResponse
+        every { mockkPrivacyService.info(policyItemRequest) } returns Optional.of(policyItemInfoResponse)
 
         repeat(2) { cachingNodeBlockingServiceFactory.privacyService().info(policyItemRequest) }
 

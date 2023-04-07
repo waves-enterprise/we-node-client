@@ -25,6 +25,9 @@ interface WeTxApiFeign {
     @RequestLine("GET /transactions/info/{id}")
     fun txInfo(@Param("id") id: String): Optional<TxDto>
 
+    @RequestLine("GET /transactions/unconfirmed")
+    fun utxTxs(): List<TxDto>
+
     @RequestLine("GET /transactions/unconfirmed/size")
-    fun utxInfo(): UtxSizeDto
+    fun utxSize(): UtxSizeDto
 }

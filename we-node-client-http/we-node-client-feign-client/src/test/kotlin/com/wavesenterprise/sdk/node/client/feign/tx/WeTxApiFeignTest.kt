@@ -36,12 +36,19 @@ internal class WeTxApiFeignTest {
     }
 
     @Test
-    fun `should get utxInfo`() {
-        val utxInfo = weTxApi.utxInfo()
+    fun `should get utxSize`() {
+        val utxInfo = weTxApi.utxSize()
 
         assertEquals(10, utxInfo.size)
         assertEquals(250, utxInfo.sizeInBytes)
     }
+
+//    @Test
+//    fun `should get utxInfo`() {
+//        weTxApi.utxTxs()[0].apply {
+//            assertEquals("", )
+//        }
+//    }
 
     @Test
     fun `should successfully sign SignRequest`() {

@@ -3,11 +3,14 @@ package com.wavesenterprise.sdk.node.client.feign.contract
 import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.client.http.DataEntryDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.client.http.contract.ContractInfoDto.Companion.toDomain
+import com.wavesenterprise.sdk.node.client.http.contract.ContractTxStatusDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.DataEntry
+import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.contract.ConnectionRequest
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.ContractInfo
 import com.wavesenterprise.sdk.node.domain.contract.ContractTransactionResponse
+import com.wavesenterprise.sdk.node.domain.contract.ContractTxStatus
 import com.wavesenterprise.sdk.node.domain.contract.ExecutionErrorRequest
 import com.wavesenterprise.sdk.node.domain.contract.ExecutionSuccessRequest
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
@@ -55,4 +58,7 @@ class FeignContractService(
         } catch (ex: ContractNotFoundException) {
             Optional.empty()
         }
+
+    override fun getContractTxStatus(txId: TxId): List<ContractTxStatus> =
+        weContractServiceApiFeign.contractTxStatus(txId.asBase58String()).map { it.toDomain() }
 }

@@ -4,7 +4,7 @@ dependencies {
     api(project(":we-node-client-domain"))
     api(project(":we-node-client-blocking-client"))
     api(project(":we-node-client-error"))
-    implementation(project(":we-node-client-http:we-node-client-http-dto"))
+    implementation(project(":we-node-client-json"))
 
     implementation("io.github.openfeign:feign-core")
     implementation("io.github.openfeign:feign-jackson")

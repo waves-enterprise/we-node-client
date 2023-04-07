@@ -1,0 +1,24 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/contracts/status/C2HM9q3QzGSBydnCA4GMcf3cFnTaSuwaWXVtsCSTSmZW"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": [
+      {
+        "sender": "3NotQaBygbSvYZW4ftJ2ZwLXex4rTHY1Qzn",
+        "senderPublicKey": "CgqRPcPnexY533gCh2SSvBXh5bca1qMs7KFGntawHGww",
+        "txId": "C2HM9q3QzGSBydnCA4GMcf3cFnTaSuwaWXVtsCSTSmZW",
+        "status": "Success",
+        "code": 1,
+        "message": "some message",
+        "timestamp": 0,
+        "signature": "64jhcF6DyvDntTDHFhcDaxVEXtd52mqC6uWbEiysxLAsab3NU4jNBWUS4TrAdGfaMwiQ5eybP8zv5MWBBUauk1pA"
+      }
+    ],
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

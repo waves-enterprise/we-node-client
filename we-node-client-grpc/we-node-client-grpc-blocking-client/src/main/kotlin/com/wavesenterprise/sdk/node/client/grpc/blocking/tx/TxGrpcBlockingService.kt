@@ -24,7 +24,11 @@ class TxGrpcBlockingService(
         TODO("Not yet implemented")
     }
 
-    override fun utxInfo(): UtxSize {
+    override fun utxInfo(): List<Tx> {
+        TODO("Not yet implemented")
+    }
+
+    override fun utxSize(): UtxSize {
         TODO("Not yet implemented")
     }
 
