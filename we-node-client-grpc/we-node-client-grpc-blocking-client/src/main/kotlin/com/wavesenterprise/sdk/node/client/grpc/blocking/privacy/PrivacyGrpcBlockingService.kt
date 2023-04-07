@@ -8,13 +8,14 @@ import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemInfoResponse
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemRequest
 import com.wavesenterprise.sdk.node.domain.privacy.SendDataRequest
 import com.wavesenterprise.sdk.node.domain.tx.PolicyDataHashTx
+import java.util.Optional
 
 class PrivacyGrpcBlockingService : PrivacyService {
     override fun sendData(request: SendDataRequest): PolicyDataHashTx {
         TODO("Not yet implemented")
     }
 
-    override fun info(request: PolicyItemRequest): PolicyItemInfoResponse {
+    override fun info(request: PolicyItemRequest): Optional<PolicyItemInfoResponse> {
         TODO("Not yet implemented")
     }
 

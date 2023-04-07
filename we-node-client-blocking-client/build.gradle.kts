@@ -6,7 +6,7 @@ dependencies {
     api(project(":we-node-client-domain"))
     api(project(":we-node-client-error"))
 
-    implementation(project(":we-node-client-http:we-node-client-http-dto"))
+    implementation(project(":we-node-client-json"))
 
     testImplementation("ch.qos.logback:logback-classic")
     testImplementation("org.junit.jupiter:junit-jupiter-api")

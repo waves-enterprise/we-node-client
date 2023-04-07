@@ -11,6 +11,7 @@ interface TxService {
     fun <T : Tx> sign(request: SignRequest<T>): T
     fun <T : Tx> signAndBroadcast(request: SignRequest<T>): T
     fun <T : Tx> broadcast(tx: T): T
-    fun utxInfo(): UtxSize
+    fun utxInfo(): List<Tx>
+    fun utxSize(): UtxSize
     fun txInfo(txId: TxId): Optional<TxInfo>
 }

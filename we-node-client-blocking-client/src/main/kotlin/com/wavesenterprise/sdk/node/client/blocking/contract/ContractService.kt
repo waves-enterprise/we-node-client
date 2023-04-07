@@ -1,10 +1,12 @@
 package com.wavesenterprise.sdk.node.client.blocking.contract
 
 import com.wavesenterprise.sdk.node.domain.DataEntry
+import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.contract.ConnectionRequest
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.ContractInfo
 import com.wavesenterprise.sdk.node.domain.contract.ContractTransactionResponse
+import com.wavesenterprise.sdk.node.domain.contract.ContractTxStatus
 import com.wavesenterprise.sdk.node.domain.contract.ExecutionErrorRequest
 import com.wavesenterprise.sdk.node.domain.contract.ExecutionSuccessRequest
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
@@ -17,6 +19,6 @@ interface ContractService {
     fun commitExecutionError(executionErrorRequest: ExecutionErrorRequest)
     fun getContractKeys(contractKeysRequest: ContractKeysRequest): List<DataEntry>
     fun getContractKey(contractKeyRequest: ContractKeyRequest): Optional<DataEntry>
-
     fun getContractInfo(contractId: ContractId): Optional<ContractInfo>
+    fun getContractTxStatus(txId: TxId): List<ContractTxStatus>
 }

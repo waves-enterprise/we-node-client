@@ -11,10 +11,12 @@ import com.wavesenterprise.sdk.node.client.grpc.mapper.contract.ContractKeysRequ
 import com.wavesenterprise.sdk.node.client.grpc.mapper.contract.ContractTransactionResponseMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.contract.ExecutionResultMapper.dto
 import com.wavesenterprise.sdk.node.domain.DataEntry
+import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.contract.ConnectionRequest
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.ContractInfo
 import com.wavesenterprise.sdk.node.domain.contract.ContractTransactionResponse
+import com.wavesenterprise.sdk.node.domain.contract.ContractTxStatus
 import com.wavesenterprise.sdk.node.domain.contract.ExecutionErrorRequest
 import com.wavesenterprise.sdk.node.domain.contract.ExecutionSuccessRequest
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
@@ -74,6 +76,10 @@ class ContractGrpcBlockingService(
         )
 
     override fun getContractInfo(contractId: ContractId): Optional<ContractInfo> {
+        throw IllegalArgumentException("Not implemented in grpc")
+    }
+
+    override fun getContractTxStatus(txId: TxId): List<ContractTxStatus> {
         throw IllegalArgumentException("Not implemented in grpc")
     }
 }

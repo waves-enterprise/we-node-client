@@ -7,6 +7,7 @@ import com.wavesenterprise.sdk.node.client.feign.FeignNodeClientParams
 import com.wavesenterprise.sdk.node.client.feign.FeignNodeErrorDecoder
 import com.wavesenterprise.sdk.node.client.feign.FeignNodeErrorMapper
 import com.wavesenterprise.sdk.node.client.feign.FeignWeApiFactory
+import com.wavesenterprise.sdk.node.client.http.contract.TxStatusDto
 import com.wavesenterprise.sdk.node.exception.specific.ContractNotFoundException
 import io.mockk.spyk
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -123,6 +124,24 @@ internal class WeContractServiceApiFeignTest {
                 "Contract 'CgqRPcPnexY533gCh2SSvBXh5bca1qMs7KFGntawHGww' is not found",
                 this.nodeError.message
             )
+        }
+    }
+
+    @Test
+    fun `should get contract tx status`() {
+        val txId = "C2HM9q3QzGSBydnCA4GMcf3cFnTaSuwaWXVtsCSTSmZW"
+        weContractServiceApiFeign.contractTxStatus(txId = txId)[0].apply {
+            assertEquals("3NotQaBygbSvYZW4ftJ2ZwLXex4rTHY1Qzn", sender)
+            assertEquals("CgqRPcPnexY533gCh2SSvBXh5bca1qMs7KFGntawHGww", senderPublicKey)
+            assertEquals("C2HM9q3QzGSBydnCA4GMcf3cFnTaSuwaWXVtsCSTSmZW", txId)
+            assertEquals(1, code)
+            assertEquals("some message", message)
+            assertEquals(0, timestamp)
+            assertEquals(
+                "64jhcF6DyvDntTDHFhcDaxVEXtd52mqC6uWbEiysxLAsab3NU4jNBWUS4TrAdGfaMwiQ5eybP8zv5MWBBUauk1pA",
+                signature
+            )
+            assertEquals(TxStatusDto.SUCCESS, status)
         }
     }
 }

@@ -70,7 +70,7 @@ fun mockkNodeBlockingServiceFactory(
 fun mockkTxService(): TxService {
     val txService: TxService = mockk()
     every {
-        txService.utxInfo()
+        txService.utxSize()
     } returns UtxSize(
         txCount = TxCount(1),
         size = DataSize(1),
@@ -109,17 +109,19 @@ fun mockkPrivacyService(): PrivacyService {
     } returns Data("".toByteArray())
     every {
         privacyService.info(any())
-    } returns PolicyItemInfoResponse(
-        senderAddress = Address.fromBase58(""),
-        policyId = PolicyId.fromBase58(""),
-        info = PolicyItemFileInfo(
-            filename = FileName(""),
-            size = DataSize(1),
-            timestamp = Timestamp(1),
-            author = DataAuthor(""),
-            comment = DataComment(""),
-        ),
-        dataHash = Hash("".toByteArray())
+    } returns Optional.of(
+        PolicyItemInfoResponse(
+            senderAddress = Address.fromBase58(""),
+            policyId = PolicyId.fromBase58(""),
+            info = PolicyItemFileInfo(
+                filename = FileName(""),
+                size = DataSize(1),
+                timestamp = Timestamp(1),
+                author = DataAuthor(""),
+                comment = DataComment(""),
+            ),
+            dataHash = Hash("".toByteArray())
+        )
     )
     every {
         privacyService.sendData(any())

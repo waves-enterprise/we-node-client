@@ -25,7 +25,9 @@ class FeignTxService(
 
     override fun <T : Tx> broadcast(tx: T) = weTxApiFeign.broadcast(mapDto(tx)).toDomain() as T
 
-    override fun utxInfo(): UtxSize = weTxApiFeign.utxInfo().toDomain()
+    override fun utxSize(): UtxSize = weTxApiFeign.utxSize().toDomain()
+
+    override fun utxInfo(): List<Tx> = weTxApiFeign.utxTxs().map { it.toDomain() }
 
     override fun txInfo(txId: TxId): Optional<TxInfo> =
         try {

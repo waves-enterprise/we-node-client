@@ -4,7 +4,7 @@ dependencies {
 
     api(project(":we-node-client-domain"))
     api(project(":we-node-client-coroutines-client"))
-    implementation(project(":we-node-client-http:we-node-client-http-dto"))
+    implementation(project(":we-node-client-json"))
 
     implementation("io.ktor:ktor-client-core")
     implementation("io.ktor:ktor-client-cio")

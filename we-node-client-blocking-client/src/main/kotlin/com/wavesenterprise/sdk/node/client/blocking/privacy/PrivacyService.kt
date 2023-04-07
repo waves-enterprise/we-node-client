@@ -7,10 +7,11 @@ import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemInfoResponse
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemRequest
 import com.wavesenterprise.sdk.node.domain.privacy.SendDataRequest
 import com.wavesenterprise.sdk.node.domain.tx.PolicyDataHashTx
+import java.util.Optional
 
 interface PrivacyService {
     fun sendData(request: SendDataRequest): PolicyDataHashTx
-    fun info(request: PolicyItemRequest): PolicyItemInfoResponse
+    fun info(request: PolicyItemRequest): Optional<PolicyItemInfoResponse>
     fun data(request: PolicyItemRequest): Data
     fun exists(request: PolicyItemRequest): Boolean
     fun recipients(policyId: PolicyId): List<Address>
