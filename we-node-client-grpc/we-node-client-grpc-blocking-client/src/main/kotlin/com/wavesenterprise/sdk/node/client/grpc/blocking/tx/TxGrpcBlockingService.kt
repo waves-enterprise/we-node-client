@@ -6,11 +6,11 @@ import com.wavesenterprise.sdk.node.domain.sign.SignRequest
 import com.wavesenterprise.sdk.node.domain.tx.Tx
 import com.wavesenterprise.sdk.node.domain.tx.TxInfo
 import com.wavesenterprise.sdk.node.domain.tx.UtxSize
-import io.grpc.ManagedChannel
+import io.grpc.Channel
 import java.util.Optional
 
 class TxGrpcBlockingService(
-    private val channel: ManagedChannel,
+    private val channel: Channel,
 ) : TxService, AutoCloseable {
     override fun <T : Tx> sign(request: SignRequest<T>): T {
         TODO("Not yet implemented")

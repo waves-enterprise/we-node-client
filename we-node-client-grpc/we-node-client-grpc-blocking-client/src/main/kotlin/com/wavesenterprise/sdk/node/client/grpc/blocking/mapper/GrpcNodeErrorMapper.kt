@@ -1,4 +1,4 @@
-package com.wavesenterprise.sdk.node.client.grpc.blocking
+package com.wavesenterprise.sdk.node.client.grpc.blocking.mapper
 
 import com.sun.org.slf4j.internal.LoggerFactory
 import com.wavesenterprise.sdk.node.exception.NodeBadRequestException

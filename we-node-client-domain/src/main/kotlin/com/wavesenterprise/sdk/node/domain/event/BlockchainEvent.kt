@@ -19,7 +19,7 @@ sealed interface BlockchainEvent {
 
     data class BlockAppended(
         val signature: Signature,
-        val reference: String,
+        val reference: BlockReference,
         val txIds: List<TxId>,
         val miner: Address,
         val height: Height,
