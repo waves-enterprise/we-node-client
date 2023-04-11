@@ -1,5 +1,6 @@
 package com.wavesenterprise.sdk.node.client.grpc.blocking
 
+import com.wavesenterprise.sdk.node.client.grpc.blocking.mapper.GrpcNodeErrorMapper
 import com.wavesenterprise.sdk.node.exception.NodeBadRequestException
 import com.wavesenterprise.sdk.node.exception.NodeError
 import com.wavesenterprise.sdk.node.exception.NodeException

@@ -3,7 +3,7 @@ package com.wavesenterprise.sdk.node.client.grpc.blocking.contract
 import com.wavesenterprise.protobuf.service.contract.ContractServiceGrpc
 import com.wavesenterprise.protobuf.service.contract.ContractServiceGrpc.ContractServiceBlockingStub
 import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
-import com.wavesenterprise.sdk.node.client.grpc.blocking.GrpcNodeErrorMapper
+import com.wavesenterprise.sdk.node.client.grpc.blocking.mapper.GrpcNodeErrorMapper
 import com.wavesenterprise.sdk.node.client.grpc.blocking.util.catchingNodeCall
 import com.wavesenterprise.sdk.node.client.grpc.mapper.DataEntryMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.contract.ConnectionRequestMapper.dto
