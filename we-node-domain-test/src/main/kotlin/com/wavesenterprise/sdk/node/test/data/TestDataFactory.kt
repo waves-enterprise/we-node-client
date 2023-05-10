@@ -42,10 +42,13 @@ import com.wavesenterprise.sdk.node.domain.contract.ContractTxStatus
 import com.wavesenterprise.sdk.node.domain.contract.ContractVersion
 import com.wavesenterprise.sdk.node.domain.contract.CreateContractTransaction
 import com.wavesenterprise.sdk.node.domain.contract.TxStatus
+import com.wavesenterprise.sdk.node.domain.privacy.Data
 import com.wavesenterprise.sdk.node.domain.privacy.DataAuthor
 import com.wavesenterprise.sdk.node.domain.privacy.DataComment
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemFileInfo
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemInfoResponse
+import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemRequest
+import com.wavesenterprise.sdk.node.domain.privacy.SendDataRequest
 import com.wavesenterprise.sdk.node.domain.sign.CreateContractSignRequest
 import com.wavesenterprise.sdk.node.domain.tx.AtomicInnerTx
 import com.wavesenterprise.sdk.node.domain.tx.AtomicTx
@@ -75,13 +78,25 @@ class TestDataFactory private constructor() {
 
     companion object {
         @JvmStatic
-        fun address() = Address(randomBytesFromUUID())
+        fun address(bytes: ByteArray = randomBytesFromUUID()) = Address(bytes)
 
         @JvmStatic
-        fun txId() = TxId(randomBytesFromUUID())
+        fun txId(bytes: ByteArray = randomBytesFromUUID()) = TxId(bytes)
 
         @JvmStatic
-        fun password() = Password("password")
+        fun password(password: String = "password") = Password(password)
+
+        @JvmStatic
+        fun policyId(txId: TxId = txId()) = PolicyId(txId)
+
+        @JvmStatic
+        fun dataHash(bytes: ByteArray = randomBytesFromUUID()) = Hash(bytes)
+
+        @JvmStatic
+        fun data(bytes: ByteArray = randomBytesFromUUID()) = Data(bytes)
+
+        @JvmStatic
+        fun fee(value: Long = 0) = Fee(value)
 
         @JvmStatic
         fun contractTransaction(
@@ -651,6 +666,40 @@ class TestDataFactory private constructor() {
             timestamp = timestamp,
             signature = signature,
             status = status,
+        )
+
+        @JvmStatic
+        fun sendDataRequest(
+            senderAddress: Address = address(),
+            policyId: PolicyId = policyId(),
+            dataHash: Hash = dataHash(),
+            data: Data = data(),
+            info: PolicyItemFileInfo = policyItemFileInfo(),
+            fee: Fee = fee(),
+            feeAssetId: FeeAssetId? = null,
+            atomicBadge: AtomicBadge? = null,
+            password: Password = password("password"),
+            broadcastTx: Boolean = true,
+        ) = SendDataRequest(
+            senderAddress = senderAddress,
+            policyId = policyId,
+            dataHash = dataHash,
+            data = data,
+            info = info,
+            fee = fee,
+            feeAssetId = feeAssetId,
+            atomicBadge = atomicBadge,
+            password = password,
+            broadcastTx = broadcastTx,
+        )
+
+        @JvmStatic
+        fun policyItemRequest(
+            policyId: PolicyId = policyId(),
+            dataHash: Hash = dataHash(),
+        ) = PolicyItemRequest(
+            policyId = policyId,
+            dataHash = dataHash,
         )
     }
 }

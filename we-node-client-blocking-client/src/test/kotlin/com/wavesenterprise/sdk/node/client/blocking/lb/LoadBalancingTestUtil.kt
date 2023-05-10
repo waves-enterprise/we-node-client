@@ -106,7 +106,7 @@ fun mockkPrivacyService(): PrivacyService {
     val privacyService: PrivacyService = mockk()
     every {
         privacyService.data(any())
-    } returns Data("".toByteArray())
+    } returns Optional.of(Data("".toByteArray()))
     every {
         privacyService.info(any())
     } returns Optional.of(

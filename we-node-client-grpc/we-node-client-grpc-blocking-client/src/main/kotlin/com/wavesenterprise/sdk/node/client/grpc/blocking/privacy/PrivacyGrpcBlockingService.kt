@@ -2,6 +2,7 @@ package com.wavesenterprise.sdk.node.client.grpc.blocking.privacy
 
 import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.domain.Address
+import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.PolicyId
 import com.wavesenterprise.sdk.node.domain.privacy.Data
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemInfoResponse
@@ -19,7 +20,7 @@ class PrivacyGrpcBlockingService : PrivacyService {
         TODO("Not yet implemented")
     }
 
-    override fun data(request: PolicyItemRequest): Data {
+    override fun data(request: PolicyItemRequest): Optional<Data> {
         TODO("Not yet implemented")
     }
 
@@ -35,7 +36,7 @@ class PrivacyGrpcBlockingService : PrivacyService {
         TODO("Not yet implemented")
     }
 
-    override fun hashes(policyId: PolicyId): List<Address> {
+    override fun hashes(policyId: PolicyId): List<Hash> {
         TODO("Not yet implemented")
     }
 }
