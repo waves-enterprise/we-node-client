@@ -11,6 +11,7 @@ dependencies {
     implementation("io.github.openfeign:feign-slf4j")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
+    testImplementation(project(":we-node-domain-test"))
     testImplementation("ch.qos.logback:logback-classic")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-params")

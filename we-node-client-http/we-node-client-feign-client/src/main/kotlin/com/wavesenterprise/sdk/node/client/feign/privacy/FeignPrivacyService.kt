@@ -1,14 +1,18 @@
 package com.wavesenterprise.sdk.node.client.feign.privacy
 
 import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
+import com.wavesenterprise.sdk.node.client.http.privacy.PolicyItemInfoResponseDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.client.http.tx.PolicyDataHashTxDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.Address
+import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.PolicyId
 import com.wavesenterprise.sdk.node.domain.privacy.Data
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemInfoResponse
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemRequest
 import com.wavesenterprise.sdk.node.domain.privacy.SendDataRequest
 import com.wavesenterprise.sdk.node.domain.tx.PolicyDataHashTx
+import com.wavesenterprise.sdk.node.exception.specific.PolicyDoesNotExistException
+import com.wavesenterprise.sdk.node.exception.specific.PolicyItemDataIsMissingException
 import java.util.Optional
 
 class FeignPrivacyService(
@@ -17,26 +21,46 @@ class FeignPrivacyService(
     override fun sendData(request: SendDataRequest): PolicyDataHashTx =
         wePrivacyServiceApiFeign.sendDataToPrivacy(request).toDomain()
 
-    override fun info(request: PolicyItemRequest): Optional<PolicyItemInfoResponse> {
-        TODO("Not yet implemented")
-    }
+    override fun info(request: PolicyItemRequest): Optional<PolicyItemInfoResponse> =
+        try {
+            Optional.of(
+                wePrivacyServiceApiFeign.getPolicyItemInfo(
+                    policyId = request.policyId.asBase58String(),
+                    policyItemHash = request.dataHash.asHexString(),
+                ).toDomain()
+            )
+        } catch (ex: PolicyItemDataIsMissingException) {
+            Optional.empty()
+        }
 
-    override fun data(request: PolicyItemRequest): Data {
-        TODO("Not yet implemented")
-    }
+    override fun data(request: PolicyItemRequest): Optional<Data> =
+        try {
+            Optional.of(
+                Data.fromByteArray(
+                    bytes = wePrivacyServiceApiFeign.getDataFromPrivacy(
+                        policyId = request.policyId.asBase58String(),
+                        policyItemHash = request.dataHash.asHexString(),
+                    )
+                )
+            )
+        } catch (ex: PolicyItemDataIsMissingException) {
+            Optional.empty<Data>()
+        } catch (ex: PolicyDoesNotExistException) {
+            Optional.empty<Data>()
+        }
 
-    override fun exists(request: PolicyItemRequest): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun exists(request: PolicyItemRequest): Boolean =
+        wePrivacyServiceApiFeign.getDataFromPrivacy(
+            policyId = request.policyId.asBase58String(),
+            policyItemHash = request.dataHash.asHexString(),
+        ).isNotEmpty()
 
     override fun recipients(policyId: PolicyId): List<Address> =
         wePrivacyServiceApiFeign.getPolicyRecipients(policyId.asBase58String()).map { Address.fromBase58(it) }
 
-    override fun owners(policyId: PolicyId): List<Address> {
-        TODO("Not yet implemented")
-    }
+    override fun owners(policyId: PolicyId): List<Address> =
+        wePrivacyServiceApiFeign.getPolicyOwners(policyId = policyId.asBase58String()).map { Address.fromBase58(it) }
 
-    override fun hashes(policyId: PolicyId): List<Address> {
-        TODO("Not yet implemented")
-    }
+    override fun hashes(policyId: PolicyId): List<Hash> =
+        wePrivacyServiceApiFeign.getPolicyHashes(policyId = policyId.asBase58String()).map { Hash.fromHexString(it) }
 }
