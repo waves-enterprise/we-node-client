@@ -57,5 +57,6 @@ include(
 
     "we-tx-signer:we-tx-signer-api",
     "we-tx-signer:we-tx-signer-node",
-    "we-node-client-error"
+    "we-node-client-error",
+    "we-atomic",
 )

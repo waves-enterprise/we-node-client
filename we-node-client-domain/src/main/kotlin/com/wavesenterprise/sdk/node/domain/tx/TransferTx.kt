@@ -27,7 +27,4 @@ data class TransferTx(
     val proofs: List<Signature>? = null,
     val senderAddress: Address,
     override val version: TxVersion,
-) : Tx, AtomicInnerTx, AtomicSignInnerTx<TransferTx> {
-    override fun withAtomicBadge(atomicBadge: AtomicBadge?): TransferTx =
-        copy(atomicBadge = atomicBadge)
-}
+) : Tx, AtomicInnerTx

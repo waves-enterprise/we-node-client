@@ -1,8 +1,12 @@
 package com.wavesenterprise.sdk.tx.signer
 
+import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.sign.SignRequest
 import com.wavesenterprise.sdk.node.domain.tx.Tx
 
 interface TxSigner {
     fun <T : Tx> sign(signRequest: SignRequest<T>): T
+
+    fun getSignerAddress(): Address
 }
+// impl that knows about atomicLocalContext and puts atomic badge when signing Tx-s

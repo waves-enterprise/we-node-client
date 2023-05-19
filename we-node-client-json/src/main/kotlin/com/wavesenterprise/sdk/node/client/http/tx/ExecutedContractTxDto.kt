@@ -6,6 +6,9 @@ import com.wavesenterprise.sdk.node.client.http.DataEntryDto.Companion.toDto
 import com.wavesenterprise.sdk.node.client.http.ValidationProofDto
 import com.wavesenterprise.sdk.node.client.http.ValidationProofDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.client.http.ValidationProofDto.Companion.toDto
+import com.wavesenterprise.sdk.node.client.http.atomic.AtomicBadgeDto
+import com.wavesenterprise.sdk.node.client.http.atomic.AtomicBadgeDto.Companion.toDomain
+import com.wavesenterprise.sdk.node.client.http.atomic.AtomicBadgeDto.Companion.toDto
 import com.wavesenterprise.sdk.node.client.http.tx.ExecutableTxDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.client.http.tx.ExecutableTxDto.Companion.toDto
 import com.wavesenterprise.sdk.node.domain.Address
@@ -27,11 +30,12 @@ data class ExecutedContractTxDto(
     val resultsHash: String,
     val validationProofs: List<ValidationProofDto>,
     override val timestamp: Long,
+    val atomicBadge: AtomicBadgeDto?,
     val proofs: List<String>,
     val sender: String,
     override val version: Int,
     override val height: Long? = null,
-) : TxDto, AtomicInnerTxDto {
+) : TxDto, AtomicInnerTxDto, AtomicSignInnerTxDto {
     companion object {
         @JvmStatic
         fun ExecutedContractTx.toDto(): ExecutedContractTxDto =
@@ -43,6 +47,7 @@ data class ExecutedContractTxDto(
                 resultsHash = resultsHash.asHexString(),
                 validationProofs = validationProofs.map { it.toDto() },
                 timestamp = timestamp.utcTimestampMillis,
+                atomicBadge = atomicBadge?.toDto(),
                 proofs = proofs.map { it.asBase58String() },
                 sender = senderAddress.asBase58String(),
                 version = version.value,
@@ -58,6 +63,7 @@ data class ExecutedContractTxDto(
                 resultsHash = Hash.fromHexString(resultsHash),
                 validationProofs = validationProofs.map { it.toDomain() },
                 timestamp = Timestamp.fromUtcTimestamp(timestamp),
+                atomicBadge = atomicBadge?.toDomain(),
                 proofs = proofs.map { Signature.fromBase58(it) },
                 senderAddress = Address.fromBase58(sender),
                 version = TxVersion(version),

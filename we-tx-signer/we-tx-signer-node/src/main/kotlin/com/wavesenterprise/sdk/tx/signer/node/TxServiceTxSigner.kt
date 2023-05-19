@@ -27,4 +27,6 @@ class TxServiceTxSigner(
         } else {
             address
         }
+
+    override fun getSignerAddress(): Address = signCredentialsProvider.credentials().senderAddress
 }

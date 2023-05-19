@@ -15,8 +15,8 @@ import com.wavesenterprise.sdk.node.domain.contract.ContractImageHash
 import com.wavesenterprise.sdk.node.domain.contract.ContractName
 import com.wavesenterprise.sdk.node.domain.contract.ContractVersion
 import com.wavesenterprise.sdk.node.domain.sign.CallContractSignRequest
-import com.wavesenterprise.sdk.node.domain.sign.ContractSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CreateContractSignRequest
+import com.wavesenterprise.sdk.node.domain.sign.SignRequest
 import com.wavesenterprise.sdk.node.domain.tx.ContractTx
 import kotlin.reflect.KMutableProperty0
 
@@ -74,7 +74,7 @@ class ContractSignRequestBuilder {
 
     fun contractId(contractId: ContractId) = this.apply { builderProperties.contractId = contractId }
 
-    fun build(txType: TxType): ContractSignRequest<out ContractTx> {
+    fun build(txType: TxType): SignRequest<out ContractTx> {
         return when (txType) {
             TxType.CREATE_CONTRACT -> {
                 val variablesIsEqualsNull = getVariablesIsEqualsNull(NOT_NULLABLE_FOR_CREATE)

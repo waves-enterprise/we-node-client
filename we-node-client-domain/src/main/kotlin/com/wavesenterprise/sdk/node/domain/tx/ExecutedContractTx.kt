@@ -9,6 +9,7 @@ import com.wavesenterprise.sdk.node.domain.Timestamp
 import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.TxVersion
 import com.wavesenterprise.sdk.node.domain.ValidationProof
+import com.wavesenterprise.sdk.node.domain.atomic.AtomicBadge
 
 data class ExecutedContractTx(
     override val id: TxId,
@@ -18,6 +19,7 @@ data class ExecutedContractTx(
     val resultsHash: Hash,
     val validationProofs: List<ValidationProof>,
     override val timestamp: Timestamp,
+    override val atomicBadge: AtomicBadge?,
     val proofs: List<Signature>,
     val senderAddress: Address,
     override val version: TxVersion,
