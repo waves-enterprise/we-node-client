@@ -24,9 +24,11 @@ data class UpdateContractSignRequest(
     val imageHash: ContractImageHash,
     val apiVersion: ContractApiVersion? = null,
     val validationPolicy: ValidationPolicy? = null,
-    val atomicBadge: AtomicBadge? = null,
-) : SignRequest<UpdateContractTx> {
+    override val atomicBadge: AtomicBadge? = null,
+) : AtomicInnerSignRequest<UpdateContractTx> {
     override fun withAddress(address: Address) = copy(senderAddress = address)
 
-    override fun withPassword(password: Password?) = copy(password = password)
+    override fun withPassword(password: Password?): SignRequest<UpdateContractTx> = copy(password = password)
+    override fun withAtomicBadge(atomicBadge: AtomicBadge?) =
+        copy(atomicBadge = atomicBadge)
 }

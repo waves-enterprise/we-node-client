@@ -419,6 +419,7 @@ class TestDataFactory private constructor() {
             version: TxVersion = TxVersion(1),
             proofs: List<Signature> = listOf(),
             timestamp: Timestamp = Timestamp(1L),
+            atomicBadge: AtomicBadge? = null,
             senderAddress: Address = Address(randomBytesFromUUID()),
         ) = ExecutedContractTx(
             id = id,
@@ -428,6 +429,7 @@ class TestDataFactory private constructor() {
             resultsHash = resultsHash,
             validationProofs = validationProofs,
             timestamp = timestamp,
+            atomicBadge = atomicBadge,
             proofs = proofs,
             senderAddress = senderAddress,
             version = version,

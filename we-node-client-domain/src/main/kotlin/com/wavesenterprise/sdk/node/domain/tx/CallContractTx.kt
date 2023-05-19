@@ -26,7 +26,4 @@ data class CallContractTx(
     val proofs: List<Signature>? = null,
     val senderAddress: Address,
     override val version: TxVersion,
-) : ContractTx, ExecutableTx, AtomicInnerTx, AtomicSignInnerTx<CallContractTx> {
-    override fun withAtomicBadge(atomicBadge: AtomicBadge?): CallContractTx =
-        copy(atomicBadge = atomicBadge)
-}
+) : ContractTx, ExecutableTx, AtomicInnerTx

@@ -21,7 +21,7 @@ class FeignTxService(
         weTxApiFeign.sign(mapDto(request)).toDomain() as T
 
     override fun <T : Tx> signAndBroadcast(request: SignRequest<T>): T =
-        weTxApiFeign.sign(mapDto(request)).toDomain() as T
+        weTxApiFeign.signAndBroadcast(mapDto(request)).toDomain() as T
 
     override fun <T : Tx> broadcast(tx: T) = weTxApiFeign.broadcast(mapDto(tx)).toDomain() as T
 

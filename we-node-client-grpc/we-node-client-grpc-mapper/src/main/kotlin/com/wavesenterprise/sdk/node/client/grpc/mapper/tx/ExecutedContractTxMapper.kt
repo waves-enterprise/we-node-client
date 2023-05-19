@@ -57,6 +57,7 @@ object ExecutedContractTxMapper {
             resultsHash = Hash(tx.resultsHash.byteArray()),
             validationProofs = tx.validationProofsList.map { it.domain() },
             timestamp = Timestamp.fromUtcTimestamp(tx.timestamp),
+            atomicBadge = null,
             proofs = tx.proofsList.let { dtoProofs ->
                 dtoProofs.map {
                     Signature(it.byteArray())

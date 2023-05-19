@@ -17,3 +17,10 @@ dependencies {
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjvm-default=all")
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
