@@ -20,7 +20,7 @@ data class PolicyItemInfoResponseDto(
                 senderAddress = Address.fromBase58(sender),
                 policyId = PolicyId.fromBase58(policy),
                 info = info.toDomain(),
-                dataHash = Hash.fromHexString(hash),
+                dataHash = Hash.fromStringBase58(hash),
             )
 
         @JvmStatic
@@ -29,7 +29,7 @@ data class PolicyItemInfoResponseDto(
                 sender = senderAddress.asBase58String(),
                 policy = policyId.asBase58String(),
                 info = info.toDto(),
-                hash = dataHash.asHexString(),
+                hash = dataHash.asBase58String(),
             )
     }
 }

@@ -36,7 +36,7 @@ class DefaultLoadBalanceStrategy(
                             GET_PRIVACY_INFO_METHOD_NAME ->
                                 nodesResolver.getOrderedAliveNodesForPrivacyInfo(firstArg)
                             GET_PRIVACY_DATA_METHOD_NAME -> {
-                                val secondArg = Hash.fromHexString(args[1] as String)
+                                val secondArg = Hash.fromStringBase58(args[1] as String)
                                 nodesResolver.getOrderedAliveNodesForPrivacyData(firstArg, secondArg)
                             }
                             else -> nodesResolver.getOrderedAliveNodes()

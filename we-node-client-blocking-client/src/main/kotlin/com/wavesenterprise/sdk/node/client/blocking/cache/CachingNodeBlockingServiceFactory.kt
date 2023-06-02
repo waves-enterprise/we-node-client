@@ -49,7 +49,7 @@ class CachingNodeBlockingServiceFactory(
                 Optional.of(
                     requireNotNull(
                         policyItemInfoCache.load(
-                            "${request.policyId.asBase58String()}_${request.dataHash.asHexString()}"
+                            "${request.policyId.asBase58String()}_${request.dataHash.asBase58String()}"
                         ) {
                             privacyService.info(request).orElseGet(null)
                         }

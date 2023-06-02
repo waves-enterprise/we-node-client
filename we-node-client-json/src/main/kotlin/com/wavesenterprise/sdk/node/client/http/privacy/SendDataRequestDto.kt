@@ -25,7 +25,7 @@ data class SendDataRequestDto(
             SendDataRequestDto(
                 sender = senderAddress.asBase58String(),
                 policyId = policyId.asBase58String(),
-                dataHash = dataHash.asHexString(),
+                dataHash = dataHash.asBase58String(),
                 data = BASE_64_ENCODER.encodeToString(data.bytes),
                 info = info.toDto(),
                 fee = fee.value,

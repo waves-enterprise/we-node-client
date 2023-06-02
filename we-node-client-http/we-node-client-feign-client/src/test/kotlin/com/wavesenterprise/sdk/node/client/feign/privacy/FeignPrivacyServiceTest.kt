@@ -4,7 +4,7 @@ import com.wavesenterprise.sdk.node.client.http.privacy.PolicyItemInfoResponseDt
 import com.wavesenterprise.sdk.node.client.http.tx.PolicyDataHashTxDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.client.http.tx.PolicyDataHashTxDto.Companion.toDto
 import com.wavesenterprise.sdk.node.domain.Address
-import com.wavesenterprise.sdk.node.domain.Hash.Companion.hexStrHash
+import com.wavesenterprise.sdk.node.domain.Hash.Companion.base58StrHash
 import com.wavesenterprise.sdk.node.domain.privacy.Data.Companion.data
 import com.wavesenterprise.sdk.node.exception.NodeError
 import com.wavesenterprise.sdk.node.exception.specific.PolicyItemDataIsMissingException
@@ -111,15 +111,15 @@ class FeignPrivacyServiceTest {
     fun `should return hashes by policy id`() {
         dataHash()
         val expectedHashes = listOf(
-            dataHash().asHexString(),
-            dataHash().asHexString(),
+            dataHash().asBase58String(),
+            dataHash().asBase58String(),
         )
         every {
             wePrivacyServiceApiFeign.getPolicyHashes(any())
         } returns expectedHashes
 
         val hashes = feignPrivacyService.hashes(policyId())
-        assertEquals(expectedHashes.map { it.hexStrHash }, hashes)
+        assertEquals(expectedHashes.map { it.base58StrHash }, hashes)
     }
 
     @Test

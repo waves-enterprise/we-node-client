@@ -71,6 +71,7 @@ import com.wavesenterprise.sdk.node.domain.tx.TxInfo
 import com.wavesenterprise.sdk.node.domain.tx.UpdateContractTx
 import com.wavesenterprise.sdk.node.domain.tx.UpdatePolicyTx
 import com.wavesenterprise.sdk.node.test.data.Util.Companion.randomBytesFromUUID
+import com.wavesenterprise.sdk.node.test.data.Util.Companion.randomStringBase58
 import java.time.Instant
 import java.util.UUID
 
@@ -90,7 +91,7 @@ class TestDataFactory private constructor() {
         fun policyId(txId: TxId = txId()) = PolicyId(txId)
 
         @JvmStatic
-        fun dataHash(bytes: ByteArray = randomBytesFromUUID()) = Hash(bytes)
+        fun dataHash(stringBase58: String = randomStringBase58()) = Hash.fromStringBase58(stringBase58)
 
         @JvmStatic
         fun data(bytes: ByteArray = randomBytesFromUUID()) = Data(bytes)
@@ -290,7 +291,7 @@ class TestDataFactory private constructor() {
             feeAssetId: FeeAssetId? = null,
             atomicBadge: AtomicBadge? = null,
             senderAddress: Address = Address(randomBytesFromUUID()),
-            dataHash: Hash = Hash(randomBytesFromUUID()),
+            dataHash: Hash = Hash.fromStringBase58(randomStringBase58()),
             policyId: PolicyId = PolicyId.fromByteArray(randomBytesFromUUID()),
         ) = PolicyDataHashTx(
             id = id,
@@ -632,7 +633,7 @@ class TestDataFactory private constructor() {
             senderAddress: Address = Address(randomBytesFromUUID()),
             policyId: PolicyId = PolicyId.fromByteArray(randomBytesFromUUID()),
             info: PolicyItemFileInfo = policyItemFileInfo(),
-            dataHash: Hash = Hash(randomBytesFromUUID()),
+            dataHash: Hash = Hash.fromStringBase58(randomStringBase58()),
         ) = PolicyItemInfoResponse(
             senderAddress = senderAddress,
             policyId = policyId,
