@@ -37,7 +37,7 @@ data class PolicyDataHashTxDto(
             PolicyDataHashTxDto(
                 id = id.asBase58String(),
                 senderPublicKey = senderPublicKey.asBase58String(),
-                dataHash = dataHash.asHexString(),
+                dataHash = dataHash.asBase58String(),
                 policyId = policyId.asBase58String(),
                 timestamp = timestamp.utcTimestampMillis,
                 fee = fee.value,
@@ -53,7 +53,7 @@ data class PolicyDataHashTxDto(
             PolicyDataHashTx(
                 id = TxId.fromBase58(id),
                 senderPublicKey = PublicKey.fromBase58(senderPublicKey),
-                dataHash = Hash.fromHexString(dataHash),
+                dataHash = Hash.fromStringBase58(dataHash),
                 policyId = PolicyId.fromBase58(policyId),
                 timestamp = Timestamp.fromUtcTimestamp(timestamp),
                 fee = Fee(fee),

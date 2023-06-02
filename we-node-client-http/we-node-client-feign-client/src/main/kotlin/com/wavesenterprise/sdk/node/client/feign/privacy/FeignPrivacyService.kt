@@ -26,7 +26,7 @@ class FeignPrivacyService(
             Optional.of(
                 wePrivacyServiceApiFeign.getPolicyItemInfo(
                     policyId = request.policyId.asBase58String(),
-                    policyItemHash = request.dataHash.asHexString(),
+                    policyItemHash = request.dataHash.asBase58String(),
                 ).toDomain()
             )
         } catch (ex: PolicyItemDataIsMissingException) {
@@ -39,7 +39,7 @@ class FeignPrivacyService(
                 Data.fromByteArray(
                     bytes = wePrivacyServiceApiFeign.getDataFromPrivacy(
                         policyId = request.policyId.asBase58String(),
-                        policyItemHash = request.dataHash.asHexString(),
+                        policyItemHash = request.dataHash.asBase58String(),
                     )
                 )
             )
@@ -52,7 +52,7 @@ class FeignPrivacyService(
     override fun exists(request: PolicyItemRequest): Boolean =
         wePrivacyServiceApiFeign.getDataFromPrivacy(
             policyId = request.policyId.asBase58String(),
-            policyItemHash = request.dataHash.asHexString(),
+            policyItemHash = request.dataHash.asBase58String(),
         ).isNotEmpty()
 
     override fun recipients(policyId: PolicyId): List<Address> =
@@ -62,5 +62,5 @@ class FeignPrivacyService(
         wePrivacyServiceApiFeign.getPolicyOwners(policyId = policyId.asBase58String()).map { Address.fromBase58(it) }
 
     override fun hashes(policyId: PolicyId): List<Hash> =
-        wePrivacyServiceApiFeign.getPolicyHashes(policyId = policyId.asBase58String()).map { Hash.fromHexString(it) }
+        wePrivacyServiceApiFeign.getPolicyHashes(policyId = policyId.asBase58String()).map { Hash.fromStringBase58(it) }
 }

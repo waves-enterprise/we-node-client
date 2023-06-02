@@ -46,7 +46,7 @@ class KtorPrivacyService(
                 Privacy.PATH,
                 request.policyId.asBase58String(),
                 Privacy.Policy.GET_INFO,
-                request.dataHash.asHexString(),
+                request.dataHash.asBase58String(),
             )
             contentType(ContentType.Application.Json)
             accept(ContentType.Any)
@@ -58,7 +58,7 @@ class KtorPrivacyService(
                 Privacy.PATH,
                 request.policyId.asBase58String(),
                 Privacy.Policy.GET_DATA,
-                request.dataHash.asHexString(),
+                request.dataHash.asBase58String(),
             )
             contentType(ContentType.Application.Json)
             accept(ContentType.Any)
@@ -99,7 +99,7 @@ class KtorPrivacyService(
             )
             contentType(ContentType.Application.Json)
             accept(ContentType.Any)
-        }.body<List<String>>().map { Hash.fromHexString(it) }
+        }.body<List<String>>().map { Hash.fromStringBase58(it) }
 
     companion object {
         object Privacy {
