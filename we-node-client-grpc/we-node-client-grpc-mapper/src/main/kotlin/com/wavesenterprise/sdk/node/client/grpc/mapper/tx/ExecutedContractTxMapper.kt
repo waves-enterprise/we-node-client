@@ -1,5 +1,6 @@
 package com.wavesenterprise.sdk.node.client.grpc.mapper.tx
 
+import com.google.protobuf.ByteString
 import com.wavesenterprise.sdk.node.client.grpc.mapper.AddressMapper.byteString
 import com.wavesenterprise.sdk.node.client.grpc.mapper.DataEntryMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.DataEntryMapper.dto
@@ -34,7 +35,7 @@ object ExecutedContractTxMapper {
             senderPublicKey = tx.senderPublicKey.byteString()
             this.tx = ExecutableTxMapper.dtoInternal(tx.tx)
             results += tx.results.map { it.dto() }
-            resultsHash = tx.resultsHash.byteString()
+            resultsHash = tx.resultsHash?.byteString() ?: ByteString.EMPTY
             validationProofs += tx.validationProofs.map { it.dto() }
             timestamp = tx.timestamp.utcTimestampMillis
             tx.proofs?.also { domainProofs: List<Signature> ->

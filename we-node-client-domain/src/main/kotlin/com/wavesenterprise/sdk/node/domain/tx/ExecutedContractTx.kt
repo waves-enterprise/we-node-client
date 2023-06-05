@@ -16,7 +16,7 @@ data class ExecutedContractTx(
     val senderPublicKey: PublicKey,
     val tx: ExecutableTx,
     val results: List<DataEntry>,
-    val resultsHash: Hash,
+    val resultsHash: Hash?,
     val validationProofs: List<ValidationProof>,
     override val timestamp: Timestamp,
     override val atomicBadge: AtomicBadge?,
