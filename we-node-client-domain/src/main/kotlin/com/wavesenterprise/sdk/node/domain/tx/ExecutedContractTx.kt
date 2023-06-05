@@ -2,6 +2,7 @@ package com.wavesenterprise.sdk.node.domain.tx
 
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.DataEntry
+import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.Signature
@@ -17,7 +18,8 @@ data class ExecutedContractTx(
     val tx: ExecutableTx,
     val results: List<DataEntry>,
     val resultsHash: Hash?,
-    val validationProofs: List<ValidationProof>,
+    val fee: Fee = Fee(0), // TODO: resolve problems with versioning
+    val validationProofs: List<ValidationProof>?,
     override val timestamp: Timestamp,
     override val atomicBadge: AtomicBadge?,
     val proofs: List<Signature>,

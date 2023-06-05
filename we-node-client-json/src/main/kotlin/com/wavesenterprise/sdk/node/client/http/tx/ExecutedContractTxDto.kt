@@ -12,6 +12,7 @@ import com.wavesenterprise.sdk.node.client.http.atomic.AtomicBadgeDto.Companion.
 import com.wavesenterprise.sdk.node.client.http.tx.ExecutableTxDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.client.http.tx.ExecutableTxDto.Companion.toDto
 import com.wavesenterprise.sdk.node.domain.Address
+import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.Signature
@@ -28,7 +29,8 @@ data class ExecutedContractTxDto(
     val tx: ExecutableTxDto,
     val results: List<DataEntryDto>,
     val resultsHash: String? = null,
-    val validationProofs: List<ValidationProofDto>,
+    val fee: Long,
+    val validationProofs: List<ValidationProofDto>? = null,
     override val timestamp: Long,
     val atomicBadge: AtomicBadgeDto?,
     val proofs: List<String>,
@@ -45,7 +47,8 @@ data class ExecutedContractTxDto(
                 tx = tx.toDto(),
                 results = results.map { it.toDto() },
                 resultsHash = resultsHash?.asBase58String(),
-                validationProofs = validationProofs.map { it.toDto() },
+                fee = fee.value,
+                validationProofs = validationProofs?.map { it.toDto() },
                 timestamp = timestamp.utcTimestampMillis,
                 atomicBadge = atomicBadge?.toDto(),
                 proofs = proofs.map { it.asBase58String() },
@@ -61,7 +64,8 @@ data class ExecutedContractTxDto(
                 tx = tx.toDomain(),
                 results = results.map { it.toDomain() },
                 resultsHash = resultsHash?.let { Hash.fromStringBase58(it) },
-                validationProofs = validationProofs.map { it.toDomain() },
+                fee = Fee(fee),
+                validationProofs = validationProofs?.map { it.toDomain() },
                 timestamp = Timestamp.fromUtcTimestamp(timestamp),
                 atomicBadge = atomicBadge?.toDomain(),
                 proofs = proofs.map { Signature.fromBase58(it) },
