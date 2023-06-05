@@ -13,6 +13,7 @@ import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.ExecutableTxMapper.dom
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.ValidationProofMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.ValidationProofMapper.dto
 import com.wavesenterprise.sdk.node.domain.Address
+import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.Signature
@@ -36,7 +37,7 @@ object ExecutedContractTxMapper {
             this.tx = ExecutableTxMapper.dtoInternal(tx.tx)
             results += tx.results.map { it.dto() }
             resultsHash = tx.resultsHash?.byteString() ?: ByteString.EMPTY
-            validationProofs += tx.validationProofs.map { it.dto() }
+            validationProofs += tx.validationProofs?.map { it.dto() } ?: emptyList()
             timestamp = tx.timestamp.utcTimestampMillis
             tx.proofs?.also { domainProofs: List<Signature> ->
                 proofs += domainProofs.map { it.byteString() }
@@ -56,6 +57,7 @@ object ExecutedContractTxMapper {
             tx = tx.tx.domain(),
             results = tx.resultsList.map { it.domain() },
             resultsHash = Hash(tx.resultsHash.byteArray()),
+            fee = Fee(0),
             validationProofs = tx.validationProofsList.map { it.domain() },
             timestamp = Timestamp.fromUtcTimestamp(tx.timestamp),
             atomicBadge = null,
