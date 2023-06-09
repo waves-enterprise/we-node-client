@@ -5,6 +5,8 @@ import feign.codec.ErrorDecoder
 
 data class FeignNodeClientParams(
     override val url: String,
+    override val xApiKey: String? = null,
+    override val xPrivacyApiKey: String? = null,
     override val decode404: Boolean = true,
     override val connectTimeout: Long = 5000,
     override val readTimeout: Long = 3000,
