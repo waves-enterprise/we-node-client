@@ -1,7 +1,12 @@
 package com.wavesenterprise.sdk.node.client.blocking.lb
 
+import com.github.benmanes.caffeine.cache.Caffeine
+import com.wavesenterprise.sdk.node.client.blocking.cache.CaffeineLoadingCache
+import com.wavesenterprise.sdk.node.client.blocking.cache.LoadingCache
 import com.wavesenterprise.sdk.node.client.blocking.credentials.NodeCredentialsProvider
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
+import com.wavesenterprise.sdk.node.domain.Address
+import com.wavesenterprise.sdk.node.domain.PolicyId
 
 class LbServiceFactoryBuilder {
     private var nodesResolver: NodesResolver? = null
@@ -10,6 +15,8 @@ class LbServiceFactoryBuilder {
     private var circuitBreaker: CircuitBreaker? = null
     private var circuitBreakerProperties: CircuitBreakerProperties? = null
     private var nodeCredentialsProvider: NodeCredentialsProvider? = null
+    private var recipientsCache: LoadingCache<PolicyId, Set<Address>>? = null
+    private var privacyDataNodesCache: PrivacyDataNodesCache? = null
 
     fun nodesResolver(nodesResolver: NodesResolver): LbServiceFactoryBuilder =
         this.apply {
@@ -34,6 +41,16 @@ class LbServiceFactoryBuilder {
     fun nodeCredentialsProvider(nodeCredentialsProvider: NodeCredentialsProvider) =
         this.apply {
             this.nodeCredentialsProvider = nodeCredentialsProvider
+        }
+
+    fun recipientsCache(recipientsCache: LoadingCache<PolicyId, Set<Address>>) =
+        this.apply {
+            this.recipientsCache = recipientsCache
+        }
+
+    fun privacyDataNodesCache(privacyDataNodesCache: PrivacyDataNodesCache) =
+        this.apply {
+            this.privacyDataNodesCache = privacyDataNodesCache
         }
 
     /**
@@ -65,9 +82,20 @@ class LbServiceFactoryBuilder {
             circuitBreakerProperties = circuitBreakerProperties,
             nodeCircuitBreakers = nodeCircuitBreakers,
         )
+        val actualRecipientsCache: LoadingCache<PolicyId, Set<Address>> =
+            recipientsCache ?: CaffeineLoadingCache(Caffeine.newBuilder().build())
+        val recipientsCacheLoadBalancerPostInvokeHandler =
+            RecipientsCacheLoadBalancerPostInvokeHandler(actualRecipientsCache)
+        val actualPrivacyDataNodesCache =
+            privacyDataNodesCache ?: PrivacyDataNodesCache(CaffeineLoadingCache(Caffeine.newBuilder().build()))
+        val privacyDataNodesCacheLoadBalancerPostInvokeHandler = PrivacyDataNodesCacheLoadBalancerPostInvokeHandler(
+            privacyDataNodesCache = actualPrivacyDataNodesCache,
+        )
         val actualNodesResolver = nodesResolver ?: DefaultNodesResolver(
             nodeServiceFactoryWrappers = nodeServiceFactoryWrappers,
             circuitBreaker = actualCircuitBreaker,
+            recipientsCache = actualRecipientsCache,
+            privacyDataNodesCache = actualPrivacyDataNodesCache,
         )
         val actualStrategy = strategy ?: DefaultLoadBalanceStrategy(
             nodesResolver = actualNodesResolver,
@@ -78,6 +106,8 @@ class LbServiceFactoryBuilder {
             strategy = actualStrategy,
             retryStrategy = actualRetryStrategy,
             circuitBreaker = actualCircuitBreaker,
+            recipientsCacheLoadBalancerPostInvokeHandler = recipientsCacheLoadBalancerPostInvokeHandler,
+            privacyDataNodesCacheLoadBalancerPostInvokeHandler = privacyDataNodesCacheLoadBalancerPostInvokeHandler,
         )
     }
 

@@ -5,6 +5,7 @@ import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.client.blocking.credentials.DefaultNodeCredentialsProvider
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeInfoService
+import com.wavesenterprise.sdk.node.client.blocking.policyDataHashTx
 import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
 import com.wavesenterprise.sdk.node.domain.Address
@@ -17,7 +18,6 @@ import com.wavesenterprise.sdk.node.domain.PolicyId
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.Timestamp
 import com.wavesenterprise.sdk.node.domain.TxCount
-import com.wavesenterprise.sdk.node.domain.blocking.policyDataHashTx
 import com.wavesenterprise.sdk.node.domain.privacy.Data
 import com.wavesenterprise.sdk.node.domain.privacy.DataAuthor
 import com.wavesenterprise.sdk.node.domain.privacy.DataComment

@@ -21,5 +21,7 @@ class CaffeineLoadingCache<K : Any, V : Any>(
         cache.put(key, value)
     }
 
+    fun remove(key: K) = cache.invalidate(key)
+
     override fun getIfPresent(key: K): V? = cache.getIfPresent(key)
 }

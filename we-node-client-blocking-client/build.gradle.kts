@@ -8,6 +8,7 @@ dependencies {
 
     implementation(project(":we-node-client-json"))
 
+    testImplementation(project(":we-node-domain-test"))
     testImplementation("ch.qos.logback:logback-classic")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-params")

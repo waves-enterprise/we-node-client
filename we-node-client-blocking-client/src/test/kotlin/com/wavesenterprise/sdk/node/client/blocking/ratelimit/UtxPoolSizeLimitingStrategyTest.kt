@@ -1,8 +1,8 @@
 package com.wavesenterprise.sdk.node.client.blocking.ratelimit
 
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
-import com.wavesenterprise.sdk.node.domain.blocking.txCount
-import com.wavesenterprise.sdk.node.domain.blocking.utxSize
+import com.wavesenterprise.sdk.node.client.blocking.txCount
+import com.wavesenterprise.sdk.node.client.blocking.utxSize
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertFalse
