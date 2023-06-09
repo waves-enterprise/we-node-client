@@ -2,6 +2,7 @@ package com.wavesenterprise.sdk.node.client.feign.privacy
 
 import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.client.http.privacy.PolicyItemInfoResponseDto.Companion.toDomain
+import com.wavesenterprise.sdk.node.client.http.privacy.SendDataRequestDto.Companion.toDto
 import com.wavesenterprise.sdk.node.client.http.tx.PolicyDataHashTxDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.Hash
@@ -19,7 +20,7 @@ class FeignPrivacyService(
     private val wePrivacyServiceApiFeign: WePrivacyServiceApiFeign,
 ) : PrivacyService {
     override fun sendData(request: SendDataRequest): PolicyDataHashTx =
-        wePrivacyServiceApiFeign.sendDataToPrivacy(request).toDomain()
+        wePrivacyServiceApiFeign.sendDataToPrivacy(request.toDto()).toDomain()
 
     override fun info(request: PolicyItemRequest): Optional<PolicyItemInfoResponse> =
         try {
