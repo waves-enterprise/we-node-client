@@ -1,12 +1,12 @@
 package com.wavesenterprise.sdk.node.client.blocking.lb
 
+import com.wavesenterprise.sdk.node.client.blocking.policyItemInfoResponse
+import com.wavesenterprise.sdk.node.client.blocking.sendDataRequest
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.Password
 import com.wavesenterprise.sdk.node.domain.PolicyId
 import com.wavesenterprise.sdk.node.domain.TxId
-import com.wavesenterprise.sdk.node.domain.blocking.policyItemInfoResponse
-import com.wavesenterprise.sdk.node.domain.blocking.sendDataRequest
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemRequest

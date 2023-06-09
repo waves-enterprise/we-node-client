@@ -14,6 +14,8 @@ class LoadBalancingServiceFactory(
     private val strategy: LoadBalanceStrategy,
     private val retryStrategy: RetryStrategy,
     private val circuitBreaker: CircuitBreaker,
+    private val recipientsCacheLoadBalancerPostInvokeHandler: RecipientsCacheLoadBalancerPostInvokeHandler,
+    private val privacyDataNodesCacheLoadBalancerPostInvokeHandler: PrivacyDataNodesCacheLoadBalancerPostInvokeHandler,
 ) : NodeBlockingServiceFactory {
 
     override fun txService() =
@@ -63,7 +65,11 @@ class LoadBalancingServiceFactory(
                 strategy = strategy,
                 circuitBreaker = circuitBreaker,
                 retryStrategy = retryStrategy,
-                fnServiceResolver = fnServiceResolver
+                fnServiceResolver = fnServiceResolver,
+                loadBalancerPostInvokeHandlers = listOf(
+                    recipientsCacheLoadBalancerPostInvokeHandler,
+                    privacyDataNodesCacheLoadBalancerPostInvokeHandler,
+                ),
             ),
         ) as T
 }

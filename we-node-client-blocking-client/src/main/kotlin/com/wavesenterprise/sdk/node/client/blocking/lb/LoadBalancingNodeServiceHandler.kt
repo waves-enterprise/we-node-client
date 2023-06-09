@@ -12,6 +12,7 @@ class LoadBalancingNodeServiceHandler(
     private val circuitBreaker: CircuitBreaker,
     private val retryStrategy: RetryStrategy,
     private val fnServiceResolver: (NodeBlockingServiceFactory) -> (Any),
+    private val loadBalancerPostInvokeHandlers: Iterable<LoadBalancerPostInvokeHandler>,
 ) : InvocationHandler {
 
     private val logger = LoggerFactory.getLogger(LoadBalancingNodeServiceHandler::class.java)
@@ -56,6 +57,15 @@ class LoadBalancingNodeServiceHandler(
                     ).also {
                     logger.debug("Invocation successful")
                     circuitBreaker.tryReturnIntoRotation(nodeServiceFactoryWrapper.name)
+                }.also {
+                    loadBalancerPostInvokeHandlers.forEach { lbPostInvokeHandlers ->
+                        lbPostInvokeHandlers.handle(
+                            client = nodeServiceFactoryWrapper,
+                            method = method,
+                            args = args,
+                            result = it,
+                        )
+                    }
                 }
             } catch (ex: Exception) {
                 val resultingEx = when (ex) {

@@ -5,7 +5,7 @@ import com.wavesenterprise.sdk.node.client.blocking.lb.mockkPrivacyService
 import com.wavesenterprise.sdk.node.client.blocking.lb.mockkTxService
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.client.blocking.ratelimit.exception.TooManyRequestsException
-import com.wavesenterprise.sdk.node.domain.blocking.sendDataRequest
+import com.wavesenterprise.sdk.node.client.blocking.sendDataRequest
 import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk

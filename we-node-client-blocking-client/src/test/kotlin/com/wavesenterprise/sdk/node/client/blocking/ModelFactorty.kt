@@ -1,4 +1,4 @@
-package com.wavesenterprise.sdk.node.domain.blocking
+package com.wavesenterprise.sdk.node.client.blocking
 
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.BlockVersion

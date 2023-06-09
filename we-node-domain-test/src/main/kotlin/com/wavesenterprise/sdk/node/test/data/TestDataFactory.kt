@@ -49,7 +49,10 @@ import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemFileInfo
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemInfoResponse
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemRequest
 import com.wavesenterprise.sdk.node.domain.privacy.SendDataRequest
+import com.wavesenterprise.sdk.node.domain.sign.AtomicSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CreateContractSignRequest
+import com.wavesenterprise.sdk.node.domain.sign.CreatePolicySignRequest
+import com.wavesenterprise.sdk.node.domain.sign.UpdatePolicySignRequest
 import com.wavesenterprise.sdk.node.domain.tx.AtomicInnerTx
 import com.wavesenterprise.sdk.node.domain.tx.AtomicTx
 import com.wavesenterprise.sdk.node.domain.tx.BurnTx
@@ -703,6 +706,71 @@ class TestDataFactory private constructor() {
         ) = PolicyItemRequest(
             policyId = policyId,
             dataHash = dataHash,
+        )
+
+        @JvmStatic
+        fun createPolicySignRequest(
+            version: TxVersion = TxVersion(2),
+            senderAddress: Address = address(),
+            password: Password = password(),
+            fee: Fee = fee(),
+            feeAssetId: FeeAssetId? = null,
+            policyName: PolicyName = PolicyName("test-policy"),
+            recipients: List<Address> = listOf(),
+            owners: List<Address> = listOf(),
+            description: PolicyDescription = PolicyDescription("test"),
+            atomicBadge: AtomicBadge? = null,
+        ) = CreatePolicySignRequest(
+            version = version,
+            senderAddress = senderAddress,
+            password = password,
+            fee = fee,
+            feeAssetId = feeAssetId,
+            policyName = policyName,
+            recipients = recipients,
+            owners = owners,
+            description = description,
+            atomicBadge = atomicBadge,
+        )
+
+        @JvmStatic
+        fun updatePolicySignRequest(
+            policyId: PolicyId = policyId(),
+            opType: OpType = OpType.ADD,
+            version: TxVersion = TxVersion(2),
+            senderAddress: Address = address(),
+            password: Password = password(),
+            fee: Fee = fee(),
+            feeAssetId: FeeAssetId? = null,
+            recipients: List<Address> = listOf(),
+            owners: List<Address> = listOf(),
+            atomicBadge: AtomicBadge? = null,
+        ) = UpdatePolicySignRequest(
+            policyId = policyId,
+            opType = opType,
+            version = version,
+            senderAddress = senderAddress,
+            password = password,
+            fee = fee,
+            feeAssetId = feeAssetId,
+            recipients = recipients,
+            owners = owners,
+            atomicBadge = atomicBadge,
+        )
+
+        @JvmStatic
+        fun atomicSignRequest(
+            version: TxVersion? = TxVersion(2),
+            senderAddress: Address = address(),
+            password: Password? = password(),
+            fee: Fee = fee(),
+            txs: List<AtomicInnerTx> = listOf(),
+        ) = AtomicSignRequest(
+            version = version,
+            senderAddress = senderAddress,
+            password = password,
+            fee = fee,
+            txs = txs,
         )
     }
 }
