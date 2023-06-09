@@ -2,8 +2,8 @@ package com.wavesenterprise.sdk.node.client.feign.privacy
 
 import com.wavesenterprise.sdk.node.client.http.privacy.ForceSyncDto
 import com.wavesenterprise.sdk.node.client.http.privacy.PolicyItemInfoResponseDto
+import com.wavesenterprise.sdk.node.client.http.privacy.SendDataRequestDto
 import com.wavesenterprise.sdk.node.client.http.tx.PolicyDataHashTxDto
-import com.wavesenterprise.sdk.node.domain.privacy.SendDataRequest
 import feign.Headers
 import feign.Param
 import feign.RequestLine
@@ -63,7 +63,7 @@ interface WePrivacyServiceApiFeign {
 
     @Headers("Content-Type: application/json")
     @RequestLine("POST /privacy/sendData")
-    fun sendDataToPrivacy(request: SendDataRequest): PolicyDataHashTxDto
+    fun sendDataToPrivacy(request: SendDataRequestDto): PolicyDataHashTxDto
 
 //    @Headers("Content-Type: multipart/form-data")
 //    @RequestLine("POST /privacy/sendData")
