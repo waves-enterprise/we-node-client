@@ -6,6 +6,7 @@ import com.wavesenterprise.sdk.node.domain.FeeAssetId
 import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.Password
 import com.wavesenterprise.sdk.node.domain.PolicyId
+import com.wavesenterprise.sdk.node.domain.TxVersion
 import com.wavesenterprise.sdk.node.domain.atomic.AtomicBadge
 import com.wavesenterprise.sdk.node.domain.atomic.HasMutableAtomicBadge
 
@@ -20,6 +21,7 @@ data class SendDataRequest(
     override val atomicBadge: AtomicBadge? = null,
     val password: Password? = null,
     val broadcastTx: Boolean,
+    val version: TxVersion? = null,
 ) : HasMutableAtomicBadge<SendDataRequest> {
     override fun withAtomicBadge(atomicBadge: AtomicBadge?): SendDataRequest =
         copy(atomicBadge = atomicBadge).also {
