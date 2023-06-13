@@ -9,11 +9,11 @@ import java.util.Base64
 data class SendDataRequestDto(
     val sender: String,
     val policyId: String,
-    val dataHash: String,
+    val hash: String,
     val data: String,
     val info: PolicyItemFileInfoDto,
     val fee: Long,
-    val feeAssetId: String? = null,
+    val type: String = "",
     val atomicBadge: AtomicBadgeDto? = null,
     val password: String? = null,
 ) {
@@ -25,11 +25,10 @@ data class SendDataRequestDto(
             SendDataRequestDto(
                 sender = senderAddress.asBase58String(),
                 policyId = policyId.asBase58String(),
-                dataHash = dataHash.asBase58String(),
+                hash = dataHash.asBase58String(),
                 data = BASE_64_ENCODER.encodeToString(data.bytes),
                 info = info.toDto(),
                 fee = fee.value,
-                feeAssetId = feeAssetId?.asBase58String(),
                 atomicBadge = atomicBadge?.toDto(),
                 password = password?.value,
             )
