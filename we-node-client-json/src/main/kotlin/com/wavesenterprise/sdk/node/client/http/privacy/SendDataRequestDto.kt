@@ -13,9 +13,10 @@ data class SendDataRequestDto(
     val data: String,
     val info: PolicyItemFileInfoDto,
     val fee: Long,
-    val type: String = "",
+    val type: String = "", // TODO
     val atomicBadge: AtomicBadgeDto? = null,
     val password: String? = null,
+    val version: Int? = null,
 ) {
     companion object {
         private val BASE_64_ENCODER = Base64.getEncoder()
@@ -31,6 +32,7 @@ data class SendDataRequestDto(
                 fee = fee.value,
                 atomicBadge = atomicBadge?.toDto(),
                 password = password?.value,
+                version = version?.value,
             )
     }
 }
