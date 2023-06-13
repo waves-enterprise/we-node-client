@@ -62,8 +62,11 @@ interface WePrivacyServiceApiFeign {
 //    fun getPolicyItemInfos(): PolicyItemInfoResponseDto
 
     @Headers("Content-Type: application/json")
-    @RequestLine("POST /privacy/sendData")
-    fun sendDataToPrivacy(request: SendDataRequestDto): PolicyDataHashTxDto
+    @RequestLine("POST /privacy/sendData?broadcast={broadcast}")
+    fun sendDataToPrivacy(
+        request: SendDataRequestDto,
+        @Param("broadcast") broadcast: Boolean,
+    ): PolicyDataHashTxDto
 
 //    @Headers("Content-Type: multipart/form-data")
 //    @RequestLine("POST /privacy/sendData")

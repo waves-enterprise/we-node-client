@@ -44,7 +44,7 @@ class FeignPrivacyServiceTest {
         val expectedPolicyDataHashTxDto = policyDataHashTx().toDto()
         val sendDataRequest = sendDataRequest()
         every {
-            wePrivacyServiceApiFeign.sendDataToPrivacy(any())
+            wePrivacyServiceApiFeign.sendDataToPrivacy(any(), any())
         } returns expectedPolicyDataHashTxDto
         val policyDataHashTx = feignPrivacyService.sendData(sendDataRequest)
         assertEquals(expectedPolicyDataHashTxDto.toDomain(), policyDataHashTx)

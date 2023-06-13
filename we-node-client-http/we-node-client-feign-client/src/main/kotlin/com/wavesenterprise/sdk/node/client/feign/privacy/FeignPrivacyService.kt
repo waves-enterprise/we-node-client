@@ -20,7 +20,10 @@ class FeignPrivacyService(
     private val wePrivacyServiceApiFeign: WePrivacyServiceApiFeign,
 ) : PrivacyService {
     override fun sendData(request: SendDataRequest): PolicyDataHashTx =
-        wePrivacyServiceApiFeign.sendDataToPrivacy(request.toDto()).toDomain()
+        wePrivacyServiceApiFeign.sendDataToPrivacy(
+            request = request.toDto(),
+            broadcast = request.broadcastTx,
+        ).toDomain()
 
     override fun info(request: PolicyItemRequest): Optional<PolicyItemInfoResponse> =
         try {
