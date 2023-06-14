@@ -26,7 +26,7 @@ class DefaultAtomicAwareContext : AtomicAwareContext {
 
     override fun commitAtomic(): AtomicSignRequest =
         AtomicSignRequest(
-            version = TxVersion(2),
+            version = TxVersion(3),
             senderAddress = Address(ByteArray(0)),
             fee = Fee(0),
             txs = txs.values.toList(),
