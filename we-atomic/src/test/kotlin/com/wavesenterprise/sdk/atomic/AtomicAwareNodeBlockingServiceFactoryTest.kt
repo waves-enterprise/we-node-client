@@ -6,6 +6,7 @@ import com.wavesenterprise.sdk.node.domain.sign.AtomicSignRequest
 import com.wavesenterprise.sdk.node.domain.tx.CallContractTx
 import com.wavesenterprise.sdk.node.domain.tx.Tx
 import com.wavesenterprise.sdk.node.test.data.TestDataFactory
+import com.wavesenterprise.sdk.tx.signer.TxSigner
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -19,12 +20,13 @@ class AtomicAwareNodeBlockingServiceFactoryTest {
 
     private val nodeBlockingServiceFactory: NodeBlockingServiceFactory = mockk()
     private val txService: TxService = mockk()
+    private val txSigner: TxSigner = mockk()
 
     @BeforeEach
     fun setUp() {
         every { txService.broadcast(any()) } returns TestDataFactory.callContractTx()
         every { nodeBlockingServiceFactory.txService() } returns txService
-        atomicAwareNodeBlockingServiceFactory = AtomicAwareNodeBlockingServiceFactory(nodeBlockingServiceFactory)
+        atomicAwareNodeBlockingServiceFactory = AtomicAwareNodeBlockingServiceFactory(nodeBlockingServiceFactory, txSigner)
         atomicAwareContextManager = atomicAwareNodeBlockingServiceFactory.atomicAwareContextManager
     }
 
