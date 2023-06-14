@@ -2,6 +2,7 @@ package com.wavesenterprise.sdk.atomic
 
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
+import com.wavesenterprise.sdk.node.domain.sign.AtomicInnerSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.SignRequest
 import com.wavesenterprise.sdk.node.domain.tx.AtomicTx
 import com.wavesenterprise.sdk.node.domain.tx.Tx
@@ -28,7 +29,7 @@ class AtomicAwareNodeBlockingServiceFactory(
 
             override fun <T : Tx> signAndBroadcast(request: SignRequest<T>): T =
                 with(atomicAwareContextManager.getContext()) {
-                    if (isSentInAtomic()) {
+                    if (isSentInAtomic() && request is AtomicInnerSignRequest) {
                         txSigner.sign(request).also { addTx(it) }
                     } else {
                         txService.signAndBroadcast(request)
