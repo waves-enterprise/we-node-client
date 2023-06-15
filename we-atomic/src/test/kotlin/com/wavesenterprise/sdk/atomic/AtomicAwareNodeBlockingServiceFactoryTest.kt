@@ -26,7 +26,7 @@ class AtomicAwareNodeBlockingServiceFactoryTest {
     fun setUp() {
         every { txService.broadcast(any()) } returns TestDataFactory.callContractTx()
         every { nodeBlockingServiceFactory.txService() } returns txService
-        atomicAwareNodeBlockingServiceFactory = AtomicAwareNodeBlockingServiceFactory(nodeBlockingServiceFactory, txSigner)
+        atomicAwareNodeBlockingServiceFactory = AtomicAwareNodeBlockingServiceFactory(nodeBlockingServiceFactory) { txSigner }
         atomicAwareContextManager = atomicAwareNodeBlockingServiceFactory.atomicAwareContextManager
     }
 
