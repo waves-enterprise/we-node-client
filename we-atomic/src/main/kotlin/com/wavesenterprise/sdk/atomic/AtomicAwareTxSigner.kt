@@ -12,19 +12,18 @@ class AtomicAwareTxSigner(
 ) : TxSigner by txSigner {
     override fun <T : Tx> sign(signRequest: SignRequest<T>): T =
         with(atomicAwareContextManager.getContext()) {
-            var signRequestWithAtomicBadge = signRequest
-            if (isSentInAtomic()) {
+            val test = if (isSentInAtomic()) {
                 when (signRequest) {
                     is AtomicInnerSignRequest -> {
-                        signRequestWithAtomicBadge = signRequest.withAtomicBadge(
+                        signRequest.withAtomicBadge(
                             AtomicBadge(
                                 trustedSender = getSignerAddress()
                             )
                         )
                     }
-                    else -> throw IllegalArgumentException("not atomic signable")
+                    else -> throw IllegalArgumentException("Not atomic signable: $signRequest")
                 }
-            }
-            txSigner.sign(signRequestWithAtomicBadge)
+            } else signRequest
+            txSigner.sign(test)
         }
 }
