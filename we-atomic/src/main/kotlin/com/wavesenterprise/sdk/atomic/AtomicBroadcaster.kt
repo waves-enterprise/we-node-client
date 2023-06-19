@@ -2,26 +2,26 @@ package com.wavesenterprise.sdk.atomic
 
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
-import com.wavesenterprise.sdk.node.domain.tx.AtomicTx
 import com.wavesenterprise.sdk.tx.signer.TxSigner
 
-class AtomicBroadcaster( // todo: rename
+class AtomicBroadcaster(
+    // todo: rename
     private val txSigner: TxSigner,
     private val atomicAwareContextManager: AtomicAwareContextManager,
     private val atomicAwareNodeBlockingServiceFactory: NodeBlockingServiceFactory,
 ) {
     private val txService: TxService = atomicAwareNodeBlockingServiceFactory.txService()
 
-    fun doInAtomic(block: () -> Unit): AtomicTx? { // TODO: Add posibility for hold atomicTx and return needed class
+    fun <T> doInAtomic(block: () -> T): T? { // TODO: Add posibility for hold atomicTx and return needed class
         atomicAwareContextManager.beginAtomic()
         try {
-            block()
+            val blockResult = block()
             val atomicSignRequest = atomicAwareContextManager.commitAtomic()
-            if (atomicSignRequest.txs.isEmpty()) {
-                return null
-            }
-            val signedAtomicSignRequest = txSigner.sign(atomicSignRequest)
-            return txService.broadcast(signedAtomicSignRequest)
+            return if (atomicSignRequest.txs.isNotEmpty()) {
+                val signedAtomicSignRequest = txSigner.sign(atomicSignRequest)
+                txService.broadcast(signedAtomicSignRequest)
+                return blockResult
+            } else blockResult
         } finally {
             atomicAwareContextManager.clearContext()
         }
