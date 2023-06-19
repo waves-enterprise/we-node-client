@@ -18,7 +18,6 @@ interface WePrivacyServiceApiFeign {
     @RequestLine("GET /privacy/forceSync/{policyId}")
     fun forceSyncByPolicyId(policyId: String): ForceSyncDto
 
-    @Headers("Content-Type: application/json")
     @RequestLine("GET /privacy/{policyId}/getData/{policyItemHash}")
     fun getDataFromPrivacy(
         @Param("policyId") policyId: String,
