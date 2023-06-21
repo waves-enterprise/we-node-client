@@ -10,6 +10,7 @@ import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFact
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeInfoService
 import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
+import com.wavesenterprise.sdk.node.client.blocking.util.UtilsService
 import com.wavesenterprise.sdk.node.client.grpc.blocking.contract.ContractGrpcBlockingService
 import com.wavesenterprise.sdk.node.client.grpc.blocking.event.BlockchainEventsGrpcBlockingService
 import com.wavesenterprise.sdk.node.client.grpc.blocking.tx.TxGrpcBlockingService
@@ -57,4 +58,8 @@ class GrpcNodeServiceFactory(
             channel = channel,
             grpc = BlockchainEventsServiceGrpc.newBlockingStub(channel),
         )
+
+    override fun utilService(): UtilsService {
+        TODO("Not yet implemented")
+    }
 }
