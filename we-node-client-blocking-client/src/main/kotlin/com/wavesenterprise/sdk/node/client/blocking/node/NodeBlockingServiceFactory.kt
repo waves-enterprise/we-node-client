@@ -6,6 +6,7 @@ import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.client.blocking.event.BlockchainEventsService
 import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
+import com.wavesenterprise.sdk.node.client.blocking.util.UtilsService
 
 interface NodeBlockingServiceFactory {
     fun txService(): TxService
@@ -15,4 +16,5 @@ interface NodeBlockingServiceFactory {
     fun privacyService(): PrivacyService
     fun blocksService(): BlocksService
     fun blockchainEventsService(): BlockchainEventsService
+    fun utilService(): UtilsService
 }

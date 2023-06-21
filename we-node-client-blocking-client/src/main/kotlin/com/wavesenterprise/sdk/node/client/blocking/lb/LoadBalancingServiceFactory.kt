@@ -8,6 +8,7 @@ import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFact
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeInfoService
 import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
+import com.wavesenterprise.sdk.node.client.blocking.util.UtilsService
 import java.lang.reflect.Proxy
 
 class LoadBalancingServiceFactory(
@@ -51,6 +52,11 @@ class LoadBalancingServiceFactory(
     override fun blockchainEventsService(): BlockchainEventsService =
         createService(BlockchainEventsService::class.java) {
             it.blockchainEventsService()
+        }
+
+    override fun utilService(): UtilsService =
+        createService(UtilsService::class.java) {
+            it.utilService()
         }
 
     @Suppress("UNCHECKED_CAST")

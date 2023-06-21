@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/utils/time"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "system": 1687343013465,
+      "NTP": 1687343013465
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
