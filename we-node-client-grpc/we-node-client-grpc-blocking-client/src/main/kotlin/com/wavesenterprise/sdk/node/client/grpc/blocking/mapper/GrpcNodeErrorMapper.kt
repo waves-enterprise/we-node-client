@@ -34,9 +34,9 @@ import io.grpc.Status.UNKNOWN
 import io.grpc.StatusRuntimeException
 
 /**
- * status docs: https://cloud.yandex.com/en/docs/api-design-guide/concepts/errors
+ * Mapper for errors from node by GRPC
+ * @see <a href="https://cloud.yandex.com/en/docs/api-design-guide/concepts/errors">Yandex Cloud API</a>
  */
-// TODO: DOC
 object GrpcNodeErrorMapper {
 
     private const val ERROR_CODE_KEY = "error-code"

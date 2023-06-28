@@ -7,10 +7,8 @@ dependencies {
 
     api(project(":we-node-client-http:we-node-client-feign-client"))
 
-    val feignVersion = 11.9 // todo gradle.propertiess
-
-    implementation("io.github.openfeign:feign-core:$feignVersion")
-    implementation("io.github.openfeign:feign-jackson:$feignVersion")
+    implementation("io.github.openfeign:feign-core")
+    implementation("io.github.openfeign:feign-jackson")
 
     testImplementation("io.mockk:mockk")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
