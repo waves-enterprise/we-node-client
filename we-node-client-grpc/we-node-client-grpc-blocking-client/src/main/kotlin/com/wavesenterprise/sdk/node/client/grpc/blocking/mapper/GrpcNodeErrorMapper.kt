@@ -1,6 +1,5 @@
 package com.wavesenterprise.sdk.node.client.grpc.blocking.mapper
 
-import com.sun.org.slf4j.internal.LoggerFactory
 import com.wavesenterprise.sdk.node.exception.NodeBadRequestException
 import com.wavesenterprise.sdk.node.exception.NodeConflictException
 import com.wavesenterprise.sdk.node.exception.NodeError
@@ -32,6 +31,7 @@ import io.grpc.Status.UNAVAILABLE
 import io.grpc.Status.UNIMPLEMENTED
 import io.grpc.Status.UNKNOWN
 import io.grpc.StatusRuntimeException
+import org.slf4j.LoggerFactory
 
 /**
  * Mapper for errors from node by GRPC

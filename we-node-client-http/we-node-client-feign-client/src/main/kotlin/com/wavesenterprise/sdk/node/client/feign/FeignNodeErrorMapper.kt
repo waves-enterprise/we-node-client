@@ -2,7 +2,6 @@ package com.wavesenterprise.sdk.node.client.feign
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.sun.org.slf4j.internal.LoggerFactory
 import com.wavesenterprise.sdk.node.exception.NodeBadRequestException
 import com.wavesenterprise.sdk.node.exception.NodeConflictException
 import com.wavesenterprise.sdk.node.exception.NodeError
@@ -27,6 +26,7 @@ import feign.FeignException.ServiceUnavailable
 import feign.FeignException.TooManyRequests
 import feign.FeignException.Unauthorized
 import feign.FeignException.UnprocessableEntity
+import org.slf4j.LoggerFactory
 
 class FeignNodeErrorMapper(
     private val objectMapper: ObjectMapper,

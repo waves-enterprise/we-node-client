@@ -13,6 +13,7 @@ val jacocoToolVersion: String by project
 val logbackVersion: String by project
 val javaxAnnotationApiVersion: String by project
 val caffeineCacheVersion: String by project
+val slf4jVersion: String by project
 
 val ioGrpcVersion: String by project
 val ioGrpcKotlinVersion: String by project
@@ -272,6 +273,7 @@ subprojects {
             dependency("io.github.openfeign:feign-slf4j:$feignVersion")
             dependency("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonModuleKotlin")
             dependency("com.github.ben-manes.caffeine:caffeine:$caffeineCacheVersion")
+            dependency("org.slf4j:slf4j-api:$slf4jVersion")
 
             dependency("org.junit.platform:junit-platform-launcher:$junitPlatformLauncherVersion")
             dependency("io.mockk:mockk:$mockkVersion")
