@@ -13,7 +13,7 @@ class AtomicAwareNodeBlockingServiceFactory(
     private val txSigner: () -> TxSigner,
 ) : NodeBlockingServiceFactory by nodeBlockingServiceFactory {
 
-    private val testTxSigner: TxSigner by lazy { txSigner.invoke() }
+    private val txSignerFromContext: TxSigner by lazy { txSigner.invoke() }
 
     val atomicAwareContextManager: AtomicAwareContextManager =
         ThreadLocalAtomicAwareContextManager()
@@ -32,7 +32,7 @@ class AtomicAwareNodeBlockingServiceFactory(
             override fun <T : Tx> signAndBroadcast(request: SignRequest<T>): T =
                 with(atomicAwareContextManager.getContext()) {
                     if (isSentInAtomic() && request is AtomicInnerSignRequest) {
-                        testTxSigner.sign(request).also { addTx(it) }
+                        txSignerFromContext.sign(request).also { addTx(it) }
                     } else {
                         txService.signAndBroadcast(request)
                     }

@@ -5,7 +5,6 @@ import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
 import com.wavesenterprise.sdk.tx.signer.TxSigner
 
 class AtomicBroadcaster(
-    // todo: rename
     private val txSigner: TxSigner,
     private val atomicAwareContextManager: AtomicAwareContextManager,
     private val atomicAwareNodeBlockingServiceFactory: NodeBlockingServiceFactory,
