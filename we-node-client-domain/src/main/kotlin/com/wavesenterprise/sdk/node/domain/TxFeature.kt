@@ -1,6 +1,4 @@
-package com.wavesplatform.vst.node.dto.tx
-
-import com.wavesenterprise.sdk.node.domain.TxType
+package com.wavesenterprise.sdk.node.domain
 
 enum class TxFeature {
     SPONSORED_FEES,

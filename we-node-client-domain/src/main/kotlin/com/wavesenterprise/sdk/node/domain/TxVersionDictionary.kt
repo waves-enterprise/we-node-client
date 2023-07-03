@@ -1,8 +1,5 @@
 package com.wavesenterprise.sdk.node.domain
 
-import com.wavesplatform.vst.node.dto.tx.DictionaryTxVersion
-import com.wavesplatform.vst.node.dto.tx.TxFeature
-
 object TxVersionDictionary {
 
     fun maxVersionSupports(type: TxType, vararg features: TxFeature): Int =
