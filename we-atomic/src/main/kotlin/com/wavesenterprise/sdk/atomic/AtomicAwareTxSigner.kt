@@ -1,5 +1,6 @@
 package com.wavesenterprise.sdk.atomic
 
+import com.wavesenterprise.sdk.atomic.manager.AtomicAwareContextManager
 import com.wavesenterprise.sdk.node.domain.atomic.AtomicBadge
 import com.wavesenterprise.sdk.node.domain.sign.AtomicInnerSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.SignRequest

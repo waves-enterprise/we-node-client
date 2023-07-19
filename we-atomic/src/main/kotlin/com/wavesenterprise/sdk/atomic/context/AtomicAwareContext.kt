@@ -1,4 +1,4 @@
-package com.wavesenterprise.sdk.atomic
+package com.wavesenterprise.sdk.atomic.context
 
 import com.wavesenterprise.sdk.node.domain.sign.AtomicSignRequest
 import com.wavesenterprise.sdk.node.domain.tx.Tx

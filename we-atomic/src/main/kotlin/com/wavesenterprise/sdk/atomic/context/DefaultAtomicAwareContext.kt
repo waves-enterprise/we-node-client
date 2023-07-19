@@ -1,4 +1,4 @@
-package com.wavesenterprise.sdk.atomic
+package com.wavesenterprise.sdk.atomic.context
 
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.Fee
