@@ -1,10 +1,7 @@
 package com.wavesenterprise.sdk.atomic
 
-import com.wavesenterprise.sdk.atomic.cache.contract.info.ThreadLocalContractInfoCacheManager
 import com.wavesenterprise.sdk.atomic.manager.AtomicAwareContextManager
-import com.wavesenterprise.sdk.atomic.manager.AtomicAwareContextManagerHook
 import com.wavesenterprise.sdk.atomic.manager.ContractInfoCacheManager
-import com.wavesenterprise.sdk.atomic.manager.ThreadLocalAtomicAwareContextManagerWithHook
 import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
@@ -26,30 +23,12 @@ import java.util.Optional
 
 class AtomicAwareNodeBlockingServiceFactory(
     private val nodeBlockingServiceFactory: NodeBlockingServiceFactory,
+    private val atomicAwareContextManager: AtomicAwareContextManager,
+    private val contractInfoCacheManager: ContractInfoCacheManager,
     private val txSigner: () -> TxSigner,
 ) : NodeBlockingServiceFactory by nodeBlockingServiceFactory {
 
     private val txSignerFromContext: TxSigner by lazy { txSigner.invoke() }
-
-    val contractVersionCacheManager: ContractInfoCacheManager = ThreadLocalContractInfoCacheManager()
-
-    inner class ContractInfoCacheContextManagerHook(
-        private val contractInfoCacheManager: ContractInfoCacheManager,
-    ) : AtomicAwareContextManagerHook {
-
-        override fun begin() {
-            contractInfoCacheManager.init()
-        }
-
-        override fun clear() {
-            contractInfoCacheManager.clear()
-        }
-    }
-
-    val atomicAwareContextManager: AtomicAwareContextManager =
-        ThreadLocalAtomicAwareContextManagerWithHook(
-            ContractInfoCacheContextManagerHook(contractVersionCacheManager)
-        )
 
     override fun txService(): TxService = nodeBlockingServiceFactory.txService().let { txService ->
         object : TxService by txService {
@@ -98,7 +77,7 @@ class AtomicAwareNodeBlockingServiceFactory(
                             }
                     is CallContractTx -> null
                 }?.also {
-                    contractVersionCacheManager.getCache().put(
+                    contractInfoCacheManager.getCache().put(
                         contractId = it.id,
                         contractInfo = it,
                     )
@@ -111,7 +90,7 @@ class AtomicAwareNodeBlockingServiceFactory(
         nodeBlockingServiceFactory.contractService().let { contractService ->
             object : ContractService by contractService {
                 override fun getContractInfo(contractId: ContractId): Optional<ContractInfo> =
-                    contractVersionCacheManager.getCache().get(contractId)?.let { contractInfo ->
+                    contractInfoCacheManager.getCache().get(contractId)?.let { contractInfo ->
                         Optional.of(contractInfo)
                     } ?: contractService.getContractInfo(contractId)
             }

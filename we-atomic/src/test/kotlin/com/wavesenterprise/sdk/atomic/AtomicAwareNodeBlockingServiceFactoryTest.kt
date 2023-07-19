@@ -1,6 +1,11 @@
 package com.wavesenterprise.sdk.atomic
 
+import com.wavesenterprise.sdk.atomic.cache.contract.info.ThreadLocalContractInfoCacheManager
 import com.wavesenterprise.sdk.atomic.manager.AtomicAwareContextManager
+import com.wavesenterprise.sdk.atomic.manager.AtomicAwareContextManagerHook
+import com.wavesenterprise.sdk.atomic.manager.ContractInfoCacheContextManagerHook
+import com.wavesenterprise.sdk.atomic.manager.ContractInfoCacheManager
+import com.wavesenterprise.sdk.atomic.manager.ThreadLocalAtomicAwareContextManagerWithHook
 import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
@@ -24,6 +29,8 @@ class AtomicAwareNodeBlockingServiceFactoryTest {
 
     private lateinit var atomicAwareNodeBlockingServiceFactory: AtomicAwareNodeBlockingServiceFactory
     private lateinit var atomicAwareContextManager: AtomicAwareContextManager
+    private lateinit var contractInfoCacheManager: ContractInfoCacheManager
+    private lateinit var atomicAwareContextManagerHook: AtomicAwareContextManagerHook
 
     private val nodeBlockingServiceFactory: NodeBlockingServiceFactory = mockk()
     private val txService: TxService = mockk()
@@ -35,9 +42,15 @@ class AtomicAwareNodeBlockingServiceFactoryTest {
         every { txService.broadcast(any()) } returns TestDataFactory.callContractTx()
         every { nodeBlockingServiceFactory.txService() } returns txService
         every { nodeBlockingServiceFactory.contractService() } returns contractService
+        contractInfoCacheManager = ThreadLocalContractInfoCacheManager()
+        atomicAwareContextManagerHook = ContractInfoCacheContextManagerHook(contractInfoCacheManager)
+        atomicAwareContextManager = ThreadLocalAtomicAwareContextManagerWithHook(atomicAwareContextManagerHook)
         atomicAwareNodeBlockingServiceFactory =
-            AtomicAwareNodeBlockingServiceFactory(nodeBlockingServiceFactory) { txSigner }
-        atomicAwareContextManager = atomicAwareNodeBlockingServiceFactory.atomicAwareContextManager
+            AtomicAwareNodeBlockingServiceFactory(
+                nodeBlockingServiceFactory = nodeBlockingServiceFactory,
+                atomicAwareContextManager = atomicAwareContextManager,
+                contractInfoCacheManager = contractInfoCacheManager,
+            ) { txSigner }
     }
 
     @Test
@@ -82,8 +95,7 @@ class AtomicAwareNodeBlockingServiceFactoryTest {
             tx = createContractTx,
         )
 
-        atomicAwareNodeBlockingServiceFactory
-            .contractVersionCacheManager
+        contractInfoCacheManager
             .getCache()
             .get(createContractTx.id.contractId)!!
             .also {
@@ -98,7 +110,7 @@ class AtomicAwareNodeBlockingServiceFactoryTest {
     @Test
     fun `should use ContractInfo cache when call getContractInfo`() {
         val expectedContractInfo: ContractInfo = TestDataFactory.contractInfo()
-        atomicAwareNodeBlockingServiceFactory.contractVersionCacheManager.getCache().put(
+        contractInfoCacheManager.getCache().put(
             contractId = expectedContractInfo.id,
             contractInfo = expectedContractInfo,
         )
