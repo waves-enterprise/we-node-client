@@ -33,6 +33,8 @@ data class TxId(val bytes: ByteArray) {
         return true
     }
 
+    override fun toString(): String = "TxId(${asBase58String()})"
+
     override fun hashCode(): Int {
         return bytes.contentHashCode()
     }

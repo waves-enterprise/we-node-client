@@ -34,8 +34,10 @@ import com.wavesenterprise.sdk.node.domain.ValidationProof
 import com.wavesenterprise.sdk.node.domain.atomic.AtomicBadge
 import com.wavesenterprise.sdk.node.domain.contract.CallContractTransaction
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
+import com.wavesenterprise.sdk.node.domain.contract.ContractId.Companion.contractId
 import com.wavesenterprise.sdk.node.domain.contract.ContractImage
 import com.wavesenterprise.sdk.node.domain.contract.ContractImageHash
+import com.wavesenterprise.sdk.node.domain.contract.ContractInfo
 import com.wavesenterprise.sdk.node.domain.contract.ContractName
 import com.wavesenterprise.sdk.node.domain.contract.ContractTransaction
 import com.wavesenterprise.sdk.node.domain.contract.ContractTxStatus
@@ -771,6 +773,21 @@ class TestDataFactory private constructor() {
             password = password,
             fee = fee,
             txs = txs,
+        )
+
+        @JvmStatic
+        fun contractInfo(
+            id: ContractId = txId().contractId,
+            image: ContractImage = ContractImage("test-image:0.0.1"),
+            imageHash: ContractImageHash = ContractImageHash("hash"),
+            version: ContractVersion = ContractVersion(1),
+            active: Boolean = true,
+        ) = ContractInfo(
+            id = id,
+            image = image,
+            imageHash = imageHash,
+            version = version,
+            active = active,
         )
     }
 }

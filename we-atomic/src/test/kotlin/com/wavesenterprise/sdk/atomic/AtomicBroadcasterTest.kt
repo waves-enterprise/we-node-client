@@ -1,5 +1,6 @@
 package com.wavesenterprise.sdk.atomic
 
+import com.wavesenterprise.sdk.atomic.manager.AtomicAwareContextManager
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
 import com.wavesenterprise.sdk.node.domain.sign.AtomicSignRequest

@@ -1,9 +1,15 @@
 package com.wavesenterprise.sdk.atomic
 
+import com.wavesenterprise.sdk.atomic.manager.AtomicAwareContextManager
+import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
+import com.wavesenterprise.sdk.node.domain.contract.ContractId.Companion.contractId
+import com.wavesenterprise.sdk.node.domain.contract.ContractInfo
+import com.wavesenterprise.sdk.node.domain.contract.ContractVersion
 import com.wavesenterprise.sdk.node.domain.sign.AtomicSignRequest
 import com.wavesenterprise.sdk.node.domain.tx.CallContractTx
+import com.wavesenterprise.sdk.node.domain.tx.ContractTx.Companion.contractId
 import com.wavesenterprise.sdk.node.domain.tx.Tx
 import com.wavesenterprise.sdk.node.test.data.TestDataFactory
 import com.wavesenterprise.sdk.tx.signer.TxSigner
@@ -12,21 +18,25 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.util.Optional
 
 class AtomicAwareNodeBlockingServiceFactoryTest {
 
-    lateinit var atomicAwareNodeBlockingServiceFactory: AtomicAwareNodeBlockingServiceFactory
-    lateinit var atomicAwareContextManager: AtomicAwareContextManager
+    private lateinit var atomicAwareNodeBlockingServiceFactory: AtomicAwareNodeBlockingServiceFactory
+    private lateinit var atomicAwareContextManager: AtomicAwareContextManager
 
     private val nodeBlockingServiceFactory: NodeBlockingServiceFactory = mockk()
     private val txService: TxService = mockk()
+    private val contractService: ContractService = mockk()
     private val txSigner: TxSigner = mockk()
 
     @BeforeEach
     fun setUp() {
         every { txService.broadcast(any()) } returns TestDataFactory.callContractTx()
         every { nodeBlockingServiceFactory.txService() } returns txService
-        atomicAwareNodeBlockingServiceFactory = AtomicAwareNodeBlockingServiceFactory(nodeBlockingServiceFactory) { txSigner }
+        every { nodeBlockingServiceFactory.contractService() } returns contractService
+        atomicAwareNodeBlockingServiceFactory =
+            AtomicAwareNodeBlockingServiceFactory(nodeBlockingServiceFactory) { txSigner }
         atomicAwareContextManager = atomicAwareNodeBlockingServiceFactory.atomicAwareContextManager
     }
 
@@ -60,5 +70,44 @@ class AtomicAwareNodeBlockingServiceFactoryTest {
         val atomicTx2: AtomicSignRequest = atomicAwareContextManager.commitAtomic()
         assertEquals(1, atomicTx2.txs.size)
         assertEquals(expectedAtomicTx2, atomicTx2.txs[0])
+    }
+
+    @Test
+    fun `should cache ContractInfo when broadcast CreateContractTx`() {
+        atomicAwareContextManager.beginAtomic()
+        val createContractTx = TestDataFactory.createContractTx()
+
+        every { contractService.getContractInfo(createContractTx.id.contractId) } returns Optional.empty()
+        atomicAwareNodeBlockingServiceFactory.txService().broadcast(
+            tx = createContractTx,
+        )
+
+        atomicAwareNodeBlockingServiceFactory
+            .contractVersionCacheManager
+            .getCache()
+            .get(createContractTx.id.contractId)!!
+            .also {
+                assertEquals(it.id, createContractTx.contractId())
+                assertEquals(it.image, createContractTx.image)
+                assertEquals(it.imageHash, createContractTx.imageHash)
+                assertEquals(it.version, ContractVersion(1))
+                assertEquals(it.active, true)
+            }
+    }
+
+    @Test
+    fun `should use ContractInfo cache when call getContractInfo`() {
+        val expectedContractInfo: ContractInfo = TestDataFactory.contractInfo()
+        atomicAwareNodeBlockingServiceFactory.contractVersionCacheManager.getCache().put(
+            contractId = expectedContractInfo.id,
+            contractInfo = expectedContractInfo,
+        )
+        every { contractService.getContractInfo(any()) } returns Optional.empty()
+
+        atomicAwareNodeBlockingServiceFactory.contractService().getContractInfo(
+            contractId = expectedContractInfo.id,
+        ).also {
+            assertEquals(it.get(), expectedContractInfo)
+        }
     }
 }
