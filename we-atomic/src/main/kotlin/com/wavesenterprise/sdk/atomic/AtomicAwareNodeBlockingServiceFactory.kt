@@ -4,11 +4,14 @@ import com.wavesenterprise.sdk.atomic.manager.AtomicAwareContextManager
 import com.wavesenterprise.sdk.atomic.manager.ContractInfoCacheManager
 import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
+import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
+import com.wavesenterprise.sdk.node.domain.atomic.AtomicBadge
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.ContractInfo
 import com.wavesenterprise.sdk.node.domain.contract.ContractVersion
 import com.wavesenterprise.sdk.node.domain.contract.ContractVersion.Companion.update
+import com.wavesenterprise.sdk.node.domain.privacy.SendDataRequest
 import com.wavesenterprise.sdk.node.domain.sign.AtomicInnerSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.SignRequest
 import com.wavesenterprise.sdk.node.domain.tx.AtomicTx
@@ -16,6 +19,7 @@ import com.wavesenterprise.sdk.node.domain.tx.CallContractTx
 import com.wavesenterprise.sdk.node.domain.tx.ContractTx.Companion.contractId
 import com.wavesenterprise.sdk.node.domain.tx.CreateContractTx
 import com.wavesenterprise.sdk.node.domain.tx.ExecutableTx
+import com.wavesenterprise.sdk.node.domain.tx.PolicyDataHashTx
 import com.wavesenterprise.sdk.node.domain.tx.Tx
 import com.wavesenterprise.sdk.node.domain.tx.UpdateContractTx
 import com.wavesenterprise.sdk.tx.signer.TxSigner
@@ -65,6 +69,7 @@ class AtomicAwareNodeBlockingServiceFactory(
                         version = ContractVersion(1),
                         active = true,
                     )
+
                     is UpdateContractTx ->
                         nodeBlockingServiceFactory
                             .contractService()
@@ -75,6 +80,7 @@ class AtomicAwareNodeBlockingServiceFactory(
                                     version = this.version.update()
                                 )
                             }
+
                     is CallContractTx -> null
                 }?.also {
                     contractInfoCacheManager.getCache().put(
@@ -83,6 +89,24 @@ class AtomicAwareNodeBlockingServiceFactory(
                     )
                 }
             }
+        }
+    }
+
+    override fun privacyService(): PrivacyService = nodeBlockingServiceFactory.privacyService().let { privacyService ->
+        object : PrivacyService by privacyService {
+            override fun sendData(request: SendDataRequest): PolicyDataHashTx =
+                privacyService.sendData(request.withAtomicBadgeIfNecessary())
+
+            private fun SendDataRequest.withAtomicBadgeIfNecessary() =
+                if (!broadcastTx && senderAddress != txSignerFromContext.getSignerAddress()) {
+                    withAtomicBadge(
+                        atomicBadge = AtomicBadge(
+                            trustedSender = txSignerFromContext.getSignerAddress(),
+                        )
+                    )
+                } else {
+                    this
+                }
         }
     }
 

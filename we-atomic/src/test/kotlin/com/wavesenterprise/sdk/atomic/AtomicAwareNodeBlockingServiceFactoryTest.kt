@@ -8,10 +8,12 @@ import com.wavesenterprise.sdk.atomic.manager.ContractInfoCacheManager
 import com.wavesenterprise.sdk.atomic.manager.ThreadLocalAtomicAwareContextManagerWithHook
 import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
+import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
 import com.wavesenterprise.sdk.node.domain.contract.ContractId.Companion.contractId
 import com.wavesenterprise.sdk.node.domain.contract.ContractInfo
 import com.wavesenterprise.sdk.node.domain.contract.ContractVersion
+import com.wavesenterprise.sdk.node.domain.privacy.SendDataRequest
 import com.wavesenterprise.sdk.node.domain.sign.AtomicSignRequest
 import com.wavesenterprise.sdk.node.domain.tx.CallContractTx
 import com.wavesenterprise.sdk.node.domain.tx.ContractTx.Companion.contractId
@@ -20,7 +22,10 @@ import com.wavesenterprise.sdk.node.test.data.TestDataFactory
 import com.wavesenterprise.sdk.tx.signer.TxSigner
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.util.Optional
@@ -35,6 +40,7 @@ class AtomicAwareNodeBlockingServiceFactoryTest {
     private val nodeBlockingServiceFactory: NodeBlockingServiceFactory = mockk()
     private val txService: TxService = mockk()
     private val contractService: ContractService = mockk()
+    private val privacyService: PrivacyService = mockk()
     private val txSigner: TxSigner = mockk()
 
     @BeforeEach
@@ -42,6 +48,7 @@ class AtomicAwareNodeBlockingServiceFactoryTest {
         every { txService.broadcast(any()) } returns TestDataFactory.callContractTx()
         every { nodeBlockingServiceFactory.txService() } returns txService
         every { nodeBlockingServiceFactory.contractService() } returns contractService
+        every { nodeBlockingServiceFactory.privacyService() } returns privacyService
         contractInfoCacheManager = ThreadLocalContractInfoCacheManager()
         atomicAwareContextManagerHook = ContractInfoCacheContextManagerHook(contractInfoCacheManager)
         atomicAwareContextManager = ThreadLocalAtomicAwareContextManagerWithHook(atomicAwareContextManagerHook)
@@ -120,6 +127,43 @@ class AtomicAwareNodeBlockingServiceFactoryTest {
             contractId = expectedContractInfo.id,
         ).also {
             assertEquals(it.get(), expectedContractInfo)
+        }
+    }
+
+    @Test
+    fun `should add atomic badge to send data request if necessary`() {
+        val addressFromTxSigner = TestDataFactory.address()
+        every { txSigner.getSignerAddress() } returns addressFromTxSigner
+        val sendDataRequestCaptor = slot<SendDataRequest>()
+        every { privacyService.sendData(capture(sendDataRequestCaptor)) } returns TestDataFactory.policyDataHashTx()
+        val sendDataRequest = TestDataFactory.sendDataRequest(
+            broadcastTx = false,
+            senderAddress = TestDataFactory.address(),
+            atomicBadge = null,
+        )
+        atomicAwareNodeBlockingServiceFactory.privacyService().sendData(sendDataRequest)
+
+        sendDataRequestCaptor.captured.also {
+            assertNotNull(it.atomicBadge)
+            assertEquals(addressFromTxSigner, it.atomicBadge!!.trustedSender)
+        }
+    }
+
+    @Test
+    fun `shouldn't add atomic badge to send data request if not necessary`() {
+        val addressFromTxSigner = TestDataFactory.address()
+        every { txSigner.getSignerAddress() } returns addressFromTxSigner
+        val sendDataRequestCaptor = slot<SendDataRequest>()
+        every { privacyService.sendData(capture(sendDataRequestCaptor)) } returns TestDataFactory.policyDataHashTx()
+        val sendDataRequest = TestDataFactory.sendDataRequest(
+            broadcastTx = true,
+            senderAddress = addressFromTxSigner,
+            atomicBadge = null,
+        )
+        atomicAwareNodeBlockingServiceFactory.privacyService().sendData(sendDataRequest)
+
+        sendDataRequestCaptor.captured.also {
+            assertNull(it.atomicBadge)
         }
     }
 }
