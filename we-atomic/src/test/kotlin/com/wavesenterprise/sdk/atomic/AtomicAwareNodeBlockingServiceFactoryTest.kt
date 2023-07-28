@@ -156,7 +156,7 @@ class AtomicAwareNodeBlockingServiceFactoryTest {
         val sendDataRequestCaptor = slot<SendDataRequest>()
         every { privacyService.sendData(capture(sendDataRequestCaptor)) } returns TestDataFactory.policyDataHashTx()
         val sendDataRequest = TestDataFactory.sendDataRequest(
-            broadcastTx = true,
+            broadcastTx = false,
             senderAddress = addressFromTxSigner,
             atomicBadge = null,
         )

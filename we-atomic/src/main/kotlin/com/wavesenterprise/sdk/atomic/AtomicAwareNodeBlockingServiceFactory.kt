@@ -98,15 +98,12 @@ class AtomicAwareNodeBlockingServiceFactory(
                 privacyService.sendData(request.withAtomicBadgeIfNecessary())
 
             private fun SendDataRequest.withAtomicBadgeIfNecessary() =
-                if (!broadcastTx && senderAddress != txSignerFromContext.getSignerAddress()) {
-                    withAtomicBadge(
-                        atomicBadge = AtomicBadge(
+                withAtomicBadge(
+                    atomicBadge = if (!broadcastTx && senderAddress != txSignerFromContext.getSignerAddress())
+                        AtomicBadge(
                             trustedSender = txSignerFromContext.getSignerAddress(),
-                        )
-                    )
-                } else {
-                    this
-                }
+                        ) else null
+                )
         }
     }
 
