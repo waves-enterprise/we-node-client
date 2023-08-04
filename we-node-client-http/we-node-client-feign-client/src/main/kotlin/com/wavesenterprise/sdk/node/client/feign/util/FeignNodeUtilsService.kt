@@ -1,14 +1,14 @@
 package com.wavesenterprise.sdk.node.client.feign.util
 
-import com.wavesenterprise.sdk.node.client.blocking.util.UtilsService
+import com.wavesenterprise.sdk.node.client.blocking.util.NodeUtilsService
 import com.wavesenterprise.sdk.node.client.http.util.HashedMessageDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.client.http.util.TimeDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.util.HashedMessage
 import com.wavesenterprise.sdk.node.domain.util.Time
 
-class FeignUtilsService(
+class FeignNodeUtilsService(
     private val weUtilsServiceApiFeign: WeUtilsServiceApiFeign,
-) : UtilsService {
+) : NodeUtilsService {
 
     override fun currentTime(): Time =
         weUtilsServiceApiFeign.currentTime().toDomain()

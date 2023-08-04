@@ -8,7 +8,7 @@ import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFact
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeInfoService
 import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
-import com.wavesenterprise.sdk.node.client.blocking.util.UtilsService
+import com.wavesenterprise.sdk.node.client.blocking.util.NodeUtilsService
 import com.wavesenterprise.sdk.node.client.feign.FeignNodeClientParams
 import com.wavesenterprise.sdk.node.client.feign.FeignWeApiFactory
 import com.wavesenterprise.sdk.node.client.feign.blocks.FeignBlocksService
@@ -23,7 +23,7 @@ import com.wavesenterprise.sdk.node.client.feign.privacy.FeignPrivacyService
 import com.wavesenterprise.sdk.node.client.feign.privacy.WePrivacyServiceApiFeign
 import com.wavesenterprise.sdk.node.client.feign.tx.FeignTxService
 import com.wavesenterprise.sdk.node.client.feign.tx.WeTxApiFeign
-import com.wavesenterprise.sdk.node.client.feign.util.FeignUtilsService
+import com.wavesenterprise.sdk.node.client.feign.util.FeignNodeUtilsService
 import com.wavesenterprise.sdk.node.client.feign.util.WeUtilsServiceApiFeign
 
 class FeignNodeServiceFactory(
@@ -88,12 +88,12 @@ class FeignNodeServiceFactory(
         TODO("Not yet implemented")
     }
 
-    override fun utilService(): UtilsService {
+    override fun nodeUtilsService(): NodeUtilsService {
         val weBlocksServiceApiFeign = FeignWeApiFactory.createClient(
             clientClass = WeUtilsServiceApiFeign::class.java,
-            loggerName = UtilsService::class.java.name,
+            loggerName = NodeUtilsService::class.java.name,
             feignProperties = params,
         )
-        return FeignUtilsService(weBlocksServiceApiFeign)
+        return FeignNodeUtilsService(weBlocksServiceApiFeign)
     }
 }
