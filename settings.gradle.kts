@@ -37,6 +37,8 @@ pluginManagement {
 rootProject.name = "we-node-client"
 
 include(
+    "we-node-client-bom",
+
     "we-node-client-domain",
     "we-node-client-blocking-client",
     "we-node-client-reactor-client",
