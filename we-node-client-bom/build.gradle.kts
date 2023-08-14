@@ -9,8 +9,8 @@ javaPlatform {
 
 dependencies {
     constraints {
-        project.rootProject.subprojects.forEach {
-            api(it)
+        project.rootProject.subprojects.forEach { project ->
+            api(project)
         }
     }
 }
