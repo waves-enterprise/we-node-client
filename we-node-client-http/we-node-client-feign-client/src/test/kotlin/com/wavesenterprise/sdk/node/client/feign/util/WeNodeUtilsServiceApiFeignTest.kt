@@ -14,7 +14,7 @@ import org.junit.jupiter.api.TestInstance
 
 @WireMockTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class WeUtilsServiceApiFeignTest {
+class WeNodeUtilsServiceApiFeignTest {
 
     lateinit var weUtilsServiceApiFeign: WeUtilsServiceApiFeign
 

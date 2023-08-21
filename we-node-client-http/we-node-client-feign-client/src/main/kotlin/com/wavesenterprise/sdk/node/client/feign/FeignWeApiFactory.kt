@@ -35,7 +35,7 @@ object FeignWeApiFactory {
         }
         .encoder(JacksonEncoder(objectMapper))
         .decoder(JacksonByteArrayDecoder(OptionalDecoder(JacksonDecoder(objectMapper))))
-        .errorDecoder(errorDecoder ?: ErrorDecoder.Default())
+        .errorDecoder(errorDecoder ?: FeignNodeErrorDecoder(FeignNodeErrorMapper(objectMapper)))
         .logLevel(feignProperties.loggerLevel)
         .logger(Slf4jLogger(loggerName))
         .options(

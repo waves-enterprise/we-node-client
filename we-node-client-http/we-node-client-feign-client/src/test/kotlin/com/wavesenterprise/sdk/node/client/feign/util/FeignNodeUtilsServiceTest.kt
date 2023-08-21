@@ -10,15 +10,15 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class FeignUtilsServiceTest {
+class FeignNodeUtilsServiceTest {
 
     private val weUtilsServiceApiFeign: WeUtilsServiceApiFeign = mockk()
 
-    private lateinit var feignUtilsService: FeignUtilsService
+    private lateinit var feignUtilsService: FeignNodeUtilsService
 
     @BeforeEach
     fun init() {
-        feignUtilsService = FeignUtilsService(weUtilsServiceApiFeign)
+        feignUtilsService = FeignNodeUtilsService(weUtilsServiceApiFeign)
     }
 
     @Test
