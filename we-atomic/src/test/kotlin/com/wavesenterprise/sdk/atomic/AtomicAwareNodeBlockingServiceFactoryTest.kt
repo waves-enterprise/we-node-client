@@ -163,7 +163,8 @@ class AtomicAwareNodeBlockingServiceFactoryTest {
         atomicAwareNodeBlockingServiceFactory.privacyService().sendData(sendDataRequest)
 
         sendDataRequestCaptor.captured.also {
-            assertNull(it.atomicBadge)
+            assertNotNull(it.atomicBadge)
+            assertNull(it.atomicBadge!!.trustedSender)
         }
     }
 }

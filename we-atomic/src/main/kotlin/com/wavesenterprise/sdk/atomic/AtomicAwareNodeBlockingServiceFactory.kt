@@ -102,7 +102,7 @@ class AtomicAwareNodeBlockingServiceFactory(
                     atomicBadge = if (!broadcastTx && senderAddress != txSignerFromContext.getSignerAddress())
                         AtomicBadge(
                             trustedSender = txSignerFromContext.getSignerAddress(),
-                        ) else null
+                        ) else AtomicBadge(trustedSender = null)
                 )
         }
     }
