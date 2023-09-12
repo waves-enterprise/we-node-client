@@ -8,6 +8,7 @@ import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.client.blocking.event.BlockchainEventsService
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeInfoService
+import com.wavesenterprise.sdk.node.client.blocking.pki.PkiService
 import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
 import com.wavesenterprise.sdk.node.client.blocking.util.NodeUtilsService
@@ -60,6 +61,10 @@ class GrpcNodeServiceFactory(
         )
 
     override fun nodeUtilsService(): NodeUtilsService {
+        TODO("Not yet implemented")
+    }
+
+    override fun pkiService(): PkiService {
         TODO("Not yet implemented")
     }
 }

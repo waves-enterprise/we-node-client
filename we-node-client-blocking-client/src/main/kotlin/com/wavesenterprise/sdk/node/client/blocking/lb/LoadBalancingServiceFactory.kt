@@ -6,6 +6,7 @@ import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.client.blocking.event.BlockchainEventsService
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeInfoService
+import com.wavesenterprise.sdk.node.client.blocking.pki.PkiService
 import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
 import com.wavesenterprise.sdk.node.client.blocking.util.NodeUtilsService
@@ -57,6 +58,11 @@ class LoadBalancingServiceFactory(
     override fun nodeUtilsService(): NodeUtilsService =
         createService(NodeUtilsService::class.java) {
             it.nodeUtilsService()
+        }
+
+    override fun pkiService(): PkiService =
+        createService(PkiService::class.java) {
+            it.pkiService()
         }
 
     @Suppress("UNCHECKED_CAST")
