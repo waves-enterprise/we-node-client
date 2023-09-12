@@ -6,6 +6,7 @@ import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.client.blocking.event.BlockchainEventsService
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeBlockingServiceFactory
 import com.wavesenterprise.sdk.node.client.blocking.node.NodeInfoService
+import com.wavesenterprise.sdk.node.client.blocking.pki.PkiService
 import com.wavesenterprise.sdk.node.client.blocking.privacy.PrivacyService
 import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
 import com.wavesenterprise.sdk.node.client.blocking.util.NodeUtilsService
@@ -19,6 +20,8 @@ import com.wavesenterprise.sdk.node.client.feign.node.FeignAddressService
 import com.wavesenterprise.sdk.node.client.feign.node.FeignNodeInfoService
 import com.wavesenterprise.sdk.node.client.feign.node.WeAddressServiceApiFeign
 import com.wavesenterprise.sdk.node.client.feign.node.WeNodeInfoServiceApiFeign
+import com.wavesenterprise.sdk.node.client.feign.pki.FeignPkiService
+import com.wavesenterprise.sdk.node.client.feign.pki.WePkiServiceApiFeign
 import com.wavesenterprise.sdk.node.client.feign.privacy.FeignPrivacyService
 import com.wavesenterprise.sdk.node.client.feign.privacy.WePrivacyServiceApiFeign
 import com.wavesenterprise.sdk.node.client.feign.tx.FeignTxService
@@ -95,5 +98,14 @@ class FeignNodeServiceFactory(
             feignProperties = params,
         )
         return FeignNodeUtilsService(weBlocksServiceApiFeign)
+    }
+
+    override fun pkiService(): PkiService {
+        val wePkiServiceApiFeign = FeignWeApiFactory.createClient(
+            clientClass = WePkiServiceApiFeign::class.java,
+            loggerName = PkiService::class.java.name,
+            feignProperties = params,
+        )
+        return FeignPkiService(wePkiServiceApiFeign)
     }
 }
