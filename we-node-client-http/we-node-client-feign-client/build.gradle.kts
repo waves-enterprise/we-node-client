@@ -6,10 +6,10 @@ dependencies {
     api(project(":we-node-client-error"))
     implementation(project(":we-node-client-json"))
 
-    implementation("io.github.openfeign:feign-core")
-    implementation("io.github.openfeign:feign-jackson")
-    implementation("io.github.openfeign:feign-slf4j")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    api("io.github.openfeign:feign-core")
+    api("io.github.openfeign:feign-jackson")
+    api("io.github.openfeign:feign-slf4j")
+    api("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     testImplementation(project(":we-node-domain-test"))
     testImplementation("ch.qos.logback:logback-classic")
