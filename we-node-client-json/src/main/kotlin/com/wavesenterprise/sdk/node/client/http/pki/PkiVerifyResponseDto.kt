@@ -2,7 +2,7 @@ package com.wavesenterprise.sdk.node.client.http.pki
 
 import com.wavesenterprise.sdk.node.domain.pki.PkiVerifyResponse
 
-class PkiVerifyResponseDto(
+data class PkiVerifyResponseDto(
     val sigStatus: Boolean,
 ) {
     companion object {

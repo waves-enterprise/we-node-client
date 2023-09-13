@@ -1,5 +1,5 @@
 package com.wavesenterprise.sdk.node.domain.pki
 
-class PkiVerifyResponse(
+data class PkiVerifyResponse(
     val sigStatus: Boolean,
 )

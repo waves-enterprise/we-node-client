@@ -2,7 +2,7 @@ package com.wavesenterprise.sdk.node.client.http.pki
 
 import com.wavesenterprise.sdk.node.domain.pki.PkiVerifyRequest
 
-class PkiVerifyRequestDto(
+data class PkiVerifyRequestDto(
     val inputData: String,
     val signature: String,
     val sigType: Int,
