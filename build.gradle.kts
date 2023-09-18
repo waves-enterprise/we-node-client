@@ -227,6 +227,11 @@ configure(
                             name.set("Artem Bekirev")
                             email.set("abekirev@gmail.com")
                         }
+                        developer {
+                            id.set("donyfutura")
+                            name.set("Daniil Georgiev")
+                            email.set("donyfutura@gmail.com")
+                        }
                     }
                 }
             }
