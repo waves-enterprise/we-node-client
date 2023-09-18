@@ -1,0 +1,26 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/blocks/headers/last"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "reference": "2MFnZY4hyi796xYFw3uKu7SrDowsffk5Lx7oRogqtUJ5qzyYc75x3BaN3xXuM2yvzjCsxAxyJVV1JbswLf9BVwNa",
+      "blocksize": 226,
+      "features": [1, 2, 3],
+      "signature": "5E2XthFEC8msu6HsW7FsCeYSEK85A8s4M5cZTydKJYNTRqnXUSwh1Fxt7i1mhxuG5fUhvQnT5UBgg95Ayo4Ft5zo",
+      "generator": "3M3xGmJGmxBv2aZ4UFmn93rHxVXTJDKSAnh",
+      "transactionCount": 0,
+      "version": 3,
+      "poa-consensus": {
+        "overall-skipped-rounds": 8184788
+      },
+      "timestamp": 1626675751200,
+      "height": 552123
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

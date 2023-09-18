@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/contracts/info/5inUANAmDzRfq5f1Yv7HBTm8G4AREPfeKCntaEDDqVbU"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "contractId": "5inUANAmDzRfq5f1Yv7HBTm8G4AREPfeKCntaEDDqVbU",
+      "image": "image",
+      "imageHash": "b48d1de58c39d2160a4b8a5a9cae90818da1212742ec1f11fba1209bed0a212c",
+      "version": 1,
+      "active": true
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

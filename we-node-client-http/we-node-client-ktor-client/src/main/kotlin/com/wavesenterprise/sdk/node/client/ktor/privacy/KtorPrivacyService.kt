@@ -1,15 +1,15 @@
 package com.wavesenterprise.sdk.node.client.ktor.privacy
 
+import com.wavesenterprise.sdk.node.client.coroutines.privacy.PrivacyService
+import com.wavesenterprise.sdk.node.client.http.privacy.PolicyItemInfoResponseDto
+import com.wavesenterprise.sdk.node.client.http.privacy.PolicyItemInfoResponseDto.Companion.toDomain
+import com.wavesenterprise.sdk.node.client.http.privacy.SendDataRequestDto.Companion.toDto
+import com.wavesenterprise.sdk.node.client.http.tx.PolicyDataHashTxDto
+import com.wavesenterprise.sdk.node.client.http.tx.PolicyDataHashTxDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.client.ktor.privacy.KtorPrivacyService.Companion.Privacy.BROADCAST
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.PolicyId
-import com.wavesenterprise.sdk.node.domain.coroutines.privacy.PrivacyService
-import com.wavesenterprise.sdk.node.domain.http.privacy.PolicyItemInfoResponseDto
-import com.wavesenterprise.sdk.node.domain.http.privacy.PolicyItemInfoResponseDto.Companion.toDomain
-import com.wavesenterprise.sdk.node.domain.http.privacy.SendDataRequestDto.Companion.toDto
-import com.wavesenterprise.sdk.node.domain.http.tx.PolicyDataHashTxDto
-import com.wavesenterprise.sdk.node.domain.http.tx.PolicyDataHashTxDto.Companion.toDomain
 import com.wavesenterprise.sdk.node.domain.privacy.Data
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemInfoResponse
 import com.wavesenterprise.sdk.node.domain.privacy.PolicyItemRequest
@@ -46,7 +46,7 @@ class KtorPrivacyService(
                 Privacy.PATH,
                 request.policyId.asBase58String(),
                 Privacy.Policy.GET_INFO,
-                request.dataHash.asHexString(),
+                request.dataHash.asBase58String(),
             )
             contentType(ContentType.Application.Json)
             accept(ContentType.Any)
@@ -58,7 +58,7 @@ class KtorPrivacyService(
                 Privacy.PATH,
                 request.policyId.asBase58String(),
                 Privacy.Policy.GET_DATA,
-                request.dataHash.asHexString(),
+                request.dataHash.asBase58String(),
             )
             contentType(ContentType.Application.Json)
             accept(ContentType.Any)
@@ -99,7 +99,7 @@ class KtorPrivacyService(
             )
             contentType(ContentType.Application.Json)
             accept(ContentType.Any)
-        }.body<List<String>>().map { Hash.fromHexString(it) }
+        }.body<List<String>>().map { Hash.fromStringBase58(it) }
 
     companion object {
         object Privacy {

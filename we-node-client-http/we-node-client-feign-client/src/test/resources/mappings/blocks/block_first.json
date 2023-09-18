@@ -1,0 +1,57 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/blocks/first"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "reference": "5qWJh9aQ2hkwnBWygGYmrBhzMe5inRZ2r6WhEXz3VJsiMtASWkvbsVeZGychZKzcPDbWmpzdhQwNQJ19PfK2dst9",
+      "blocksize": 589,
+      "features": [1, 2, 3],
+      "signature": "4U4Hmg4mDYrvxaZ3JVzL1Z1piPDZ1PJ61vd1PeS7ESZFkHsUCUqeeAZoszTVr43Z4NV44dqbLv9WdrLytDL6gHuv",
+      "fee": 5000000,
+      "generator": "3NkZd8Xd4KsuPiNVsuphRNCZE3SqJycqv8d",
+      "pos-consensus": {
+        "base-target": 249912231,
+        "generation-signature": "LM83w6eWQHnLJF2D9RQNdNcHAdnZLCLWrn5bfcoqcZy"
+      },
+      "poa-consensus": {
+        "overall-skipped-rounds": 2
+      },
+      "transactionCount": 1,
+      "version": 12,
+      "timestamp": 1568287320962,
+      "height": 48260,
+      "transactions": [
+        {
+          "senderPublicKey": "4L4XEpNpesX9r6rVJ8hW1TrMiNCZ6SMvRuWPKB7T47wKfnp4D84XBUv7xsa36CGwoyK3fzfojivwonHNrsX2fLBL",
+          "image": "registry.weintegrator.com/icore-sc/we-contract-sdk/samples/my-demo-contract:1.2.0",
+          "fee": 0,
+          "imageHash": "2fad12f4de059e29f92e7d31b91b6cf8388bc0cadb2fdfd194b25e21193bd7cc",
+          "type": 103,
+          "params": [
+            {
+              "type": "string",
+              "value": "createContract",
+              "key": "action"
+            }
+          ],
+          "version": 2,
+          "sender": "3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX",
+          "feeAssetId": null,
+          "proofs": [
+            "378ShzisNBmGWEXdVbkWMqkfhhFuMYFJXSnG8bN5j7veUDXQUHzATEyxVuMwA1MCArb23kGrbA9iY213sK3WxL3d"
+          ],
+          "contractName": "demo-contract",
+          "id": "8mYpzj5rVVQSp2DgsyMvoMSViHtX94dJHkPyX2xo855y",
+          "timestamp": 1656952109871,
+          "height": 5577377
+        }
+      ]
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

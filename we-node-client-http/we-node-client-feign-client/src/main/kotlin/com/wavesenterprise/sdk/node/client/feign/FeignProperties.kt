@@ -5,6 +5,8 @@ import feign.codec.ErrorDecoder
 
 interface FeignProperties {
     val url: String
+    val xApiKey: String?
+    val xPrivacyApiKey: String?
     val decode404: Boolean
     val connectTimeout: Long
     val readTimeout: Long

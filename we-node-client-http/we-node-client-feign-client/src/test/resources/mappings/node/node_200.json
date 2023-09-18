@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/node/owner"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "address": "3LGBihYhwjDhHbTZKK7eP5oTMHYe5tA14Yf",
+      "publicKey": "FcWEYLLxVJ1ngfvhYv17ycjhWczopW32nt3wvnNqweSc"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

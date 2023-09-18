@@ -5,28 +5,26 @@ import com.wavesenterprise.sdk.node.domain.ContractApiVersion
 import com.wavesenterprise.sdk.node.domain.DataEntry
 import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.FeeAssetId
-import com.wavesenterprise.sdk.node.domain.Hash
-import com.wavesenterprise.sdk.node.domain.Password
 import com.wavesenterprise.sdk.node.domain.TxType
 import com.wavesenterprise.sdk.node.domain.TxVersion
 import com.wavesenterprise.sdk.node.domain.ValidationPolicy
 import com.wavesenterprise.sdk.node.domain.atomic.AtomicBadge
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.ContractImage
+import com.wavesenterprise.sdk.node.domain.contract.ContractImageHash
 import com.wavesenterprise.sdk.node.domain.contract.ContractName
 import com.wavesenterprise.sdk.node.domain.contract.ContractVersion
 import com.wavesenterprise.sdk.node.domain.sign.CallContractSignRequest
-import com.wavesenterprise.sdk.node.domain.sign.ContractSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.CreateContractSignRequest
+import com.wavesenterprise.sdk.node.domain.sign.SignRequest
 import com.wavesenterprise.sdk.node.domain.tx.ContractTx
 import kotlin.reflect.KMutableProperty0
 
 class ContractSignRequestBuilder {
     private var builderProperties: BuilderProperties = BuilderProperties()
 
-    val NOT_NULLABLE_FOR_CREATE = with(builderProperties) {
+    private val NOT_NULLABLE_FOR_CREATE = with(builderProperties) {
         listOf(
-            ::senderAddress,
             ::fee,
             ::image,
             ::imageHash,
@@ -35,9 +33,8 @@ class ContractSignRequestBuilder {
         )
     }
 
-    val NOT_NULLABLE_FOR_CALL = with(builderProperties) {
+    private val NOT_NULLABLE_FOR_CALL = with(builderProperties) {
         listOf(
-            ::senderAddress,
             ::fee,
             ::params,
             ::contractId,
@@ -47,17 +44,13 @@ class ContractSignRequestBuilder {
 
     fun version(version: TxVersion) = this.apply { builderProperties.version = version }
 
-    fun senderAddress(senderAddress: Address) = this.apply { builderProperties.senderAddress = senderAddress }
-
-    fun password(password: Password) = this.apply { builderProperties.password = password }
-
     fun fee(fee: Fee) = this.apply { builderProperties.fee = fee }
 
     fun feeAssetId(feeAssetId: FeeAssetId) = this.apply { builderProperties.feeAssetId = feeAssetId }
 
     fun image(image: ContractImage) = this.apply { builderProperties.image = image }
 
-    fun imageHash(imageHash: Hash) = this.apply { builderProperties.imageHash = imageHash }
+    fun imageHash(imageHash: ContractImageHash) = this.apply { builderProperties.imageHash = imageHash }
 
     fun contractName(contractName: ContractName) = this.apply { builderProperties.contractName = contractName }
 
@@ -81,7 +74,7 @@ class ContractSignRequestBuilder {
 
     fun contractId(contractId: ContractId) = this.apply { builderProperties.contractId = contractId }
 
-    fun build(txType: TxType): ContractSignRequest<out ContractTx> {
+    fun build(txType: TxType): SignRequest<out ContractTx> {
         return when (txType) {
             TxType.CREATE_CONTRACT -> {
                 val variablesIsEqualsNull = getVariablesIsEqualsNull(NOT_NULLABLE_FOR_CREATE)
@@ -89,8 +82,7 @@ class ContractSignRequestBuilder {
                     with(builderProperties) {
                         CreateContractSignRequest(
                             version = version,
-                            senderAddress = senderAddress!!,
-                            password = password,
+                            senderAddress = Address.EMPTY,
                             fee = fee!!,
                             feeAssetId = feeAssetId,
                             image = image!!,
@@ -116,8 +108,7 @@ class ContractSignRequestBuilder {
                     with(builderProperties) {
                         CallContractSignRequest(
                             version = version,
-                            senderAddress = senderAddress!!,
-                            password = password,
+                            senderAddress = Address.EMPTY,
                             fee = fee!!,
                             feeAssetId = feeAssetId,
                             params = params!!,
@@ -149,12 +140,10 @@ class ContractSignRequestBuilder {
 
     class BuilderProperties {
         var version: TxVersion? = null
-        var senderAddress: Address? = null
-        var password: Password? = null
         var fee: Fee? = null
         var feeAssetId: FeeAssetId? = null
         var image: ContractImage? = null
-        var imageHash: Hash? = null
+        var imageHash: ContractImageHash? = null
         var contractName: ContractName? = null
         var params: List<DataEntry>? = null
         var apiVersion: ContractApiVersion? = null

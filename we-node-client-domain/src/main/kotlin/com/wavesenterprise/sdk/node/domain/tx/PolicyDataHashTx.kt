@@ -24,7 +24,4 @@ data class PolicyDataHashTx(
     val proofs: List<Signature>? = null,
     val senderAddress: Address,
     override val version: TxVersion,
-) : Tx, AtomicInnerTx, AtomicSignInnerTx<PolicyDataHashTx> {
-    override fun withAtomicBadge(atomicBadge: AtomicBadge?): PolicyDataHashTx =
-        copy(atomicBadge = atomicBadge)
-}
+) : Tx, AtomicInnerTx

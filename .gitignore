@@ -17,5 +17,6 @@ target
 .attach_pid*
 lombok.config
 .DS_Store
+.java-version
 
 checkstyle.cache

@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/privacy/5inUANAmDzRfq5f1Yv7HBTm8G4AREPfeKCntaEDDqVbU/owners"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": [
+      "DP5MggKC8GJuLZshCVNSYwBtE6WTRtMM1YPPdcmwbuNg", "C2HM9q3QzGSBydnCA4GMcf3cFnTaSuwaWXVtsCSTSmZW"
+    ],
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

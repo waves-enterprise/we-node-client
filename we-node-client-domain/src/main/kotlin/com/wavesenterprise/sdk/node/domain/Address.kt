@@ -23,6 +23,8 @@ data class Address(val bytes: ByteArray) {
         inline val ByteArray.address: Address get() = Address(this)
 
         inline val String.base58Address: Address get() = fromBase58(this)
+
+        val EMPTY = Address(ByteArray(0))
     }
 
     override fun equals(other: Any?): Boolean {

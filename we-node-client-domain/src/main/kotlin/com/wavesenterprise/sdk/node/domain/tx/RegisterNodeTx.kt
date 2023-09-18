@@ -15,7 +15,7 @@ data class RegisterNodeTx(
     val senderPublicKey: PublicKey,
     val target: Address,
     val targetPublicKey: PublicKey,
-    val nodeName: NodeName,
+    val nodeName: NodeName?,
     val opType: OpType,
     override val timestamp: Timestamp,
     val fee: Fee,

@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/utils/hash/secure",
+    "bodyPatterns": [
+      {
+        "equalTo": "\"test\""
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "message": "test",
+      "hash": "2FnJ3K7yJaei4jjEMB6b22MjUmBtneSjpE5xqWRuAG6r"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

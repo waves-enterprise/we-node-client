@@ -26,7 +26,4 @@ data class CreatePolicyTx(
     val proofs: List<Signature>? = null,
     val senderAddress: Address,
     override val version: TxVersion,
-) : Tx, AtomicInnerTx, AtomicSignInnerTx<CreatePolicyTx> {
-    override fun withAtomicBadge(atomicBadge: AtomicBadge?): CreatePolicyTx =
-        copy(atomicBadge = atomicBadge)
-}
+) : Tx, AtomicInnerTx

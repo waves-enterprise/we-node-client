@@ -15,9 +15,11 @@ data class TransferSignRequest(
     val fee: Fee,
     val recipient: Address,
     val amount: Amount,
-    val atomicBadge: AtomicBadge? = null,
-) : SignRequest<TransferTx> {
+    override val atomicBadge: AtomicBadge? = null,
+) : AtomicInnerSignRequest<TransferTx> {
     override fun withAddress(address: Address) = copy(senderAddress = address)
 
-    override fun withPassword(password: Password) = copy(password = password)
+    override fun withPassword(password: Password?): SignRequest<TransferTx> = copy(password = password)
+    override fun withAtomicBadge(atomicBadge: AtomicBadge?) =
+        copy(atomicBadge = atomicBadge)
 }

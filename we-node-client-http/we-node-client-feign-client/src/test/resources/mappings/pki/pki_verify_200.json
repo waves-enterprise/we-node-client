@@ -1,0 +1,22 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/pki/verify",
+    "bodyPatterns": [
+      {
+        "equalToJson": {
+          "inputData": "data",
+          "signature": "signature",
+          "sigType": 1,
+          "extendedKeyUsageList": []
+        }
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "sigStatus": true
+    }
+  }
+}

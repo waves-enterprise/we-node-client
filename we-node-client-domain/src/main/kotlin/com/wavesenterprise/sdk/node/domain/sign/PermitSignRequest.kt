@@ -17,9 +17,11 @@ data class PermitSignRequest(
     val target: Address,
     val opType: OpType,
     val dueTimestamp: Timestamp,
-    val atomicBadge: AtomicBadge? = null,
-) : SignRequest<PermitTx> {
+    override val atomicBadge: AtomicBadge? = null,
+) : AtomicInnerSignRequest<PermitTx> {
     override fun withAddress(address: Address) = copy(senderAddress = address)
 
-    override fun withPassword(password: Password) = copy(password = password)
+    override fun withPassword(password: Password?): SignRequest<PermitTx> = copy(password = password)
+    override fun withAtomicBadge(atomicBadge: AtomicBadge?) =
+        copy(atomicBadge = atomicBadge)
 }

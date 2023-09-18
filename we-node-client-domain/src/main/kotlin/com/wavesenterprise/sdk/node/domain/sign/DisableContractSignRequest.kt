@@ -16,9 +16,13 @@ data class DisableContractSignRequest(
     val fee: Fee,
     val contractId: ContractId,
     val feeAssetId: FeeAssetId? = null,
-    val atomicBadge: AtomicBadge? = null,
-) : SignRequest<DisableContractTx> {
+    override val atomicBadge: AtomicBadge? = null,
+) : AtomicInnerSignRequest<DisableContractTx> {
+
     override fun withAddress(address: Address) = copy(senderAddress = address)
 
-    override fun withPassword(password: Password) = copy(password = password)
+    override fun withPassword(password: Password?): SignRequest<DisableContractTx> = copy(password = password)
+
+    override fun withAtomicBadge(atomicBadge: AtomicBadge?): DisableContractSignRequest =
+        copy(atomicBadge = atomicBadge)
 }

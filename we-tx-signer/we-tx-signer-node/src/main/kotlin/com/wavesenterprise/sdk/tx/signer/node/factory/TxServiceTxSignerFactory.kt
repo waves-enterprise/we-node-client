@@ -1,6 +1,6 @@
 package com.wavesenterprise.sdk.tx.signer.node.factory
 
-import com.wavesenterprise.sdk.node.domain.blocking.tx.TxService
+import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
 import com.wavesenterprise.sdk.tx.signer.TxSigner
 import com.wavesenterprise.sdk.tx.signer.node.TxServiceTxSigner
 import com.wavesenterprise.sdk.tx.signer.node.credentials.Credentials

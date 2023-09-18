@@ -22,7 +22,4 @@ data class DisableContractTx(
     val proofs: List<Signature>? = null,
     val senderAddress: Address,
     override val version: TxVersion,
-) : Tx, AtomicInnerTx, AtomicSignInnerTx<DisableContractTx> {
-    override fun withAtomicBadge(atomicBadge: AtomicBadge?): DisableContractTx =
-        copy(atomicBadge = atomicBadge)
-}
+) : Tx, AtomicInnerTx

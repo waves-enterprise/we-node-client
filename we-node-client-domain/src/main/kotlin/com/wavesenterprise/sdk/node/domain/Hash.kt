@@ -1,12 +1,9 @@
 package com.wavesenterprise.sdk.node.domain
 
-import java.util.Locale
+import com.wavesenterprise.sdk.node.domain.base58.WeBase58
 
 data class Hash(val bytes: ByteArray) {
-    fun asHexString(): String =
-        bytes.joinToString("") { byte: Byte ->
-            "%02x".format(byte)
-        }
+    fun asBase58String(): String = WeBase58.encode(bytes)
 
     companion object {
         @JvmStatic
@@ -14,23 +11,12 @@ data class Hash(val bytes: ByteArray) {
             Hash(bytes)
 
         @JvmStatic
-        fun fromHexString(hexStr: String): Hash {
-            check(hexStr.length % 2 == 0) {
-                "Hex string must have an even length"
-            }
-            return Hash(
-                hexStr
-                    .chunked(2)
-                    .map {
-                        it.uppercase(Locale.getDefault()).toInt(16).toByte()
-                    }
-                    .toByteArray()
-            )
-        }
+        fun fromStringBase58(base58HashString: String): Hash =
+            Hash(WeBase58.decode(base58HashString))
 
         inline val ByteArray.hash: Hash get() = Hash(this)
 
-        inline val String.hexStrHash: Hash get() = fromHexString(this)
+        inline val String.base58StrHash: Hash get() = fromStringBase58(this)
     }
 
     override fun equals(other: Any?): Boolean {

@@ -7,6 +7,9 @@ data class ContractVersion(val value: Int) {
             ContractVersion =
             ContractVersion(value)
 
+        @JvmStatic
+        fun ContractVersion.update() = ContractVersion(this.value + 1)
+
         inline val Int.contractVersion: ContractVersion get() = ContractVersion(this)
     }
 }

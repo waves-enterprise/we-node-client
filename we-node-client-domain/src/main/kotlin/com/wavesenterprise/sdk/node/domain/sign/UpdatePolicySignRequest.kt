@@ -20,9 +20,12 @@ data class UpdatePolicySignRequest(
     val opType: OpType,
     val recipients: List<Address>,
     val owners: List<Address>,
-    val atomicBadge: AtomicBadge? = null,
-) : SignRequest<UpdatePolicyTx> {
+    override val atomicBadge: AtomicBadge? = null,
+) : AtomicInnerSignRequest<UpdatePolicyTx> {
     override fun withAddress(address: Address) = copy(senderAddress = address)
 
-    override fun withPassword(password: Password) = copy(password = password)
+    override fun withPassword(password: Password?): SignRequest<UpdatePolicyTx> = copy(password = password)
+
+    override fun withAtomicBadge(atomicBadge: AtomicBadge?): UpdatePolicySignRequest =
+        copy(atomicBadge = atomicBadge)
 }

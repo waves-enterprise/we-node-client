@@ -1,7 +1,5 @@
 package com.wavesenterprise.sdk.node.domain.atomic
 
-interface HasAtomicBadge<T : HasAtomicBadge<T>> {
+interface HasAtomicBadge {
     val atomicBadge: AtomicBadge?
-
-    fun withAtomicBadge(atomicBadge: AtomicBadge?): T
 }

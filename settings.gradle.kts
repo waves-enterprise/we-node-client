@@ -13,9 +13,7 @@ pluginManagement {
 
     plugins {
         kotlin("jvm") version kotlinVersion apply false
-        kotlin("plugin.spring") version kotlinVersion apply false
         `maven-publish`
-        id("org.springframework.boot") version springBootVersion apply false
         id("io.spring.dependency-management") version gradleDependencyManagementVersion apply false
         id("io.gitlab.arturbosch.detekt") version detektVersion apply false
         id("org.jlleitschuh.gradle.ktlint") version ktlintVersion apply false
@@ -37,14 +35,17 @@ pluginManagement {
 rootProject.name = "we-node-client"
 
 include(
+    "we-node-client-bom",
+
     "we-node-client-domain",
     "we-node-client-blocking-client",
     "we-node-client-reactor-client",
     "we-node-client-coroutines-client",
-    
-    "we-node-client-http:we-node-client-http-dto",
+
     "we-node-client-http:we-node-client-ktor-client",
     "we-node-client-http:we-node-client-feign-client",
+
+    "we-node-client-json",
 
     "we-node-client-grpc:we-node-client-grpc-mapper",
     "we-node-client-grpc:we-node-client-grpc-java",
@@ -56,4 +57,6 @@ include(
 
     "we-tx-signer:we-tx-signer-api",
     "we-tx-signer:we-tx-signer-node",
+    "we-node-client-error",
+    "we-atomic",
 )

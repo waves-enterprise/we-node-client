@@ -7,17 +7,19 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 val kotlinVersion: String by project
 val kotlinCoroutinesVersion: String by project
 val reactorVersion: String by project
-val springBootVersion: String by project
-val springCloudVersion: String by project
 val jacocoToolVersion: String by project
 val logbackVersion: String by project
 val javaxAnnotationApiVersion: String by project
+val caffeineCacheVersion: String by project
+val slf4jVersion: String by project
 
 val ioGrpcVersion: String by project
 val ioGrpcKotlinVersion: String by project
 val protobufVersion: String by project
+val reactorBomVersion: String by project
 
-val junitPlatformLauncherVersion: String by project
+val junitVersion: String by project
+val hamcrestVersion: String by project
 val mockkVersion: String by project
 val springMockkVersion: String by project
 val wireMockVersion: String by project
@@ -37,15 +39,13 @@ val gitHubProject = "waves-enterprise/we-node-client"
 val githubUrl = "https://github.com/$gitHubProject"
 
 val feignVersion: String by project
-val jacksonModuleKotlin: String by project
+val jacksonVersion: String by project
 
 plugins {
     kotlin("jvm") apply false
     `maven-publish`
     signing
     id("io.codearte.nexus-staging")
-    kotlin("plugin.spring") apply false
-    id("org.springframework.boot") apply false
     id("io.spring.dependency-management") apply false
     id("io.gitlab.arturbosch.detekt") apply false
     id("org.jlleitschuh.gradle.ktlint") apply false
@@ -79,9 +79,53 @@ allprojects {
 }
 
 subprojects {
+    apply(plugin = "maven-publish")
+
+    publishing {
+        repositories {
+            if (weMavenUser != null && weMavenPassword != null) {
+                maven {
+                    name = "WE-artifacts"
+                    afterEvaluate {
+                        url = uri(
+                            "$weMavenBasePath${
+                                if (project.version.toString()
+                                        .endsWith("-SNAPSHOT")
+                                ) "maven-snapshots" else "maven-releases"
+                            }"
+                        )
+                    }
+                    credentials {
+                        username = weMavenUser
+                        password = weMavenPassword
+                    }
+                }
+            }
+
+            if (sonaTypeMavenPassword != null && sonaTypeMavenUser != null) {
+                maven {
+                    name = "SonaType-maven-central-staging"
+                    val releasesUrl = uri("$sonaTypeBasePath/service/local/staging/deploy/maven2/")
+                    afterEvaluate {
+                        url = if (version.toString()
+                                .endsWith("SNAPSHOT")
+                        ) throw kotlin.Exception("shouldn't publish snapshot") else releasesUrl
+                    }
+                    credentials {
+                        username = sonaTypeMavenUser
+                        password = sonaTypeMavenPassword
+                    }
+                }
+            }
+        }
+    }
+}
+
+configure(
+    subprojects.filter { it.name != "we-node-client-bom" }
+) {
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "kotlin")
-    apply(plugin = "maven-publish")
     apply(plugin = "signing")
     apply(plugin = "io.gitlab.arturbosch.detekt")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
@@ -141,41 +185,6 @@ subprojects {
     }
 
     publishing {
-        repositories {
-            if (weMavenUser != null && weMavenPassword != null) {
-                maven {
-                    name = "WE-artifacts"
-                    afterEvaluate {
-                        url = uri("$weMavenBasePath${
-                            if (project.version.toString()
-                                    .endsWith("-SNAPSHOT")
-                            ) "maven-snapshots" else "maven-releases"
-                        }")
-                    }
-                    credentials {
-                        username = weMavenUser
-                        password = weMavenPassword
-                    }
-                }
-            }
-
-            if (sonaTypeMavenPassword != null && sonaTypeMavenUser != null) {
-                maven {
-                    name = "SonaType-maven-central-staging"
-                    val releasesUrl = uri("$sonaTypeBasePath/service/local/staging/deploy/maven2/")
-                    afterEvaluate {
-                        url = if (version.toString()
-                                .endsWith("SNAPSHOT")
-                        ) throw kotlin.Exception("shouldn't publish snapshot") else releasesUrl
-                    }
-                    credentials {
-                        username = sonaTypeMavenUser
-                        password = sonaTypeMavenPassword
-                    }
-                }
-            }
-        }
-
         publications {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
@@ -218,6 +227,11 @@ subprojects {
                             name.set("Artem Bekirev")
                             email.set("abekirev@gmail.com")
                         }
+                        developer {
+                            id.set("donyfutura")
+                            name.set("Daniil Georgiev")
+                            email.set("donyfutura@gmail.com")
+                        }
                     }
                 }
             }
@@ -234,45 +248,32 @@ subprojects {
 
     the<DependencyManagementExtension>().apply {
         imports {
-            mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootVersion")
-            mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
-            mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootVersion") {
-                bomProperty("kotlin.version", kotlinVersion)
-            }
+            mavenBom("org.jetbrains.kotlin:kotlin-bom:$kotlinVersion")
+            mavenBom("org.jetbrains.kotlinx:kotlinx-coroutines-bom:$kotlinCoroutinesVersion")
+            mavenBom("com.fasterxml.jackson:jackson-bom:$jacksonVersion")
+            mavenBom("com.google.protobuf:protobuf-bom:$protobufVersion")
+            mavenBom("io.grpc:grpc-bom:$ioGrpcVersion")
+            mavenBom("io.github.openfeign:feign-bom:$feignVersion")
+            mavenBom("io.ktor:ktor-bom:$ktorVersion")
+            mavenBom("io.projectreactor:reactor-bom:$reactorBomVersion")
+
+            mavenBom("org.junit:junit-bom:$junitVersion")
         }
         dependencies {
-            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$kotlinCoroutinesVersion")
-            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$kotlinCoroutinesVersion")
-            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:$kotlinCoroutinesVersion")
-
+            dependency("io.grpc:grpc-kotlin-stub:$ioGrpcKotlinVersion")
             dependency("javax.annotation:javax.annotation-api:$javaxAnnotationApiVersion")
 
-            dependency("io.projectreactor:reactor-core:$reactorVersion")
-
-            dependency("com.google.protobuf:protobuf-java:$protobufVersion")
-            dependency("io.grpc:grpc-core:$ioGrpcVersion")
-            dependency("io.grpc:grpc-stub:$ioGrpcVersion")
-            dependency("io.grpc:grpc-netty:$ioGrpcVersion")
-            dependency("io.grpc:grpc-protobuf:$ioGrpcVersion")
-
-            dependency("com.google.protobuf:protobuf-kotlin:$protobufVersion")
-            dependency("io.grpc:grpc-kotlin-stub:$ioGrpcKotlinVersion")
-
             dependency("ch.qos.logback:logback-classic:$logbackVersion")
+            dependency("org.slf4j:slf4j-api:$slf4jVersion")
+            dependency("com.github.ben-manes.caffeine:caffeine:$caffeineCacheVersion")
 
-            dependency("io.ktor:ktor-client-core:$ktorVersion")
-            dependency("io.ktor:ktor-client-cio:$ktorVersion")
-            dependency("io.ktor:ktor-client-logging:$ktorVersion")
-            dependency("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-            dependency("io.ktor:ktor-serialization-jackson:$ktorVersion")
-
-            dependency("io.github.openfeign:feign-core:$feignVersion")
-            dependency("io.github.openfeign:feign-jackson:$feignVersion")
-            dependency("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonModuleKotlin")
-
-            dependency("org.junit.platform:junit-platform-launcher:$junitPlatformLauncherVersion")
             dependency("io.mockk:mockk:$mockkVersion")
             dependency("com.ninja-squad:springmockk:$springMockkVersion")
+
+            dependency("org.hamcrest:hamcrest:$hamcrestVersion")
+            dependency("org.hamcrest:hamcrest-core:$hamcrestVersion")
+            dependency("org.hamcrest:hamcrest-library:$hamcrestVersion")
+
             dependency("com.github.tomakehurst:wiremock-jre8:$wireMockVersion")
         }
     }

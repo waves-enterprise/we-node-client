@@ -1,6 +1,8 @@
 package com.wavesenterprise.sdk.node.client.feign.contract
 
-import com.wavesenterprise.sdk.node.domain.http.DataEntryDto
+import com.wavesenterprise.sdk.node.client.http.DataEntryDto
+import com.wavesenterprise.sdk.node.client.http.contract.ContractInfoDto
+import com.wavesenterprise.sdk.node.client.http.contract.ContractTxStatusDto
 import feign.Param
 import feign.RequestLine
 import java.util.Optional
@@ -20,4 +22,14 @@ interface WeContractServiceApiFeign {
         @Param("matches") offset: Int? = null,
         @Param("limit") matches: String? = null,
     ): List<DataEntryDto>
+
+    @RequestLine("GET /contracts/info/{contractId}")
+    fun contractInfo(
+        @Param("contractId") contractId: String,
+    ): ContractInfoDto
+
+    @RequestLine("GET /contracts/status/{txId}")
+    fun contractTxStatus(
+        @Param("txId") txId: String,
+    ): List<ContractTxStatusDto>
 }
