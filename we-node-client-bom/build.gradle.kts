@@ -1,5 +1,5 @@
-val gitHubProject = "waves-enterprise/we-node-client"
-val githubUrl = "https://github.com/$gitHubProject"
+val gitHubProject: String by project
+val githubUrl: String by project
 
 plugins {
     `maven-publish`
@@ -26,7 +26,7 @@ publishing {
             pom {
                 packaging = "pom"
                 name.set(project.name)
-                url.set(githubUrl)
+                url.set(githubUrl + gitHubProject)
                 description.set("WE Node Client BOM")
 
                 licenses {
@@ -37,9 +37,9 @@ publishing {
                 }
 
                 scm {
-                    connection.set("scm:$githubUrl")
+                    connection.set("scm:$githubUrl$gitHubProject")
                     developerConnection.set("scm:git@github.com:$gitHubProject.git")
-                    url.set(githubUrl)
+                    url.set(githubUrl + gitHubProject)
                 }
 
                 developers {
