@@ -2,6 +2,7 @@ val gitHubProject: String by project
 val githubUrl: String by project
 
 plugins {
+    signing
     `maven-publish`
     `java-platform`
 }
@@ -20,7 +21,7 @@ dependencies {
 
 publishing {
     publications {
-        create<MavenPublication>("we-node-client-bom") {
+        create<MavenPublication>("projectBom") {
             from(components["javaPlatform"])
 
             pom {
@@ -48,8 +49,21 @@ publishing {
                         name.set("Stepan Kashintsev")
                         email.set("kpote3@gmail.com")
                     }
+                    developer {
+                        id.set("donyfutura")
+                        name.set("Daniil Georgiev")
+                        email.set("donyfutura@gmail.com")
+                    }
                 }
             }
+        }
+    }
+}
+
+signing {
+    afterEvaluate {
+        if (!project.version.toString().endsWith("SNAPSHOT")) {
+            sign(publishing.publications["projectBom"])
         }
     }
 }
