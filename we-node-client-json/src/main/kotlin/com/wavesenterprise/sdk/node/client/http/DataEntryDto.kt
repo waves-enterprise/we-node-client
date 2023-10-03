@@ -12,7 +12,7 @@ data class DataEntryDto(
 ) {
     companion object {
         const val BINARY_TYPE = "binary"
-        const val BOOLEAN_TYPE = "bool"
+        const val BOOLEAN_TYPE = "boolean"
         const val INTEGER_TYPE = "integer"
         const val STRING_TYPE = "string"
 
