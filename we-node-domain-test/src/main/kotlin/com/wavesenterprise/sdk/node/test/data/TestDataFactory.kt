@@ -6,7 +6,10 @@ import com.wavesenterprise.sdk.node.domain.AssetId
 import com.wavesenterprise.sdk.node.domain.Attachment
 import com.wavesenterprise.sdk.node.domain.ChainId
 import com.wavesenterprise.sdk.node.domain.DataEntry
+import com.wavesenterprise.sdk.node.domain.DataKey
 import com.wavesenterprise.sdk.node.domain.DataSize
+import com.wavesenterprise.sdk.node.domain.DataValue
+import com.wavesenterprise.sdk.node.domain.DataValue.IntegerDataValue
 import com.wavesenterprise.sdk.node.domain.Decimals
 import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.FeeAssetId
@@ -31,6 +34,11 @@ import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.TxType
 import com.wavesenterprise.sdk.node.domain.TxVersion
 import com.wavesenterprise.sdk.node.domain.ValidationProof
+import com.wavesenterprise.sdk.node.domain.address.Message
+import com.wavesenterprise.sdk.node.domain.address.SignMessageRequest
+import com.wavesenterprise.sdk.node.domain.address.SignMessageResponse
+import com.wavesenterprise.sdk.node.domain.address.VerifyMessageSignatureRequest
+import com.wavesenterprise.sdk.node.domain.address.VerifyMessageSignatureResponse
 import com.wavesenterprise.sdk.node.domain.atomic.AtomicBadge
 import com.wavesenterprise.sdk.node.domain.contract.CallContractTransaction
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
@@ -103,6 +111,27 @@ class TestDataFactory private constructor() {
 
         @JvmStatic
         fun fee(value: Long = 0) = Fee(value)
+
+        @JvmStatic
+        fun publicKey(bytes: ByteArray = randomBytesFromUUID()) = PublicKey(bytes)
+
+        @JvmStatic
+        fun message(value: String = "message") = Message(value)
+
+        @JvmStatic
+        fun signature(bytes: ByteArray = randomBytesFromUUID()) = Signature(bytes)
+
+        @JvmStatic
+        fun dataKey(value: String = "dataKey") = DataKey(value)
+
+        @JvmStatic
+        fun dataEntry(
+            key: DataKey = dataKey(),
+            value: DataValue = IntegerDataValue(0L),
+        ) = DataEntry(
+            key = key,
+            value = value,
+        )
 
         @JvmStatic
         fun contractTransaction(
@@ -788,6 +817,44 @@ class TestDataFactory private constructor() {
             imageHash = imageHash,
             version = version,
             active = active,
+        )
+
+        @JvmStatic
+        fun signMessageRequest(
+            message: Message = message(),
+            password: Password = password(),
+        ) = SignMessageRequest(
+            message = message,
+            password = password,
+        )
+
+        @JvmStatic
+        fun signMessageResponse(
+            message: Message = message(),
+            publicKey: PublicKey = publicKey(),
+            signature: Signature = signature(),
+        ) = SignMessageResponse(
+            message = message,
+            publicKey = publicKey,
+            signature = signature,
+        )
+
+        @JvmStatic
+        fun verifyMessageSignatureRequest(
+            message: Message = message(),
+            publicKey: PublicKey = publicKey(),
+            signature: Signature = signature(),
+        ) = VerifyMessageSignatureRequest(
+            message = message,
+            publicKey = publicKey,
+            signature = signature,
+        )
+
+        @JvmStatic
+        fun verifyMessageSignatureResponse(
+            valid: Boolean = true,
+        ) = VerifyMessageSignatureResponse(
+            valid = valid,
         )
     }
 }

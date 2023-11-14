@@ -1,0 +1,24 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/addresses/data/3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": [
+      {
+        "type": "integer",
+        "key": "some-key",
+        "value": 100
+      },
+      {
+        "type": "string",
+        "key": "another-key",
+        "value": "testValue"
+      }
+    ],
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

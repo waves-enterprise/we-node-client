@@ -1,0 +1,24 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/addresses/sign/3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX",
+    "bodyPatterns": [
+      {
+        "equalToJson": {
+          "message": "message",
+          "password": "incorrect-password"
+        }
+      }
+    ]
+  },
+  "response": {
+    "status": 400,
+    "jsonBody": {
+      "error": 115,
+      "message": "no private key for sender address in wallet or provided password is incorrect"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
