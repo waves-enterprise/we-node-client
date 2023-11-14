@@ -12,13 +12,13 @@ import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
 import com.wavesenterprise.sdk.node.client.blocking.util.NodeUtilsService
 import com.wavesenterprise.sdk.node.client.feign.FeignNodeClientParams
 import com.wavesenterprise.sdk.node.client.feign.FeignWeApiFactory
+import com.wavesenterprise.sdk.node.client.feign.address.FeignAddressService
+import com.wavesenterprise.sdk.node.client.feign.address.WeAddressServiceApiFeign
 import com.wavesenterprise.sdk.node.client.feign.blocks.FeignBlocksService
 import com.wavesenterprise.sdk.node.client.feign.blocks.WeBlocksServiceApiFeign
 import com.wavesenterprise.sdk.node.client.feign.contract.FeignContractService
 import com.wavesenterprise.sdk.node.client.feign.contract.WeContractServiceApiFeign
-import com.wavesenterprise.sdk.node.client.feign.node.FeignAddressService
 import com.wavesenterprise.sdk.node.client.feign.node.FeignNodeInfoService
-import com.wavesenterprise.sdk.node.client.feign.node.WeAddressServiceApiFeign
 import com.wavesenterprise.sdk.node.client.feign.node.WeNodeInfoServiceApiFeign
 import com.wavesenterprise.sdk.node.client.feign.pki.FeignPkiService
 import com.wavesenterprise.sdk.node.client.feign.pki.WePkiServiceApiFeign
