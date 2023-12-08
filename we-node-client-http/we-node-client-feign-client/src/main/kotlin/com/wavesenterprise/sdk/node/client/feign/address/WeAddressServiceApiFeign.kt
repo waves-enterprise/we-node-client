@@ -1,7 +1,7 @@
 package com.wavesenterprise.sdk.node.client.feign.address
 
+import com.wavesenterprise.sdk.node.client.http.AddressDto
 import com.wavesenterprise.sdk.node.client.http.DataEntryDto
-import com.wavesenterprise.sdk.node.client.http.address.AddressDto
 import com.wavesenterprise.sdk.node.client.http.address.SignMessageRequestDto
 import com.wavesenterprise.sdk.node.client.http.address.SignMessageResponseDto
 import com.wavesenterprise.sdk.node.client.http.address.VerifyMessageSignatureRequestDto

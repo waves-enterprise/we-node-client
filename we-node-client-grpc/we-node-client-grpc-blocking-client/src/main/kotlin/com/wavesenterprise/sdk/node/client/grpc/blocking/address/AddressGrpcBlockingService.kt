@@ -1,4 +1,4 @@
-package com.wavesenterprise.sdk.node.client.grpc.blocking.node
+package com.wavesenterprise.sdk.node.client.grpc.blocking.address
 
 import com.wavesenterprise.sdk.node.client.blocking.address.AddressService
 import com.wavesenterprise.sdk.node.domain.Address

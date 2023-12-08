@@ -1,4 +1,4 @@
-package com.wavesenterprise.sdk.node.client.http.address
+package com.wavesenterprise.sdk.node.client.http
 
 import com.wavesenterprise.sdk.node.domain.Address
 
@@ -11,8 +11,5 @@ data class AddressDto(
 
         @JvmStatic
         fun Address.toDto(): AddressDto = AddressDto(address = asBase58String())
-
-        @JvmStatic
-        fun String.toDomain(): Address = Address.fromBase58(this)
     }
 }

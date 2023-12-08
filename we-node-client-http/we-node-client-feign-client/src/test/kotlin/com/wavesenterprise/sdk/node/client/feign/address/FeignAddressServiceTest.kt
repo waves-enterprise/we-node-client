@@ -1,14 +1,14 @@
 package com.wavesenterprise.sdk.node.client.feign.address
 
+import com.wavesenterprise.sdk.node.client.http.AddressDto.Companion.toDto
 import com.wavesenterprise.sdk.node.client.http.DataEntryDto.Companion.toDto
-import com.wavesenterprise.sdk.node.client.http.address.AddressDto.Companion.toDto
 import com.wavesenterprise.sdk.node.client.http.address.SignMessageResponseDto.Companion.toDto
 import com.wavesenterprise.sdk.node.client.http.address.VerifyMessageSignatureResponseDto.Companion.toDto
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.DataEntry
 import com.wavesenterprise.sdk.node.domain.DataKey
 import com.wavesenterprise.sdk.node.exception.NodeError
-import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistsException
+import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistException
 import com.wavesenterprise.sdk.node.test.data.TestDataFactory.Companion.address
 import com.wavesenterprise.sdk.node.test.data.TestDataFactory.Companion.dataEntry
 import com.wavesenterprise.sdk.node.test.data.TestDataFactory.Companion.dataKey
@@ -124,10 +124,9 @@ class FeignAddressServiceTest {
 
     @Test
     fun `should return null when catch DataKeyNotExistsException`() {
-        feignAddressService = FeignAddressService(weAddressServiceApiFeign)
         every {
             weAddressServiceApiFeign.getAddressValue(any(), any())
-        } throws DataKeyNotExistsException(
+        } throws DataKeyNotExistException(
             nodeError = NodeError(error = 304, message = "no data for this key"),
             cause = Exception(),
         )
