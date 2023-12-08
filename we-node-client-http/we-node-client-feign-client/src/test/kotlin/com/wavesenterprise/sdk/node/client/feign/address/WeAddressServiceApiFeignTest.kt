@@ -7,13 +7,14 @@ import com.wavesenterprise.sdk.node.client.feign.FeignNodeClientParams
 import com.wavesenterprise.sdk.node.client.feign.FeignNodeErrorDecoder
 import com.wavesenterprise.sdk.node.client.feign.FeignNodeErrorMapper
 import com.wavesenterprise.sdk.node.client.feign.FeignWeApiFactory
+import com.wavesenterprise.sdk.node.client.http.AddressDto
 import com.wavesenterprise.sdk.node.client.http.DataEntryDto
-import com.wavesenterprise.sdk.node.client.http.address.AddressDto
 import com.wavesenterprise.sdk.node.client.http.address.SignMessageRequestDto
 import com.wavesenterprise.sdk.node.client.http.address.SignMessageResponseDto
 import com.wavesenterprise.sdk.node.client.http.address.VerifyMessageSignatureRequestDto
 import com.wavesenterprise.sdk.node.client.http.address.VerifyMessageSignatureResponseDto
 import com.wavesenterprise.sdk.node.exception.NodeErrorCode
+import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistException
 import com.wavesenterprise.sdk.node.exception.specific.InvalidPasswordException
 import com.wavesenterprise.sdk.node.exception.specific.InvalidPublicKeyException
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -146,6 +147,16 @@ class WeAddressServiceApiFeignTest {
                     "Unable to create public key: null",
                 nodeError.message
             )
+        }
+    }
+
+    @Test
+    fun `should throw DataKeyNotExistException`() {
+        assertThrows<DataKeyNotExistException> {
+            weAddressServiceApiFeign.getAddressValue(address, "non-existent-key")
+        }.apply {
+            assertEquals(NodeErrorCode.DATA_KEY_NOT_EXIST.code, nodeError.error)
+            assertEquals("no data for this key", nodeError.message)
         }
     }
 

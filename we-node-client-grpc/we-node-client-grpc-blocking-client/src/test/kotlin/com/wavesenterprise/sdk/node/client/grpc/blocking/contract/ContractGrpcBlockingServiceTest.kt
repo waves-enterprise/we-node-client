@@ -35,7 +35,7 @@ internal class ContractGrpcBlockingServiceTest {
             StatusRuntimeException(status, metadata)
         every {
             metadata.get(Metadata.Key.of("error-code", Metadata.ASCII_STRING_MARSHALLER))
-        } returns NodeErrorCode.DATA_KEY_NOT_EXISTS.code.toString()
+        } returns NodeErrorCode.DATA_KEY_NOT_EXIST.code.toString()
         every {
             metadata.get(
                 Metadata.Key.of("error-message", Metadata.ASCII_STRING_MARSHALLER)

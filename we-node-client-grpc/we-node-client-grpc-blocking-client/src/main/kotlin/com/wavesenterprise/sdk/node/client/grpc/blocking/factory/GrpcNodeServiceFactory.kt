@@ -3,6 +3,7 @@ package com.wavesenterprise.sdk.node.client.grpc.blocking.factory
 import com.wavesenterprise.protobuf.service.contract.ContractServiceGrpc
 import com.wavesenterprise.protobuf.service.messagebroker.BlockchainEventsServiceGrpc
 import com.wavesenterprise.sdk.node.client.blocking.address.AddressService
+import com.wavesenterprise.sdk.node.client.blocking.alias.AliasService
 import com.wavesenterprise.sdk.node.client.blocking.blocks.BlocksService
 import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.client.blocking.event.BlockchainEventsService
@@ -23,10 +24,22 @@ class GrpcNodeServiceFactory(
     private val channel: Channel,
 ) : NodeBlockingServiceFactory {
 
-    override fun txService(): TxService {
-        return TxGrpcBlockingService(
+    override fun addressService(): AddressService {
+        TODO("Not yet implemented")
+    }
+
+    override fun aliasService(): AliasService {
+        TODO("Not yet implemented")
+    }
+
+    override fun blockchainEventsService(): BlockchainEventsService =
+        BlockchainEventsGrpcBlockingService(
             channel = channel,
+            grpc = BlockchainEventsServiceGrpc.newBlockingStub(channel),
         )
+
+    override fun blocksService(): BlocksService {
+        TODO("Not yet implemented")
     }
 
     override fun contractService(): ContractService {
@@ -38,27 +51,9 @@ class GrpcNodeServiceFactory(
         )
     }
 
-    override fun addressService(): AddressService {
-        TODO("Not yet implemented")
-    }
-
     override fun nodeInfoService(): NodeInfoService {
         TODO("Not yet implemented")
     }
-
-    override fun privacyService(): PrivacyService {
-        TODO("Not yet implemented")
-    }
-
-    override fun blocksService(): BlocksService {
-        TODO("Not yet implemented")
-    }
-
-    override fun blockchainEventsService(): BlockchainEventsService =
-        BlockchainEventsGrpcBlockingService(
-            channel = channel,
-            grpc = BlockchainEventsServiceGrpc.newBlockingStub(channel),
-        )
 
     override fun nodeUtilsService(): NodeUtilsService {
         TODO("Not yet implemented")
@@ -66,5 +61,15 @@ class GrpcNodeServiceFactory(
 
     override fun pkiService(): PkiService {
         TODO("Not yet implemented")
+    }
+
+    override fun privacyService(): PrivacyService {
+        TODO("Not yet implemented")
+    }
+
+    override fun txService(): TxService {
+        return TxGrpcBlockingService(
+            channel = channel,
+        )
     }
 }

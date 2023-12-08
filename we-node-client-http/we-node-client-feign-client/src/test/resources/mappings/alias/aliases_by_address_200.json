@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/alias/by-address/3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": [
+      "alias:R:_firstAlias",
+      "alias:R:_secondAlias"
+    ],
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
