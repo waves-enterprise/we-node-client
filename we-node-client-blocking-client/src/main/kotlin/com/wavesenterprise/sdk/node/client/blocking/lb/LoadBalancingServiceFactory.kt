@@ -1,6 +1,7 @@
 package com.wavesenterprise.sdk.node.client.blocking.lb
 
 import com.wavesenterprise.sdk.node.client.blocking.address.AddressService
+import com.wavesenterprise.sdk.node.client.blocking.alias.AliasService
 import com.wavesenterprise.sdk.node.client.blocking.blocks.BlocksService
 import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.client.blocking.event.BlockchainEventsService
@@ -20,29 +21,19 @@ class LoadBalancingServiceFactory(
     private val privacyDataNodesCacheLoadBalancerPostInvokeHandler: PrivacyDataNodesCacheLoadBalancerPostInvokeHandler,
 ) : NodeBlockingServiceFactory {
 
-    override fun txService() =
-        createService(TxService::class.java) {
-            it.txService()
-        }
-
-    override fun contractService(): ContractService =
-        createService(ContractService::class.java) {
-            it.contractService()
-        }
-
     override fun addressService(): AddressService =
         createService(AddressService::class.java) {
             it.addressService()
         }
 
-    override fun nodeInfoService(): NodeInfoService =
-        createService(NodeInfoService::class.java) {
-            it.nodeInfoService()
+    override fun aliasService(): AliasService =
+        createService(AliasService::class.java) {
+            it.aliasService()
         }
 
-    override fun privacyService(): PrivacyService =
-        createService(PrivacyService::class.java) {
-            it.privacyService()
+    override fun blockchainEventsService(): BlockchainEventsService =
+        createService(BlockchainEventsService::class.java) {
+            it.blockchainEventsService()
         }
 
     override fun blocksService(): BlocksService =
@@ -50,9 +41,14 @@ class LoadBalancingServiceFactory(
             it.blocksService()
         }
 
-    override fun blockchainEventsService(): BlockchainEventsService =
-        createService(BlockchainEventsService::class.java) {
-            it.blockchainEventsService()
+    override fun contractService(): ContractService =
+        createService(ContractService::class.java) {
+            it.contractService()
+        }
+
+    override fun nodeInfoService(): NodeInfoService =
+        createService(NodeInfoService::class.java) {
+            it.nodeInfoService()
         }
 
     override fun nodeUtilsService(): NodeUtilsService =
@@ -63,6 +59,16 @@ class LoadBalancingServiceFactory(
     override fun pkiService(): PkiService =
         createService(PkiService::class.java) {
             it.pkiService()
+        }
+
+    override fun privacyService(): PrivacyService =
+        createService(PrivacyService::class.java) {
+            it.privacyService()
+        }
+
+    override fun txService() =
+        createService(TxService::class.java) {
+            it.txService()
         }
 
     @Suppress("UNCHECKED_CAST")

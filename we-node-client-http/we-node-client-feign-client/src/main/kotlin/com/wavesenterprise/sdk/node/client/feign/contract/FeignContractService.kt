@@ -16,7 +16,7 @@ import com.wavesenterprise.sdk.node.domain.contract.ExecutionSuccessRequest
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeysRequest
 import com.wavesenterprise.sdk.node.exception.specific.ContractNotFoundException
-import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistsException
+import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistException
 import java.util.Optional
 
 class FeignContractService(
@@ -48,7 +48,7 @@ class FeignContractService(
                 contractId = contractKeyRequest.contractId.asBase58String(),
                 key = contractKeyRequest.key,
             ).map { it.toDomain() }
-        } catch (ex: DataKeyNotExistsException) {
+        } catch (ex: DataKeyNotExistException) {
             Optional.empty()
         }
 

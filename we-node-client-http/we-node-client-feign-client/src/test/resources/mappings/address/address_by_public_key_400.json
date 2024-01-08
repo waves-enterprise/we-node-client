@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/addresses/publicKey/invalid-public-key"
+  },
+  "response": {
+    "status": 400,
+    "jsonBody": {
+      "error": 108,
+      "message": "invalid public key: Can't create public key from string 'invalid-public-key': Unable to create public key: null"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

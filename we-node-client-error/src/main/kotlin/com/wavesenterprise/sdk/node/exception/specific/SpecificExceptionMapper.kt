@@ -2,10 +2,13 @@ package com.wavesenterprise.sdk.node.exception.specific
 
 import com.wavesenterprise.sdk.node.exception.NodeError
 import com.wavesenterprise.sdk.node.exception.NodeErrorCode
+import com.wavesenterprise.sdk.node.exception.NodeErrorCode.ALIAS_NOT_EXIST
 import com.wavesenterprise.sdk.node.exception.NodeErrorCode.CONTRACT_NOT_FOUND
 import com.wavesenterprise.sdk.node.exception.NodeErrorCode.CUSTOM_VALIDATION_ERROR
-import com.wavesenterprise.sdk.node.exception.NodeErrorCode.DATA_KEY_NOT_EXISTS
+import com.wavesenterprise.sdk.node.exception.NodeErrorCode.DATA_KEY_NOT_EXIST
 import com.wavesenterprise.sdk.node.exception.NodeErrorCode.INVALID_ADDRESS
+import com.wavesenterprise.sdk.node.exception.NodeErrorCode.INVALID_PASSWORD
+import com.wavesenterprise.sdk.node.exception.NodeErrorCode.INVALID_PUBLIC_KEY
 import com.wavesenterprise.sdk.node.exception.NodeErrorCode.INVALID_SIGNATURE
 import com.wavesenterprise.sdk.node.exception.NodeErrorCode.POLICY_DOES_NOT_EXIST
 import com.wavesenterprise.sdk.node.exception.NodeErrorCode.POLICY_ITEM_DATA_IS_MISSING
@@ -21,8 +24,11 @@ object SpecificExceptionMapper {
             when (code) {
                 INVALID_SIGNATURE -> InvalidSignatureException(nodeError, cause = exception)
                 INVALID_ADDRESS -> InvalidAddressException(nodeError, cause = exception)
+                INVALID_PUBLIC_KEY -> InvalidPublicKeyException(nodeError, cause = exception)
+                INVALID_PASSWORD -> InvalidPasswordException(nodeError, cause = exception)
                 CUSTOM_VALIDATION_ERROR -> CustomValidationErrorException(nodeError, cause = exception)
-                DATA_KEY_NOT_EXISTS -> DataKeyNotExistsException(nodeError, cause = exception)
+                ALIAS_NOT_EXIST -> AliasNotExistException(nodeError, exception)
+                DATA_KEY_NOT_EXIST -> DataKeyNotExistException(nodeError, cause = exception)
                 CONTRACT_NOT_FOUND -> ContractNotFoundException(nodeError, cause = exception)
                 POLICY_DOES_NOT_EXIST -> PolicyDoesNotExistException(nodeError, cause = exception)
                 PRIVACY_API_KEY_NOT_VALID -> PrivacyApiKeyNotValidException(nodeError, cause = exception)

@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/alias/by-alias/_non-existent-alias"
+  },
+  "response": {
+    "status": 404,
+    "jsonBody": {
+      "error": 302,
+      "message": "alias 'alias:R:_non-existent-alias' doesn't exist"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

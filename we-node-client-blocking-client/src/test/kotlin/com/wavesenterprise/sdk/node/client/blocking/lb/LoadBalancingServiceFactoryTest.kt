@@ -16,6 +16,7 @@ import com.wavesenterprise.sdk.node.exception.NodeInternalServerErrorException
 import com.wavesenterprise.sdk.node.exception.NodeServiceUnavailableException
 import com.wavesenterprise.sdk.node.exception.specific.ContractNotFoundException
 import com.wavesenterprise.sdk.node.exception.specific.PolicyItemDataIsMissingException
+import com.wavesenterprise.sdk.node.test.data.TestDataFactory.Companion.address
 import io.mockk.Called
 import io.mockk.every
 import io.mockk.verify
@@ -355,7 +356,7 @@ class LoadBalancingServiceFactoryTest {
             mockkAddressService2.getAddressValues(any())
         } throws NodeServiceUnavailableException(cause = Exception())
 
-        val address = "address"
+        val address = address()
         repeat(TESTS) { lb.addressService().getAddressValues(address) }
         verify(atLeast = 50) { mockkAddressService1.getAddressValues(address) }
         verify(atLeast = 1) { mockkAddressService2.getAddressValues(address) }

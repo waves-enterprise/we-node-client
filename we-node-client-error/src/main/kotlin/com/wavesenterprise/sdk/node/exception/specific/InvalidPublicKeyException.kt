@@ -4,7 +4,7 @@ import com.wavesenterprise.sdk.node.exception.NodeError
 import com.wavesenterprise.sdk.node.exception.NodeErrorInfoHolder
 import com.wavesenterprise.sdk.node.exception.NodeException
 
-class DataKeyNotExistsException(
+class InvalidPublicKeyException(
     override val nodeError: NodeError,
     override val cause: Exception,
 ) : NodeException(cause), NodeErrorInfoHolder

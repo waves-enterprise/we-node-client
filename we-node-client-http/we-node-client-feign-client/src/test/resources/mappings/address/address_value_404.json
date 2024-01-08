@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/addresses/data/3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX/non-existent-key"
+  },
+  "response": {
+    "status": 404,
+    "jsonBody": {
+      "error": 304,
+      "message": "no data for this key"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/addresses/verify/3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX",
+    "bodyPatterns": [
+      {
+        "equalToJson": {
+          "message": "59Su1K4KSU",
+          "publicKey": "4L4XEpNpesX9r6rVJ8hW1TrMiNCZ6SMvRuWPKB7T47wKfnp4D84XBUv7xsa36CGwoyK3fzfojivwonHNrsX2fLBL",
+          "signature": "2CE7zZqJ2zXphCweDbvMMCvYYcc7AsHHNdf9jGLHDX4FMqN1G7HwN2SF91rdUyBP6oKRYqNE1gcVU2xJuM1B4mEX"
+        }
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "valid": true
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

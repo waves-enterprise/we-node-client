@@ -12,7 +12,7 @@ class AtomicBroadcaster(
 ) {
     private val txService: TxService = atomicAwareNodeBlockingServiceFactory.txService()
 
-    fun <T> doInAtomic(block: () -> T): T? {
+    fun <T> doInAtomic(block: () -> T): T {
         atomicAwareContextManager.beginAtomic()
         try {
             val blockResult = block()

@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/addresses/publicKey/4L4XEpNpesX9r6rVJ8hW1TrMiNCZ6SMvRuWPKB7T47wKfnp4D84XBUv7xsa36CGwoyK3fzfojivwonHNrsX2fLBL"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "address": "3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

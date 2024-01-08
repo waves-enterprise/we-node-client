@@ -6,7 +6,7 @@ import com.wavesenterprise.sdk.node.exception.NodeError
 import com.wavesenterprise.sdk.node.exception.NodeException
 import com.wavesenterprise.sdk.node.exception.specific.ContractNotFoundException
 import com.wavesenterprise.sdk.node.exception.specific.CustomValidationErrorException
-import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistsException
+import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistException
 import com.wavesenterprise.sdk.node.exception.specific.InvalidAddressException
 import com.wavesenterprise.sdk.node.exception.specific.InvalidSignatureException
 import com.wavesenterprise.sdk.node.exception.specific.PolicyDoesNotExistException
@@ -106,8 +106,8 @@ internal class GrpcNodeErrorMapperTest {
         } returns expectedNodeError.message
         val ex = GrpcNodeErrorMapper.mapToGeneralException(statusRuntimeException)
         ex.apply {
-            assertTrue(this is DataKeyNotExistsException).let {
-                (this as DataKeyNotExistsException).apply {
+            assertTrue(this is DataKeyNotExistException).let {
+                (this as DataKeyNotExistException).apply {
                     assertEquals(expectedNodeError.error, nodeError.error)
                     assertEquals(expectedNodeError.message, nodeError.message)
                 }

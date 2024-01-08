@@ -7,7 +7,7 @@ import com.wavesenterprise.sdk.node.exception.NodeError
 import com.wavesenterprise.sdk.node.exception.NodeNotFoundException
 import com.wavesenterprise.sdk.node.exception.specific.ContractNotFoundException
 import com.wavesenterprise.sdk.node.exception.specific.CustomValidationErrorException
-import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistsException
+import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistException
 import com.wavesenterprise.sdk.node.exception.specific.InvalidAddressException
 import com.wavesenterprise.sdk.node.exception.specific.InvalidSignatureException
 import com.wavesenterprise.sdk.node.exception.specific.PolicyDoesNotExistException
@@ -106,8 +106,8 @@ internal class FeignNodeErrorMapperTest {
             )
         )
         ex.apply {
-            assertTrue(this is DataKeyNotExistsException)
-            (this as DataKeyNotExistsException).apply {
+            assertTrue(this is DataKeyNotExistException)
+            (this as DataKeyNotExistException).apply {
                 assertEquals(this.nodeError.error, nodeError.error)
                 assertEquals(this.nodeError.message, nodeError.message)
             }

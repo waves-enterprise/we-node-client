@@ -20,6 +20,9 @@ data class Address(val bytes: ByteArray) {
                 WeBase58.decode(string)
             )
 
+        @JvmStatic
+        fun String.toDomain(): Address = Address.fromBase58(this)
+
         inline val ByteArray.address: Address get() = Address(this)
 
         inline val String.base58Address: Address get() = fromBase58(this)

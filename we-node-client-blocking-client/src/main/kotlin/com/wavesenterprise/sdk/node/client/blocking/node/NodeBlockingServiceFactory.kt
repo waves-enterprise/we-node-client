@@ -1,6 +1,7 @@
 package com.wavesenterprise.sdk.node.client.blocking.node
 
 import com.wavesenterprise.sdk.node.client.blocking.address.AddressService
+import com.wavesenterprise.sdk.node.client.blocking.alias.AliasService
 import com.wavesenterprise.sdk.node.client.blocking.blocks.BlocksService
 import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.client.blocking.event.BlockchainEventsService
@@ -10,13 +11,14 @@ import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
 import com.wavesenterprise.sdk.node.client.blocking.util.NodeUtilsService
 
 interface NodeBlockingServiceFactory {
-    fun txService(): TxService
-    fun contractService(): ContractService
     fun addressService(): AddressService
-    fun nodeInfoService(): NodeInfoService
-    fun privacyService(): PrivacyService
-    fun blocksService(): BlocksService
+    fun aliasService(): AliasService
     fun blockchainEventsService(): BlockchainEventsService
+    fun blocksService(): BlocksService
+    fun contractService(): ContractService
+    fun nodeInfoService(): NodeInfoService
     fun nodeUtilsService(): NodeUtilsService
     fun pkiService(): PkiService
+    fun privacyService(): PrivacyService
+    fun txService(): TxService
 }

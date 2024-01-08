@@ -21,7 +21,7 @@ import com.wavesenterprise.sdk.node.domain.contract.ExecutionErrorRequest
 import com.wavesenterprise.sdk.node.domain.contract.ExecutionSuccessRequest
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeysRequest
-import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistsException
+import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistException
 import io.grpc.Channel
 import io.grpc.ClientInterceptor
 import io.grpc.Status
@@ -68,7 +68,7 @@ class ContractGrpcBlockingService(
                     null
                 else {
                     when (val mappedException = GrpcNodeErrorMapper.mapToGeneralException(ex)) {
-                        is DataKeyNotExistsException -> null
+                        is DataKeyNotExistException -> null
                         else -> throw mappedException
                     }
                 }

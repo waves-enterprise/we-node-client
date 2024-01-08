@@ -5,7 +5,7 @@ import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
 import com.wavesenterprise.sdk.node.exception.NodeError
 import com.wavesenterprise.sdk.node.exception.specific.ContractNotFoundException
-import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistsException
+import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistException
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -41,7 +41,7 @@ class FeignContractServiceTest {
                 contractId = contractKeyRequest.contractId.asBase58String(),
                 key = contractKeyRequest.key,
             )
-        } throws DataKeyNotExistsException(
+        } throws DataKeyNotExistException(
             nodeError = NodeError(error = 304, message = "no data for this key"),
             cause = Exception(),
         )
