@@ -21,7 +21,7 @@ data class SponsorFeeSignRequestDto(
                 sender = senderAddress.asBase58String(),
                 password = password?.value,
                 fee = fee.value,
-                enabled = enabled,
+                enabled = enabled.value,
                 assetId = assetId?.asBase58String(),
             )
     }

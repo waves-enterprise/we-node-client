@@ -1,5 +1,7 @@
 package com.wavesenterprise.sdk.node.domain.tx
 
+import com.wavesenterprise.sdk.node.domain.Address
+import com.wavesenterprise.sdk.node.domain.Signature
 import com.wavesenterprise.sdk.node.domain.Timestamp
 import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.TxType
@@ -30,11 +32,75 @@ import com.wavesenterprise.sdk.node.domain.TxType.TRANSFER
 import com.wavesenterprise.sdk.node.domain.TxType.UPDATE_CONTRACT
 import com.wavesenterprise.sdk.node.domain.TxType.UPDATE_POLICY
 import com.wavesenterprise.sdk.node.domain.TxVersion
+import com.wavesenterprise.sdk.node.domain.sign.FieldInfo
+import com.wavesenterprise.sdk.node.domain.sign.SerializableToBytes
+import com.wavesenterprise.sdk.node.domain.util.processor.concatBytes
+import com.wavesenterprise.sdk.node.domain.util.processor.numberToBytes
+import kotlin.reflect.full.findAnnotation
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.jvm.isAccessible
+import kotlin.reflect.jvm.javaField
 
 sealed interface Tx {
     val id: TxId
     val timestamp: Timestamp
     val version: TxVersion
+
+    fun withId(id: TxId): Tx
+    fun withProof(proof: Signature): Tx
+    fun withSenderAddress(senderAddress: Address): Tx
+
+    @Suppress("SpreadOperator")
+    fun getBytes(networkByte: Byte): ByteArray {
+        val txVersion = version
+        val txVersionBytes = txVersion.getSignatureBytes(networkByte)
+        val txTypeBytes = byteArrayOf(this.type().code.toByte())
+
+        val fields = this::class.memberProperties
+            .map {
+                it.isAccessible = true
+                it
+            }.filter {
+                it.findAnnotation<FieldInfo>() != null
+            }.sortedBy {
+                val annot = requireNotNull(it.findAnnotation<FieldInfo>())
+                annot.bytesPosition
+            }
+
+        val allBytes: MutableList<ByteArray> = mutableListOf()
+
+        for (field in fields) {
+            val annotation = requireNotNull(field.findAnnotation<FieldInfo>())
+            val value = field.javaField?.get(this)
+            if (txVersion.value >= annotation.sinceVersion) {
+                if (annotation.required && value == null) {
+                    throw IllegalStateException("${field.name} is required for signing in tx ${this::class.simpleName}")
+                }
+                if (!annotation.required) {
+                    if (value == null) {
+                        allBytes += byteArrayOf(0)
+                    } else {
+                        allBytes += byteArrayOf(1)
+                        allBytes += (value as SerializableToBytes).getSignatureBytes(networkByte)
+                    }
+                } else {
+                    if (value is List<*>) {
+                        if (value.isEmpty()) {
+                            allBytes += byteArrayOf(0, 0)
+                        } else {
+                            allBytes += numberToBytes(value.size, 2)
+                            value.forEach {
+                                allBytes += (it as SerializableToBytes).getSignatureBytes(networkByte)
+                            }
+                        }
+                    } else {
+                        allBytes += (value as SerializableToBytes).getSignatureBytes(networkByte)
+                    }
+                }
+            }
+        }
+        return concatBytes(txTypeBytes, txVersionBytes, *allBytes.toTypedArray())
+    }
 
     companion object {
 

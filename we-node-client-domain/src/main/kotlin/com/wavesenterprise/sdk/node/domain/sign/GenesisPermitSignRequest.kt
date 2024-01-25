@@ -8,7 +8,7 @@ import com.wavesenterprise.sdk.node.domain.TxVersion
 import com.wavesenterprise.sdk.node.domain.tx.GenesisPermitTx
 
 data class GenesisPermitSignRequest(
-    val version: TxVersion? = null,
+    override val version: TxVersion? = null,
     override val senderAddress: Address,
     override val password: Password? = null,
     val fee: Fee,

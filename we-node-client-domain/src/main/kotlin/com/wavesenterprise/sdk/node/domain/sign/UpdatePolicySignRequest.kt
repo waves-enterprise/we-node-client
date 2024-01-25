@@ -6,12 +6,15 @@ import com.wavesenterprise.sdk.node.domain.FeeAssetId
 import com.wavesenterprise.sdk.node.domain.OpType
 import com.wavesenterprise.sdk.node.domain.Password
 import com.wavesenterprise.sdk.node.domain.PolicyId
+import com.wavesenterprise.sdk.node.domain.PublicKey
+import com.wavesenterprise.sdk.node.domain.Timestamp
+import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.TxVersion
 import com.wavesenterprise.sdk.node.domain.atomic.AtomicBadge
 import com.wavesenterprise.sdk.node.domain.tx.UpdatePolicyTx
 
 data class UpdatePolicySignRequest(
-    val version: TxVersion? = null,
+    override val version: TxVersion? = null,
     override val senderAddress: Address,
     override val password: Password? = null,
     val fee: Fee,
@@ -28,4 +31,22 @@ data class UpdatePolicySignRequest(
 
     override fun withAtomicBadge(atomicBadge: AtomicBadge?): UpdatePolicySignRequest =
         copy(atomicBadge = atomicBadge)
+
+    companion object {
+        @JvmStatic
+        fun UpdatePolicySignRequest.toTx(senderPublicKey: PublicKey) = UpdatePolicyTx(
+            id = TxId.EMPTY,
+            senderPublicKey = senderPublicKey,
+            policyId = policyId,
+            recipients = recipients,
+            owners = owners,
+            opType = opType,
+            timestamp = Timestamp(System.currentTimeMillis()),
+            fee = fee,
+            feeAssetId = feeAssetId,
+            atomicBadge = atomicBadge,
+            senderAddress = senderAddress,
+            version = requireNotNull(version),
+        )
+    }
 }

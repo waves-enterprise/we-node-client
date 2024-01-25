@@ -1,6 +1,7 @@
 package com.wavesenterprise.sdk.node.client.http.sign
 
 import com.wavesenterprise.sdk.node.client.http.OpTypeConstants.toDto
+import com.wavesenterprise.sdk.node.client.http.RoleConstants.toDto
 import com.wavesenterprise.sdk.node.client.http.atomic.AtomicBadgeDto
 import com.wavesenterprise.sdk.node.client.http.atomic.AtomicBadgeDto.Companion.toDto
 import com.wavesenterprise.sdk.node.client.http.tx.PermitTxDto
@@ -14,6 +15,7 @@ data class PermitSignRequestDto(
     val password: String?,
     val fee: Long,
     val target: String,
+    val role: String,
     val opType: String,
     val dueTimestamp: Long,
     val atomicBadge: AtomicBadgeDto?,
@@ -27,6 +29,7 @@ data class PermitSignRequestDto(
                 password = password?.value,
                 fee = fee.value,
                 target = target.asBase58String(),
+                role = role.toDto(),
                 opType = opType.toDto(),
                 dueTimestamp = dueTimestamp.utcTimestampMillis,
                 atomicBadge = atomicBadge?.toDto(),
