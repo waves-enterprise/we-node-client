@@ -24,7 +24,7 @@ data class ReissueSignRequestDto(
                 fee = fee.value,
                 quantity = quantity.value,
                 assetId = assetId?.asBase58String(),
-                reissuable = reissuable,
+                reissuable = reissuable.value,
             )
     }
 }

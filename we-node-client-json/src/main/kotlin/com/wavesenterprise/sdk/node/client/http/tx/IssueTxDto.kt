@@ -8,6 +8,7 @@ import com.wavesenterprise.sdk.node.domain.IssueTxDescription
 import com.wavesenterprise.sdk.node.domain.IssueTxName
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.Quantity
+import com.wavesenterprise.sdk.node.domain.Reissuable
 import com.wavesenterprise.sdk.node.domain.Script
 import com.wavesenterprise.sdk.node.domain.Signature
 import com.wavesenterprise.sdk.node.domain.Timestamp
@@ -45,7 +46,7 @@ data class IssueTxDto(
                 description = description.asBase58String(),
                 quantity = quantity.value,
                 decimals = decimals.value,
-                reissuable = reissuable,
+                reissuable = reissuable.value,
                 fee = fee.value,
                 timestamp = timestamp.utcTimestampMillis,
                 script = script?.asBase64String(),
@@ -64,7 +65,7 @@ data class IssueTxDto(
                 description = IssueTxDescription.fromBase58(description),
                 quantity = Quantity(quantity),
                 decimals = Decimals(decimals),
-                reissuable = reissuable,
+                reissuable = Reissuable(reissuable),
                 fee = Fee(fee),
                 timestamp = Timestamp.fromUtcTimestamp(timestamp),
                 script = script?.let { Script.fromBase64(it) },

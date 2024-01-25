@@ -1,6 +1,9 @@
 package com.wavesenterprise.sdk.node.domain
 
-data class Fee(val value: Long) {
+import com.wavesenterprise.sdk.node.domain.sign.SerializableToBytes
+import com.wavesenterprise.sdk.node.domain.util.processor.LongProcessor
+
+data class Fee(val value: Long) : SerializableToBytes {
     init {
         check(value >= 0) {
             "Fee value should be a non-negative number"
@@ -20,4 +23,6 @@ data class Fee(val value: Long) {
 
         inline val Int.fee: Fee get() = Fee(this.toLong())
     }
+
+    override fun getSignatureBytes(networkByte: Byte?): ByteArray = LongProcessor.getBytes(value)
 }

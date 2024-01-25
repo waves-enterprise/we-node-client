@@ -1,8 +1,10 @@
 package com.wavesenterprise.sdk.node.domain
 
 import com.wavesenterprise.sdk.node.domain.base58.WeBase58
+import com.wavesenterprise.sdk.node.domain.sign.SerializableToBytes
+import com.wavesenterprise.sdk.node.domain.util.processor.Base58WithLengthProcessor
 
-data class Attachment(val bytes: ByteArray) {
+data class Attachment(val bytes: ByteArray) : SerializableToBytes {
     fun asBase58String(): String =
         WeBase58.encode(bytes)
 
@@ -21,6 +23,8 @@ data class Attachment(val bytes: ByteArray) {
 
         inline val String.base58Attachment: Attachment get() = fromBase58(this)
     }
+
+    override fun getSignatureBytes(networkByte: Byte?): ByteArray = Base58WithLengthProcessor.getBytes(bytes)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

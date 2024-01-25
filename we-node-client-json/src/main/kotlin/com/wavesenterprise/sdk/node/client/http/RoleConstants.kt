@@ -12,6 +12,7 @@ object RoleConstants {
     const val CONNECTION_MANAGER = "connection_manager"
     const val CONTRACT_VALIDATOR = "contract_validator"
     const val BANNED = "banned"
+    const val DEX = "dex"
 
     @JvmStatic
     fun Role.toDto(): String =
@@ -25,6 +26,7 @@ object RoleConstants {
             Role.CONNECTION_MANAGER -> CONNECTION_MANAGER
             Role.CONTRACT_VALIDATOR -> CONTRACT_VALIDATOR
             Role.BANNED -> BANNED
+            Role.DEX -> DEX
         }
 
     @JvmStatic

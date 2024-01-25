@@ -2,6 +2,7 @@ package com.wavesenterprise.sdk.node.client.http.tx
 
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.AssetId
+import com.wavesenterprise.sdk.node.domain.Enabled
 import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.Signature
@@ -31,7 +32,7 @@ data class SponsorFeeTxDto(
                 id = id.asBase58String(),
                 senderPublicKey = senderPublicKey.asBase58String(),
                 assetId = assetId?.asBase58String(),
-                enabled = enabled,
+                enabled = enabled.value,
                 fee = fee.value,
                 timestamp = timestamp.utcTimestampMillis,
                 proofs = proofs?.map { it.asBase58String() },
@@ -45,7 +46,7 @@ data class SponsorFeeTxDto(
                 id = TxId.fromBase58(id),
                 senderPublicKey = PublicKey.fromBase58(senderPublicKey),
                 assetId = assetId?.let { AssetId.fromBase58(it) },
-                enabled = enabled,
+                enabled = Enabled(enabled),
                 fee = Fee(fee),
                 timestamp = Timestamp.fromUtcTimestamp(timestamp),
                 proofs = proofs?.map { Signature.fromBase58(it) },

@@ -3,8 +3,10 @@ package com.wavesenterprise.sdk.node.domain.contract
 import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.TxId.Companion.txId
 import com.wavesenterprise.sdk.node.domain.base58.WeBase58
+import com.wavesenterprise.sdk.node.domain.sign.SerializableToBytes
+import com.wavesenterprise.sdk.node.domain.util.processor.Base58WithLengthProcessor
 
-data class ContractId(val txId: TxId) {
+data class ContractId(val txId: TxId) : SerializableToBytes {
     fun asBase58String(): String =
         txId.asBase58String()
 
@@ -31,4 +33,6 @@ data class ContractId(val txId: TxId) {
 
         inline val String.base58ContractId: ContractId get() = fromBase58(this)
     }
+
+    override fun getSignatureBytes(networkByte: Byte?): ByteArray = Base58WithLengthProcessor.getBytes(txId.bytes)
 }

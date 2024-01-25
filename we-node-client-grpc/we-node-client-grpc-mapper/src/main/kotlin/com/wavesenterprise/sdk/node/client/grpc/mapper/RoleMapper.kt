@@ -8,15 +8,16 @@ object RoleMapper {
     @JvmStatic
     fun Role.dto(): ProtoRole =
         when (this) {
-            Role.PERMISSIONER -> 0
-            Role.SENDER -> 1
-            Role.BLACKLISTER -> 2
-            Role.MINER -> 3
-            Role.ISSUER -> 4
-            Role.CONTRACT_DEVELOPER -> 5
-            Role.CONNECTION_MANAGER -> 6
-            Role.CONTRACT_VALIDATOR -> 7
-            Role.BANNED -> 8
+            Role.MINER -> 1
+            Role.ISSUER -> 2
+            Role.DEX -> 3
+            Role.PERMISSIONER -> 4
+            Role.BLACKLISTER -> 5
+            Role.BANNED -> 6
+            Role.CONTRACT_DEVELOPER -> 7
+            Role.CONNECTION_MANAGER -> 8
+            Role.SENDER -> 9
+            Role.CONTRACT_VALIDATOR -> 10
         }.let { roleId ->
             role {
                 id = roleId
@@ -26,15 +27,16 @@ object RoleMapper {
     @JvmStatic
     fun ProtoRole.domain(): Role =
         when (id) {
-            0 -> Role.PERMISSIONER
-            1 -> Role.SENDER
-            2 -> Role.BLACKLISTER
-            3 -> Role.MINER
-            4 -> Role.ISSUER
-            5 -> Role.CONTRACT_DEVELOPER
-            6 -> Role.CONNECTION_MANAGER
-            7 -> Role.CONTRACT_VALIDATOR
-            8 -> Role.BANNED
+            1 -> Role.MINER
+            2 -> Role.ISSUER
+            3 -> Role.DEX
+            4 -> Role.PERMISSIONER
+            5 -> Role.BLACKLISTER
+            6 -> Role.BANNED
+            7 -> Role.CONTRACT_DEVELOPER
+            8 -> Role.CONNECTION_MANAGER
+            9 -> Role.SENDER
+            10 -> Role.CONTRACT_VALIDATOR
             else -> error("Unknown role id $this")
         }
 }
