@@ -14,9 +14,9 @@ data class AtomicTx(
     @FieldInfo(required = true, sinceVersion = 1, bytesPosition = 1)
     val senderPublicKey: PublicKey,
     val miner: Address? = null,
-    @FieldInfo(required = true, sinceVersion = 2, bytesPosition = 2)
+    @FieldInfo(required = true, sinceVersion = 1, bytesPosition = 2)
     val txs: List<AtomicInnerTx>,
-    @FieldInfo(required = true, sinceVersion = 2, bytesPosition = 3)
+    @FieldInfo(required = true, sinceVersion = 1, bytesPosition = 3)
     override val timestamp: Timestamp,
     val proofs: List<Signature>? = null,
     val senderAddress: Address,
