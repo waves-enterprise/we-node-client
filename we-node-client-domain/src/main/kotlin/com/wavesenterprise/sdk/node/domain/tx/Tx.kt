@@ -97,6 +97,13 @@ sealed interface Tx {
                         allBytes += (value as SerializableToBytes).getSignatureBytes(networkByte)
                     }
                 }
+            } else {
+                if (value != null) {
+                    throw IllegalArgumentException(
+                        "The tx version $version does not support" +
+                            " the field ${field.name} by tx type - ${this.type()}"
+                    )
+                }
             }
         }
         return concatBytes(txTypeBytes, txVersionBytes, *allBytes.toTypedArray())

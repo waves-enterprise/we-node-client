@@ -25,10 +25,11 @@ object CryptoProUtil {
         it.initialize(CryptDhAllowedSpec())
     }
 
-    private val keyStore: KeyStore = KeyStore.getInstance(storeName, providerName)
+    private val keyStore: KeyStore = KeyStore.getInstance(storeName, providerName).also {
+        it.load(null, null)
+    }
 
     fun generateAndStoreKeyPair(password: String, alias: String): KeyPair {
-        keyStore.load(null, null)
         val keyPair = keyPairGenerator.generateKeyPair()
         storeKey(
             keyPair = keyPair,
