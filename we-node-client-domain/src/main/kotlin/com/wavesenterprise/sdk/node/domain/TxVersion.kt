@@ -1,7 +1,6 @@
 package com.wavesenterprise.sdk.node.domain
 
 import com.wavesenterprise.sdk.node.domain.sign.SerializableToBytes
-import com.wavesenterprise.sdk.node.domain.util.processor.IntProcessor
 
 data class TxVersion(val value: Int) : SerializableToBytes {
     companion object {
@@ -13,5 +12,5 @@ data class TxVersion(val value: Int) : SerializableToBytes {
         inline val Int.txVersion: TxVersion get() = TxVersion(this)
     }
 
-    override fun getSignatureBytes(networkByte: Byte?): ByteArray = IntProcessor.getBytes(value)
+    override fun getSignatureBytes(networkByte: Byte?): ByteArray = byteArrayOf(value.toByte())
 }
