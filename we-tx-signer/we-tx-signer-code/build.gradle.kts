@@ -1,3 +1,4 @@
+val bouncycastleVersion: String by project
 
 dependencies {
     implementation(kotlin("stdlib"))
@@ -6,6 +7,9 @@ dependencies {
     api(project(":we-tx-signer:we-tx-signer-api"))
     api(project(":we-node-client-http:we-node-client-feign-client"))
     implementation(project(":we-node-client-json"))
+
+    implementation("org.bouncycastle:bcprov-jdk15on:$bouncycastleVersion")
+    implementation("org.bouncycastle:bcpkix-jdk15on:$bouncycastleVersion")
 
     implementation("ru.CryptoPro:ades-core")
     implementation("ru.CryptoPro:cades")
