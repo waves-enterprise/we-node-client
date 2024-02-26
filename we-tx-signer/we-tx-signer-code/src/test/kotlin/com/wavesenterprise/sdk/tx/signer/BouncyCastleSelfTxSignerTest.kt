@@ -49,37 +49,43 @@ import com.wavesenterprise.sdk.node.domain.sign.SetAssetScriptSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.SponsorFeeSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.UpdateContractSignRequest
 import com.wavesenterprise.sdk.node.domain.sign.UpdatePolicySignRequest
-import com.wavesenterprise.sdk.tx.signer.signer.gost.CryptoProSigner
+import com.wavesenterprise.sdk.tx.signer.signer.gost.BouncyCastleSigner
+import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import ru.CryptoPro.JCSP.JCSP
-import java.security.KeyStore
+import java.security.KeyPairGenerator
 import java.security.PrivateKey
 import java.security.Security
+import java.security.spec.ECGenParameterSpec
 
-class GOSTSelfTxSignerTest {
+class BouncyCastleSelfTxSignerTest {
 
     init {
-        Security.addProvider(JCSP())
+        Security.addProvider(BouncyCastleProvider())
     }
 
-    private lateinit var cryptoProKeyStore: KeyStore
-    private lateinit var cryptoProSelfTxSigner: SelfTxSigner
-    private lateinit var cryptoProSigner: CryptoProSigner
+    private lateinit var bouncyCastleSelfTxSigner: SelfTxSigner
+    private lateinit var bouncyCastleSigner: BouncyCastleSigner
+
+    private val keyPairGen = KeyPairGenerator.getInstance(
+        "ECGOST3410", "BC"
+    ).also {
+        it.initialize(ECGenParameterSpec("GostR3410-2001-CryptoPro-A"))
+    }
+    private val bouncyCastlePrivateKey: PrivateKey = keyPairGen.generateKeyPair().private
 
     @BeforeEach
     fun init() {
-        cryptoProKeyStore = KeyStore.getInstance(JCSP.HD_STORE_NAME, JCSP())
-        cryptoProKeyStore.load(null, "".toCharArray())
-        cryptoProSigner = CryptoProSigner(
-            privateKey = cryptoProKeyStore.getKey(ALIAS, password) as PrivateKey,
+
+        bouncyCastleSigner = BouncyCastleSigner(
             networkByte = NETWORK_BYTE,
+            privateKey = bouncyCastlePrivateKey,
         )
-        cryptoProSelfTxSigner = SelfTxSigner(
-            signer = cryptoProSigner,
+        bouncyCastleSelfTxSigner = SelfTxSigner(
+            signer = bouncyCastleSigner,
         )
     }
 
@@ -95,11 +101,12 @@ class GOSTSelfTxSignerTest {
             name = IssueTxName("test".toByteArray()),
             reissuable = Reissuable(true),
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertTrue(cryptoProSignedTx.proofs!!.isNotEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     @Test
@@ -112,11 +119,12 @@ class GOSTSelfTxSignerTest {
             reissuable = Reissuable(true),
             assetId = AssetId.fromBase58("6UAMZA6RshxyPvt9W7aoWiUiB6N73yLQMMfiRQYXdWZh"),
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertFalse(cryptoProSignedTx.proofs!!.isEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     @Test
@@ -129,11 +137,12 @@ class GOSTSelfTxSignerTest {
             quantity = Quantity(1),
             attachment = Attachment("test".toByteArray())
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertTrue(cryptoProSignedTx.proofs!!.isNotEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     @Test
@@ -144,11 +153,12 @@ class GOSTSelfTxSignerTest {
             leaseId = LeaseId(TxId.fromBase58("D2xJxvMtmNuzDxdgofd8jUBJaece57Szk9mLqyV4dHk")),
             version = TxVersion(2),
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertFalse(cryptoProSignedTx.proofs!!.isEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     @Test
@@ -159,12 +169,12 @@ class GOSTSelfTxSignerTest {
             fee = Fee(0),
             version = TxVersion(2),
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
 
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertFalse(cryptoProSignedTx.proofs!!.isEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     @Test
@@ -176,11 +186,12 @@ class GOSTSelfTxSignerTest {
             assetId = AssetId("assetId".toByteArray()),
             enabled = Enabled(true),
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertFalse(cryptoProSignedTx.proofs!!.isEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     @Test
@@ -191,11 +202,12 @@ class GOSTSelfTxSignerTest {
             version = TxVersion(1),
             assetId = AssetId("assetId".toByteArray())
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertFalse(cryptoProSignedTx.proofs!!.isEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     @Test
@@ -209,11 +221,12 @@ class GOSTSelfTxSignerTest {
             dueTimestamp = Timestamp(1704810799915),
             version = TxVersion(1),
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertFalse(cryptoProSignedTx.proofs!!.isEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     @Test
@@ -243,11 +256,12 @@ class GOSTSelfTxSignerTest {
                 minor = MinorVersion(0),
             )
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertFalse(cryptoProSignedTx.proofs!!.isEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     @Test
@@ -271,11 +285,12 @@ class GOSTSelfTxSignerTest {
             version = TxVersion(4),
             atomicBadge = null,
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertFalse(cryptoProSignedTx.proofs!!.isEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     @Test
@@ -288,11 +303,12 @@ class GOSTSelfTxSignerTest {
             imageHash = ContractImageHash("test-hash"),
             image = ContractImage("test-image"),
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertTrue(cryptoProSignedTx.proofs!!.isNotEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     @Test
@@ -303,11 +319,12 @@ class GOSTSelfTxSignerTest {
             fee = Fee(0),
             contractId = ContractId.fromBase58("D2xJxvMtmNuzDxdgofd8jUBJaece57Szk9mLqyV4dHk"),
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertTrue(cryptoProSignedTx.proofs!!.isNotEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     @Test
@@ -318,11 +335,12 @@ class GOSTSelfTxSignerTest {
             txs = listOf(),
             fee = Fee(0),
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertTrue(cryptoProSignedTx.proofs!!.isNotEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     @Test
@@ -333,14 +351,15 @@ class GOSTSelfTxSignerTest {
             fee = Fee(0),
             opType = OpType.ADD,
             target = Address.fromBase58("3HgjVZvBHNaVfU7fHx9mqDXeJy4J8khadRC"),
-            targetPublicKey = cryptoProSigner.getPublicKey(),
+            targetPublicKey = bouncyCastleSigner.getPublicKey(),
             nodeName = NodeName("test"),
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertTrue(cryptoProSignedTx.proofs!!.isNotEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     @Test
@@ -354,11 +373,12 @@ class GOSTSelfTxSignerTest {
             recipients = listOf(Address.fromBase58("3HgjVZvBHNaVfU7fHx9mqDXeJy4J8khadRC")),
             owners = listOf(Address.fromBase58("3HgjVZvBHNaVfU7fHx9mqDXeJy4J8khadRC")),
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertTrue(cryptoProSignedTx.proofs!!.isNotEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     @Test
@@ -372,17 +392,15 @@ class GOSTSelfTxSignerTest {
             opType = OpType.ADD,
             policyId = PolicyId(TxId.fromBase58("D2xJxvMtmNuzDxdgofd8jUBJaece57Szk9mLqyV4dHk"))
         )
-        val cryptoProSignedTx = cryptoProSelfTxSigner.sign(signRequest)
-        assertNotNull(cryptoProSignedTx.proofs)
-        assertTrue(cryptoProSignedTx.proofs!!.isNotEmpty())
-        assertFalse(cryptoProSignedTx.senderAddress == Address.EMPTY)
-        assertFalse(cryptoProSignedTx.id == TxId.EMPTY)
+
+        val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
+        assertNotNull(bouncyCastleSignedTx.proofs)
+        assertTrue(bouncyCastleSignedTx.proofs!!.isNotEmpty())
+        assertFalse(bouncyCastleSignedTx.senderAddress == Address.EMPTY)
+        assertFalse(bouncyCastleSignedTx.id == TxId.EMPTY)
     }
 
     companion object {
-        private const val ALIAS = "test"
         private const val NETWORK_BYTE = 'I'.code.toByte()
-        private val source = GOSTSelfTxSignerTest::class.java.getResourceAsStream("/gost_keystore")
-        private val password = "".toCharArray()
     }
 }
