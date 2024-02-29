@@ -44,7 +44,7 @@ object BouncyCastleUtil {
     }
 
     fun generateKeyPairFromSeed(seed: String): KeyPair {
-        val d = BigInteger(seedHash(seed).reversedArray())
+        val d = BigInteger(1, seedHash(seed).reversedArray())
         val ecParameterSpec = ECNamedCurveTable.getParameterSpec(ecParams)
         val privateKeySpec = ECPrivateKeySpec(d, ecParameterSpec)
         val keyFactory: KeyFactory = KeyFactory.getInstance(keyPairAlg)
