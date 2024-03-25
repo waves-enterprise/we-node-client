@@ -4,6 +4,7 @@ import com.wavesenterprise.protobuf.service.contract.ContractServiceGrpc
 import com.wavesenterprise.protobuf.service.contract.ContractServiceGrpc.ContractServiceBlockingStub
 import com.wavesenterprise.sdk.node.client.blocking.contract.ContractService
 import com.wavesenterprise.sdk.node.client.grpc.blocking.mapper.GrpcNodeErrorMapper
+import com.wavesenterprise.sdk.node.client.grpc.blocking.mapper.GrpcNodeErrorMapper.ERROR_CODE_KEY
 import com.wavesenterprise.sdk.node.client.grpc.blocking.util.catchingNodeCall
 import com.wavesenterprise.sdk.node.client.grpc.mapper.DataEntryMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.contract.ConnectionRequestMapper.dto
@@ -21,9 +22,12 @@ import com.wavesenterprise.sdk.node.domain.contract.ExecutionErrorRequest
 import com.wavesenterprise.sdk.node.domain.contract.ExecutionSuccessRequest
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeysRequest
+import com.wavesenterprise.sdk.node.exception.NodeError
+import com.wavesenterprise.sdk.node.exception.NodeErrorCode
 import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistException
 import io.grpc.Channel
 import io.grpc.ClientInterceptor
+import io.grpc.Metadata
 import io.grpc.Status
 import io.grpc.StatusRuntimeException
 import java.util.Optional
@@ -64,15 +68,23 @@ class ContractGrpcBlockingService(
             try {
                 contractServiceStub.getContractKey(contractKeyRequest.dto())?.entry?.domain()
             } catch (ex: StatusRuntimeException) {
-                if (ex.status == Status.NOT_FOUND && ex.trailers == null)
-                    null
-                else {
-                    when (val mappedException = GrpcNodeErrorMapper.mapToGeneralException(ex)) {
-                        is DataKeyNotExistException -> null
-                        else -> throw mappedException
-                    }
+                if (ex.status.code == Status.Code.NOT_FOUND) {
+                    throw parseDataKeyNotExistException(ex)
+                } else {
+                    throw GrpcNodeErrorMapper.mapToGeneralException(ex)
                 }
             }
+        )
+
+    private fun parseDataKeyNotExistException(ex: StatusRuntimeException): DataKeyNotExistException =
+        DataKeyNotExistException(
+            nodeError = NodeError(
+                error = NodeErrorCode.CONTRACT_NOT_FOUND.code,
+                message = ex.message
+                    ?: ex.trailers.get(Metadata.Key.of(ERROR_CODE_KEY, Metadata.ASCII_STRING_MARSHALLER))
+                    ?: "",
+            ),
+            cause = ex,
         )
 
     override fun getContractInfo(contractId: ContractId): Optional<ContractInfo> {
