@@ -11,7 +11,7 @@ include:
     file: 'common/sonarqube.gitlab-ci.yml'
   - project: 'integrator1/devops/gitlab-ci-jobs'
     ref: master
-    file: 'common/build-gradle.gitlab-ci.yml'    
+    file: 'common/build-gradle.gitlab-ci.yml'
 
 stages:
   - tests
@@ -22,15 +22,15 @@ stages:
     expire_in: 1 week
     name: "${CI_COMMIT_SHORT_SHA}_${CI_JOB_ID}"
     reports:
-      junit: "**/test-results/test/*.xml"  
+      junit: "**/test-results/test/*.xml"
     paths:
       - "**/build/reports/detekt/detekt.xml"
       - "**/test-results/test/*.xml"
       - "**/build/jacocoReports/test/jacocoTestReport.xml"
-      - images.json  
+      - images.json
       - "**/build/libs"
 
-# check code quality 
+# check code quality
 code_quality:
   extends:
     - .check_code_quality
@@ -39,15 +39,13 @@ code_quality:
     - dev
     - merge_requests
     - /^.*rc.*$/
-    - /^.*release.*$/    
+    - /^.*release.*$/
     - /^.*hotfix.*$/
-    
+
 tests&build:
   extends:
     - .test-gradle
   script:
-    - chmod +x ./we-tx-signer/we-tx-signer-code/lib/start.sh
-    - ./we-tx-signer/we-tx-signer-code/lib/start.sh
     - ./gradlew -PweMavenUser=$MAVEN_USER -PweMavenPassword=$MAVEN_PASSWORD version check build publish
   only:
     - dev
@@ -61,8 +59,6 @@ tests&build_for_maven_central:
     - .test-gradle
   script:
     - cat $we_maven_central_gpg | base64 --decode > "$(pwd)/we_maven_central.gpg"
-    - chmod +x ./we-tx-signer/we-tx-signer-code/lib/start.sh
-    - ./we-tx-signer/we-tx-signer-code/lib/start.sh
     - ./gradlew --no-parallel -PsonaTypeMavenUser=$SONATYPE_USER -PsonaTypeMavenPassword=$SONATYPE_PASSWORD -Psigning.keyId=$SIGN_KEY_ID -Psigning.password=$SIGN_PASSWORD -Psigning.secretKeyRingFile="$(pwd)/we_maven_central.gpg" version check build publish
     - ./gradlew -PsonaTypeMavenUser=$SONATYPE_USER -PsonaTypeMavenPassword=$SONATYPE_PASSWORD closeAndReleaseRepository
   only:
@@ -80,8 +76,6 @@ tests-mr:
     - git checkout $CI_MERGE_REQUEST_TARGET_BRANCH_NAME
     - git pull
     - git merge origin/$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
-    - chmod +x ./we-tx-signer/we-tx-signer-code/lib/start.sh
-    - ./we-tx-signer/we-tx-signer-code/lib/start.sh
     - ./gradlew -PweMavenUser=$MAVEN_USER -PweMavenPassword=$MAVEN_PASSWORD check build
     - docker images --format "{{json . }}" --no-trunc > images.json
-  <<: *artifacts 
+  <<: *artifacts

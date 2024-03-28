@@ -7,7 +7,6 @@ import com.wavesenterprise.sdk.node.domain.ChainId
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.sign.SignRequest
 import com.wavesenterprise.sdk.node.domain.tx.Tx
-import com.wavesenterprise.sdk.tx.signer.signer.Signer
 
 class SelfTxSigner(
     private val signer: Signer,

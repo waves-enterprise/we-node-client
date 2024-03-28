@@ -58,6 +58,7 @@ include(
     "we-tx-signer:we-tx-signer-api",
     "we-tx-signer:we-tx-signer-node",
     "we-tx-signer:we-tx-signer-code",
+    "we-tx-signer:we-tx-signer-bouncy-castle",
     "we-node-client-error",
     "we-atomic",
 )
