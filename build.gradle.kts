@@ -12,7 +12,7 @@ val logbackVersion: String by project
 val javaxAnnotationApiVersion: String by project
 val caffeineCacheVersion: String by project
 val slf4jVersion: String by project
-val cryptoProVersion: String by project
+val bouncycastleVersion: String by project
 
 val ioGrpcVersion: String by project
 val ioGrpcKotlinVersion: String by project
@@ -292,11 +292,8 @@ configure(
             dependency("org.slf4j:slf4j-api:$slf4jVersion")
             dependency("com.github.ben-manes.caffeine:caffeine:$caffeineCacheVersion")
 
-            dependency("ru.CryptoPro:ades-core:$cryptoProVersion")
-            dependency("ru.CryptoPro:cades:$cryptoProVersion")
-            dependency("ru.CryptoPro:jcp:$cryptoProVersion")
-            dependency("ru.CryptoPro:jcp-rev-check:$cryptoProVersion")
-            dependency("ru.CryptoPro:jcsp:$cryptoProVersion")
+            dependency("org.bouncycastle:bcprov-jdk15on:$bouncycastleVersion")
+            dependency("org.bouncycastle:bcpkix-jdk15on:$bouncycastleVersion")
 
             dependency("io.mockk:mockk:$mockkVersion")
             dependency("com.ninja-squad:springmockk:$springMockkVersion")
