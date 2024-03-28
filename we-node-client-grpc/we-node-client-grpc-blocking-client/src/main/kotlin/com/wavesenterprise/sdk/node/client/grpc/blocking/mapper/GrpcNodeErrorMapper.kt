@@ -39,8 +39,8 @@ import org.slf4j.LoggerFactory
  */
 object GrpcNodeErrorMapper {
 
-    private const val ERROR_CODE_KEY = "error-code"
-    private const val ERROR_MESSAGE_KEY = "error-message"
+    const val ERROR_CODE_KEY = "error-code"
+    const val ERROR_MESSAGE_KEY = "error-message"
 
     private val LOG = LoggerFactory.getLogger(GrpcNodeErrorMapper::class.java)
 

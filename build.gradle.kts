@@ -12,6 +12,7 @@ val logbackVersion: String by project
 val javaxAnnotationApiVersion: String by project
 val caffeineCacheVersion: String by project
 val slf4jVersion: String by project
+val cryptoProVersion: String by project
 
 val ioGrpcVersion: String by project
 val ioGrpcKotlinVersion: String by project
@@ -75,6 +76,30 @@ allprojects {
 
     repositories {
         mavenCentral()
+        maven {
+            name = "maven-snapshots"
+            url = uri("https://artifacts.wavesenterprise.com/repository/maven-snapshots/")
+            mavenContent {
+                snapshotsOnly()
+            }
+            credentials {
+                username = weMavenUser
+                password = weMavenPassword
+            }
+        }
+
+        maven {
+            name = "maven-releases"
+            url = uri("https://artifacts.wavesenterprise.com/repository/maven-releases/")
+            mavenContent {
+                releasesOnly()
+            }
+            credentials {
+                username = weMavenUser
+                password = weMavenPassword
+            }
+        }
+        mavenLocal()
     }
 }
 
@@ -266,6 +291,12 @@ configure(
             dependency("ch.qos.logback:logback-classic:$logbackVersion")
             dependency("org.slf4j:slf4j-api:$slf4jVersion")
             dependency("com.github.ben-manes.caffeine:caffeine:$caffeineCacheVersion")
+
+            dependency("ru.CryptoPro:ades-core:$cryptoProVersion")
+            dependency("ru.CryptoPro:cades:$cryptoProVersion")
+            dependency("ru.CryptoPro:jcp:$cryptoProVersion")
+            dependency("ru.CryptoPro:jcp-rev-check:$cryptoProVersion")
+            dependency("ru.CryptoPro:jcsp:$cryptoProVersion")
 
             dependency("io.mockk:mockk:$mockkVersion")
             dependency("com.ninja-squad:springmockk:$springMockkVersion")

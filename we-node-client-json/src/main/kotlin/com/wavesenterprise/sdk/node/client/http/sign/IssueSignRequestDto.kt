@@ -28,7 +28,7 @@ data class IssueSignRequestDto(
                 quantity = quantity.value,
                 description = description.asBase58String(),
                 decimals = decimals.value,
-                reissuable = reissuable,
+                reissuable = reissuable.value,
             )
     }
 }

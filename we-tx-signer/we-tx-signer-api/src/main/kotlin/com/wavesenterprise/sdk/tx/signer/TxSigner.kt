@@ -9,4 +9,3 @@ interface TxSigner {
 
     fun getSignerAddress(): Address
 }
-// impl that knows about atomicLocalContext and puts atomic badge when signing Tx-s

@@ -26,6 +26,7 @@ import com.wavesenterprise.sdk.node.domain.PolicyId
 import com.wavesenterprise.sdk.node.domain.PolicyName
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.Quantity
+import com.wavesenterprise.sdk.node.domain.Reissuable
 import com.wavesenterprise.sdk.node.domain.Role
 import com.wavesenterprise.sdk.node.domain.Script
 import com.wavesenterprise.sdk.node.domain.Signature
@@ -479,7 +480,7 @@ class TestDataFactory private constructor() {
             description: IssueTxDescription = IssueTxDescription(randomBytesFromUUID()),
             quantity: Quantity = Quantity(1),
             decimals: Decimals = Decimals(Byte.MIN_VALUE),
-            reissuable: Boolean = false,
+            reissuable: Reissuable = Reissuable(false),
             fee: Fee = Fee(1),
             timestamp: Timestamp = Timestamp(1),
             script: Script? = null,
@@ -541,7 +542,7 @@ class TestDataFactory private constructor() {
             senderPublicKey: PublicKey = PublicKey(randomBytesFromUUID()),
             assetId: AssetId? = null,
             quantity: Quantity = Quantity(1),
-            reissuable: Boolean = false,
+            reissuable: Reissuable = Reissuable(false),
             fee: Fee = Fee(0),
             timestamp: Timestamp = Timestamp(1),
             proofs: List<Signature>? = null,

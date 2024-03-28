@@ -1,5 +1,6 @@
 package com.wavesenterprise.sdk.node.domain.tx
 
+import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.Signature
@@ -14,4 +15,10 @@ data class GenesisRegisterNodeTx(
     override val timestamp: Timestamp,
     val signature: Signature,
     override val version: TxVersion,
-) : Tx
+) : Tx {
+    override fun withId(id: TxId): Tx = copy(id = id)
+
+    override fun withProof(proof: Signature): Tx = copy(signature = proof)
+
+    override fun withSenderAddress(senderAddress: Address): Tx = this
+}

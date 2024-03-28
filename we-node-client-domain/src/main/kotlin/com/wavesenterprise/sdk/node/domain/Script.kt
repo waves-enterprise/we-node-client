@@ -1,8 +1,9 @@
 package com.wavesenterprise.sdk.node.domain
 
+import com.wavesenterprise.sdk.node.domain.sign.SerializableToBytes
 import java.util.Base64
 
-data class Script(val bytes: ByteArray) {
+data class Script(val bytes: ByteArray) : SerializableToBytes {
     fun asBase64String(): String =
         BASE_64_ENCODER.encodeToString(bytes)
 
@@ -22,6 +23,8 @@ data class Script(val bytes: ByteArray) {
 
         inline val ByteArray.script: Script get() = Script(this)
     }
+
+    override fun getSignatureBytes(networkByte: Byte?): ByteArray = bytes
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

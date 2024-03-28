@@ -25,4 +25,10 @@ data class ExecutedContractTx(
     val proofs: List<Signature>,
     val senderAddress: Address,
     override val version: TxVersion,
-) : Tx, AtomicInnerTx
+) : Tx, AtomicInnerTx {
+    override fun withId(id: TxId): Tx = copy(id = id)
+
+    override fun withProof(proof: Signature): Tx = copy(proofs = proofs.plus(proof))
+
+    override fun withSenderAddress(senderAddress: Address): Tx = copy(senderAddress = senderAddress)
+}

@@ -16,4 +16,10 @@ data class GenesisTx(
     override val timestamp: Timestamp,
     val signature: Signature,
     override val version: TxVersion,
-) : Tx
+) : Tx {
+    override fun withId(id: TxId): Tx = copy(id = id)
+
+    override fun withProof(proof: Signature): Tx = copy(signature = proof)
+
+    override fun withSenderAddress(senderAddress: Address): Tx = this
+}

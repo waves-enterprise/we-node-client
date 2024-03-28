@@ -1,6 +1,12 @@
 package com.wavesenterprise.sdk.node.domain
 
-data class Alias(val value: String) {
+import com.wavesenterprise.sdk.node.domain.sign.SerializableToBytes
+import com.wavesenterprise.sdk.node.domain.util.ALIAS_VERSION
+import com.wavesenterprise.sdk.node.domain.util.processor.concatBytes
+import com.wavesenterprise.sdk.node.domain.util.processor.numberToBytes
+import com.wavesenterprise.sdk.node.domain.util.processor.strToBytes
+
+data class Alias(val value: String) : SerializableToBytes {
     companion object {
         @JvmStatic
         fun fromString(str: String): Alias =
@@ -12,5 +18,15 @@ data class Alias(val value: String) {
         private const val ALIAS_START_INDEX = 8
 
         inline val String.alias: Alias get() = Alias(this)
+    }
+
+    override fun getSignatureBytes(networkByte: Byte?): ByteArray {
+        val aliasBytes = strToBytes(value)
+        return concatBytes(
+            byteArrayOf(ALIAS_VERSION),
+            byteArrayOf(requireNotNull(networkByte)),
+            numberToBytes(aliasBytes.size, 2),
+            aliasBytes
+        )
     }
 }

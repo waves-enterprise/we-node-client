@@ -8,25 +8,43 @@ import com.wavesenterprise.sdk.node.domain.IssueTxDescription
 import com.wavesenterprise.sdk.node.domain.IssueTxName
 import com.wavesenterprise.sdk.node.domain.PublicKey
 import com.wavesenterprise.sdk.node.domain.Quantity
+import com.wavesenterprise.sdk.node.domain.Reissuable
 import com.wavesenterprise.sdk.node.domain.Script
 import com.wavesenterprise.sdk.node.domain.Signature
 import com.wavesenterprise.sdk.node.domain.Timestamp
 import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.TxVersion
+import com.wavesenterprise.sdk.node.domain.sign.FieldInfo
 
 data class IssueTx(
     override val id: TxId,
+    @FieldInfo(required = true, sinceVersion = 2, bytesPosition = 1)
     val chainId: ChainId,
+    @FieldInfo(required = true, sinceVersion = 2, bytesPosition = 2)
     val senderPublicKey: PublicKey,
+    @FieldInfo(required = true, sinceVersion = 2, bytesPosition = 3)
     val name: IssueTxName,
+    @FieldInfo(required = true, sinceVersion = 2, bytesPosition = 4)
     val description: IssueTxDescription,
+    @FieldInfo(required = true, sinceVersion = 2, bytesPosition = 5)
     val quantity: Quantity,
+    @FieldInfo(required = true, sinceVersion = 2, bytesPosition = 6)
     val decimals: Decimals,
-    val reissuable: Boolean,
+    @FieldInfo(required = true, sinceVersion = 2, bytesPosition = 7)
+    val reissuable: Reissuable,
+    @FieldInfo(required = true, sinceVersion = 2, bytesPosition = 8)
     val fee: Fee,
+    @FieldInfo(required = true, sinceVersion = 2, bytesPosition = 9)
     override val timestamp: Timestamp,
+    @FieldInfo(required = false, sinceVersion = 2, bytesPosition = 10)
     val script: Script? = null,
     val proofs: List<Signature>? = null,
     val senderAddress: Address,
     override val version: TxVersion,
-) : Tx
+) : Tx {
+    override fun withId(id: TxId): Tx = copy(id = id)
+
+    override fun withProof(proof: Signature): Tx = copy(proofs = proofs?.plus(proof) ?: listOf(proof))
+
+    override fun withSenderAddress(senderAddress: Address): Tx = copy(senderAddress = senderAddress)
+}

@@ -5,8 +5,8 @@ import com.wavesenterprise.protobuf.service.contract.ContractServiceGrpc
 import com.wavesenterprise.sdk.node.domain.DataValue
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.keys.ContractKeyRequest
-import com.wavesenterprise.sdk.node.exception.NodeErrorCode
 import com.wavesenterprise.sdk.node.exception.NodeException
+import com.wavesenterprise.sdk.node.exception.specific.DataKeyNotExistException
 import io.grpc.Metadata
 import io.grpc.Status
 import io.grpc.StatusRuntimeException
@@ -15,7 +15,6 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -28,37 +27,7 @@ internal class ContractGrpcBlockingServiceTest {
     lateinit var protoContractService: ContractServiceGrpc.ContractServiceBlockingStub
 
     @Test
-    fun `should return null for not found key`() {
-        val status = Status.NOT_FOUND
-        val metadata: Metadata = mockedMetadata(status)
-        every { protoContractService.getContractKey(any()) } throws
-            StatusRuntimeException(status, metadata)
-        every {
-            metadata.get(Metadata.Key.of("error-code", Metadata.ASCII_STRING_MARSHALLER))
-        } returns NodeErrorCode.DATA_KEY_NOT_EXIST.code.toString()
-        every {
-            metadata.get(
-                Metadata.Key.of("error-message", Metadata.ASCII_STRING_MARSHALLER)
-            )
-        } returns "no data for this key"
-        val contractGrpcBlockingService = ContractGrpcBlockingService(
-            mockk(),
-            mockk(),
-            protoContractService
-        )
-
-        assertFalse(
-            contractGrpcBlockingService.getContractKey(
-                ContractKeyRequest(
-                    contractId = ContractId.fromBase58("2nfSLahtZMk8wjD5fiPtfYiNYDKmyNpgSvB8bRgPSrQU"),
-                    key = "notFoundKey"
-                )
-            ).isPresent
-        )
-    }
-
-    @Test
-    fun `should return null for not found with null metadata`() {
+    fun `should throw ContractNotFoundException for not found`() {
         val statusRuntimeExceptionNullMetadata = StatusRuntimeException(Status.NOT_FOUND)
         every { protoContractService.getContractKey(any()) } throws statusRuntimeExceptionNullMetadata
         val contractGrpcBlockingService = ContractGrpcBlockingService(
@@ -67,14 +36,14 @@ internal class ContractGrpcBlockingServiceTest {
             protoContractService
         )
 
-        assertFalse(
+        assertThrows<DataKeyNotExistException> {
             contractGrpcBlockingService.getContractKey(
                 ContractKeyRequest(
                     contractId = ContractId.fromBase58("2nfSLahtZMk8wjD5fiPtfYiNYDKmyNpgSvB8bRgPSrQU"),
                     key = "notFoundKey"
                 )
-            ).isPresent
-        )
+            )
+        }
     }
 
     @Test

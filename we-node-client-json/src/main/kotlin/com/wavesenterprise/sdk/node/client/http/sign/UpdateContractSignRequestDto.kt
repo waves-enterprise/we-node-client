@@ -1,7 +1,5 @@
 package com.wavesenterprise.sdk.node.client.http.sign
 
-import com.wavesenterprise.sdk.node.client.http.ContractApiVersionDto
-import com.wavesenterprise.sdk.node.client.http.ContractApiVersionDto.Companion.toDto
 import com.wavesenterprise.sdk.node.client.http.ValidationPolicyDto
 import com.wavesenterprise.sdk.node.client.http.ValidationPolicyDto.Companion.toDto
 import com.wavesenterprise.sdk.node.client.http.atomic.AtomicBadgeDto
@@ -20,7 +18,7 @@ data class UpdateContractSignRequestDto(
     val contractId: String,
     val image: String,
     val imageHash: String,
-    val apiVersion: ContractApiVersionDto?,
+    val apiVersion: String?,
     val validationPolicy: ValidationPolicyDto?,
     val atomicBadge: AtomicBadgeDto?,
 ) : SignRequestDto<UpdateContractTxDto> {
@@ -36,7 +34,7 @@ data class UpdateContractSignRequestDto(
                 contractId = contractId.asBase58String(),
                 image = image.value,
                 imageHash = imageHash.value,
-                apiVersion = apiVersion?.toDto(),
+                apiVersion = apiVersion?.let { "${it.major.value}.${it.minor.value}" },
                 validationPolicy = validationPolicy?.toDto(),
                 atomicBadge = atomicBadge?.toDto(),
             )
