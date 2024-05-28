@@ -347,11 +347,10 @@ class BouncyCastleSelfTxSignerTest {
     @Test
     fun `should sign RegisterNodeTx`() {
         val signRequest = RegisterNodeSignRequest(
-            senderAddress = Address.EMPTY,
             version = TxVersion(2),
+            senderAddress = Address.EMPTY,
             fee = Fee(0),
             opType = OpType.ADD,
-            target = Address.fromBase58("3HgjVZvBHNaVfU7fHx9mqDXeJy4J8khadRC"),
             targetPublicKey = bouncyCastleSigner.getPublicKey(),
             nodeName = NodeName("test"),
         )
