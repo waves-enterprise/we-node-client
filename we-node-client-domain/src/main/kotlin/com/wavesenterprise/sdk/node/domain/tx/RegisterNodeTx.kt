@@ -15,7 +15,6 @@ data class RegisterNodeTx(
     override val id: TxId,
     @FieldInfo(required = true, sinceVersion = 1, bytesPosition = 1)
     val senderPublicKey: PublicKey,
-    val target: Address,
     @FieldInfo(required = true, sinceVersion = 1, bytesPosition = 2)
     val targetPublicKey: PublicKey,
     @FieldInfo(required = true, sinceVersion = 1, bytesPosition = 3)

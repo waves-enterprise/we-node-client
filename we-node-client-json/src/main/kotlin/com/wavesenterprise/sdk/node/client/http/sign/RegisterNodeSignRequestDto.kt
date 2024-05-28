@@ -12,7 +12,6 @@ data class RegisterNodeSignRequestDto(
     val password: String?,
     val fee: Long,
     val opType: String,
-    val target: String,
     val targetPublicKey: String,
     val nodeName: String,
 ) : SignRequestDto<RegisterNodeTxDto> {
@@ -25,7 +24,6 @@ data class RegisterNodeSignRequestDto(
                 password = password?.value,
                 fee = fee.value,
                 opType = opType.toDto(),
-                target = target.asBase58String(),
                 targetPublicKey = targetPublicKey.asBase58String(),
                 nodeName = nodeName.value,
             )
