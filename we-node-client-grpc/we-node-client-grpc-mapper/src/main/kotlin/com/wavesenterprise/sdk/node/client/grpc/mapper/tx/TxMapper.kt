@@ -7,6 +7,7 @@ import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.CreateContractTxMapper
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.CreatePolicyTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.DisableContractTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.ExecutedContractTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.GenesisTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.PermitTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.PolicyDataHashTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.TransferTxMapper.domain
@@ -87,7 +88,7 @@ object TxMapper {
         val version = TxVersion(version)
         return when (transactionCase) {
             Transaction.TransactionCase.GENESIS_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> genesisTransaction.domain(version)
             Transaction.TransactionCase.GENESIS_PERMIT_TRANSACTION,
             -> TODO("Not yet implemented")
             Transaction.TransactionCase.GENESIS_REGISTER_NODE_TRANSACTION,

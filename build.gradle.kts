@@ -24,6 +24,7 @@ val hamcrestVersion: String by project
 val mockkVersion: String by project
 val springMockkVersion: String by project
 val wireMockVersion: String by project
+val kotestVersion: String by project
 
 val ktorVersion: String by project
 
@@ -303,6 +304,7 @@ configure(
             dependency("org.hamcrest:hamcrest-library:$hamcrestVersion")
 
             dependency("com.github.tomakehurst:wiremock-jre8:$wireMockVersion")
+            dependency("io.kotest:kotest-runner-junit5:$kotestVersion")
         }
     }
 
