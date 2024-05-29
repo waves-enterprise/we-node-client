@@ -27,6 +27,6 @@ object AtomicBadgeMapper {
     @JvmStatic
     internal fun domainInternal(atomicBadge: ProtoAtomicBadge): AtomicBadge =
         AtomicBadge(
-            trustedSender = Address(atomicBadge.trustedSender.byteArray())
+            trustedSender = Address(atomicBadge.trustedSender.value.byteArray())
         )
 }

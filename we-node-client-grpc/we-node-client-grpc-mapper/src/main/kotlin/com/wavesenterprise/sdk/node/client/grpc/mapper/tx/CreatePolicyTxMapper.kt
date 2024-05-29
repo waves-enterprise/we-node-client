@@ -57,16 +57,14 @@ object CreatePolicyTxMapper {
     internal fun domainInternal(tx: CreatePolicyTransaction, version: TxVersion): CreatePolicyTx =
         CreatePolicyTx(
             id = TxId(tx.id.byteArray()),
-            senderPublicKey = PublicKey(tx.senderPublicKey.toByteArray()),
+            senderPublicKey = PublicKey(tx.senderPublicKey.byteArray()),
             policyName = PolicyName(tx.policyName),
             description = PolicyDescription(tx.description),
             recipients = tx.recipientsList.map { Address(it.byteArray()) },
             owners = tx.ownersList.map { Address(it.byteArray()) },
             timestamp = Timestamp.fromUtcTimestamp(tx.timestamp),
             fee = Fee(tx.fee),
-            feeAssetId = tx.feeAssetIdOrNull?.let {
-                FeeAssetId.fromByteArray(it.byteArray())
-            },
+            feeAssetId = tx.feeAssetIdOrNull?.let { FeeAssetId.fromByteArray(it.value.byteArray()) },
             atomicBadge = tx.atomicBadgeOrNull?.domain(),
             proofs = tx.proofsList?.let { dtoProofs ->
                 dtoProofs.map {
