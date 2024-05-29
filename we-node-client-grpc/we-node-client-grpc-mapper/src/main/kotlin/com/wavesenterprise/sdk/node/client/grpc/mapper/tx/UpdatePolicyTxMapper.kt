@@ -59,22 +59,18 @@ object UpdatePolicyTxMapper {
     internal fun domainInternal(tx: UpdatePolicyTransaction, version: TxVersion): UpdatePolicyTx =
         UpdatePolicyTx(
             id = TxId(tx.id.byteArray()),
-            senderPublicKey = PublicKey(tx.senderPublicKey.toByteArray()),
-            policyId = PolicyId.fromByteArray(tx.policyId.byteArray()),
+            senderPublicKey = PublicKey(tx.senderPublicKey.byteArray()),
+            policyId = PolicyId(
+                txId = TxId(tx.policyId.byteArray())
+            ),
             recipients = tx.recipientsList.map { Address(it.byteArray()) },
             owners = tx.ownersList.map { Address(it.byteArray()) },
             opType = tx.opType.domain(),
-            timestamp = Timestamp.fromUtcTimestamp(tx.timestamp),
+            timestamp = Timestamp(tx.timestamp),
             fee = Fee(tx.fee),
-            feeAssetId = tx.feeAssetIdOrNull?.let {
-                FeeAssetId.fromByteArray(it.byteArray())
-            },
+            feeAssetId = tx.feeAssetIdOrNull?.let { FeeAssetId.fromByteArray(it.byteArray()) },
             atomicBadge = tx.atomicBadgeOrNull?.domain(),
-            proofs = tx.proofsList?.let { dtoProofs ->
-                dtoProofs.map {
-                    Signature(it.byteArray())
-                }
-            },
+            proofs = tx.proofsList?.map { Signature(it.byteArray()) },
             senderAddress = Address(tx.senderAddress.byteArray()),
             version = version,
         )
