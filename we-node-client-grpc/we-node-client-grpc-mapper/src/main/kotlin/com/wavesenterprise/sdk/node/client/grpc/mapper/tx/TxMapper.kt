@@ -18,6 +18,7 @@ import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.PermitTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.PolicyDataHashTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.RegisterNodeTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.ReissueTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.SetAssetScriptTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.SponsorFeeTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.TransferTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.TxMapper.domain
@@ -120,7 +121,7 @@ object TxMapper {
             Transaction.TransactionCase.SPONSOR_FEE_TRANSACTION,
             -> sponsorFeeTransaction.domain(version)
             Transaction.TransactionCase.SET_ASSET_SCRIPT_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> setAssetScriptTransaction.domain(version)
             Transaction.TransactionCase.DATA_TRANSACTION,
             -> TODO("Not yet implemented")
             Transaction.TransactionCase.TRANSFER_TRANSACTION,
