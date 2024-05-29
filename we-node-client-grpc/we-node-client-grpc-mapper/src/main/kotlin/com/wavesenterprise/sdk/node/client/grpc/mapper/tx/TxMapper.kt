@@ -13,6 +13,7 @@ import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.GenesisRegisterNodeTxM
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.GenesisTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.PermitTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.PolicyDataHashTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.RegisterNodeTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.TransferTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.TxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.UpdateContractTxMapper.domain
@@ -98,7 +99,7 @@ object TxMapper {
             Transaction.TransactionCase.GENESIS_REGISTER_NODE_TRANSACTION,
             -> genesisRegisterNodeTransaction.domain(version)
             Transaction.TransactionCase.REGISTER_NODE_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> registerNodeTransaction.domain(version)
             Transaction.TransactionCase.CREATE_ALIAS_TRANSACTION,
             -> createAliasTransaction.domain(version)
             Transaction.TransactionCase.ISSUE_TRANSACTION,
