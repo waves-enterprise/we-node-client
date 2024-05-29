@@ -3,6 +3,7 @@ package com.wavesenterprise.sdk.node.client.grpc.mapper.tx
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.AtomicTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.BurnTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.CallContractTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.CreateAliasTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.CreateContractTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.CreatePolicyTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.DisableContractTxMapper.domain
@@ -99,7 +100,7 @@ object TxMapper {
             Transaction.TransactionCase.REGISTER_NODE_TRANSACTION,
             -> TODO("Not yet implemented")
             Transaction.TransactionCase.CREATE_ALIAS_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> createAliasTransaction.domain(version)
             Transaction.TransactionCase.ISSUE_TRANSACTION,
             -> TODO("Not yet implemented")
             Transaction.TransactionCase.REISSUE_TRANSACTION,
