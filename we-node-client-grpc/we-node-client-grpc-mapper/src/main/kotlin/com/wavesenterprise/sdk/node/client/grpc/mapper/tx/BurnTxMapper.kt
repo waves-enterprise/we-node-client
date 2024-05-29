@@ -51,18 +51,12 @@ object BurnTxMapper {
         BurnTx(
             id = TxId(tx.id.byteArray()),
             chainId = ChainId(tx.chainId.toByte()),
-            senderPublicKey = PublicKey(tx.senderPublicKey.toByteArray()),
-            assetId = tx.assetId?.let {
-                AssetId.fromByteArray(it.byteArray())
-            },
+            senderPublicKey = PublicKey(tx.senderPublicKey.byteArray()),
+            assetId = AssetId(tx.assetId.byteArray()),
             amount = Amount(tx.amount),
             fee = Fee(tx.fee),
             timestamp = Timestamp.fromUtcTimestamp(tx.timestamp),
-            proofs = tx.proofsList?.let { dtoProofs ->
-                dtoProofs.map {
-                    Signature(it.byteArray())
-                }
-            },
+            proofs = tx.proofsList?.map { Signature(it.byteArray()) },
             senderAddress = Address(tx.senderAddress.byteArray()),
             version = version,
         )
