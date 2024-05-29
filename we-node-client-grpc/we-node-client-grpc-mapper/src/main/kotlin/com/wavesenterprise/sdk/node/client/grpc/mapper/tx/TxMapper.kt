@@ -12,6 +12,7 @@ import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.GenesisPermitTxMapper.
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.GenesisRegisterNodeTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.GenesisTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.IssueTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.LeaseTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.PermitTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.PolicyDataHashTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.RegisterNodeTxMapper.domain
@@ -111,7 +112,7 @@ object TxMapper {
             Transaction.TransactionCase.BURN_TRANSACTION,
             -> burnTransaction.domain(version)
             Transaction.TransactionCase.LEASE_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> leaseTransaction.domain(version)
             Transaction.TransactionCase.LEASE_CANCEL_TRANSACTION,
             -> TODO("Not yet implemented")
             Transaction.TransactionCase.SPONSOR_FEE_TRANSACTION,
