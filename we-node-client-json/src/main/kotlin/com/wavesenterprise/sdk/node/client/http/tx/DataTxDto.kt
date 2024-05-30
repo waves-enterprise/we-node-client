@@ -1,8 +1,8 @@
 package com.wavesenterprise.sdk.node.client.http.tx
 
-import com.wavesenterprise.sdk.node.client.http.PermitDataEntryDto
-import com.wavesenterprise.sdk.node.client.http.PermitDataEntryDto.Companion.toDomain
-import com.wavesenterprise.sdk.node.client.http.PermitDataEntryDto.Companion.toDto
+import com.wavesenterprise.sdk.node.client.http.DataEntryDto
+import com.wavesenterprise.sdk.node.client.http.DataEntryDto.Companion.toDomain
+import com.wavesenterprise.sdk.node.client.http.DataEntryDto.Companion.toDto
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.FeeAssetId
@@ -20,7 +20,7 @@ data class DataTxDto(
     val senderPublicKey: String,
     val author: String,
     val authorPublicKey: String,
-    val data: List<PermitDataEntryDto>,
+    val data: List<DataEntryDto>,
     override val timestamp: Long,
     val fee: Long,
     val feeAssetId: String?,
