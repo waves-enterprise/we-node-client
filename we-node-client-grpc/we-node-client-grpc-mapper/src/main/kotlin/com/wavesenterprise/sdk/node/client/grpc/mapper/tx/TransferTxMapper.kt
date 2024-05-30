@@ -14,6 +14,7 @@ import com.wavesenterprise.sdk.node.client.grpc.mapper.Util.setIfNotNull
 import com.wavesenterprise.sdk.node.domain.Address
 import com.wavesenterprise.sdk.node.domain.Amount
 import com.wavesenterprise.sdk.node.domain.AssetId
+import com.wavesenterprise.sdk.node.domain.Attachment
 import com.wavesenterprise.sdk.node.domain.Fee
 import com.wavesenterprise.sdk.node.domain.FeeAssetId
 import com.wavesenterprise.sdk.node.domain.PublicKey
@@ -23,6 +24,7 @@ import com.wavesenterprise.sdk.node.domain.TxId
 import com.wavesenterprise.sdk.node.domain.TxVersion
 import com.wavesenterprise.sdk.node.domain.tx.TransferTx
 import com.wavesenterprise.transaction.protobuf.transfer.TransferTransaction
+import com.wavesenterprise.transaction.protobuf.transfer.assetIdOrNull
 import com.wavesenterprise.transaction.protobuf.transfer.atomicBadgeOrNull
 import com.wavesenterprise.transaction.protobuf.transfer.feeAssetIdOrNull
 import com.wavesenterprise.transaction.protobuf.transfer.transferTransaction
@@ -59,21 +61,20 @@ object TransferTxMapper {
     internal fun domainInternal(tx: TransferTransaction, version: TxVersion): TransferTx =
         TransferTx(
             id = TxId(tx.id.byteArray()),
-            senderPublicKey = PublicKey(tx.senderPublicKey.toByteArray()),
-            assetId = tx.assetId?.let { AssetId(it.byteArray()) },
+            senderPublicKey = PublicKey(tx.senderPublicKey.byteArray()),
+            assetId = tx.assetIdOrNull?.let { AssetId(it.value.byteArray()) },
             feeAssetId = tx.feeAssetIdOrNull?.let {
-                FeeAssetId.fromByteArray(it.byteArray())
+                FeeAssetId(
+                    txId = TxId(it.value.byteArray()),
+                )
             },
-            timestamp = Timestamp.fromUtcTimestamp(tx.timestamp),
+            timestamp = Timestamp(tx.timestamp),
             amount = Amount(tx.amount),
             fee = Fee(tx.fee),
             recipient = Address(tx.recipient.byteArray()),
+            attachment = Attachment(tx.attachment.byteArray()),
             atomicBadge = tx.atomicBadgeOrNull?.domain(),
-            proofs = tx.proofsList?.let { dtoProofs ->
-                dtoProofs.map {
-                    Signature(it.byteArray())
-                }
-            },
+            proofs = tx.proofsList?.map { Signature(it.byteArray()) },
             senderAddress = Address(tx.senderAddress.byteArray()),
             version = version,
         )
