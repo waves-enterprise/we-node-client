@@ -6,6 +6,7 @@ import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.CallContractTxMapper.d
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.CreateAliasTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.CreateContractTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.CreatePolicyTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.DataTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.DisableContractTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.ExecutedContractTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.GenesisPermitTxMapper.domain
@@ -123,7 +124,7 @@ object TxMapper {
             Transaction.TransactionCase.SET_ASSET_SCRIPT_TRANSACTION,
             -> setAssetScriptTransaction.domain(version)
             Transaction.TransactionCase.DATA_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> dataTransaction.domain(version)
             Transaction.TransactionCase.TRANSFER_TRANSACTION,
             -> transferTransaction.domain(version)
             Transaction.TransactionCase.MASS_TRANSFER_TRANSACTION,
