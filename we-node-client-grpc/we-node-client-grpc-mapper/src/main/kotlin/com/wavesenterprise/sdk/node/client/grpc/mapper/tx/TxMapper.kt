@@ -21,6 +21,7 @@ import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.PolicyDataHashTxMapper
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.RegisterNodeTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.ReissueTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.SetAssetScriptTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.SetScriptTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.SponsorFeeTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.TransferTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.TxMapper.domain
@@ -149,7 +150,7 @@ object TxMapper {
             Transaction.TransactionCase.UPDATE_CONTRACT_TRANSACTION,
             -> updateContractTransaction.domain(version)
             Transaction.TransactionCase.SET_SCRIPT_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> setScriptTransaction.domain(version)
             Transaction.TransactionCase.ATOMIC_TRANSACTION,
             -> atomicTransaction.domain(version)
             Transaction.TransactionCase.TRANSACTION_NOT_SET,
