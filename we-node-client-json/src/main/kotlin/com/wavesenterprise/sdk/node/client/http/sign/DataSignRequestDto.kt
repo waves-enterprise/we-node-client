@@ -1,7 +1,7 @@
 package com.wavesenterprise.sdk.node.client.http.sign
 
-import com.wavesenterprise.sdk.node.client.http.PermitDataEntryDto
-import com.wavesenterprise.sdk.node.client.http.PermitDataEntryDto.Companion.toDto
+import com.wavesenterprise.sdk.node.client.http.DataEntryDto
+import com.wavesenterprise.sdk.node.client.http.DataEntryDto.Companion.toDto
 import com.wavesenterprise.sdk.node.client.http.tx.DataTxDto
 import com.wavesenterprise.sdk.node.domain.TxType
 import com.wavesenterprise.sdk.node.domain.sign.DataSignRequest
@@ -14,7 +14,7 @@ data class DataSignRequestDto(
     val fee: Long,
     val feeAssetId: String?,
     val author: String,
-    val data: List<PermitDataEntryDto>,
+    val data: List<DataEntryDto>,
 ) : SignRequestDto<DataTxDto> {
     companion object {
         @JvmStatic

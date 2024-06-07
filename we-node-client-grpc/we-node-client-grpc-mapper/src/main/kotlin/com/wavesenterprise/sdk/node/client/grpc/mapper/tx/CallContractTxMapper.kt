@@ -23,7 +23,6 @@ import com.wavesenterprise.sdk.node.domain.TxVersion
 import com.wavesenterprise.sdk.node.domain.contract.ContractId
 import com.wavesenterprise.sdk.node.domain.contract.ContractVersion
 import com.wavesenterprise.sdk.node.domain.tx.CallContractTx
-import com.wavesenterprise.transaction.protobuf.DataEntry
 import com.wavesenterprise.transaction.protobuf.docker.CallContractTransaction
 import com.wavesenterprise.transaction.protobuf.docker.atomicBadgeOrNull
 import com.wavesenterprise.transaction.protobuf.docker.callContractTransaction
@@ -60,23 +59,21 @@ object CallContractTxMapper {
     internal fun domainInternal(tx: CallContractTransaction, version: TxVersion): CallContractTx =
         CallContractTx(
             id = TxId(tx.id.byteArray()),
-            senderPublicKey = PublicKey(tx.senderPublicKey.toByteArray()),
-            contractId = ContractId.fromByteArray(tx.contractId.toByteArray()),
-            params = tx.paramsList.map { param: DataEntry ->
-                param.domain()
-            },
+            senderPublicKey = PublicKey(tx.senderPublicKey.byteArray()),
+            contractId = ContractId(
+                txId = TxId(tx.contractId.byteArray())
+            ),
+            params = tx.paramsList.map { it.domain() },
             fee = Fee(tx.fee),
-            timestamp = Timestamp.fromUtcTimestamp(tx.timestamp),
+            timestamp = Timestamp(tx.timestamp),
             contractVersion = ContractVersion(tx.contractVersion),
             feeAssetId = tx.feeAssetIdOrNull?.let {
-                FeeAssetId.fromByteArray(it.byteArray())
+                FeeAssetId(
+                    txId = TxId(it.value.byteArray())
+                )
             },
             atomicBadge = tx.atomicBadgeOrNull?.domain(),
-            proofs = tx.proofsList?.let { dtoProofs ->
-                dtoProofs.map {
-                    Signature(it.byteArray())
-                }
-            },
+            proofs = tx.proofsList?.map { Signature(it.byteArray()) },
             senderAddress = Address(tx.senderAddress.byteArray()),
             version = version,
         )

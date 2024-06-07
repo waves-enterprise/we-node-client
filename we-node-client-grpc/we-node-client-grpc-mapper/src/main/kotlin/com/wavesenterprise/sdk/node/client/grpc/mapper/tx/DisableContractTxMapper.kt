@@ -54,18 +54,20 @@ object DisableContractTxMapper {
     internal fun domainInternal(tx: DisableContractTransaction, version: TxVersion): DisableContractTx =
         DisableContractTx(
             id = TxId(tx.id.byteArray()),
-            senderPublicKey = PublicKey(tx.senderPublicKey.toByteArray()),
-            contractId = ContractId.fromByteArray(tx.contractId.toByteArray()),
+            senderPublicKey = PublicKey(tx.senderPublicKey.byteArray()),
+            contractId = ContractId(
+                txId = TxId(tx.contractId.byteArray()),
+            ),
             fee = Fee(tx.fee),
-            timestamp = Timestamp.fromUtcTimestamp(tx.timestamp),
+            timestamp = Timestamp(tx.timestamp),
             feeAssetId = tx.feeAssetIdOrNull?.let {
-                FeeAssetId.fromByteArray(it.byteArray())
+                FeeAssetId(
+                    txId = TxId(it.value.byteArray()),
+                )
             },
             atomicBadge = tx.atomicBadgeOrNull?.domain(),
-            proofs = tx.proofsList?.let { dtoProofs ->
-                dtoProofs.map {
-                    Signature(it.byteArray())
-                }
+            proofs = tx.proofsList?.map {
+                Signature(it.byteArray())
             },
             senderAddress = Address(tx.senderAddress.byteArray()),
             version = version,

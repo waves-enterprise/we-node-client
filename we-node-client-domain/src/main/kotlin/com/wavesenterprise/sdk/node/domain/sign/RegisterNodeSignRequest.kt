@@ -17,7 +17,6 @@ data class RegisterNodeSignRequest(
     override val password: Password? = null,
     val fee: Fee,
     val opType: OpType,
-    val target: Address,
     val targetPublicKey: PublicKey,
     val nodeName: NodeName,
 ) : SignRequest<RegisterNodeTx> {
@@ -30,7 +29,6 @@ data class RegisterNodeSignRequest(
         fun RegisterNodeSignRequest.toTx(senderPublicKey: PublicKey) = RegisterNodeTx(
             id = TxId.EMPTY,
             senderPublicKey = senderPublicKey,
-            target = target,
             targetPublicKey = targetPublicKey,
             nodeName = nodeName,
             opType = opType,

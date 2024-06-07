@@ -3,13 +3,28 @@ package com.wavesenterprise.sdk.node.client.grpc.mapper.tx
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.AtomicTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.BurnTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.CallContractTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.CreateAliasTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.CreateContractTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.CreatePolicyTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.DataTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.DisableContractTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.ExecutedContractTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.GenesisPermitTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.GenesisRegisterNodeTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.GenesisTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.IssueTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.LeaseCancelTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.LeaseTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.MassTransferTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.PermitTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.PolicyDataHashTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.RegisterNodeTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.ReissueTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.SetAssetScriptTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.SetScriptTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.SponsorFeeTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.TransferTxMapper.domain
+import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.TxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.UpdateContractTxMapper.domain
 import com.wavesenterprise.sdk.node.client.grpc.mapper.tx.UpdatePolicyTxMapper.domain
 import com.wavesenterprise.sdk.node.domain.TxVersion
@@ -87,35 +102,35 @@ object TxMapper {
         val version = TxVersion(version)
         return when (transactionCase) {
             Transaction.TransactionCase.GENESIS_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> genesisTransaction.domain(version)
             Transaction.TransactionCase.GENESIS_PERMIT_TRANSACTION,
             -> TODO("Not yet implemented")
             Transaction.TransactionCase.GENESIS_REGISTER_NODE_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> genesisRegisterNodeTransaction.domain(version)
             Transaction.TransactionCase.REGISTER_NODE_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> registerNodeTransaction.domain(version)
             Transaction.TransactionCase.CREATE_ALIAS_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> createAliasTransaction.domain(version)
             Transaction.TransactionCase.ISSUE_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> issueTransaction.domain(version)
             Transaction.TransactionCase.REISSUE_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> reissueTransaction.domain(version)
             Transaction.TransactionCase.BURN_TRANSACTION,
             -> burnTransaction.domain(version)
             Transaction.TransactionCase.LEASE_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> leaseTransaction.domain(version)
             Transaction.TransactionCase.LEASE_CANCEL_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> leaseCancelTransaction.domain(version)
             Transaction.TransactionCase.SPONSOR_FEE_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> sponsorFeeTransaction.domain(version)
             Transaction.TransactionCase.SET_ASSET_SCRIPT_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> setAssetScriptTransaction.domain(version)
             Transaction.TransactionCase.DATA_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> dataTransaction.domain(version)
             Transaction.TransactionCase.TRANSFER_TRANSACTION,
             -> transferTransaction.domain(version)
             Transaction.TransactionCase.MASS_TRANSFER_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> massTransferTransaction.domain(version)
             Transaction.TransactionCase.PERMIT_TRANSACTION,
             -> permitTransaction.domain(version)
             Transaction.TransactionCase.CREATE_POLICY_TRANSACTION,
@@ -135,7 +150,7 @@ object TxMapper {
             Transaction.TransactionCase.UPDATE_CONTRACT_TRANSACTION,
             -> updateContractTransaction.domain(version)
             Transaction.TransactionCase.SET_SCRIPT_TRANSACTION,
-            -> TODO("Not yet implemented")
+            -> setScriptTransaction.domain(version)
             Transaction.TransactionCase.ATOMIC_TRANSACTION,
             -> atomicTransaction.domain(version)
             Transaction.TransactionCase.TRANSACTION_NOT_SET,

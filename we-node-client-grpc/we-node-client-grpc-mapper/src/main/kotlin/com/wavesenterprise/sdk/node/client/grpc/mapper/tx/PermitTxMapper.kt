@@ -51,16 +51,14 @@ object PermitTxMapper {
     internal fun domainInternal(tx: PermitTransaction, version: TxVersion): PermitTx =
         PermitTx(
             id = TxId(tx.id.byteArray()),
-            senderPublicKey = PublicKey(tx.senderPublicKey.toByteArray()),
+            senderPublicKey = PublicKey(tx.senderPublicKey.byteArray()),
             target = Address(tx.target.byteArray()),
-            timestamp = Timestamp.fromUtcTimestamp(tx.timestamp),
+            timestamp = Timestamp(tx.timestamp),
             fee = Fee(tx.fee),
             permissionOp = tx.permissionOp.domain(),
             atomicBadge = tx.atomicBadgeOrNull?.domain(),
-            proofs = tx.proofsList?.let { dtoProofs ->
-                dtoProofs.map {
-                    Signature(it.byteArray())
-                }
+            proofs = tx.proofsList?.map {
+                Signature(it.byteArray())
             },
             senderAddress = Address(tx.senderAddress.byteArray()),
             version = version,

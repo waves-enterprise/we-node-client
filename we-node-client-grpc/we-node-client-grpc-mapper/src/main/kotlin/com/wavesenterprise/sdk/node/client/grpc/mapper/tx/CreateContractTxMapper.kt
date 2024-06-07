@@ -27,7 +27,6 @@ import com.wavesenterprise.sdk.node.domain.contract.ContractImage
 import com.wavesenterprise.sdk.node.domain.contract.ContractImageHash
 import com.wavesenterprise.sdk.node.domain.contract.ContractName
 import com.wavesenterprise.sdk.node.domain.tx.CreateContractTx
-import com.wavesenterprise.transaction.protobuf.DataEntry
 import com.wavesenterprise.transaction.protobuf.docker.CreateContractTransaction
 import com.wavesenterprise.transaction.protobuf.docker.apiVersionOrNull
 import com.wavesenterprise.transaction.protobuf.docker.atomicBadgeOrNull
@@ -69,26 +68,22 @@ object CreateContractTxMapper {
     internal fun domainInternal(tx: CreateContractTransaction, version: TxVersion): CreateContractTx =
         CreateContractTx(
             id = TxId(tx.id.byteArray()),
-            senderPublicKey = PublicKey(tx.senderPublicKey.toByteArray()),
+            senderPublicKey = PublicKey(tx.senderPublicKey.byteArray()),
             image = ContractImage(tx.image),
             imageHash = ContractImageHash(tx.imageHash),
             contractName = ContractName(tx.contractName),
-            params = tx.paramsList.map { param: DataEntry ->
-                param.domain()
-            },
+            params = tx.paramsList.map { it.domain() },
             fee = Fee(tx.fee),
-            timestamp = Timestamp.fromUtcTimestamp(tx.timestamp),
+            timestamp = Timestamp(tx.timestamp),
             feeAssetId = tx.feeAssetIdOrNull?.let {
-                FeeAssetId.fromByteArray(it.byteArray())
+                FeeAssetId(
+                    txId = TxId(it.value.byteArray())
+                )
             },
             atomicBadge = tx.atomicBadgeOrNull?.domain(),
             validationPolicy = tx.validationPolicyOrNull?.domain(),
             apiVersion = tx.apiVersionOrNull?.domain(),
-            proofs = tx.proofsList?.let { dtoProofs ->
-                dtoProofs.map {
-                    Signature(it.byteArray())
-                }
-            },
+            proofs = tx.proofsList?.map { Signature(it.byteArray()) },
             senderAddress = Address(tx.senderAddress.byteArray()),
             version = version,
         )

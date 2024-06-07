@@ -17,7 +17,6 @@ data class RegisterNodeTxDto(
     override val id: String,
     override val type: Int = TxType.REGISTER_NODE.code,
     val senderPublicKey: String,
-    val target: String,
     val targetPubKey: String,
     val nodeName: String?,
     val opType: String,
@@ -34,7 +33,6 @@ data class RegisterNodeTxDto(
             RegisterNodeTxDto(
                 id = id.asBase58String(),
                 senderPublicKey = senderPublicKey.asBase58String(),
-                target = target.asBase58String(),
                 targetPubKey = targetPublicKey.asBase58String(),
                 nodeName = nodeName?.value,
                 opType = opType.toDto(),
@@ -50,7 +48,6 @@ data class RegisterNodeTxDto(
             RegisterNodeTx(
                 id = TxId.fromBase58(id),
                 senderPublicKey = PublicKey.fromBase58(senderPublicKey),
-                target = Address.fromBase58(target),
                 targetPublicKey = PublicKey.fromBase58(targetPubKey),
                 nodeName = nodeName?.let { NodeName(it) },
                 opType = opType.fromOpTypeDtoToDomain(),

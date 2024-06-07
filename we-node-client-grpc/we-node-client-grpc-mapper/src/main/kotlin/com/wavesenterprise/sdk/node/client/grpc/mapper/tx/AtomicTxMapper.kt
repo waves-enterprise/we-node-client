@@ -19,6 +19,7 @@ import com.wavesenterprise.sdk.node.domain.TxVersion
 import com.wavesenterprise.sdk.node.domain.tx.AtomicTx
 import com.wavesenterprise.transaction.protobuf.AtomicTransaction
 import com.wavesenterprise.transaction.protobuf.atomicTransaction
+import com.wavesenterprise.transaction.protobuf.minerOrNull
 
 object AtomicTxMapper {
     @JvmStatic
@@ -48,13 +49,10 @@ object AtomicTxMapper {
         AtomicTx(
             id = TxId(tx.id.byteArray()),
             senderPublicKey = PublicKey(tx.senderPublicKey.toByteArray()),
+            miner = tx.minerOrNull?.let { Address(it.value.byteArray()) },
             txs = tx.transactionsList.map { it.domain(version) },
-            timestamp = Timestamp.fromUtcTimestamp(tx.timestamp),
-            proofs = tx.proofsList?.let { dtoProofs ->
-                dtoProofs.map {
-                    Signature(it.byteArray())
-                }
-            },
+            timestamp = Timestamp(tx.timestamp),
+            proofs = tx.proofsList?.map { Signature(it.byteArray()) },
             senderAddress = Address(tx.senderAddress.byteArray()),
             fee = Fee(0),
             version = version,

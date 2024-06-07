@@ -57,20 +57,20 @@ object PolicyDataHashTxMapper {
     internal fun domainInternal(tx: PolicyDataHashTransaction, version: TxVersion): PolicyDataHashTx =
         PolicyDataHashTx(
             id = TxId(tx.id.byteArray()),
-            senderPublicKey = PublicKey(tx.senderPublicKey.toByteArray()),
+            senderPublicKey = PublicKey(tx.senderPublicKey.byteArray()),
             dataHash = Hash(tx.dataHash.byteArray()),
-            policyId = PolicyId.fromByteArray(tx.policyId.byteArray()),
-            timestamp = Timestamp.fromUtcTimestamp(tx.timestamp),
+            policyId = PolicyId(
+                txId = TxId(tx.policyId.byteArray())
+            ),
+            timestamp = Timestamp(tx.timestamp),
             fee = Fee(tx.fee),
             feeAssetId = tx.feeAssetIdOrNull?.let {
-                FeeAssetId.fromByteArray(it.byteArray())
+                FeeAssetId(
+                    txId = TxId(it.value.byteArray())
+                )
             },
             atomicBadge = tx.atomicBadgeOrNull?.domain(),
-            proofs = tx.proofsList?.let { dtoProofs ->
-                dtoProofs.map {
-                    Signature(it.byteArray())
-                }
-            },
+            proofs = tx.proofsList?.map { Signature(it.byteArray()) },
             senderAddress = Address(tx.senderAddress.byteArray()),
             version = version,
         )
