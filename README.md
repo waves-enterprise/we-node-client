@@ -1,4 +1,4 @@
-# we-node-client
+# we-node-client.
 
 Java/Kotlin SDK Node client and domain.
 
