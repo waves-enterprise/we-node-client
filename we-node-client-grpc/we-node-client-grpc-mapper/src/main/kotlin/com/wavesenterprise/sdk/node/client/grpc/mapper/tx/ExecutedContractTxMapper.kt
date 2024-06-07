@@ -53,19 +53,15 @@ object ExecutedContractTxMapper {
     internal fun domainInternal(tx: ExecutedContractTransaction, version: TxVersion): ExecutedContractTx =
         ExecutedContractTx(
             id = TxId(tx.id.byteArray()),
-            senderPublicKey = PublicKey(tx.senderPublicKey.toByteArray()),
+            senderPublicKey = PublicKey(tx.senderPublicKey.byteArray()),
             tx = tx.tx.domain(),
             results = tx.resultsList.map { it.domain() },
             resultsHash = Hash(tx.resultsHash.byteArray()),
             fee = Fee(0),
             validationProofs = tx.validationProofsList.map { it.domain() },
-            timestamp = Timestamp.fromUtcTimestamp(tx.timestamp),
+            timestamp = Timestamp(tx.timestamp),
             atomicBadge = null,
-            proofs = tx.proofsList.let { dtoProofs ->
-                dtoProofs.map {
-                    Signature(it.byteArray())
-                }
-            },
+            proofs = tx.proofsList.map { Signature(it.byteArray()) },
             senderAddress = Address(tx.senderAddress.byteArray()),
             version = version,
         )
