@@ -57,7 +57,7 @@ complexity:
     active: false
     threshold: 10
     includeStaticDeclarations: false
-  ComplexMethod:
+  CyclomaticComplexMethod:
     active: true
     threshold: 10
     ignoreSingleWhenExpression: false
@@ -214,99 +214,6 @@ exceptions:
       - Throwable
       - RuntimeException
 
-formatting:
-  active: true
-  android: false
-  autoCorrect: true
-  ChainWrapping:
-    active: true
-    autoCorrect: true
-  CommentSpacing:
-    active: true
-    autoCorrect: true
-  Filename:
-    active: true
-  FinalNewline:
-    active: true
-    autoCorrect: true
-  ImportOrdering:
-    active: false
-  Indentation:
-    active: true
-    autoCorrect: true
-    indentSize: 4
-    continuationIndentSize: 4
-  MaximumLineLength:
-    active: true
-    maxLineLength: 120
-  ModifierOrdering:
-    active: true
-    autoCorrect: true
-  NoBlankLineBeforeRbrace:
-    active: true
-    autoCorrect: true
-  NoConsecutiveBlankLines:
-    active: true
-    autoCorrect: true
-  NoEmptyClassBody:
-    active: true
-    autoCorrect: true
-  NoLineBreakAfterElse:
-    active: true
-    autoCorrect: true
-  NoLineBreakBeforeAssignment:
-    active: true
-    autoCorrect: true
-  NoMultipleSpaces:
-    active: true
-    autoCorrect: true
-  NoSemicolons:
-    active: true
-    autoCorrect: true
-  NoTrailingSpaces:
-    active: true
-    autoCorrect: true
-  NoUnitReturn:
-    active: true
-    autoCorrect: true
-  NoUnusedImports:
-    active: true
-    autoCorrect: true
-  NoWildcardImports:
-    active: true
-    autoCorrect: true
-  PackageName:
-    active: true
-    autoCorrect: true
-  ParameterListWrapping:
-    active: true
-    autoCorrect: true
-    indentSize: 4
-  SpacingAroundColon:
-    active: true
-    autoCorrect: true
-  SpacingAroundComma:
-    active: true
-    autoCorrect: true
-  SpacingAroundCurly:
-    active: true
-    autoCorrect: true
-  SpacingAroundKeyword:
-    active: true
-    autoCorrect: true
-  SpacingAroundOperators:
-    active: true
-    autoCorrect: true
-  SpacingAroundParens:
-    active: true
-    autoCorrect: true
-  SpacingAroundRangeOperator:
-    active: true
-    autoCorrect: true
-  StringTemplate:
-    active: true
-    autoCorrect: true
-
 naming:
   active: true
   ClassNaming:
@@ -365,28 +272,6 @@ naming:
       - "**/*.Spec.kt"
       - "**/*.Spek.kt"
     minimumFunctionNameLength: 3
-  FunctionNaming:
-    active: true
-    excludes:
-      - "**/test/**"
-      - "**/androidTest/**"
-      - "**/*.Test.kt"
-      - "**/*.Spec.kt"
-      - "**/*.Spek.kt"
-    functionPattern: '^([a-z$][a-zA-Z$0-9]*)|(`.*`)$'
-    excludeClassPattern: '$^'
-    ignoreOverridden: true
-  FunctionParameterNaming:
-    active: true
-    excludes:
-      - "**/test/**"
-      - "**/androidTest/**"
-      - "**/*.Test.kt"
-      - "**/*.Spec.kt"
-      - "**/*.Spek.kt"
-    parameterPattern: '[a-z][A-Za-z0-9]*'
-    excludeClassPattern: '$^'
-    ignoreOverridden: true
   InvalidPackageDeclaration:
     active: false
     rootPackage: ''
@@ -444,18 +329,6 @@ naming:
       - "**/*.Spec.kt"
       - "**/*.Spek.kt"
     minimumVariableNameLength: 1
-  VariableNaming:
-    active: true
-    excludes:
-      - "**/test/**"
-      - "**/androidTest/**"
-      - "**/*.Test.kt"
-      - "**/*.Spec.kt"
-      - "**/*.Spek.kt"
-    variablePattern: '[a-z][A-Za-z0-9]*'
-    privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
-    excludeClassPattern: '$^'
-    ignoreOverridden: true
 
 performance:
   active: true
@@ -482,8 +355,6 @@ performance:
 
 potential-bugs:
   active: true
-  DuplicateCaseInWhenExpression:
-    active: true
   EqualsAlwaysReturnsTrueOrFalse:
     active: false
   EqualsWithHashCodeExist:
@@ -504,10 +375,8 @@ potential-bugs:
       - "**/*.Test.kt"
       - "**/*.Spec.kt"
       - "**/*.Spek.kt"
-    excludeAnnotatedProperties:
+    ignoreAnnotated:
     ignoreOnClassesPattern: ""
-  MissingWhenCase:
-    active: false
   UnconditionalJumpStatementInLoop:
     active: false
   UnreachableCode:
@@ -527,7 +396,8 @@ style:
     active: false
   DataClassContainsFunctions:
     active: false
-    conversionFunctionPrefix: 'to'
+    conversionFunctionPrefix:
+      - 'to'
   DataClassShouldBeImmutable:
     active: false
   EqualsNullCall:
@@ -541,10 +411,10 @@ style:
     includeLineWrapping: false
   ForbiddenComment:
     active: true
-    values:
-      - TODO
-      - FIXME
-      - STOPSHIP
+    comments:
+      - "TODO"
+      - "FIXME"
+      - "STOPSHIP"
   ForbiddenImport:
     active: false
     imports:
@@ -554,7 +424,8 @@ style:
   FunctionOnlyReturningConstant:
     active: false
     ignoreOverridableFunction: true
-    excludedFunctions: 'describeContents'
+    excludedFunctions:
+      - 'describeContents'
   LoopWithTooManyJumpStatements:
     active: false
     maxJumpCount: 1
@@ -579,7 +450,7 @@ style:
     ignoreNamedArgument: true
     ignoreEnums: false
     ignoreRanges: false
-  MandatoryBracesIfStatements:
+  BracesOnIfStatements:
     active: false
   MaxLineLength:
     active: true
@@ -601,8 +472,6 @@ style:
     active: true
   OptionalUnit:
     active: false
-  OptionalWhenBraces:
-    active: false
   PreferToOverPairSyntax:
     active: false
   ProtectedMemberInFinalClass:
@@ -612,7 +481,8 @@ style:
   ReturnCount:
     active: true
     max: 3
-    excludedFunctions: "equals"
+    excludedFunctions:
+      - "equals"
     excludeLabeled: false
     excludeReturnFromLambda: true
   SafeCast:
@@ -628,10 +498,10 @@ style:
     active: false
   UnderscoresInNumericLiterals:
     active: false
-    acceptableDecimalLength: 5
+    acceptableLength: 5
   UnnecessaryAbstractClass:
     active: false
-    excludeAnnotatedClasses:
+    ignoreAnnotated:
       - dagger.Module
   UnnecessaryApply:
     active: false
@@ -654,7 +524,7 @@ style:
     active: false
   UseDataClass:
     active: false
-    excludeAnnotatedClasses:
+    ignoreAnnotated:
   UseRequire:
     active: false
   UselessCallOnNotNull:
