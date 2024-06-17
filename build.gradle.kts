@@ -301,7 +301,7 @@ configure(
             dependency("org.hamcrest:hamcrest-core:$hamcrestVersion")
             dependency("org.hamcrest:hamcrest-library:$hamcrestVersion")
 
-            dependency("com.github.tomakehurst:wiremock-jre8:$wireMockVersion")
+            dependency("org.wiremock:wiremock:$wireMockVersion")
             dependency("io.kotest:kotest-runner-junit5:$kotestVersion")
         }
     }
