@@ -1,6 +1,5 @@
 pluginManagement {
     val kotlinVersion: String by settings
-    val springBootVersion: String by settings
     val gradleDependencyManagementVersion: String by settings
     val detektVersion: String by settings
     val ktlintVersion: String by settings
