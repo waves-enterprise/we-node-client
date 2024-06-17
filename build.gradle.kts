@@ -22,7 +22,6 @@ val reactorBomVersion: String by project
 val junitVersion: String by project
 val hamcrestVersion: String by project
 val mockkVersion: String by project
-val springMockkVersion: String by project
 val wireMockVersion: String by project
 val kotestVersion: String by project
 
@@ -297,7 +296,6 @@ configure(
             dependency("org.bouncycastle:bcpkix-jdk15on:$bouncycastleVersion")
 
             dependency("io.mockk:mockk:$mockkVersion")
-            dependency("com.ninja-squad:springmockk:$springMockkVersion")
 
             dependency("org.hamcrest:hamcrest:$hamcrestVersion")
             dependency("org.hamcrest:hamcrest-core:$hamcrestVersion")
