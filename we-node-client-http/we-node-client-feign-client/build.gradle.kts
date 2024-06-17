@@ -16,7 +16,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation("org.junit.jupiter:junit-jupiter-engine")
-    testImplementation("com.github.tomakehurst:wiremock-jre8")
+    testImplementation("org.wiremock:wiremock")
     testImplementation("io.mockk:mockk")
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
