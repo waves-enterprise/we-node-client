@@ -162,13 +162,13 @@ configure(
     apply(plugin = "jacoco")
     apply(plugin = "org.jetbrains.dokka")
 
-    val jacocoCoverageFile = "${layout.buildDirectory.get()}/jacocoReports/test/jacocoTestReport.xml"
+    val jacocoCoverageFile = layout.buildDirectory.dir("jacocoReports/test/jacocoTestReport.xml").get().asFile
 
     tasks.withType<JacocoReport> {
         reports {
             xml.apply {
                 required.set(true)
-                outputLocation.set(file(jacocoCoverageFile))
+                outputLocation.set(jacocoCoverageFile)
             }
         }
     }
@@ -320,6 +320,6 @@ configure(
 
     jacoco {
         toolVersion = jacocoToolVersion
-        reportsDirectory.set(file("${layout.buildDirectory.get()}/jacocoReports"))
+        reportsDirectory.set(layout.buildDirectory.dir("jacocoReports").get().asFile)
     }
 }
