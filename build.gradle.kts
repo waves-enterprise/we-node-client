@@ -157,7 +157,7 @@ configure(
     apply(plugin = "jacoco")
     apply(plugin = "org.jetbrains.dokka")
 
-    val jacocoCoverageFile = "$buildDir/jacocoReports/test/jacocoTestReport.xml"
+    val jacocoCoverageFile = "${layout.buildDirectory.get()}/jacocoReports/test/jacocoTestReport.xml"
 
     tasks.withType<JacocoReport> {
         reports {
@@ -315,6 +315,6 @@ configure(
 
     jacoco {
         toolVersion = jacocoToolVersion
-        reportsDirectory.set(file("$buildDir/jacocoReports"))
+        reportsDirectory.set(file("${layout.buildDirectory.get()}/jacocoReports"))
     }
 }
