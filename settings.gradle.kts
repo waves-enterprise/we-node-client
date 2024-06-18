@@ -22,7 +22,7 @@ pluginManagement {
         id("fr.brouillard.oss.gradle.jgitver") version jGitVerVersion
         id("com.google.protobuf") version protobufPluginVersion apply false
         id("org.jetbrains.dokka") version dokkaVersion
-        id("io.codearte.nexus-staging") version nexusStagingVersion
+        id("io.github.gradle-nexus.publish-plugin") version nexusStagingVersion
     }
 
     repositories {
