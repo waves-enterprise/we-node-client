@@ -46,7 +46,7 @@ plugins {
     kotlin("jvm") apply false
     `maven-publish`
     signing
-    id("io.codearte.nexus-staging")
+    id("io.github.gradle-nexus.publish-plugin")
     id("io.spring.dependency-management") apply false
     id("io.gitlab.arturbosch.detekt") apply false
     id("org.jlleitschuh.gradle.ktlint") apply false
@@ -57,10 +57,15 @@ plugins {
     id("jacoco")
 }
 
-nexusStaging {
-    serverUrl = "$sonaTypeBasePath/service/local/"
-    username = sonaTypeMavenUser
-    password = sonaTypeMavenPassword
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl.set(uri("$sonaTypeBasePath/service/local/"))
+            snapshotRepositoryUrl.set(uri("$sonaTypeBasePath/content/repositories/snapshots/"))
+            username.set(sonaTypeMavenUser)
+            password.set(sonaTypeMavenPassword)
+        }
+    }
 }
 
 jgitver {
