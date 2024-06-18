@@ -35,8 +35,10 @@ dependencies {
 val grpcJavaPlugin = "grpc"
 val grpcKotlinPlugin = "grpckt"
 
+val buildDirectory = layout.buildDirectory
+
 protobuf {
-    generatedFilesBaseDir = "$buildDir/generated-sources"
+    generatedFilesBaseDir = "${buildDirectory.get().asFile.path}/generated-sources"
 
     protoc {
         artifact = "com.google.protobuf:protoc:$protobufVersion"
@@ -61,8 +63,8 @@ sourceSets {
     main {
         java {
             srcDirs(
-                "$buildDir/generated-sources/main/kotlin",
-                "$buildDir/generated-sources/main/grpckt",
+                buildDirectory.dir("generated-sources/main/kotlin").get().asFile.path,
+                buildDirectory.dir("generated-sources/main/grpckt").get().asFile.path,
             )
         }
         proto {

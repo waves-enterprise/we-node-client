@@ -31,9 +31,10 @@ dependencies {
 }
 
 val grpcJavaPlugin = "grpc"
+val buildDirectory = layout.buildDirectory
 
 protobuf {
-    generatedFilesBaseDir = "$buildDir/generated-sources"
+    generatedFilesBaseDir = "${buildDirectory.get().asFile.path}/generated-sources"
 
     val archPostFix = if (osxArch == "m1") ":osx-x86_64" else ""
 
@@ -63,9 +64,9 @@ sourceSets {
     main {
         java {
             srcDirs(
-                "$buildDir/generated-sources/main/java",
-                "$buildDir/generated-sources/main/grpc",
-                "$buildDir/generated-sources/main/kotlin",
+                buildDirectory.dir("generated-sources/main/java").get().asFile.path,
+                buildDirectory.dir("generated-sources/main/grpc").get().asFile.path,
+                buildDirectory.dir("generated-sources/main/kotlin").get().asFile.path,
             )
         }
         proto {
