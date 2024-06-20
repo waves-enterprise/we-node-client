@@ -6,8 +6,8 @@ dependencies {
     api(project(":we-tx-signer:we-tx-signer-api"))
     api(project(":we-tx-signer:we-tx-signer-code"))
 
-    implementation("org.bouncycastle:bcprov-jdk15on")
-    implementation("org.bouncycastle:bcpkix-jdk15on")
+    implementation("org.bouncycastle:bcprov-jdk18on")
+    implementation("org.bouncycastle:bcpkix-jdk18on")
 
     testImplementation("io.mockk:mockk")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
