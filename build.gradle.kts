@@ -300,8 +300,8 @@ configure(
             dependency("org.slf4j:slf4j-api:$slf4jVersion")
             dependency("com.github.ben-manes.caffeine:caffeine:$caffeineCacheVersion")
 
-            dependency("org.bouncycastle:bcprov-jdk15on:$bouncycastleVersion")
-            dependency("org.bouncycastle:bcpkix-jdk15on:$bouncycastleVersion")
+            dependency("org.bouncycastle:bcprov-jdk18on:$bouncycastleVersion")
+            dependency("org.bouncycastle:bcpkix-jdk18on:$bouncycastleVersion")
 
             dependency("io.mockk:mockk:$mockkVersion")
 
