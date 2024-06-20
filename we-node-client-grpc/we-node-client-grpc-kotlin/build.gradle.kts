@@ -1,9 +1,5 @@
-import com.google.protobuf.gradle.generateProtoTasks
 import com.google.protobuf.gradle.id
-import com.google.protobuf.gradle.ofSourceSet
-import com.google.protobuf.gradle.plugins
 import com.google.protobuf.gradle.protobuf
-import com.google.protobuf.gradle.protoc
 
 val protobufVersion: String by project
 val ioGrpcVersion: String by project
@@ -38,15 +34,13 @@ val grpcKotlinPlugin = "grpckt"
 val buildDirectory = layout.buildDirectory
 
 protobuf {
-    generatedFilesBaseDir = "${buildDirectory.get().asFile.path}/generated-sources"
-
     protoc {
         artifact = "com.google.protobuf:protoc:$protobufVersion"
     }
 
     plugins {
         id(grpcKotlinPlugin) {
-            artifact = "io.grpc:protoc-gen-grpc-kotlin:$ioGrpcKotlinVersion:jdk7@jar"
+            artifact = "io.grpc:protoc-gen-grpc-kotlin:$ioGrpcKotlinVersion:jdk8@jar"
         }
     }
 
@@ -63,8 +57,8 @@ sourceSets {
     main {
         java {
             srcDirs(
-                buildDirectory.dir("generated-sources/main/kotlin").get().asFile.path,
-                buildDirectory.dir("generated-sources/main/grpckt").get().asFile.path,
+                "$projectDir/build//generated/source/main/grpckt",
+                "$projectDir/build//generated/source/main/kotlin",
             )
         }
         proto {
@@ -75,6 +69,8 @@ sourceSets {
 
 ktlint {
     filter {
-        exclude { it.file.absolutePath.contains("${File.separator}generated-sources${File.separator}") }
+        exclude {
+            it.file.absolutePath.contains("${File.separator}generated${File.separator}source${File.separator}")
+        }
     }
 }
