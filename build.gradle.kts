@@ -57,16 +57,19 @@ plugins {
     id("jacoco")
 }
 
-nexusPublishing {
-    repositories {
-        sonatype {
-            nexusUrl.set(uri("$sonaTypeBasePath/service/local/"))
-            snapshotRepositoryUrl.set(uri("$sonaTypeBasePath/content/repositories/snapshots/"))
-            username.set(sonaTypeMavenUser)
-            password.set(sonaTypeMavenPassword)
+if (sonaTypeMavenUser != null && sonaTypeMavenUser != null) {
+    nexusPublishing {
+        repositories {
+            sonatype {
+                nexusUrl.set(uri("$sonaTypeBasePath/service/local/"))
+                snapshotRepositoryUrl.set(uri("$sonaTypeBasePath/content/repositories/snapshots/"))
+                username.set(sonaTypeMavenUser)
+                password.set(sonaTypeMavenPassword)
+            }
         }
     }
 }
+
 
 jgitver {
     strategy = fr.brouillard.oss.jgitver.Strategies.PATTERN

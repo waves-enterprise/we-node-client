@@ -81,7 +81,7 @@ class ContractGrpcBlockingService(
             nodeError = NodeError(
                 error = NodeErrorCode.CONTRACT_NOT_FOUND.code,
                 message = ex.message
-                    ?: ex.trailers.get(Metadata.Key.of(ERROR_CODE_KEY, Metadata.ASCII_STRING_MARSHALLER))
+                    ?: ex.trailers?.get(Metadata.Key.of(ERROR_CODE_KEY, Metadata.ASCII_STRING_MARSHALLER))
                     ?: "",
             ),
             cause = ex,
