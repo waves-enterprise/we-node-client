@@ -67,6 +67,9 @@ internal class WeContractServiceApiFeignTest {
     fun `should get contract keys`() {
         val dataEntryDtoList = weContractServiceApiFeign.contractKeys(
             contractId = "8mYpzj5rVVQSp2DgsyMvoMSViHtX94dJHkPyX2xo855y",
+            limit = 3,
+            offset = 3,
+            matches = "any_match",
         )
 
         dataEntryDtoList.apply {

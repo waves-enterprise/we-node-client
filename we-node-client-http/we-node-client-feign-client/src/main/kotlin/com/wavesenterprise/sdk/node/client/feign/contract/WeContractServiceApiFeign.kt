@@ -15,12 +15,12 @@ interface WeContractServiceApiFeign {
         @Param("key") key: String,
     ): Optional<DataEntryDto>
 
-    @RequestLine("GET /contracts/{contractId}?offset={offset}&matches={matches}&limit={limit}")
+    @RequestLine("GET /contracts/{contractId}?limit={limit}&offset={offset}&matches={matches}")
     fun contractKeys(
         @Param("contractId") contractId: String,
-        @Param("offset") limit: Int? = null,
-        @Param("matches") offset: Int? = null,
-        @Param("limit") matches: String? = null,
+        @Param("limit") limit: Int? = null,
+        @Param("offset") offset: Int? = null,
+        @Param("matches") matches: String? = null,
     ): List<DataEntryDto>
 
     @RequestLine("GET /contracts/info/{contractId}")
