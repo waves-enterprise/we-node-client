@@ -20,7 +20,7 @@ fun PrivacyEventsService.fromGenesis(filtersBuilder: EventsFilterContext.() -> U
 fun PrivacyEventsService.fromBlock(
     signature: Signature,
     filtersBuilder: EventsFilterContext.() -> Unit = {
-    }
+    },
 ): PrivacyEventsIterator =
     events(
         SubscribeOnRequest(

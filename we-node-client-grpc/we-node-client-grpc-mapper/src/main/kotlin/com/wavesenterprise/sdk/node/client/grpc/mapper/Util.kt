@@ -16,7 +16,7 @@ object Util {
     inline fun <T : Any, U, R : Any> T.convertIf(
         predicate: T.() -> Boolean,
         selector: T.() -> U,
-        mapper: (U) -> R
+        mapper: (U) -> R,
     ): R? =
         if (predicate()) {
             val value: U = selector(this)

@@ -22,7 +22,7 @@ fun BlockchainEventsService.fromGenesis(filtersBuilder: EventsFilterContext.() -
 fun BlockchainEventsService.fromBlock(
     signature: Signature,
     filtersBuilder: EventsFilterContext.() -> Unit = {
-    }
+    },
 ): Flux<BlockchainEvent> =
     events(
         SubscribeOnRequest(
