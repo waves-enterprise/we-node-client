@@ -45,8 +45,8 @@ class TransactionConverterTest {
         private val params = listOf(
             DataEntry(
                 key = DataKey("key"),
-                value = DataValue.StringDataValue("value")
-            )
+                value = DataValue.StringDataValue("value"),
+            ),
         )
 
         fun callContractTx() = CallContractTx(

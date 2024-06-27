@@ -21,7 +21,9 @@ class AtomicBroadcaster(
                 val signedAtomicSignRequest = txSigner.sign(atomicSignRequest)
                 txService.broadcast(signedAtomicSignRequest)
                 return blockResult
-            } else blockResult
+            } else {
+                blockResult
+            }
         } finally {
             atomicAwareContextManager.clearContext()
         }

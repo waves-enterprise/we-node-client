@@ -33,15 +33,15 @@ internal class ContractGrpcBlockingServiceTest {
         val contractGrpcBlockingService = ContractGrpcBlockingService(
             mockk(),
             mockk(),
-            protoContractService
+            protoContractService,
         )
 
         assertThrows<DataKeyNotExistException> {
             contractGrpcBlockingService.getContractKey(
                 ContractKeyRequest(
                     contractId = ContractId.fromBase58("2nfSLahtZMk8wjD5fiPtfYiNYDKmyNpgSvB8bRgPSrQU"),
-                    key = "notFoundKey"
-                )
+                    key = "notFoundKey",
+                ),
             )
         }
     }
@@ -57,14 +57,14 @@ internal class ContractGrpcBlockingServiceTest {
         val contractGrpcBlockingService = ContractGrpcBlockingService(
             mockk(),
             mockk(),
-            protoContractService
+            protoContractService,
         )
         assertThrows<NodeException> {
             contractGrpcBlockingService.getContractKey(
                 ContractKeyRequest(
                     contractId = ContractId.fromBase58("2nfSLahtZMk8wjD5fiPtfYiNYDKmyNpgSvB8bRgPSrQU"),
-                    key = "notFoundKey"
-                )
+                    key = "notFoundKey",
+                ),
             )
         }
     }
@@ -79,14 +79,14 @@ internal class ContractGrpcBlockingServiceTest {
         val contractGrpcBlockingService = ContractGrpcBlockingService(
             mockk(),
             mockk(),
-            protoContractService
+            protoContractService,
         )
 
         val contractKeyResponse = contractGrpcBlockingService.getContractKey(
             ContractKeyRequest(
                 contractId = ContractId.fromBase58("2nfSLahtZMk8wjD5fiPtfYiNYDKmyNpgSvB8bRgPSrQU"),
-                key = "notFoundKey"
-            )
+                key = "notFoundKey",
+            ),
         ).get()
 
         assertNotNull(contractKeyResponse)

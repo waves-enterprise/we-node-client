@@ -9,7 +9,8 @@ object TxInfoMapper {
     @JvmStatic
     fun TransactionInfoResponse.domain(): TxInfo =
         TxInfo(
-            height = Height(height.toLong()), // todo: ask why height is int32 and in BlockAppended or in AppendedBlockHistory height is int64
+            // todo: ask why height is int32 and in BlockAppended or in AppendedBlockHistory height is int64
+            height = Height(height.toLong()),
             tx = transaction.domain(),
         )
 }

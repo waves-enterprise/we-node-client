@@ -5,7 +5,7 @@ import com.wavesenterprise.sdk.node.domain.address.VerifyMessageSignatureRequest
 data class VerifyMessageSignatureRequestDto(
     val message: String,
     val publicKey: String,
-    val signature: String
+    val signature: String,
 ) {
     companion object {
         @JvmStatic

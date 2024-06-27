@@ -6,8 +6,7 @@ import com.wavesenterprise.sdk.node.domain.util.processor.IntProcessor
 data class ContractVersion(val value: Int) : SerializableToBytes {
     companion object {
         @JvmStatic
-        fun fromInt(value: Int):
-            ContractVersion =
+        fun fromInt(value: Int): ContractVersion =
             ContractVersion(value)
 
         @JvmStatic

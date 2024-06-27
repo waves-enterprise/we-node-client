@@ -13,7 +13,11 @@ object Util {
         }
 
     @JvmStatic
-    inline fun <T : Any, U, R : Any> T.convertIf(predicate: T.() -> Boolean, selector: T.() -> U, mapper: (U) -> R): R? =
+    inline fun <T : Any, U, R : Any> T.convertIf(
+        predicate: T.() -> Boolean,
+        selector: T.() -> U,
+        mapper: (U) -> R
+    ): R? =
         if (predicate()) {
             val value: U = selector(this)
             val result: R = mapper(value)

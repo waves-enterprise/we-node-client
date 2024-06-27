@@ -24,10 +24,11 @@ class SelfTxSigner(
         val txId = signer.getTxId(txBytes)
         val signature = signer.getSignature(txBytes)
         val senderAddress: Address =
-            if (signRequest.senderAddress == EMPTY)
+            if (signRequest.senderAddress == EMPTY) {
                 signer.createAddress(senderPublicKey.bytes).address
-            else
+            } else {
                 signRequest.senderAddress
+            }
         return tx
             .withId(txId)
             .withProof(signature)

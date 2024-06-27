@@ -25,7 +25,7 @@ class DefaultLoadBalanceStrategy(
                                 senderAddress = senderAddress,
                                 password = nodeCredentialsProvider.getPassword(senderAddress),
                             )
-                        }
+                        },
                     )
                 }
             else -> {

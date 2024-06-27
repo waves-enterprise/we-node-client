@@ -11,104 +11,104 @@ object TxVersionDictionary {
     private fun <T : Comparable<T>> findFirstSorted(
         type: TxType,
         features: Array<out TxFeature>,
-        selector: (DictionaryTxVersion) -> T
+        selector: (DictionaryTxVersion) -> T,
     ) = checkNotNull(
-        allVersionsGroupedByTxType[type]?.sortedBy(selector)?.firstOrNull { it.supports(features = features.toSet()) }
+        allVersionsGroupedByTxType[type]?.sortedBy(selector)?.firstOrNull { it.supports(features = features.toSet()) },
     ) {
         "No transaction $type version supports $features"
     }
 
     private fun describeDictionaryTxVersions() = transactions(
         TxType.REGISTER_NODE has versions(
-            1 with noFeatures
+            1 with noFeatures,
         ),
         TxType.CREATE_ALIAS has versions(
             2 with noFeatures,
-            3 with features(TxFeature.SPONSORED_FEES)
+            3 with features(TxFeature.SPONSORED_FEES),
         ),
         TxType.ISSUE has versions(
-            2 with features(TxFeature.SMART_ACCOUNTS, TxFeature.SMART_ASSETS)
+            2 with features(TxFeature.SMART_ACCOUNTS, TxFeature.SMART_ASSETS),
         ),
         TxType.REISSUE has versions(
-            2 with features(TxFeature.SMART_ACCOUNTS)
+            2 with features(TxFeature.SMART_ACCOUNTS),
         ),
         TxType.BURN has versions(
-            2 with features(TxFeature.SMART_ACCOUNTS)
+            2 with features(TxFeature.SMART_ACCOUNTS),
         ),
         TxType.LEASE has versions(
-            2 with features(TxFeature.SMART_ACCOUNTS)
+            2 with features(TxFeature.SMART_ACCOUNTS),
         ),
         TxType.LEASE_CANCEL has versions(
-            2 with features(TxFeature.SMART_ACCOUNTS)
+            2 with features(TxFeature.SMART_ACCOUNTS),
         ),
         TxType.SPONSOR_FEE has versions(
-            1 with features(TxFeature.SPONSORED_FEES)
+            1 with features(TxFeature.SPONSORED_FEES),
         ),
         TxType.SET_ASSET_SCRIPT has versions(
-            1 with features(TxFeature.SMART_ASSETS)
+            1 with features(TxFeature.SMART_ASSETS),
         ),
         TxType.DATA has versions(
             1 with features(TxFeature.DATA_TRANSACTION),
-            2 with features(TxFeature.SPONSORED_FEES, TxFeature.DATA_TRANSACTION)
+            2 with features(TxFeature.SPONSORED_FEES, TxFeature.DATA_TRANSACTION),
         ),
         TxType.TRANSFER has versions(
             2 with features(TxFeature.SPONSORED_FEES, TxFeature.SMART_ACCOUNTS),
-            3 with features(TxFeature.SPONSORED_FEES, TxFeature.SMART_ACCOUNTS, TxFeature.ATOMIC)
+            3 with features(TxFeature.SPONSORED_FEES, TxFeature.SMART_ACCOUNTS, TxFeature.ATOMIC),
         ),
         TxType.MASS_TRANSFER has versions(
             1 with features(TxFeature.MASS_TRANSFER),
-            2 with features(TxFeature.SPONSORED_FEES, TxFeature.MASS_TRANSFER)
+            2 with features(TxFeature.SPONSORED_FEES, TxFeature.MASS_TRANSFER),
         ),
         TxType.PERMIT has versions(
             1 with noFeatures,
-            2 with features(TxFeature.ATOMIC)
+            2 with features(TxFeature.ATOMIC),
         ),
         TxType.CREATE_POLICY has versions(
             1 with noFeatures,
             2 with features(TxFeature.SPONSORED_FEES),
-            3 with features(TxFeature.SPONSORED_FEES, TxFeature.ATOMIC)
+            3 with features(TxFeature.SPONSORED_FEES, TxFeature.ATOMIC),
         ),
         TxType.UPDATE_POLICY has versions(
             1 with noFeatures,
             2 with features(TxFeature.SPONSORED_FEES),
-            3 with features(TxFeature.SPONSORED_FEES, TxFeature.ATOMIC)
+            3 with features(TxFeature.SPONSORED_FEES, TxFeature.ATOMIC),
         ),
         TxType.POLICY_DATA_HASH has versions(
             1 with noFeatures,
             2 with features(TxFeature.SPONSORED_FEES),
-            3 with features(TxFeature.SPONSORED_FEES, TxFeature.ATOMIC)
+            3 with features(TxFeature.SPONSORED_FEES, TxFeature.ATOMIC),
         ),
         TxType.CREATE_CONTRACT has versions(
             1 with noFeatures,
             2 with features(TxFeature.SPONSORED_FEES, TxFeature.GRPC_CONTRACTS),
-            3 with features(TxFeature.SPONSORED_FEES, TxFeature.GRPC_CONTRACTS, TxFeature.ATOMIC)
+            3 with features(TxFeature.SPONSORED_FEES, TxFeature.GRPC_CONTRACTS, TxFeature.ATOMIC),
         ),
         TxType.CALL_CONTRACT has versions(
             1 with noFeatures,
             2 with noFeatures,
             3 with features(TxFeature.SPONSORED_FEES),
-            4 with features(TxFeature.SPONSORED_FEES, TxFeature.ATOMIC)
+            4 with features(TxFeature.SPONSORED_FEES, TxFeature.ATOMIC),
         ),
         TxType.EXECUTED_CONTRACT has versions(
             1 with noFeatures,
-            2 with noFeatures
+            2 with noFeatures,
         ),
         TxType.DISABLE_CONTRACT has versions(
             1 with noFeatures,
             2 with features(TxFeature.SPONSORED_FEES),
-            3 with features(TxFeature.SPONSORED_FEES, TxFeature.ATOMIC)
+            3 with features(TxFeature.SPONSORED_FEES, TxFeature.ATOMIC),
         ),
         TxType.UPDATE_CONTRACT has versions(
             1 with noFeatures,
             2 with features(TxFeature.SPONSORED_FEES),
-            3 with features(TxFeature.SPONSORED_FEES, TxFeature.ATOMIC)
+            3 with features(TxFeature.SPONSORED_FEES, TxFeature.ATOMIC),
         ),
         TxType.SET_SCRIPT has versions(
-            1 with features(TxFeature.SMART_ACCOUNTS)
+            1 with features(TxFeature.SMART_ACCOUNTS),
         ),
         TxType.ATOMIC has versions(
-            1 with noFeatures
-        )
+            1 with noFeatures,
+        ),
     )
 
     private val noFeatures = emptySet<TxFeature>()

@@ -26,7 +26,7 @@ data class Alias(val value: String) : SerializableToBytes {
             byteArrayOf(ALIAS_VERSION),
             byteArrayOf(requireNotNull(networkByte)),
             numberToBytes(aliasBytes.size, 2),
-            aliasBytes
+            aliasBytes,
         )
     }
 }

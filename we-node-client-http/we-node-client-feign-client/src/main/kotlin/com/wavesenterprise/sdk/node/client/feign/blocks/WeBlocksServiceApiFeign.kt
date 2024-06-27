@@ -36,7 +36,7 @@ interface WeBlocksServiceApiFeign {
     @RequestLine("GET /blocks/headers/seq/{from}/{to}")
     fun getBlocksHeadersSequence(
         @Param("from") fromHeight: Long,
-        @Param("to") toHeight: Long
+        @Param("to") toHeight: Long,
     ): List<BlockHeadersDto>
 
     @Headers("Content-Type: application/json")

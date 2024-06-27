@@ -35,7 +35,7 @@ class WePkiServiceApiFeignTest {
                 signature = "signature",
                 sigType = 1,
                 extendedKeyUsageList = emptyList(),
-            )
+            ),
         ).also {
             assertEquals(true, it.sigStatus)
         }

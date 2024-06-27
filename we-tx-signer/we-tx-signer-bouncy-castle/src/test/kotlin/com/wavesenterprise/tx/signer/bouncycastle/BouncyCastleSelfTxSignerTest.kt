@@ -72,7 +72,8 @@ class BouncyCastleSelfTxSignerTest {
     private lateinit var bouncyCastleSigner: BouncyCastleSigner
 
     private val keyPairGen = KeyPairGenerator.getInstance(
-        "ECGOST3410", "BC"
+        "ECGOST3410",
+        "BC",
     ).also {
         it.initialize(ECGenParameterSpec("GostR3410-2001-CryptoPro-A"))
     }
@@ -80,7 +81,6 @@ class BouncyCastleSelfTxSignerTest {
 
     @BeforeEach
     fun init() {
-
         bouncyCastleSigner = BouncyCastleSigner(
             networkByte = NETWORK_BYTE,
             privateKey = bouncyCastlePrivateKey,
@@ -136,7 +136,7 @@ class BouncyCastleSelfTxSignerTest {
             fee = Fee(0),
             assetId = AssetId("8bec1mhqTiveMeRTHgYr6az12XdqBBtpeV3ZpXMRHfSB".toByteArray()),
             quantity = Quantity(1),
-            attachment = Attachment("test".toByteArray())
+            attachment = Attachment("test".toByteArray()),
         )
 
         val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
@@ -201,7 +201,7 @@ class BouncyCastleSelfTxSignerTest {
             senderAddress = Address.EMPTY,
             fee = Fee(0),
             version = TxVersion(1),
-            assetId = AssetId("assetId".toByteArray())
+            assetId = AssetId("assetId".toByteArray()),
         )
 
         val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
@@ -244,9 +244,9 @@ class BouncyCastleSelfTxSignerTest {
                         "{\"i\":1," +
                             "\"pubKey\":\"1\"," +
                             "\"description\":\"Decrypt 0\"," +
-                            "\"type\":\"main\"}"
+                            "\"type\":\"main\"}",
                     ),
-                )
+                ),
             ),
             fee = Fee(0),
             version = TxVersion(4),
@@ -255,7 +255,7 @@ class BouncyCastleSelfTxSignerTest {
             apiVersion = ContractApiVersion(
                 major = MajorVersion(1),
                 minor = MinorVersion(0),
-            )
+            ),
         )
 
         val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)
@@ -278,9 +278,9 @@ class BouncyCastleSelfTxSignerTest {
                         "{\"i\":1," +
                             "\"pubKey\":\"1\"," +
                             "\"description\":\"Decrypt 0\"," +
-                            "\"type\":\"main\"}"
+                            "\"type\":\"main\"}",
                     ),
-                )
+                ),
             ),
             fee = Fee(0),
             version = TxVersion(4),
@@ -390,7 +390,7 @@ class BouncyCastleSelfTxSignerTest {
             recipients = listOf(Address.fromBase58("3HgjVZvBHNaVfU7fHx9mqDXeJy4J8khadRC")),
             owners = listOf(Address.fromBase58("3HgjVZvBHNaVfU7fHx9mqDXeJy4J8khadRC")),
             opType = OpType.ADD,
-            policyId = PolicyId(TxId.fromBase58("D2xJxvMtmNuzDxdgofd8jUBJaece57Szk9mLqyV4dHk"))
+            policyId = PolicyId(TxId.fromBase58("D2xJxvMtmNuzDxdgofd8jUBJaece57Szk9mLqyV4dHk")),
         )
 
         val bouncyCastleSignedTx = bouncyCastleSelfTxSigner.sign(signRequest)

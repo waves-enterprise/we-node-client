@@ -102,7 +102,7 @@ class ExecutedContractTxMapperTest {
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) }.toList(),
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 
@@ -120,43 +120,67 @@ class ExecutedContractTxMapperTest {
                 listOf(
                     TestResultsMapping(
                         protoResults = listOf(
-                            dataEntry { key = "int_0"; intValue = 0 },
-                            dataEntry { key = "int_1"; intValue = 1 },
+                            dataEntry {
+                                key = "int_0"
+                                intValue = 0
+                            },
+                            dataEntry {
+                                key = "int_1"
+                                intValue = 1
+                            },
                         ),
                         domainResults = listOf(
                             DataEntry(key = DataKey("int_0"), value = DataValue.IntegerDataValue(0)),
                             DataEntry(key = DataKey("int_1"), value = DataValue.IntegerDataValue(1)),
-                        )
+                        ),
                     ),
                     TestResultsMapping(
                         protoResults = listOf(
-                            dataEntry { key = "bool_true"; boolValue = true },
-                            dataEntry { key = "bool_false"; boolValue = false },
+                            dataEntry {
+                                key = "bool_true"
+                                boolValue = true
+                            },
+                            dataEntry {
+                                key = "bool_false"
+                                boolValue = false
+                            },
                         ),
                         domainResults = listOf(
                             DataEntry(key = DataKey("bool_true"), value = DataValue.BooleanDataValue(true)),
                             DataEntry(key = DataKey("bool_false"), value = DataValue.BooleanDataValue(false)),
-                        )
+                        ),
                     ),
                     TestResultsMapping(
                         protoResults = listOf(
-                            dataEntry { key = "binary_0"; binaryValue = ByteString.copyFrom(byteArrayOf(0)) },
-                            dataEntry { key = "binary_1"; binaryValue = ByteString.copyFrom(byteArrayOf(1)) }
+                            dataEntry {
+                                key = "binary_0"
+                                binaryValue = ByteString.copyFrom(byteArrayOf(0))
+                            },
+                            dataEntry {
+                                key = "binary_1"
+                                binaryValue = ByteString.copyFrom(byteArrayOf(1))
+                            },
                         ),
                         domainResults = listOf(
                             DataEntry(key = DataKey("binary_0"), value = DataValue.BinaryDataValue(byteArrayOf(0))),
                             DataEntry(key = DataKey("binary_1"), value = DataValue.BinaryDataValue(byteArrayOf(1))),
-                        )
+                        ),
                     ),
                     TestResultsMapping(
                         protoResults = listOf(
-                            dataEntry { key = "string_1"; stringValue = "string_1" },
-                            dataEntry { key = "string_2"; stringValue = "string_2" },
+                            dataEntry {
+                                key = "string_1"
+                                stringValue = "string_1"
+                            },
+                            dataEntry {
+                                key = "string_2"
+                                stringValue = "string_2"
+                            },
                         ),
                         domainResults = listOf(
                             DataEntry(key = DataKey("string_1"), value = DataValue.StringDataValue("string_1")),
                             DataEntry(key = DataKey("string_2"), value = DataValue.StringDataValue("string_2")),
-                        )
+                        ),
                     ),
                 )
         }

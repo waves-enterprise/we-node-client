@@ -61,7 +61,7 @@ object CallContractTxMapper {
             id = TxId(tx.id.byteArray()),
             senderPublicKey = PublicKey(tx.senderPublicKey.byteArray()),
             contractId = ContractId(
-                txId = TxId(tx.contractId.byteArray())
+                txId = TxId(tx.contractId.byteArray()),
             ),
             params = tx.paramsList.map { it.domain() },
             fee = Fee(tx.fee),
@@ -69,7 +69,7 @@ object CallContractTxMapper {
             contractVersion = ContractVersion(tx.contractVersion),
             feeAssetId = tx.feeAssetIdOrNull?.let {
                 FeeAssetId(
-                    txId = TxId(it.value.byteArray())
+                    txId = TxId(it.value.byteArray()),
                 )
             },
             atomicBadge = tx.atomicBadgeOrNull?.domain(),

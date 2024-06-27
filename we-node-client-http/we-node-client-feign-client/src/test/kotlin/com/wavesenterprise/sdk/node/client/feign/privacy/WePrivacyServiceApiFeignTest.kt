@@ -32,7 +32,7 @@ class WePrivacyServiceApiFeignTest {
     fun `should return hashes by policy id`() {
         val expectedHashes = listOf(
             "DP5MggKC8GJuLZshCVNSYwBtE6WTRtMM1YPPdcmwbuNg",
-            "C2HM9q3QzGSBydnCA4GMcf3cFnTaSuwaWXVtsCSTSmZW"
+            "C2HM9q3QzGSBydnCA4GMcf3cFnTaSuwaWXVtsCSTSmZW",
         )
         wePrivacyServiceApiFeign.getPolicyHashes("5inUANAmDzRfq5f1Yv7HBTm8G4AREPfeKCntaEDDqVbU").apply {
             assertEquals(expectedHashes, this)
@@ -43,7 +43,7 @@ class WePrivacyServiceApiFeignTest {
     fun `should return owners by policy id`() {
         val expectedHashes = listOf(
             "DP5MggKC8GJuLZshCVNSYwBtE6WTRtMM1YPPdcmwbuNg",
-            "C2HM9q3QzGSBydnCA4GMcf3cFnTaSuwaWXVtsCSTSmZW"
+            "C2HM9q3QzGSBydnCA4GMcf3cFnTaSuwaWXVtsCSTSmZW",
         )
         wePrivacyServiceApiFeign.getPolicyOwners("5inUANAmDzRfq5f1Yv7HBTm8G4AREPfeKCntaEDDqVbU").apply {
             assertEquals(expectedHashes, this)
@@ -54,7 +54,7 @@ class WePrivacyServiceApiFeignTest {
     fun `should return recipients by policy id`() {
         val expectedHashes = listOf(
             "DP5MggKC8GJuLZshCVNSYwBtE6WTRtMM1YPPdcmwbuNg",
-            "C2HM9q3QzGSBydnCA4GMcf3cFnTaSuwaWXVtsCSTSmZW"
+            "C2HM9q3QzGSBydnCA4GMcf3cFnTaSuwaWXVtsCSTSmZW",
         )
         wePrivacyServiceApiFeign.getPolicyRecipients("5inUANAmDzRfq5f1Yv7HBTm8G4AREPfeKCntaEDDqVbU").apply {
             assertEquals(expectedHashes, this)

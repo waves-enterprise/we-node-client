@@ -77,7 +77,7 @@ object CreateContractTxMapper {
             timestamp = Timestamp(tx.timestamp),
             feeAssetId = tx.feeAssetIdOrNull?.let {
                 FeeAssetId(
-                    txId = TxId(it.value.byteArray())
+                    txId = TxId(it.value.byteArray()),
                 )
             },
             atomicBadge = tx.atomicBadgeOrNull?.domain(),

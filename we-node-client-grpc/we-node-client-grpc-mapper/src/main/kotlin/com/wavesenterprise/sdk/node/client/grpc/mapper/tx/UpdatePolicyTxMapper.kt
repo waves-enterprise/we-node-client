@@ -61,7 +61,7 @@ object UpdatePolicyTxMapper {
             id = TxId(tx.id.byteArray()),
             senderPublicKey = PublicKey(tx.senderPublicKey.byteArray()),
             policyId = PolicyId(
-                txId = TxId(tx.policyId.byteArray())
+                txId = TxId(tx.policyId.byteArray()),
             ),
             recipients = tx.recipientsList.map { Address(it.byteArray()) },
             owners = tx.ownersList.map { Address(it.byteArray()) },

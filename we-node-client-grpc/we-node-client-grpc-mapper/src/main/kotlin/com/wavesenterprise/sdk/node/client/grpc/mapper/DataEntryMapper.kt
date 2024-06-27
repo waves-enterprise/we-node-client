@@ -39,6 +39,6 @@ object DataEntryMapper {
                 ProtoDataEntry.ValueCase.BINARY_VALUE -> DataValue.BinaryDataValue(dataEntry.binaryValue.byteArray())
                 ProtoDataEntry.ValueCase.STRING_VALUE -> DataValue.StringDataValue(dataEntry.stringValue)
                 ProtoDataEntry.ValueCase.VALUE_NOT_SET, null -> error("Value not set")
-            }
+            },
         )
 }

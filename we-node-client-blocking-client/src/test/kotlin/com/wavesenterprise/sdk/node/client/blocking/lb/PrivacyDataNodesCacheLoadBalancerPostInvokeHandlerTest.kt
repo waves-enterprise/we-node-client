@@ -38,9 +38,9 @@ class PrivacyDataNodesCacheLoadBalancerPostInvokeHandlerTest {
                     policyItemInfoResponse(
                         dataHash = someDataHash,
                         policyId = policyId,
-                    )
+                    ),
                 )
-            }
+            },
         )
         val lb = lbServiceFactoryBuilder
             .nodeCredentialsProvider(nodeCredentialsProvider())
@@ -76,10 +76,10 @@ class PrivacyDataNodesCacheLoadBalancerPostInvokeHandlerTest {
                             policyId = policyId,
                             dataHash = someDataHash,
                             senderAddress = address,
-                        )
-                    )
+                        ),
+                    ),
                 )
-            }
+            },
         )
         val lb = lbServiceFactoryBuilder
             .nodeCredentialsProvider(nodeCredentialsProvider())
@@ -116,10 +116,10 @@ class PrivacyDataNodesCacheLoadBalancerPostInvokeHandlerTest {
                             policyId = policyId,
                             dataHash = someDataHash,
                             senderAddress = address,
-                        )
-                    )
+                        ),
+                    ),
                 )
-            }
+            },
         )
         val lb = lbServiceFactoryBuilder
             .nodeCredentialsProvider(nodeCredentialsProvider())
@@ -152,7 +152,7 @@ class PrivacyDataNodesCacheLoadBalancerPostInvokeHandlerTest {
                     policyId = policyId,
                     dataHash = someDataHash,
                 )
-            }
+            },
         )
         val lb = lbServiceFactoryBuilder
             .nodeCredentialsProvider(nodeCredentialsProvider())

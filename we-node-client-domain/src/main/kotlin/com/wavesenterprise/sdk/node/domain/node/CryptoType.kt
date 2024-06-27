@@ -4,5 +4,4 @@ enum class CryptoType {
     UNKNOWN,
     GOST,
     CURVE_25519,
-    ;
 }

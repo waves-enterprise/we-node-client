@@ -30,7 +30,7 @@ object ValidationPolicyMapper {
                 ValidationPolicy.MajorityWithOneOf(
                     majorityWithOneOf.addressesList.map {
                         Address(it.byteArray())
-                    }
+                    },
                 )
             ProtoValidationPolicy.TypeCase.TYPE_NOT_SET, null -> error("Type not set")
         }

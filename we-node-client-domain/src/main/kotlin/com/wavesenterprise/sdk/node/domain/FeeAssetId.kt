@@ -17,13 +17,13 @@ data class FeeAssetId(val txId: TxId) : SerializableToBytes {
         @JvmStatic
         fun fromByteArray(bytes: ByteArray): FeeAssetId =
             FeeAssetId(
-                bytes.txId
+                bytes.txId,
             )
 
         @JvmStatic
         fun fromBase58(string: String): FeeAssetId =
             fromByteArray(
-                WeBase58.decode(string)
+                WeBase58.decode(string),
             )
 
         inline val TxId.feeAssetId: FeeAssetId get() = FeeAssetId(this)

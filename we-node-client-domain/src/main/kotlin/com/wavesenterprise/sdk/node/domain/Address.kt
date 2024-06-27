@@ -19,10 +19,11 @@ data class Address(val bytes: ByteArray) : SerializableToBytes {
         @JvmStatic
         fun fromByteArray(bytes: ByteArray): Address =
             Address(bytes)
+
         @JvmStatic
         fun fromBase58(string: String): Address =
             fromByteArray(
-                WeBase58.decode(string)
+                WeBase58.decode(string),
             )
 
         @JvmStatic
@@ -49,7 +50,7 @@ data class Address(val bytes: ByteArray) : SerializableToBytes {
                 byteArrayOf(ALIAS_VERSION),
                 byteArrayOf(networkByte),
                 numberToBytes(aliasBytes.size),
-                aliasBytes
+                aliasBytes,
             )
         } else {
             bytes

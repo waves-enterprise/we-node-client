@@ -15,16 +15,20 @@ fun PrivacyEventsService.fromGenesis(filtersBuilder: EventsFilterContext.() -> U
         SubscribeOnRequest(
             startFrom = StartFrom.Genesis,
             filters = EventsFilterContextImpl().apply(filtersBuilder).build(),
-        )
+        ),
     )
 
 @BlockchainEventsDsl
-fun PrivacyEventsService.fromBlock(signature: Signature, filtersBuilder: EventsFilterContext.() -> Unit = {}): Flow<PrivacyEvent> =
+fun PrivacyEventsService.fromBlock(
+    signature: Signature,
+    filtersBuilder: EventsFilterContext.() -> Unit = {
+    }
+): Flow<PrivacyEvent> =
     events(
         SubscribeOnRequest(
             startFrom = StartFrom.BlockSignature(signature),
             filters = EventsFilterContextImpl().apply(filtersBuilder).build(),
-        )
+        ),
     )
 
 @BlockchainEventsDsl
@@ -33,5 +37,5 @@ fun PrivacyEventsService.fromCurrent(filtersBuilder: EventsFilterContext.() -> U
         SubscribeOnRequest(
             startFrom = StartFrom.Current,
             filters = EventsFilterContextImpl().apply(filtersBuilder).build(),
-        )
+        ),
     )

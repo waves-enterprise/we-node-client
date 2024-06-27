@@ -14,7 +14,7 @@ data class ScriptDescription(val bytes: ByteArray) {
         @JvmStatic
         fun fromBase58(string: String): ScriptDescription =
             ScriptDescription(
-                WeBase58.decode(string)
+                WeBase58.decode(string),
             )
 
         inline val ByteArray.scriptDescription: ScriptDescription get() = ScriptDescription(this)

@@ -32,7 +32,7 @@ object LeaseCancelTxMapper {
             fee = Fee(tx.fee),
             timestamp = Timestamp.fromUtcTimestamp(tx.timestamp),
             leaseId = LeaseId(
-                txId = TxId(tx.leaseId.byteArray())
+                txId = TxId(tx.leaseId.byteArray()),
             ),
             proofs = tx.proofsList?.map { Signature(it.byteArray()) },
             senderAddress = Address(tx.senderAddress.byteArray()),

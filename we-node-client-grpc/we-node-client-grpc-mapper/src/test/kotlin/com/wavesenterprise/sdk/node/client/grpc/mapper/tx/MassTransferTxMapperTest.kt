@@ -44,7 +44,7 @@ class MassTransferTxMapperTest {
             fee = 10L
             attachment = byteString("attachment")
             proofs += byteString(
-                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM"
+                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM",
             )
             senderAddress = byteString("3N9vL3apA4j2L5PojHW8TYmfHx9Lo2ZaKPB")
         }
@@ -59,7 +59,7 @@ class MassTransferTxMapperTest {
                         Transfer(
                             recipient = Address("recipient".toByteArray()),
                             amount = Amount(100L),
-                        )
+                        ),
                     ),
                     feeAssetId = FeeAssetId(
                         txId = TxId(grpcTx.feeAssetId.value.byteArray()),
@@ -70,7 +70,7 @@ class MassTransferTxMapperTest {
                     proofs = grpcTx.proofsList?.map { Signature(it.byteArray()) },
                     senderAddress = Address(grpcTx.senderAddress.byteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 
@@ -90,7 +90,7 @@ class MassTransferTxMapperTest {
             fee = 10L
             attachment = byteString("attachment")
             proofs += byteString(
-                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM"
+                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM",
             )
             senderAddress = byteString("3N9vL3apA4j2L5PojHW8TYmfHx9Lo2ZaKPB")
         }
@@ -105,7 +105,7 @@ class MassTransferTxMapperTest {
                         Transfer(
                             recipient = Address("recipient".toByteArray()),
                             amount = Amount(100L),
-                        )
+                        ),
                     ),
                     feeAssetId = null,
                     timestamp = Timestamp(grpcTx.timestamp),
@@ -114,7 +114,7 @@ class MassTransferTxMapperTest {
                     proofs = grpcTx.proofsList?.map { Signature(it.byteArray()) },
                     senderAddress = Address(grpcTx.senderAddress.byteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 }

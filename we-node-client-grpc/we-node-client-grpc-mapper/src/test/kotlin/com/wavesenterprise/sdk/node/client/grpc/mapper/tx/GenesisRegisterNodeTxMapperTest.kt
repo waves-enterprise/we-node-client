@@ -17,7 +17,7 @@ class GenesisRegisterNodeTxMapperTest {
             fee = 10L
             timestamp = 1716881331027L
             signature = ByteString.copyFromUtf8(
-                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM"
+                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM",
             )
         }
 

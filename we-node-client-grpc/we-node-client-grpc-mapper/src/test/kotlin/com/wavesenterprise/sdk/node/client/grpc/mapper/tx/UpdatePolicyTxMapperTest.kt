@@ -67,7 +67,7 @@ class UpdatePolicyTxMapperTest {
                     id = TxId(grpcTx.id.toByteArray()),
                     senderPublicKey = PublicKey(grpcTx.senderPublicKey.toByteArray()),
                     policyId = PolicyId(
-                        txId = TxId(grpcTx.policyId.toByteArray())
+                        txId = TxId(grpcTx.policyId.toByteArray()),
                     ),
                     recipients = grpcTx.recipientsList.map { Address(it.toByteArray()) }.toList(),
                     owners = grpcTx.ownersList.map { Address(it.toByteArray()) }.toList(),
@@ -83,7 +83,7 @@ class UpdatePolicyTxMapperTest {
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) }.toList(),
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 
@@ -123,7 +123,7 @@ class UpdatePolicyTxMapperTest {
                     id = TxId(grpcTx.id.toByteArray()),
                     senderPublicKey = PublicKey(grpcTx.senderPublicKey.toByteArray()),
                     policyId = PolicyId(
-                        txId = TxId(grpcTx.policyId.toByteArray())
+                        txId = TxId(grpcTx.policyId.toByteArray()),
                     ),
                     recipients = grpcTx.recipientsList.map { Address(it.toByteArray()) }.toList(),
                     owners = grpcTx.ownersList.map { Address(it.toByteArray()) }.toList(),
@@ -135,7 +135,7 @@ class UpdatePolicyTxMapperTest {
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) }.toList(),
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 
@@ -157,6 +157,6 @@ class UpdatePolicyTxMapperTest {
             TestOpTypeMapping(
                 protoOpType = ProtoOpType.REMOVE,
                 domainOpType = OpType.REMOVE,
-            )
+            ),
         )
 }

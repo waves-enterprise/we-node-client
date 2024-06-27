@@ -22,7 +22,7 @@ interface WeAddressServiceApiFeign {
     @RequestLine("GET /addresses/data/{address}/{key}")
     fun getAddressValue(
         @Param("address") address: String,
-        @Param("key") key: String
+        @Param("key") key: String,
     ): Optional<DataEntryDto>
 
     @RequestLine("GET /addresses/data/{address}")

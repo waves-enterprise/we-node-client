@@ -40,7 +40,7 @@ class BouncyCastleSigner(
         val keyFactory = KeyFactory.getInstance("ECGOST3410", "BC")
         val ecPublicKeySpec = ECPublicKeySpec(
             curveParams.g.multiply((privateKey as ECPrivateKey).d),
-            curveParams
+            curveParams,
         )
         val pubKey = keyFactory.generatePublic(ecPublicKeySpec) as BCECGOST3410PublicKey
         return pubKey.encoded.drop(pubKey.encoded.size - ASN1_KEY_PREFIX_SIZE).toByteArray().publicKey

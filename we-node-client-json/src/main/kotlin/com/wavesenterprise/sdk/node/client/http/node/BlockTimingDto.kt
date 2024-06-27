@@ -20,7 +20,7 @@ sealed interface BlockTimingDto {
                 is PoaRoundInfoDto -> {
                     BlockTiming.PoaRoundInfo(
                         roundDuration = roundDuration,
-                        syncDuration = syncDuration
+                        syncDuration = syncDuration,
                     )
                 }
                 is PosRoundInfoDto -> {

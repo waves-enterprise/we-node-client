@@ -21,7 +21,7 @@ class DefaultNodeCircuitBreaker(
                         min(
                             maxDelay.toFloat(),
                             minDelay.toFloat().pow(sequentialErrorCount.toFloat()),
-                        ).toLong()
+                        ).toLong(),
                     )
                     true
                 }
@@ -41,6 +41,9 @@ class DefaultNodeCircuitBreaker(
         }
 
     override fun status(): CircuitBreakerStatus =
-        if (sequentialErrorCount == 0L || OffsetDateTime.now().isAfter(breakUntil)) CLOSED
-        else OPEN
+        if (sequentialErrorCount == 0L || OffsetDateTime.now().isAfter(breakUntil)) {
+            CLOSED
+        } else {
+            OPEN
+        }
 }

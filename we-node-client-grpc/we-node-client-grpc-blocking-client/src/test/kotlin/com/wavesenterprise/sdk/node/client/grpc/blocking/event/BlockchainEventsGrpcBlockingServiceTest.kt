@@ -56,7 +56,7 @@ class BlockchainEventsGrpcBlockingServiceTest {
         mockkStatic(ClientCalls::class)
         every {
             ClientCalls.blockingServerStreamingCall(
-                any<ClientCall<UtilEventsSubscribeOnRequest.SubscribeOnRequest, BlockchainEvent>>(), any()
+                any<ClientCall<UtilEventsSubscribeOnRequest.SubscribeOnRequest, BlockchainEvent>>(), any(),
             )
         } returns expectedBlockchainEventIterator
 

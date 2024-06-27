@@ -29,7 +29,7 @@ class FeignPkiServiceTest {
                 signature = "signature",
                 sigType = 1,
                 extendedKeyUsageList = emptyList(),
-            )
+            ),
         ).also {
             assertEquals(expectedSigStatus, it.sigStatus)
         }

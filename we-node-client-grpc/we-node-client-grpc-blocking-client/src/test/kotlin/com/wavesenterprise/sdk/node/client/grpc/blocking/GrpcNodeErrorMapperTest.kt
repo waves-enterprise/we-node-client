@@ -35,7 +35,7 @@ internal class GrpcNodeErrorMapperTest {
         } returns expectedNodeError.error.toString()
         every {
             metadata.get(
-                Metadata.Key.of("error-message", Metadata.ASCII_STRING_MARSHALLER)
+                Metadata.Key.of("error-message", Metadata.ASCII_STRING_MARSHALLER),
             )
         } returns expectedNodeError.message
         val ex = GrpcNodeErrorMapper.mapToGeneralException(statusRuntimeException)

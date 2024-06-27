@@ -66,6 +66,6 @@ fun SignRequest<*>.mapToTx(senderPublicKey: PublicKey, chainId: ChainId): Tx =
         is UpdatePolicySignRequest -> toTx(senderPublicKey)
         is AtomicSignRequest -> toTx(senderPublicKey)
         else -> throw IllegalArgumentException(
-            "The transaction ${this.javaClass.simpleName} does not require signing or is not supported by signer"
+            "The transaction ${this.javaClass.simpleName} does not require signing or is not supported by signer",
         )
     }

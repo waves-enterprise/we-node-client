@@ -29,26 +29,26 @@ import java.security.spec.ECGenParameterSpec
 import java.util.Base64
 
 object BouncyCastleUtil {
-    private const val provider = "BC"
-    private const val keyPairAlg = "ECGOST3410"
-    private const val ecParams = "GostR3410-2001-CryptoPro-A"
+    private const val PROVIDER = "BC"
+    private const val KEY_PAIR_ALG = "ECGOST3410"
+    private const val EC_PARAMS = "GostR3410-2001-CryptoPro-A"
 
     init {
         Security.addProvider(BouncyCastleProvider())
     }
 
     fun generateKeyPair(): KeyPair {
-        val keyPairGen = KeyPairGenerator.getInstance(keyPairAlg, provider).also {
-            it.initialize(ECGenParameterSpec(ecParams))
+        val keyPairGen = KeyPairGenerator.getInstance(KEY_PAIR_ALG, PROVIDER).also {
+            it.initialize(ECGenParameterSpec(EC_PARAMS))
         }
         return keyPairGen.generateKeyPair()
     }
 
     fun generateKeyPairFromSeed(seed: String): KeyPair {
         val d = BigInteger(1, seedHash(seed).reversedArray())
-        val ecParameterSpec = ECNamedCurveTable.getParameterSpec(ecParams)
+        val ecParameterSpec = ECNamedCurveTable.getParameterSpec(EC_PARAMS)
         val privateKeySpec = ECPrivateKeySpec(d, ecParameterSpec)
-        val keyFactory: KeyFactory = KeyFactory.getInstance(keyPairAlg)
+        val keyFactory: KeyFactory = KeyFactory.getInstance(KEY_PAIR_ALG)
         val privateKey = keyFactory.generatePrivate(privateKeySpec) as BCECGOST3410PrivateKey
         val q: ECPoint = ecParameterSpec.g.multiply(privateKey.d)
         val spec = ECPublicKeySpec(q, ecParameterSpec)

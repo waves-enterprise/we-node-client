@@ -33,7 +33,7 @@ import java.util.Optional
 
 private val policies = mapOf(
     "AB" to listOf(Address.fromBase58("A"), Address.fromBase58("B")),
-    "ABC" to listOf(Address.fromBase58("A"), Address.fromBase58("B"), Address.fromBase58("C"))
+    "ABC" to listOf(Address.fromBase58("A"), Address.fromBase58("B"), Address.fromBase58("C")),
 )
 
 fun mockkNodeBlockingServiceFactory(
@@ -120,8 +120,8 @@ fun mockkPrivacyService(): PrivacyService {
                 author = DataAuthor(""),
                 comment = DataComment(""),
             ),
-            dataHash = Hash("".toByteArray())
-        )
+            dataHash = Hash("".toByteArray()),
+        ),
     )
     every {
         privacyService.sendData(any())
@@ -179,7 +179,7 @@ fun businessFailingMockClient(): NodeBlockingServiceFactory {
     } throws ContractNotFoundException(
         nodeError = NodeError(
             error = 600,
-            message = "Contract is not found"
+            message = "Contract is not found",
         ),
         cause = Exception(),
     )

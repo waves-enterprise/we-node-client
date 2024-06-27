@@ -9,6 +9,6 @@ data class ExecutionErrorRequest(
 ) {
     enum class ErrorCode {
         FATAL_ERROR,
-        RECOVERABLE_ERROR
+        RECOVERABLE_ERROR,
     }
 }

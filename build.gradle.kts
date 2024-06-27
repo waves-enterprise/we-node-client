@@ -4,6 +4,8 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val detektVersion: String by project
+
 val kotlinVersion: String by project
 val kotlinCoroutinesVersion: String by project
 val reactorVersion: String by project
@@ -48,8 +50,7 @@ plugins {
     signing
     id("io.github.gradle-nexus.publish-plugin")
     id("io.spring.dependency-management") apply false
-    id("io.gitlab.arturbosch.detekt") apply false
-    id("org.jlleitschuh.gradle.ktlint") apply false
+    id("io.gitlab.arturbosch.detekt")
     id("com.palantir.git-version") apply false
     id("com.gorylenko.gradle-git-properties") apply false
     id("fr.brouillard.oss.gradle.jgitver")
@@ -69,7 +70,6 @@ if (sonaTypeMavenUser != null && sonaTypeMavenUser != null) {
         }
     }
 }
-
 
 jgitver {
     strategy = fr.brouillard.oss.jgitver.Strategies.PATTERN
@@ -161,9 +161,12 @@ configure(
     apply(plugin = "kotlin")
     apply(plugin = "signing")
     apply(plugin = "io.gitlab.arturbosch.detekt")
-    apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "jacoco")
     apply(plugin = "org.jetbrains.dokka")
+
+    dependencies {
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detektVersion")
+    }
 
     val jacocoCoverageFile = layout.buildDirectory.dir("jacocoReports/test/jacocoTestReport.xml").get().asFile
 
@@ -199,6 +202,16 @@ configure(
         exclude("build/")
         config.setFrom(detektConfigFilePath)
         buildUponDefaultConfig = true
+    }
+
+    tasks.register<Detekt>("detektFormat") {
+        description = "Runs detekt with auto-correct to format the code."
+        group = "formatting"
+        autoCorrect = true
+        exclude("resources/")
+        exclude("build/")
+        config.setFrom(detektConfigFilePath)
+        setSource(files("src/main/java", "src/main/kotlin"))
     }
 
     val sourcesJar by tasks.creating(Jar::class) {

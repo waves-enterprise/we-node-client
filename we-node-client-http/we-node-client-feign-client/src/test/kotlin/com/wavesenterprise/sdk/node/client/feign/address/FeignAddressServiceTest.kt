@@ -45,7 +45,7 @@ class FeignAddressServiceTest {
         } returns expectedResponse.map { it.asBase58String() }
         assertEquals(
             expectedResponse,
-            feignAddressService.getAddresses()
+            feignAddressService.getAddresses(),
         )
     }
 
@@ -59,7 +59,7 @@ class FeignAddressServiceTest {
             expectedResponse,
             feignAddressService.getAddressByPublicKey(
                 publicKey = publicKey(),
-            )
+            ),
         )
     }
 
@@ -74,7 +74,7 @@ class FeignAddressServiceTest {
             feignAddressService.getAddressValue(
                 address = address(),
                 key = dataKey(),
-            )
+            ),
         )
     }
 
@@ -88,7 +88,7 @@ class FeignAddressServiceTest {
             expectedResponse,
             feignAddressService.getAddressValues(
                 address = address(),
-            )
+            ),
         )
     }
 
@@ -102,8 +102,8 @@ class FeignAddressServiceTest {
             expectedResponse,
             feignAddressService.signMessage(
                 address = address(),
-                request = signMessageRequest()
-            )
+                request = signMessageRequest(),
+            ),
         )
     }
 
@@ -117,8 +117,8 @@ class FeignAddressServiceTest {
             expectedResponse,
             feignAddressService.verifyMessageSignature(
                 address = address(),
-                request = verifyMessageSignatureRequest()
-            )
+                request = verifyMessageSignatureRequest(),
+            ),
         )
     }
 
@@ -134,8 +134,8 @@ class FeignAddressServiceTest {
             Optional.empty<DataEntry>(),
             feignAddressService.getAddressValue(
                 address = Address.fromBase58("3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX"),
-                key = DataKey("not-existing-key")
-            )
+                key = DataKey("not-existing-key"),
+            ),
         )
     }
 }

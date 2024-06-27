@@ -2,7 +2,6 @@ pluginManagement {
     val kotlinVersion: String by settings
     val gradleDependencyManagementVersion: String by settings
     val detektVersion: String by settings
-    val ktlintVersion: String by settings
     val gitPropertiesVersion: String by settings
     val palantirGitVersion: String by settings
     val jGitVerVersion: String by settings
@@ -15,7 +14,6 @@ pluginManagement {
         `maven-publish`
         id("io.spring.dependency-management") version gradleDependencyManagementVersion apply false
         id("io.gitlab.arturbosch.detekt") version detektVersion apply false
-        id("org.jlleitschuh.gradle.ktlint") version ktlintVersion apply false
         id("com.palantir.git-version") version palantirGitVersion apply false
         id("com.gorylenko.gradle-git-properties") version gitPropertiesVersion apply false
         id("jacoco")

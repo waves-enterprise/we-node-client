@@ -105,7 +105,7 @@ class CreateContractTxMapperTest {
                     ),
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) }.toList(),
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
-                )
+                ),
             )
     }
 
@@ -155,14 +155,14 @@ class CreateContractTxMapperTest {
                     apiVersion = null,
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) }.toList(),
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
-                )
+                ),
             )
     }
 
     private fun mappingArguments(): List<Arguments> =
         cartesianProduct(
             TestParamsMapping.cases(),
-            TestValidationPolicyMapping.cases()
+            TestValidationPolicyMapping.cases(),
         ).map { (testParamsMapping, testValidationPolicyMapping) ->
             arguments(testParamsMapping, testValidationPolicyMapping)
         }
@@ -176,43 +176,67 @@ class CreateContractTxMapperTest {
                 listOf(
                     TestParamsMapping(
                         protoParams = listOf(
-                            dataEntry { key = "int_0"; intValue = 0 },
-                            dataEntry { key = "int_1"; intValue = 1 },
+                            dataEntry {
+                                key = "int_0"
+                                intValue = 0
+                            },
+                            dataEntry {
+                                key = "int_1"
+                                intValue = 1
+                            },
                         ),
                         domainParams = listOf(
                             DataEntry(key = DataKey("int_0"), value = DataValue.IntegerDataValue(0)),
                             DataEntry(key = DataKey("int_1"), value = DataValue.IntegerDataValue(1)),
-                        )
+                        ),
                     ),
                     TestParamsMapping(
                         protoParams = listOf(
-                            dataEntry { key = "bool_true"; boolValue = true },
-                            dataEntry { key = "bool_false"; boolValue = false },
+                            dataEntry {
+                                key = "bool_true"
+                                boolValue = true
+                            },
+                            dataEntry {
+                                key = "bool_false"
+                                boolValue = false
+                            },
                         ),
                         domainParams = listOf(
                             DataEntry(key = DataKey("bool_true"), value = DataValue.BooleanDataValue(true)),
                             DataEntry(key = DataKey("bool_false"), value = DataValue.BooleanDataValue(false)),
-                        )
+                        ),
                     ),
                     TestParamsMapping(
                         protoParams = listOf(
-                            dataEntry { key = "binary_0"; binaryValue = ByteString.copyFrom(byteArrayOf(0)) },
-                            dataEntry { key = "binary_1"; binaryValue = ByteString.copyFrom(byteArrayOf(1)) }
+                            dataEntry {
+                                key = "binary_0"
+                                binaryValue = ByteString.copyFrom(byteArrayOf(0))
+                            },
+                            dataEntry {
+                                key = "binary_1"
+                                binaryValue = ByteString.copyFrom(byteArrayOf(1))
+                            },
                         ),
                         domainParams = listOf(
                             DataEntry(key = DataKey("binary_0"), value = DataValue.BinaryDataValue(byteArrayOf(0))),
                             DataEntry(key = DataKey("binary_1"), value = DataValue.BinaryDataValue(byteArrayOf(1))),
-                        )
+                        ),
                     ),
                     TestParamsMapping(
                         protoParams = listOf(
-                            dataEntry { key = "string_1"; stringValue = "string_1" },
-                            dataEntry { key = "string_2"; stringValue = "string_2" },
+                            dataEntry {
+                                key = "string_1"
+                                stringValue = "string_1"
+                            },
+                            dataEntry {
+                                key = "string_2"
+                                stringValue = "string_2"
+                            },
                         ),
                         domainParams = listOf(
                             DataEntry(key = DataKey("string_1"), value = DataValue.StringDataValue("string_1")),
                             DataEntry(key = DataKey("string_2"), value = DataValue.StringDataValue("string_2")),
-                        )
+                        ),
                     ),
                 )
         }
@@ -229,13 +253,13 @@ class CreateContractTxMapperTest {
                         protoValidationPolicy = validationPolicy {
                             any = any {}
                         },
-                        domainValidationPolicy = ValidationPolicy.Any
+                        domainValidationPolicy = ValidationPolicy.Any,
                     ),
                     TestValidationPolicyMapping(
                         protoValidationPolicy = validationPolicy {
                             majority = majority {}
                         },
-                        domainValidationPolicy = ValidationPolicy.Majority
+                        domainValidationPolicy = ValidationPolicy.Majority,
                     ),
                     TestValidationPolicyMapping(
                         protoValidationPolicy = validationPolicy {
@@ -250,9 +274,9 @@ class CreateContractTxMapperTest {
                             addresses = listOf(
                                 Address("3M7EEnszPAT2yr72SgWVDLxfYCa4AYvVRwv".toByteArray()),
                                 Address("3M3xGmJGmxBv2aZ4UFmn93rHxVXTJDKSAnh".toByteArray()),
-                            )
-                        )
-                    )
+                            ),
+                        ),
+                    ),
                 )
         }
     }

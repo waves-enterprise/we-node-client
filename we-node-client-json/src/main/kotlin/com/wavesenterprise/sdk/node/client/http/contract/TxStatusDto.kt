@@ -11,5 +11,4 @@ enum class TxStatusDto {
 
     @JsonProperty("Error")
     ERROR,
-    ;
 }

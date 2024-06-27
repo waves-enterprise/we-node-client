@@ -5,7 +5,7 @@ import kotlin.random.Random
 class RandomDelayRateLimitingBackOff(
     private val minWaitMs: Long,
     private val maxWaitMs: Long,
-    private val maxWaitTotalMs: Long
+    private val maxWaitTotalMs: Long,
 ) : RateLimitingBackOff {
 
     override fun start() = RandomDelayRateLimitingBackOffExecution()

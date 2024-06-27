@@ -17,13 +17,13 @@ data class PolicyId(val txId: TxId) : SerializableToBytes {
         @JvmStatic
         fun fromByteArray(bytes: ByteArray): PolicyId =
             PolicyId(
-                bytes.txId
+                bytes.txId,
             )
 
         @JvmStatic
         fun fromBase58(string: String): PolicyId =
             fromByteArray(
-                WeBase58.decode(string)
+                WeBase58.decode(string),
             )
 
         inline val TxId.policyId: PolicyId get() = PolicyId(this)

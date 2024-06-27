@@ -66,11 +66,3 @@ sourceSets {
         }
     }
 }
-
-ktlint {
-    filter {
-        exclude {
-            it.file.absolutePath.contains("${File.separator}generated${File.separator}source${File.separator}")
-        }
-    }
-}

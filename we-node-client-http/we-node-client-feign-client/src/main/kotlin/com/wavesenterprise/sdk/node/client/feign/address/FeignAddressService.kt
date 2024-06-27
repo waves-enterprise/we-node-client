@@ -43,7 +43,7 @@ class FeignAddressService(
 
     override fun signMessage(
         address: Address,
-        request: SignMessageRequest
+        request: SignMessageRequest,
     ): SignMessageResponse =
         weAddressServiceApiFeign.signMessage(
             address = address.asBase58String(),
@@ -52,7 +52,7 @@ class FeignAddressService(
 
     override fun verifyMessageSignature(
         address: Address,
-        request: VerifyMessageSignatureRequest
+        request: VerifyMessageSignatureRequest,
     ): VerifyMessageSignatureResponse =
         weAddressServiceApiFeign.verifyMessageSignature(
             address = address.asBase58String(),

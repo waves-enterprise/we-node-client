@@ -15,7 +15,7 @@ data class PublicKey(val bytes: ByteArray) : SerializableToBytes {
         @JvmStatic
         fun fromBase58(string: String): PublicKey =
             PublicKey(
-                WeBase58.decode(string)
+                WeBase58.decode(string),
             )
 
         inline val ByteArray.publicKey: PublicKey get() = PublicKey(this)

@@ -25,7 +25,7 @@ fun ContractTx.toContractTransaction() = when (this) {
         feeAssetId = feeAssetId?.toContractTransaction(),
         image = image,
         imageHash = imageHash,
-        contractName = contractName
+        contractName = contractName,
     )
     is CallContractTx -> CallContractTransaction(
         id = id,

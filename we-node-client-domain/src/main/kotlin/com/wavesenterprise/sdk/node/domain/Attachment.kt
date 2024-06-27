@@ -16,7 +16,7 @@ data class Attachment(val bytes: ByteArray) : SerializableToBytes {
         @JvmStatic
         fun fromBase58(string: String): Attachment =
             fromByteArray(
-                WeBase58.decode(string)
+                WeBase58.decode(string),
             )
 
         inline val ByteArray.attachment: Attachment get() = Attachment(this)

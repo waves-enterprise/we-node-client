@@ -54,7 +54,7 @@ class PolicyDataHashTxMapperTest {
                     senderPublicKey = PublicKey(grpcTx.senderPublicKey.toByteArray()),
                     dataHash = Hash(grpcTx.dataHash.toByteArray()),
                     policyId = PolicyId(
-                        txId = TxId(grpcTx.policyId.toByteArray())
+                        txId = TxId(grpcTx.policyId.toByteArray()),
                     ),
                     timestamp = Timestamp(grpcTx.timestamp),
                     fee = Fee(grpcTx.fee),
@@ -67,7 +67,7 @@ class PolicyDataHashTxMapperTest {
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) }.toList(),
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 
@@ -98,7 +98,7 @@ class PolicyDataHashTxMapperTest {
                     senderPublicKey = PublicKey(grpcTx.senderPublicKey.toByteArray()),
                     dataHash = Hash(grpcTx.dataHash.toByteArray()),
                     policyId = PolicyId(
-                        txId = TxId(grpcTx.policyId.toByteArray())
+                        txId = TxId(grpcTx.policyId.toByteArray()),
                     ),
                     timestamp = Timestamp(grpcTx.timestamp),
                     fee = Fee(grpcTx.fee),
@@ -107,7 +107,7 @@ class PolicyDataHashTxMapperTest {
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) }.toList(),
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 }

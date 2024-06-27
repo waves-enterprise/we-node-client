@@ -24,7 +24,7 @@ sealed interface ValidationPolicyDto {
                 is ValidationPolicy.MajorityWithOneOf -> MajorityWithOneOfValidationPolicyDto(
                     addresses = addresses.map {
                         it.asBase58String()
-                    }
+                    },
                 )
             }
 
@@ -36,7 +36,7 @@ sealed interface ValidationPolicyDto {
                 is MajorityWithOneOfValidationPolicyDto -> ValidationPolicy.MajorityWithOneOf(
                     addresses = addresses.map {
                         Address.fromBase58(it)
-                    }
+                    },
                 )
             }
     }
