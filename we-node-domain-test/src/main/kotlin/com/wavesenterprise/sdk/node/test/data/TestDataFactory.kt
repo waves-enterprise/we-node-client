@@ -152,7 +152,7 @@ class TestDataFactory private constructor() {
                     timestamp = Timestamp.fromUtcTimestamp(Instant.now().toEpochMilli()),
                     contractVersion = ContractVersion(0),
                     feeAssetId = AssetId(randomBytesFromUUID()),
-                    senderPublicKey = PublicKey(randomBytesFromUUID())
+                    senderPublicKey = PublicKey(randomBytesFromUUID()),
                 )
 
                 TxType.CREATE_CONTRACT -> CreateContractTransaction(
@@ -173,7 +173,7 @@ class TestDataFactory private constructor() {
                 )
 
                 else -> throw IllegalArgumentException(
-                    "Only CALL_CONTRACT and CREATE_CONTRACT are allowed as transaction type"
+                    "Only CALL_CONTRACT and CREATE_CONTRACT are allowed as transaction type",
                 )
             }
 
@@ -299,7 +299,8 @@ class TestDataFactory private constructor() {
 
             // sender specific
             senderAddress = senderAddress,
-            password = Password("bla"), // only for signature by node
+            // only for signature by node
+            password = Password("bla"),
             // ---------------
 
             // fee specific
@@ -694,7 +695,7 @@ class TestDataFactory private constructor() {
             message: String = "Message",
             timestamp: Timestamp = Timestamp(1),
             signature: Signature = Signature(randomBytesFromUUID()),
-            status: TxStatus = TxStatus.SUCCESS
+            status: TxStatus = TxStatus.SUCCESS,
         ) = ContractTxStatus(
             senderAddress = senderAddress,
             senderPublicKey = senderPublicKey,

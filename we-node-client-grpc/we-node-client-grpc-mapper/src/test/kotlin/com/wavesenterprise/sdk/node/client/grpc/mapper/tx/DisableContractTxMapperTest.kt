@@ -42,7 +42,7 @@ class DisableContractTxMapperTest {
                 }
             }
             proofs += byteString(
-                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM"
+                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM",
             )
             senderAddress = ByteString.copyFromUtf8("3N9vL3apA4j2L5PojHW8TYmfHx9Lo2ZaKPB")
         }
@@ -58,7 +58,7 @@ class DisableContractTxMapperTest {
                     fee = Fee(grpcTx.fee),
                     timestamp = Timestamp(grpcTx.timestamp),
                     feeAssetId = FeeAssetId(
-                        txId = TxId(grpcTx.feeAssetId.value.byteArray())
+                        txId = TxId(grpcTx.feeAssetId.value.byteArray()),
                     ),
                     atomicBadge = AtomicBadge(
                         trustedSender = Address(grpcTx.atomicBadge.trustedSender.value.byteArray()),
@@ -68,7 +68,7 @@ class DisableContractTxMapperTest {
                     },
                     senderAddress = Address(grpcTx.senderAddress.byteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 
@@ -84,7 +84,7 @@ class DisableContractTxMapperTest {
             clearFeeAssetId()
             clearAtomicBadge()
             proofs += byteString(
-                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM"
+                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM",
             )
             senderAddress = ByteString.copyFromUtf8("3N9vL3apA4j2L5PojHW8TYmfHx9Lo2ZaKPB")
         }
@@ -104,7 +104,7 @@ class DisableContractTxMapperTest {
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) },
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 }

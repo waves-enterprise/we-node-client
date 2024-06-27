@@ -14,7 +14,7 @@ import java.util.Optional
 
 @Suppress("UNCHECKED_CAST")
 class FeignTxService(
-    private val weTxApiFeign: WeTxApiFeign
+    private val weTxApiFeign: WeTxApiFeign,
 ) : TxService {
 
     override fun <T : Tx> sign(request: SignRequest<T>): T =
@@ -34,7 +34,7 @@ class FeignTxService(
             weTxApiFeign.txInfo(txId.asBase58String()).map {
                 TxInfo(
                     height = Height(checkNotNull(it.height) { "Height should be present when getting txInfo" }),
-                    tx = it.toDomain()
+                    tx = it.toDomain(),
                 )
             }
         } catch (ex: NodeNotFoundException) {

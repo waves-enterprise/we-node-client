@@ -8,7 +8,7 @@ import com.wavesenterprise.sdk.node.domain.address.SignMessageResponse
 data class SignMessageResponseDto(
     val message: String,
     val publicKey: String,
-    val signature: String
+    val signature: String,
 ) {
     companion object {
         @JvmStatic
@@ -24,7 +24,7 @@ data class SignMessageResponseDto(
             SignMessageResponse(
                 message = Message(value = message),
                 publicKey = PublicKey.fromBase58(publicKey),
-                signature = Signature.fromBase58(signature)
+                signature = Signature.fromBase58(signature),
             )
     }
 }

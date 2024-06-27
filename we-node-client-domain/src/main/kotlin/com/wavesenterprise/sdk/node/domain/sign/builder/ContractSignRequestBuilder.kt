@@ -23,7 +23,7 @@ import kotlin.reflect.KMutableProperty0
 class ContractSignRequestBuilder {
     private var builderProperties: BuilderProperties = BuilderProperties()
 
-    private val NOT_NULLABLE_FOR_CREATE = with(builderProperties) {
+    private val notNullableForCreate = with(builderProperties) {
         listOf(
             ::fee,
             ::image,
@@ -33,7 +33,7 @@ class ContractSignRequestBuilder {
         )
     }
 
-    private val NOT_NULLABLE_FOR_CALL = with(builderProperties) {
+    private val notNullableForCall = with(builderProperties) {
         listOf(
             ::fee,
             ::params,
@@ -77,7 +77,7 @@ class ContractSignRequestBuilder {
     fun build(txType: TxType): SignRequest<out ContractTx> {
         return when (txType) {
             TxType.CREATE_CONTRACT -> {
-                val variablesIsEqualsNull = getVariablesIsEqualsNull(NOT_NULLABLE_FOR_CREATE)
+                val variablesIsEqualsNull = getVariablesIsEqualsNull(notNullableForCreate)
                 if (variablesIsEqualsNull.isEmpty()) {
                     with(builderProperties) {
                         CreateContractSignRequest(
@@ -97,13 +97,13 @@ class ContractSignRequestBuilder {
                 } else {
                     throw IllegalStateException(
                         "Fields: " + variablesIsEqualsNull.toString() +
-                            " can not be null - for CreateContractSignRequest"
+                            " can not be null - for CreateContractSignRequest",
                     )
                 }
             }
 
             TxType.CALL_CONTRACT -> {
-                val variablesIsEqualsNull = getVariablesIsEqualsNull(NOT_NULLABLE_FOR_CALL)
+                val variablesIsEqualsNull = getVariablesIsEqualsNull(notNullableForCall)
                 if (variablesIsEqualsNull.isEmpty()) {
                     with(builderProperties) {
                         CallContractSignRequest(
@@ -120,7 +120,7 @@ class ContractSignRequestBuilder {
                 } else {
                     throw IllegalStateException(
                         "Fields: " + variablesIsEqualsNull.toString() +
-                            " can not be null - for CallContractSignRequest"
+                            " can not be null - for CallContractSignRequest",
                     )
                 }
             }

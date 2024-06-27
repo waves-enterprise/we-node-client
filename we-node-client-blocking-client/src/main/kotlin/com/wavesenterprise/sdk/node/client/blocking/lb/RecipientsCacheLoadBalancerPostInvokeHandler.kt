@@ -30,7 +30,6 @@ class RecipientsCacheLoadBalancerPostInvokeHandler(
                     recipientsCache.put(result.id.policyId, result.recipients.toMutableSet())
                 }
                 is UpdatePolicySignRequest -> if (result is UpdatePolicyTx) {
-
                     recipientsCache.getIfPresent(result.policyId)?.also { recipientsByPolicy ->
                         when (result.opType) {
                             OpType.ADD -> recipientsByPolicy.toMutableSet().apply { addAll(result.recipients) }

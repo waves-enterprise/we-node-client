@@ -59,7 +59,7 @@ class WeAddressServiceApiFeignTest {
     fun `should get address by publicKey`() {
         assertEquals(
             AddressDto(address),
-            weAddressServiceApiFeign.getAddressByPublicKey(publicKey)
+            weAddressServiceApiFeign.getAddressByPublicKey(publicKey),
         )
     }
 
@@ -74,7 +74,7 @@ class WeAddressServiceApiFeignTest {
             Optional.of(addressValue),
             weAddressServiceApiFeign.getAddressValue(
                 address = address,
-                key = "some-key"
+                key = "some-key",
             ),
         )
     }
@@ -95,7 +95,7 @@ class WeAddressServiceApiFeignTest {
         )
         assertEquals(
             addressValues,
-            weAddressServiceApiFeign.getAddressValues(address)
+            weAddressServiceApiFeign.getAddressValues(address),
         )
     }
 
@@ -103,7 +103,7 @@ class WeAddressServiceApiFeignTest {
     fun `should sign message`() {
         val request = SignMessageRequestDto(
             message = "message",
-            password = "password"
+            password = "password",
         )
         val response = SignMessageResponseDto(
             message = "59Su1K4KSU",
@@ -115,7 +115,7 @@ class WeAddressServiceApiFeignTest {
             weAddressServiceApiFeign.signMessage(
                 address = address,
                 request = request,
-            )
+            ),
         )
     }
 
@@ -132,7 +132,7 @@ class WeAddressServiceApiFeignTest {
             weAddressServiceApiFeign.verifyMessageSignature(
                 address = address,
                 request = request,
-            )
+            ),
         )
     }
 
@@ -145,7 +145,7 @@ class WeAddressServiceApiFeignTest {
             assertEquals(
                 "invalid public key: Can't create public key from string 'invalid-public-key': " +
                     "Unable to create public key: null",
-                nodeError.message
+                nodeError.message,
             )
         }
     }
@@ -164,7 +164,7 @@ class WeAddressServiceApiFeignTest {
     fun `should throw InvalidPasswordException`() {
         val request = SignMessageRequestDto(
             message = "message",
-            password = "incorrect-password"
+            password = "incorrect-password",
         )
         assertThrows<InvalidPasswordException> {
             weAddressServiceApiFeign.signMessage(
@@ -175,7 +175,7 @@ class WeAddressServiceApiFeignTest {
             assertEquals(NodeErrorCode.INVALID_PASSWORD.code, nodeError.error)
             assertEquals(
                 "no private key for sender address in wallet or provided password is incorrect",
-                nodeError.message
+                nodeError.message,
             )
         }
     }

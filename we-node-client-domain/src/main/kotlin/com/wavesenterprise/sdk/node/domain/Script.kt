@@ -18,7 +18,7 @@ data class Script(val bytes: ByteArray) : SerializableToBytes {
         @JvmStatic
         fun fromBase64(string: String): Script =
             Script(
-                BASE_64_DECODER.decode(string)
+                BASE_64_DECODER.decode(string),
             )
 
         inline val ByteArray.script: Script get() = Script(this)

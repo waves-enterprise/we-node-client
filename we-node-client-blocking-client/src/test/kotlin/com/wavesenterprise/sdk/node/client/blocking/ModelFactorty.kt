@@ -153,7 +153,7 @@ fun blockAtHeight(
 
 fun policyItemRequest(
     txId: TxId = TxId(UUID.randomUUID().toString().toByteArray()),
-    hash: Hash = Hash("hash".toByteArray())
+    hash: Hash = Hash("hash".toByteArray()),
 ) = PolicyItemRequest(
     policyId = PolicyId(txId = txId),
     dataHash = hash,

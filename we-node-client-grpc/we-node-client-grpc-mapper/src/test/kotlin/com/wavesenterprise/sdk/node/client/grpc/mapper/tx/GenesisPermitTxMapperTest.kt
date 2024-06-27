@@ -26,7 +26,7 @@ class GenesisPermitTxMapperTest {
         val txFee = Fee(10L)
         val txTimestamp = Timestamp(1716881331027L)
         val txSignature = Signature(
-            "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM".toByteArray()
+            "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM".toByteArray(),
         )
         val txVersion = TxVersion.fromInt(1)
 

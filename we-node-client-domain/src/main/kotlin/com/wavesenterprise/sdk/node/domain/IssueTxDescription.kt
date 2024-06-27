@@ -16,7 +16,7 @@ data class IssueTxDescription(val bytes: ByteArray) : SerializableToBytes {
         @JvmStatic
         fun fromBase58(string: String): IssueTxDescription =
             IssueTxDescription(
-                WeBase58.decode(string)
+                WeBase58.decode(string),
             )
 
         inline val ByteArray.issueTxDescription: IssueTxDescription get() = IssueTxDescription(this)

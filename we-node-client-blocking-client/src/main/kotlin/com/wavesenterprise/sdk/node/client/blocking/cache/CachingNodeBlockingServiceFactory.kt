@@ -24,8 +24,10 @@ class CachingNodeBlockingServiceFactory(
             private fun cacheTxsInBlock(block: BlockAtHeight) {
                 block.transactions.forEach { tx ->
                     txCache.put(tx.id, TxInfo(height = block.height, tx = tx))
-                    if (tx is AtomicTx) tx.txs.forEach { atomicInnerTx ->
-                        txCache.put(atomicInnerTx.id, TxInfo(height = block.height, tx = atomicInnerTx))
+                    if (tx is AtomicTx) {
+                        tx.txs.forEach { atomicInnerTx ->
+                            txCache.put(atomicInnerTx.id, TxInfo(height = block.height, tx = atomicInnerTx))
+                        }
                     }
                 }
             }
@@ -49,11 +51,11 @@ class CachingNodeBlockingServiceFactory(
                 Optional.of(
                     requireNotNull(
                         policyItemInfoCache.load(
-                            "${request.policyId.asBase58String()}_${request.dataHash.asBase58String()}"
+                            "${request.policyId.asBase58String()}_${request.dataHash.asBase58String()}",
                         ) {
                             privacyService.info(request).orElseGet(null)
-                        }
-                    )
+                        },
+                    ),
                 )
         }
     }

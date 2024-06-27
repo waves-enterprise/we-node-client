@@ -10,8 +10,8 @@ class EventsFilterContextImpl : EventsFilterContext {
         filters.add(
             EventsFilter(
                 type = FilterType.IN,
-                filter = Filter.TxTypeFilter(types)
-            )
+                filter = Filter.TxTypeFilter(types),
+            ),
         )
     }
 
@@ -22,8 +22,8 @@ class EventsFilterContextImpl : EventsFilterContext {
         filters.add(
             EventsFilter(
                 type = FilterType.OUT,
-                filter = Filter.TxTypeFilter(types)
-            )
+                filter = Filter.TxTypeFilter(types),
+            ),
         )
     }
 
@@ -34,8 +34,8 @@ class EventsFilterContextImpl : EventsFilterContext {
         filters.add(
             EventsFilter(
                 type = FilterType.IN,
-                filter = Filter.ContractIdFilter(ids)
-            )
+                filter = Filter.ContractIdFilter(ids),
+            ),
         )
     }
 
@@ -43,8 +43,8 @@ class EventsFilterContextImpl : EventsFilterContext {
         filters.add(
             EventsFilter(
                 type = FilterType.OUT,
-                filter = Filter.ContractIdFilter(ids)
-            )
+                filter = Filter.ContractIdFilter(ids),
+            ),
         )
     }
 

@@ -45,7 +45,7 @@ object FeignWeApiFactory {
                 feignProperties.readTimeout,
                 TimeUnit.MILLISECONDS,
                 true,
-            )
+            ),
         )
         .target(clientClass, feignProperties.url)
 

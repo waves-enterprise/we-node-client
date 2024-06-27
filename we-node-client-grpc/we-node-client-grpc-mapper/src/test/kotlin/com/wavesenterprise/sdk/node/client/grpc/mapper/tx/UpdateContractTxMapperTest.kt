@@ -79,7 +79,7 @@ class UpdateContractTxMapperTest {
                     id = TxId(grpcTx.id.toByteArray()),
                     senderPublicKey = PublicKey(grpcTx.senderPublicKey.toByteArray()),
                     contractId = ContractId(
-                        txId = TxId(grpcTx.contractId.toByteArray())
+                        txId = TxId(grpcTx.contractId.toByteArray()),
                     ),
                     image = ContractImage(grpcTx.image),
                     imageHash = ContractImageHash(grpcTx.imageHash),
@@ -99,7 +99,7 @@ class UpdateContractTxMapperTest {
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) }.toList(),
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 
@@ -132,7 +132,7 @@ class UpdateContractTxMapperTest {
                     id = TxId(grpcTx.id.toByteArray()),
                     senderPublicKey = PublicKey(grpcTx.senderPublicKey.toByteArray()),
                     contractId = ContractId(
-                        txId = TxId(grpcTx.contractId.toByteArray())
+                        txId = TxId(grpcTx.contractId.toByteArray()),
                     ),
                     image = ContractImage(grpcTx.image),
                     imageHash = ContractImageHash(grpcTx.imageHash),
@@ -145,7 +145,7 @@ class UpdateContractTxMapperTest {
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) }.toList(),
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 
@@ -165,13 +165,13 @@ class UpdateContractTxMapperTest {
                         protoValidationPolicy = validationPolicy {
                             any = any {}
                         },
-                        domainValidationPolicy = ValidationPolicy.Any
+                        domainValidationPolicy = ValidationPolicy.Any,
                     ),
                     TestValidationPolicyMapping(
                         protoValidationPolicy = validationPolicy {
                             majority = majority {}
                         },
-                        domainValidationPolicy = ValidationPolicy.Majority
+                        domainValidationPolicy = ValidationPolicy.Majority,
                     ),
                     TestValidationPolicyMapping(
                         protoValidationPolicy = validationPolicy {
@@ -186,9 +186,9 @@ class UpdateContractTxMapperTest {
                             addresses = listOf(
                                 Address("3M7EEnszPAT2yr72SgWVDLxfYCa4AYvVRwv".toByteArray()),
                                 Address("3M3xGmJGmxBv2aZ4UFmn93rHxVXTJDKSAnh".toByteArray()),
-                            )
-                        )
-                    )
+                            ),
+                        ),
+                    ),
                 )
         }
     }

@@ -63,7 +63,7 @@ internal class TxServiceTxSignerTest {
         }.apply {
             assertEquals(
                 "Sender address can not be empty [senderAddress = `${Address.EMPTY}`",
-                this.message
+                this.message,
             )
         }
     }

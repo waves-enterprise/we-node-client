@@ -31,7 +31,7 @@ class FeignPrivacyService(
                 wePrivacyServiceApiFeign.getPolicyItemInfo(
                     policyId = request.policyId.asBase58String(),
                     policyItemHash = request.dataHash.asBase58String(),
-                ).toDomain()
+                ).toDomain(),
             )
         } catch (ex: PolicyItemDataIsMissingException) {
             Optional.empty()
@@ -44,8 +44,8 @@ class FeignPrivacyService(
                     bytes = wePrivacyServiceApiFeign.getDataFromPrivacy(
                         policyId = request.policyId.asBase58String(),
                         policyItemHash = request.dataHash.asBase58String(),
-                    )
-                )
+                    ),
+                ),
             )
         } catch (ex: PolicyItemDataIsMissingException) {
             Optional.empty<Data>()

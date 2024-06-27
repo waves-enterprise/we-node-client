@@ -17,7 +17,7 @@ class TxServiceTxSigner(
             txService.sign(
                 signRequest
                     .withAddress(senderAddress)
-                    .withPassword(password)
+                    .withPassword(password),
             )
         }
 

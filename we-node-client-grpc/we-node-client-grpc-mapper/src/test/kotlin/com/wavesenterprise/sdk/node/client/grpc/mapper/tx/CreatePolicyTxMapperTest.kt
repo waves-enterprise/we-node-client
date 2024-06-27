@@ -76,7 +76,7 @@ class CreatePolicyTxMapperTest {
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) }.toList(),
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 
@@ -125,7 +125,7 @@ class CreatePolicyTxMapperTest {
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) }.toList(),
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 }

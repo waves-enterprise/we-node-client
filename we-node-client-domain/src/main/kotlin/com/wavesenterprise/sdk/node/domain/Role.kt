@@ -14,5 +14,6 @@ enum class Role(val code: Int) : SerializableToBytes {
     SENDER(9),
     CONTRACT_VALIDATOR(10),
     ;
+
     override fun getSignatureBytes(networkByte: Byte?): ByteArray = byteArrayOf(this.code.toByte())
 }

@@ -32,13 +32,13 @@ class CachingNodeBlockingServiceFactoryBuilder {
             Caffeine.newBuilder()
                 .expireAfterWrite(cacheDuration ?: DEFAULT_CACHE_DURATION)
                 .initialCapacity(txCacheSize ?: DEFAULT_CACHE_SIZE)
-                .build<TxId, TxInfo>()
+                .build<TxId, TxInfo>(),
         )
         val infoCache = CaffeineLoadingCache(
             Caffeine.newBuilder()
                 .expireAfterWrite(cacheDuration ?: DEFAULT_CACHE_DURATION)
                 .initialCapacity(policyItemInfoCacheSize ?: DEFAULT_POLICY_ITEM_INFO_CACHE_SIZE)
-                .build<String, PolicyItemInfoResponse>()
+                .build<String, PolicyItemInfoResponse>(),
         )
         return CachingNodeBlockingServiceFactory(
             nodeBlockingServiceFactory = nodeBlockingServiceFactory,

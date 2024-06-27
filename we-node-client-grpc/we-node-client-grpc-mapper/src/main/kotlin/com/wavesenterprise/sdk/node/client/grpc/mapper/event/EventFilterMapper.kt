@@ -31,13 +31,13 @@ object EventFilterMapper {
             is Filter.ContractIdFilter -> setContractIdFilter(
                 UtilEventsSubscribeOnRequest.ContractIdFilter.newBuilder()
                     .addAllContractIds(filter.contractIds.map { it.byteString() })
-                    .build()
+                    .build(),
             )
 
             is Filter.TxTypeFilter -> setTxTypeFilter(
                 UtilEventsSubscribeOnRequest.TxTypeFilter.newBuilder()
                     .addAllTxTypes(filter.txTypes.map { it.code })
-                    .build()
+                    .build(),
             )
         }
 

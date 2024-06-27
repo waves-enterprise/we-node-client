@@ -60,13 +60,13 @@ object PolicyDataHashTxMapper {
             senderPublicKey = PublicKey(tx.senderPublicKey.byteArray()),
             dataHash = Hash(tx.dataHash.byteArray()),
             policyId = PolicyId(
-                txId = TxId(tx.policyId.byteArray())
+                txId = TxId(tx.policyId.byteArray()),
             ),
             timestamp = Timestamp(tx.timestamp),
             fee = Fee(tx.fee),
             feeAssetId = tx.feeAssetIdOrNull?.let {
                 FeeAssetId(
-                    txId = TxId(it.value.byteArray())
+                    txId = TxId(it.value.byteArray()),
                 )
             },
             atomicBadge = tx.atomicBadgeOrNull?.domain(),

@@ -36,7 +36,7 @@ class FeignAliasServiceTest {
         } returns expectedResponse
         assertEquals(
             expectedResponse.map { it.toDomain() },
-            feignAddressService.getAliasesByAddress(address)
+            feignAddressService.getAliasesByAddress(address),
         )
     }
 
@@ -48,7 +48,7 @@ class FeignAliasServiceTest {
         } returns expectedResponse.map { it.toDto() }
         assertEquals(
             expectedResponse,
-            feignAddressService.getAddressByAlias(Alias("_alias1"))
+            feignAddressService.getAddressByAlias(Alias("_alias1")),
         )
     }
 
@@ -62,7 +62,7 @@ class FeignAliasServiceTest {
         )
         assertEquals(
             Optional.empty<Address>(),
-            feignAddressService.getAddressByAlias(Alias("_non-existent-alias"))
+            feignAddressService.getAddressByAlias(Alias("_non-existent-alias")),
         )
     }
 }

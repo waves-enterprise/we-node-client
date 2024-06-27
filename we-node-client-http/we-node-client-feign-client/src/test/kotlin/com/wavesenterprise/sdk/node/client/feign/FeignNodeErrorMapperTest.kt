@@ -35,12 +35,13 @@ internal class FeignNodeErrorMapperTest {
         val nodeError = NodeError(error = 101, message = "invalid signature")
         val ex = feignNodeErrorMapper.mapToGeneralException(
             FeignException.NotFound(
-                "", mockk(),
+                "",
+                mockk(),
                 """
                     ${jacksonObjectMapper().writeValueAsString(nodeError)}
                 """.trimIndent().toByteArray(),
-                null
-            )
+                null,
+            ),
         )
         ex.apply {
             assertTrue(this is InvalidSignatureException)
@@ -56,12 +57,13 @@ internal class FeignNodeErrorMapperTest {
         val nodeError = NodeError(error = 102, message = "invalid address")
         val ex = feignNodeErrorMapper.mapToGeneralException(
             FeignException.BadRequest(
-                "", mockk(),
+                "",
+                mockk(),
                 """
                     ${jacksonObjectMapper().writeValueAsString(nodeError)}
                 """.trimIndent().toByteArray(),
-                null
-            )
+                null,
+            ),
         )
         ex.apply {
             assertTrue(this is InvalidAddressException)
@@ -77,12 +79,13 @@ internal class FeignNodeErrorMapperTest {
         val nodeError = NodeError(error = 199, message = "Failed to decode input data: expecting Base64 encoded data")
         val ex = feignNodeErrorMapper.mapToGeneralException(
             FeignException.BadRequest(
-                "", mockk(),
+                "",
+                mockk(),
                 """
                     ${jacksonObjectMapper().writeValueAsString(nodeError)}
                 """.trimIndent().toByteArray(),
-                null
-            )
+                null,
+            ),
         )
         ex.apply {
             assertTrue(this is CustomValidationErrorException)
@@ -98,12 +101,13 @@ internal class FeignNodeErrorMapperTest {
         val nodeError = NodeError(error = 304, message = "no data for this key")
         val ex = feignNodeErrorMapper.mapToGeneralException(
             FeignException.NotFound(
-                "", mockk(),
+                "",
+                mockk(),
                 """
                     ${jacksonObjectMapper().writeValueAsString(nodeError)}
                 """.trimIndent().toByteArray(),
-                null
-            )
+                null,
+            ),
         )
         ex.apply {
             assertTrue(this is DataKeyNotExistException)
@@ -119,12 +123,13 @@ internal class FeignNodeErrorMapperTest {
         val nodeError = NodeError(error = 600, message = "Contract is not found")
         val ex = feignNodeErrorMapper.mapToGeneralException(
             FeignException.NotFound(
-                "", mockk(),
+                "",
+                mockk(),
                 """
                     ${jacksonObjectMapper().writeValueAsString(nodeError)}
                 """.trimIndent().toByteArray(),
-                null
-            )
+                null,
+            ),
         )
         ex.apply {
             assertTrue(this is ContractNotFoundException)
@@ -140,12 +145,13 @@ internal class FeignNodeErrorMapperTest {
         val nodeError = NodeError(error = 612, message = "The requested policy does not exist")
         val ex = feignNodeErrorMapper.mapToGeneralException(
             FeignException.NotFound(
-                "", mockk(),
+                "",
+                mockk(),
                 """
                     ${jacksonObjectMapper().writeValueAsString(nodeError)}
                 """.trimIndent().toByteArray(),
-                null
-            )
+                null,
+            ),
         )
         ex.apply {
             assertTrue(this is PolicyDoesNotExistException)
@@ -161,12 +167,13 @@ internal class FeignNodeErrorMapperTest {
         val nodeError = NodeError(error = 614, message = "Provided privacy API key is not correct")
         val ex = feignNodeErrorMapper.mapToGeneralException(
             FeignException.BadRequest(
-                "", mockk(),
+                "",
+                mockk(),
                 """
                     ${jacksonObjectMapper().writeValueAsString(nodeError)}
                 """.trimIndent().toByteArray(),
-                null
-            )
+                null,
+            ),
         )
         ex.apply {
             assertTrue(this is PrivacyApiKeyNotValidException)
@@ -182,12 +189,13 @@ internal class FeignNodeErrorMapperTest {
         val nodeError = NodeError(error = 617, message = "The requested dataset is missing in privacy storage")
         val ex = feignNodeErrorMapper.mapToGeneralException(
             FeignException.NotFound(
-                "", mockk(),
+                "",
+                mockk(),
                 """
                     ${jacksonObjectMapper().writeValueAsString(nodeError)}
                 """.trimIndent().toByteArray(),
-                null
-            )
+                null,
+            ),
         )
         ex.apply {
             assertTrue(this is PolicyItemDataIsMissingException)
@@ -203,12 +211,13 @@ internal class FeignNodeErrorMapperTest {
         val nodeError = NodeError(error = 999, message = "Unknown")
         val ex = feignNodeErrorMapper.mapToGeneralException(
             FeignException.NotFound(
-                "", mockk(),
+                "",
+                mockk(),
                 """
                     ${jacksonObjectMapper().writeValueAsString(nodeError)}
                 """.trimIndent().toByteArray(),
-                null
-            )
+                null,
+            ),
         )
         ex.apply {
             assertTrue(this is NodeNotFoundException)
@@ -225,12 +234,13 @@ internal class FeignNodeErrorMapperTest {
         val nodeError = NodeError(error = 999, message = "Unknown")
         val ex = feignNodeErrorMapper.mapToGeneralException(
             FeignException.BadRequest(
-                "", mockk(),
+                "",
+                mockk(),
                 """
                     ${jacksonObjectMapper().writeValueAsString(nodeError)}
                 """.trimIndent().toByteArray(),
-                null
-            )
+                null,
+            ),
         )
         ex.apply {
             assertTrue(this is NodeBadRequestException)
@@ -247,12 +257,13 @@ internal class FeignNodeErrorMapperTest {
         val nodeError = NodeError(error = 999, message = "Unknown")
         val ex = feignNodeErrorMapper.mapToGeneralException(
             FeignException.Conflict(
-                "", mockk(),
+                "",
+                mockk(),
                 """
                     ${jacksonObjectMapper().writeValueAsString(nodeError)}
                 """.trimIndent().toByteArray(),
-                null
-            )
+                null,
+            ),
         )
         ex.apply {
             assertTrue(this is NodeConflictException)

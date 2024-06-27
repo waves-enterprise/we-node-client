@@ -174,7 +174,7 @@ class LoadBalancingServiceFactoryTest {
             privacyService = mockkPrivacyService2,
         )
         val (nodeAlis3, client3) = "3" to mockkNodeBlockingServiceFactory(
-            addresses = listOf("C", "D")
+            addresses = listOf("C", "D"),
         )
 
         val lb = lbServiceFactoryBuilder
@@ -218,9 +218,9 @@ class LoadBalancingServiceFactoryTest {
             } throws PolicyItemDataIsMissingException(
                 nodeError = NodeError(
                     NodeErrorCode.POLICY_ITEM_DATA_IS_MISSING.code,
-                    ""
+                    "",
                 ),
-                cause = Exception()
+                cause = Exception(),
             )
         }
         val client3 = "3" to mockkNodeBlockingServiceFactory(
@@ -265,8 +265,8 @@ class LoadBalancingServiceFactoryTest {
         val lb = lbServiceFactoryBuilder
             .nodeCredentialsProvider(
                 nodeCredentialsProvider(
-                    mapOf(Address.fromBase58("B") to Password("password"))
-                )
+                    mapOf(Address.fromBase58("B") to Password("password")),
+                ),
             )
             .build(mapOf(nodeAlis1 to client1, client2, nodeAlis3 to client3))
 
@@ -341,7 +341,7 @@ class LoadBalancingServiceFactoryTest {
         val defaultNodeCircuitBreaker2 = DefaultNodeCircuitBreaker()
         val circuitBreaker = DefaultCircuitBreaker(
             circuitBreakerProperties = CircuitBreakerProperties(),
-            nodeCircuitBreakers = mapOf("1" to defaultNodeCircuitBreaker1, "2" to defaultNodeCircuitBreaker2)
+            nodeCircuitBreakers = mapOf("1" to defaultNodeCircuitBreaker1, "2" to defaultNodeCircuitBreaker2),
         )
         val lb = lbServiceFactoryBuilder
             .nodeCredentialsProvider(nodeCredentialsProvider())
@@ -397,7 +397,7 @@ class LoadBalancingServiceFactoryTest {
             val defaultNodeCircuitBreaker2 = DefaultNodeCircuitBreaker()
             val circuitBreaker = DefaultCircuitBreaker(
                 circuitBreakerProperties = CircuitBreakerProperties(),
-                nodeCircuitBreakers = mapOf("1" to defaultNodeCircuitBreaker1, "2" to defaultNodeCircuitBreaker2)
+                nodeCircuitBreakers = mapOf("1" to defaultNodeCircuitBreaker1, "2" to defaultNodeCircuitBreaker2),
             )
             val lb = lbServiceFactoryBuilder
                 .nodeCredentialsProvider(nodeCredentialsProvider())

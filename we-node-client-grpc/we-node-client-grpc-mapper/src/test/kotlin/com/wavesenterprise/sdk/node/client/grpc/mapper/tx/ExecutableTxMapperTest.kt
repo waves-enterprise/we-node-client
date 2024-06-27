@@ -53,7 +53,7 @@ class ExecutableTxMapperTest {
         verify {
             CreateContractTxMapper.domainInternal(
                 tx = grpcCreateContractTx,
-                version = TxVersion(executableTxVersion)
+                version = TxVersion(executableTxVersion),
             )
         }
     }
@@ -77,7 +77,7 @@ class ExecutableTxMapperTest {
         verify {
             CallContractTxMapper.domainInternal(
                 tx = grpcCallContractTx,
-                version = TxVersion(executableTxVersion)
+                version = TxVersion(executableTxVersion),
             )
         }
     }
@@ -101,7 +101,7 @@ class ExecutableTxMapperTest {
         verify {
             UpdateContractTxMapper.domainInternal(
                 tx = grpcUpdateContractTx,
-                version = TxVersion(executableTxVersion)
+                version = TxVersion(executableTxVersion),
             )
         }
     }

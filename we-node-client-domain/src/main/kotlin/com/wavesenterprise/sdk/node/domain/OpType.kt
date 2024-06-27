@@ -14,6 +14,6 @@ enum class OpType : SerializableToBytes {
                 'a'.code.toByte()
             } else {
                 'r'.code.toByte()
-            }
+            },
         )
 }

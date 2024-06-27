@@ -16,7 +16,7 @@ data class ScriptName(val bytes: ByteArray) : SerializableToBytes {
         @JvmStatic
         fun fromBase58(string: String): ScriptName =
             ScriptName(
-                WeBase58.decode(string)
+                WeBase58.decode(string),
             )
 
         inline val ByteArray.scriptName: ScriptName get() = ScriptName(this)

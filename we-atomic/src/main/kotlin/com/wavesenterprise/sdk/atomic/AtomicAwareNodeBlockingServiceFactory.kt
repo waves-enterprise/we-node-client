@@ -77,7 +77,7 @@ class AtomicAwareNodeBlockingServiceFactory(
                             .get()
                             .run {
                                 this.copy(
-                                    version = this.version.update()
+                                    version = this.version.update(),
                                 )
                             }
 
@@ -99,10 +99,13 @@ class AtomicAwareNodeBlockingServiceFactory(
 
             private fun SendDataRequest.withAtomicBadgeIfNecessary() =
                 withAtomicBadge(
-                    atomicBadge = if (!broadcastTx && senderAddress != txSignerFromContext.getSignerAddress())
+                    atomicBadge = if (!broadcastTx && senderAddress != txSignerFromContext.getSignerAddress()) {
                         AtomicBadge(
                             trustedSender = txSignerFromContext.getSignerAddress(),
-                        ) else AtomicBadge(trustedSender = null)
+                        )
+                    } else {
+                        AtomicBadge(trustedSender = null)
+                    },
                 )
         }
     }

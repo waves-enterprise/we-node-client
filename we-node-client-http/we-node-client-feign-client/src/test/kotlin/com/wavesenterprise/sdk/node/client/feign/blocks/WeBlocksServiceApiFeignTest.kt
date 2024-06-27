@@ -166,14 +166,14 @@ class WeBlocksServiceApiFeignTest {
                         DataEntryDto(
                             key = "action",
                             type = "string",
-                            value = "createContract"
-                        )
+                            value = "createContract",
+                        ),
                     ),
                     version = 2,
                     sender = "3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX",
                     feeAssetId = null,
                     proofs = listOf(
-                        "378ShzisNBmGWEXdVbkWMqkfhhFuMYFJXSnG8bN5j7veUDXQUHzATEyxVuMwA1MCArb23kGrbA9iY213sK3WxL3d"
+                        "378ShzisNBmGWEXdVbkWMqkfhhFuMYFJXSnG8bN5j7veUDXQUHzATEyxVuMwA1MCArb23kGrbA9iY213sK3WxL3d",
                     ),
                     contractName = "demo-contract",
                     timestamp = 1656952109871L,
@@ -181,7 +181,7 @@ class WeBlocksServiceApiFeignTest {
                     atomicBadge = null,
                     apiVersion = null,
                     validationPolicy = null,
-                )
+                ),
             ),
             version = 12,
             poaConsensus = PoaConsensusDto(

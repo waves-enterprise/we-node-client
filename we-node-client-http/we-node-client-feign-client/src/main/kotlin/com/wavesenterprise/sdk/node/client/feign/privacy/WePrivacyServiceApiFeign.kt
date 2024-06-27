@@ -21,7 +21,7 @@ interface WePrivacyServiceApiFeign {
     @RequestLine("GET /privacy/{policyId}/getData/{policyItemHash}")
     fun getDataFromPrivacy(
         @Param("policyId") policyId: String,
-        @Param("policyItemHash") policyItemHash: String
+        @Param("policyItemHash") policyItemHash: String,
     ): ByteArray
 
     @Headers("Content-Type: application/json")
@@ -34,19 +34,19 @@ interface WePrivacyServiceApiFeign {
     @Headers("Content-Type: application/json")
     @RequestLine("GET /privacy/{policyId}/recipients")
     fun getPolicyRecipients(
-        @Param("policyId") policyId: String
+        @Param("policyId") policyId: String,
     ): List<String>
 
     @Headers("Content-Type: application/json")
     @RequestLine("GET /privacy/{policyId}/hashes")
     fun getPolicyHashes(
-        @Param("policyId") policyId: String
+        @Param("policyId") policyId: String,
     ): List<String>
 
     @Headers("Content-Type: application/json")
     @RequestLine("GET /privacy/{policyId}/transactions")
     fun getPolicyDataHashTxs(
-        @Param("policyId") policyId: String
+        @Param("policyId") policyId: String,
     ): List<String>
 
     @Headers("Content-Type: application/json")
@@ -77,6 +77,6 @@ interface WePrivacyServiceApiFeign {
     @Headers("Content-Type: application/json")
     @RequestLine("GET /privacy/{policyId}/owners")
     fun getPolicyOwners(
-        @Param("policyId") policyId: String
+        @Param("policyId") policyId: String,
     ): List<String>
 }

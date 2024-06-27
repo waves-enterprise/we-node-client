@@ -24,14 +24,18 @@ object GrpcNodeServiceFactoryFactory {
         ManagedChannelBuilder
             .forAddress(grpcProperties.address, grpcProperties.port)
             .run {
-                if (grpcProperties.keepAliveTime != null)
+                if (grpcProperties.keepAliveTime != null) {
                     keepAliveTime(grpcProperties.keepAliveTime, TimeUnit.MILLISECONDS)
-                else this
+                } else {
+                    this
+                }
             }
             .run {
-                if (grpcProperties.keepAliveWithoutCalls != null)
+                if (grpcProperties.keepAliveWithoutCalls != null) {
                     keepAliveWithoutCalls(grpcProperties.keepAliveWithoutCalls)
-                else this
+                } else {
+                    this
+                }
             }
             .usePlaintext()
             .build()

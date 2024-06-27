@@ -33,7 +33,7 @@ class RegisterNodeTxMapperTest {
             fee = 10L
             senderAddress = ByteString.copyFromUtf8("3N9vL3apA4j2L5PojHW8TYmfHx9Lo2ZaKPB")
             proofs += ByteString.copyFromUtf8(
-                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM"
+                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM",
             )
         }
         grpcTx.domain(txVersion).apply {
@@ -49,7 +49,7 @@ class RegisterNodeTxMapperTest {
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) },
                     version = txVersion,
-                )
+                ),
             )
         }
     }
@@ -67,7 +67,7 @@ class RegisterNodeTxMapperTest {
             fee = 10L
             senderAddress = ByteString.copyFromUtf8("3N9vL3apA4j2L5PojHW8TYmfHx9Lo2ZaKPB")
             proofs += ByteString.copyFromUtf8(
-                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM"
+                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM",
             )
         }
 
@@ -84,7 +84,7 @@ class RegisterNodeTxMapperTest {
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) },
                     version = txVersion,
-                )
+                ),
             )
         }
     }

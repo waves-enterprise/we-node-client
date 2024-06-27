@@ -73,7 +73,7 @@ class ContractGrpcBlockingService(
                 } else {
                     throw GrpcNodeErrorMapper.mapToGeneralException(ex)
                 }
-            }
+            },
         )
 
     private fun parseDataKeyNotExistException(ex: StatusRuntimeException): DataKeyNotExistException =

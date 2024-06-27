@@ -31,7 +31,7 @@ class SponsorFeeTxMapperTest {
             fee = 10L
             timestamp = 1716881331027L
             proofs += byteString(
-                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM"
+                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM",
             )
             senderAddress = byteString("3N9vL3apA4j2L5PojHW8TYmfHx9Lo2ZaKPB")
         }
@@ -48,7 +48,7 @@ class SponsorFeeTxMapperTest {
                     proofs = grpcTx.proofsList.map { Signature(it.byteArray()) },
                     senderAddress = Address(grpcTx.senderAddress.byteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 }

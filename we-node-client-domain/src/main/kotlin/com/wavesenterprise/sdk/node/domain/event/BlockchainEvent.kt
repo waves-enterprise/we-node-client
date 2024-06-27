@@ -14,7 +14,7 @@ import com.wavesenterprise.sdk.node.domain.tx.Tx
 
 sealed interface BlockchainEvent {
     data class MicroBlockAppended(
-        val txs: List<Tx>
+        val txs: List<Tx>,
     ) : BlockchainEvent
 
     data class BlockAppended(
@@ -27,12 +27,12 @@ sealed interface BlockchainEvent {
         val timestamp: Timestamp,
         val fee: Fee,
         val blockSize: DataSize,
-        val features: List<Feature>
+        val features: List<Feature>,
     ) : BlockchainEvent
 
     data class RollbackCompleted(
         val returnToBlockSignature: Signature,
-        val rollbackTxIds: List<TxId>
+        val rollbackTxIds: List<TxId>,
     ) : BlockchainEvent
 
     data class AppendedBlockHistory(
@@ -45,6 +45,6 @@ sealed interface BlockchainEvent {
         val timestamp: Timestamp,
         val fee: Fee,
         val blockSize: DataSize,
-        val features: List<Feature>
+        val features: List<Feature>,
     ) : BlockchainEvent
 }

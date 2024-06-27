@@ -62,12 +62,12 @@ class TxMapperTest {
             type = "bool",
             value = true,
         )
-        assertThrows<IllegalStateException > {
+        assertThrows<IllegalStateException> {
             incorrectBooleanDataEntryDto.toDomain()
         }.also {
             assertEquals(
                 "Unknown data type ${incorrectBooleanDataEntryDto.type} for key ${incorrectBooleanDataEntryDto.key}",
-                it.message
+                it.message,
             )
         }
     }

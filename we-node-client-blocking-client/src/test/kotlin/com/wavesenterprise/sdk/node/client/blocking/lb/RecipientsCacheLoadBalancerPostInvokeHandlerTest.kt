@@ -40,7 +40,7 @@ class RecipientsCacheLoadBalancerPostInvokeHandlerTest {
                 every {
                     it.getAddresses()
                 } returns listOf(address)
-            }
+            },
         )
         val lb = lbServiceFactoryBuilder
             .nodeCredentialsProvider(nodeCredentialsProvider())
@@ -73,7 +73,7 @@ class RecipientsCacheLoadBalancerPostInvokeHandlerTest {
                 every {
                     it.getAddresses()
                 } returns listOf(address)
-            }
+            },
         )
         val lb = lbServiceFactoryBuilder
             .nodeCredentialsProvider(nodeCredentialsProvider())
@@ -84,11 +84,11 @@ class RecipientsCacheLoadBalancerPostInvokeHandlerTest {
             updatePolicySignRequest(
                 senderAddress = address,
                 policyId = existPolicyId,
-            )
+            ),
         )
         assertEquals(
             (recipients + existRecipients).toSet(),
-            recipientsCache.getIfPresent(updatePolicyTx.policyId)
+            recipientsCache.getIfPresent(updatePolicyTx.policyId),
         )
     }
 
@@ -114,7 +114,7 @@ class RecipientsCacheLoadBalancerPostInvokeHandlerTest {
                 every {
                     it.getAddresses()
                 } returns listOf(address)
-            }
+            },
         )
         val lb = lbServiceFactoryBuilder
             .nodeCredentialsProvider(nodeCredentialsProvider())
@@ -125,7 +125,7 @@ class RecipientsCacheLoadBalancerPostInvokeHandlerTest {
             updatePolicySignRequest(
                 senderAddress = address,
                 policyId = existPolicyId,
-            )
+            ),
         )
         assertTrue(recipientsCache.getIfPresent(existPolicyId)!!.isEmpty())
     }
@@ -149,7 +149,7 @@ class RecipientsCacheLoadBalancerPostInvokeHandlerTest {
                 every {
                     it.getAddresses()
                 } returns listOf(address)
-            }
+            },
         )
         val lb = lbServiceFactoryBuilder
             .nodeCredentialsProvider(nodeCredentialsProvider())
@@ -161,7 +161,7 @@ class RecipientsCacheLoadBalancerPostInvokeHandlerTest {
                 updatePolicySignRequest(
                     senderAddress = address,
                     policyId = existPolicyId,
-                )
+                ),
             )
         }
     }
