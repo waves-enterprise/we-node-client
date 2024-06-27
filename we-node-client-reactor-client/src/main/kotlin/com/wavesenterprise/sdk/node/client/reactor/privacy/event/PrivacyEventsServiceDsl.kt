@@ -21,7 +21,7 @@ fun PrivacyEventsService.fromGenesis(filtersBuilder: EventsFilterContext.() -> U
 @BlockchainEventsDsl
 fun PrivacyEventsService.fromBlock(
     signature: Signature,
-    filtersBuilder: EventsFilterContext.() -> Unit = {}
+    filtersBuilder: EventsFilterContext.() -> Unit = {},
 ): Flux<PrivacyEvent> =
     events(
         SubscribeOnRequest(

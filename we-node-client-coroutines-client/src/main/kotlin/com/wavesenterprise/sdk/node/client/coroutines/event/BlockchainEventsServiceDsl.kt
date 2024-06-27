@@ -21,7 +21,7 @@ fun BlockchainEventsService.fromGenesis(filtersBuilder: EventsFilterContext.() -
 @BlockchainEventsDsl
 fun BlockchainEventsService.fromBlock(
     signature: Signature,
-    filtersBuilder: EventsFilterContext.() -> Unit = {}
+    filtersBuilder: EventsFilterContext.() -> Unit = {},
 ): Flow<BlockchainEvent> =
     events(
         SubscribeOnRequest(
