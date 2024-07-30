@@ -1,5 +1,6 @@
 package com.wavesenterprise.sdk.node.client.grpc.blocking.mapper
 
+@Suppress("IteratorNotThrowingNoSuchElementException")
 class MappingIterator<T, R>(
     private val it: Iterator<T>,
     private val mapper: (T) -> R,

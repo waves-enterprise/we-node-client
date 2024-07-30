@@ -28,6 +28,7 @@ class FeignAddressService(
     override fun getAddressByPublicKey(publicKey: PublicKey): Address =
         weAddressServiceApiFeign.getAddressByPublicKey(publicKey.asBase58String()).toDomain()
 
+    @Suppress("SwallowedException")
     override fun getAddressValue(address: Address, key: DataKey): Optional<DataEntry> =
         try {
             weAddressServiceApiFeign.getAddressValue(

@@ -64,6 +64,7 @@ object TxMapper {
         dtoInternal(this)
 
     @JvmStatic
+    @Suppress("CyclomaticComplexMethod")
     internal fun dtoInternal(tx: Tx): Transaction =
         transaction {
             version = tx.version.value
@@ -98,6 +99,7 @@ object TxMapper {
         }
 
     @JvmStatic
+    @Suppress("LongMethod", "CyclomaticComplexMethod")
     fun Transaction.domain(): Tx {
         val version = TxVersion(version)
         return when (transactionCase) {

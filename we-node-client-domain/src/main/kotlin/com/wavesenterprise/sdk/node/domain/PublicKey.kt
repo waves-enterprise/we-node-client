@@ -18,6 +18,7 @@ data class PublicKey(val bytes: ByteArray) : SerializableToBytes {
                 WeBase58.decode(string),
             )
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.publicKey: PublicKey get() = PublicKey(this)
 
         inline val String.base58PublicKey: TxId get() = TxId.fromBase58(this)

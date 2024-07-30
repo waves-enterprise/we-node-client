@@ -32,6 +32,7 @@ import io.grpc.Status
 import io.grpc.StatusRuntimeException
 import java.util.Optional
 
+@Suppress("SpreadOperator")
 class ContractGrpcBlockingService(
     private val channel: Channel,
     private val clientInterceptors: List<ClientInterceptor> = emptyList(),

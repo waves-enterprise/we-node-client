@@ -54,6 +54,7 @@ object GrpcNodeErrorMapper {
         return exception
     }
 
+    @Suppress("CyclomaticComplexMethod")
     private fun decodeCommonException(ex: StatusRuntimeException): NodeException? {
         return when (ex.status) {
             CANCELLED -> NodeUnexpectedException(cause = ex)
@@ -89,6 +90,7 @@ object GrpcNodeErrorMapper {
             else -> null
         }
 
+    @Suppress("TooGenericExceptionCaught")
     private fun tryParseError(trailers: Metadata?): NodeError? {
         return try {
             if (trailers == null) return null

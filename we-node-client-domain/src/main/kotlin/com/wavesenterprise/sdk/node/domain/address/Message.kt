@@ -6,6 +6,7 @@ data class Message(val value: String) {
         fun fromString(value: String): Message =
             Message(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val String.message: Message get() = Message(this)
     }
 }

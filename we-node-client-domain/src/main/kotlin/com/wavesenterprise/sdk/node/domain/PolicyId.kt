@@ -26,8 +26,10 @@ data class PolicyId(val txId: TxId) : SerializableToBytes {
                 WeBase58.decode(string),
             )
 
+        @Suppress("MemberNameEqualsClassName")
         inline val TxId.policyId: PolicyId get() = PolicyId(this)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.policyId: PolicyId get() = fromByteArray(this)
 
         inline val String.base58PolicyId: PolicyId get() = fromBase58(this)

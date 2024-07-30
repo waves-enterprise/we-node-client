@@ -25,6 +25,7 @@ class FeignPrivacyService(
             broadcast = request.broadcastTx,
         ).toDomain()
 
+    @Suppress("SwallowedException")
     override fun info(request: PolicyItemRequest): Optional<PolicyItemInfoResponse> =
         try {
             Optional.of(
@@ -37,6 +38,7 @@ class FeignPrivacyService(
             Optional.empty()
         }
 
+    @Suppress("SwallowedException")
     override fun data(request: PolicyItemRequest): Optional<Data> =
         try {
             Optional.of(

@@ -6,6 +6,7 @@ data class DataKey(val value: String) {
         fun fromString(value: String): DataKey =
             DataKey(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val String.dataKey: DataKey get() = DataKey(this)
     }
 }

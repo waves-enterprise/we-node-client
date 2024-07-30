@@ -21,6 +21,7 @@ data class Script(val bytes: ByteArray) : SerializableToBytes {
                 BASE_64_DECODER.decode(string),
             )
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.script: Script get() = Script(this)
     }
 

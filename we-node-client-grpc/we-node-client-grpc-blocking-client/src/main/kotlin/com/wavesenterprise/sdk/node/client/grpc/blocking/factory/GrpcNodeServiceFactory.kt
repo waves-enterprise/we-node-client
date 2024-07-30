@@ -42,6 +42,7 @@ class GrpcNodeServiceFactory(
         TODO("Not yet implemented")
     }
 
+    @Suppress("SpreadOperator")
     override fun contractService(): ContractService {
         return ContractGrpcBlockingService(
             channel = channel,

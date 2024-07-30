@@ -6,6 +6,7 @@ data class MajorVersion(val value: Int) {
         fun fromInt(value: Int): MajorVersion =
             MajorVersion(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val Int.majorVersion: MajorVersion get() = MajorVersion(this)
     }
 }

@@ -7,6 +7,7 @@ import feign.Headers
 import feign.Param
 import feign.RequestLine
 
+@Suppress("TooManyFunctions")
 interface WeBlocksServiceApiFeign {
 
     @Headers("Content-Type: application/json")

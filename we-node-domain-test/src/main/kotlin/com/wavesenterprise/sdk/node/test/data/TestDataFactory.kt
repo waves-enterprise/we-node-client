@@ -1,3 +1,5 @@
+@file:Suppress("LongParameterList", "LargeClass")
+
 package com.wavesenterprise.sdk.node.test.data
 
 import com.wavesenterprise.sdk.node.domain.Address

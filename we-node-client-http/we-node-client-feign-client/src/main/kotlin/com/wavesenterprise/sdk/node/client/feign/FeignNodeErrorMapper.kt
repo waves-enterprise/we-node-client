@@ -68,6 +68,7 @@ class FeignNodeErrorMapper(
             else -> null
         }
 
+    @Suppress("TooGenericExceptionCaught")
     private fun tryParseError(content: String) =
         try {
             objectMapper.readValue<NodeError>(content)

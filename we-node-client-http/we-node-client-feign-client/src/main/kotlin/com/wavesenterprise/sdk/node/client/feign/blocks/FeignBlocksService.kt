@@ -10,6 +10,7 @@ import com.wavesenterprise.sdk.node.domain.Signature
 import com.wavesenterprise.sdk.node.domain.blocks.BlockAtHeight
 import com.wavesenterprise.sdk.node.domain.blocks.BlockHeaders
 
+@Suppress("TooManyFunctions")
 class FeignBlocksService(
     private val weBlocksServiceApiFeign: WeBlocksServiceApiFeign,
 ) : BlocksService {

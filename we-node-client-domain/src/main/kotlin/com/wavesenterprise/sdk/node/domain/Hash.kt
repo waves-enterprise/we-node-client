@@ -14,6 +14,7 @@ data class Hash(val bytes: ByteArray) {
         fun fromStringBase58(base58HashString: String): Hash =
             Hash(WeBase58.decode(base58HashString))
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.hash: Hash get() = Hash(this)
 
         inline val String.base58StrHash: Hash get() = fromStringBase58(this)

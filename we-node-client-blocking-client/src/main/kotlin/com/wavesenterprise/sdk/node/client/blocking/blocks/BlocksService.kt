@@ -6,6 +6,7 @@ import com.wavesenterprise.sdk.node.domain.Signature
 import com.wavesenterprise.sdk.node.domain.blocks.BlockAtHeight
 import com.wavesenterprise.sdk.node.domain.blocks.BlockHeaders
 
+@Suppress("TooManyFunctions")
 interface BlocksService {
 
     fun blockHeight(): Height

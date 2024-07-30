@@ -17,6 +17,7 @@ data class ScriptDescription(val bytes: ByteArray) {
                 WeBase58.decode(string),
             )
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.scriptDescription: ScriptDescription get() = ScriptDescription(this)
 
         inline val String.base58ScriptDescription: ScriptDescription get() = fromBase58(this)

@@ -1,6 +1,5 @@
 build:
-  # TODO: https://jira.web3tech.ru/browse/WTCH-339
-  maxIssues: 150
+  maxIssues: 50
   excludeCorrectable: false
   weights:
     # complexity: 2
