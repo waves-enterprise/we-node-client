@@ -33,11 +33,11 @@ object ContractTransactionResponseMapper {
 
     @JvmStatic
     internal fun domainInternal(
-        contractTransactionResponse: ProtoContractTransactionResponse
+        contractTransactionResponse: ProtoContractTransactionResponse,
     ): ContractTransactionResponse = contractTransactionResponse.run {
         ContractTransactionResponse(
             transaction = transaction.domain(),
-            authToken = AuthToken(authToken)
+            authToken = AuthToken(authToken),
         )
     }
 
@@ -47,7 +47,7 @@ object ContractTransactionResponseMapper {
 
     @JvmStatic
     internal fun domainInternal(
-        contractTransaction: ProtoContractTransaction
+        contractTransaction: ProtoContractTransaction,
     ): ContractTransaction = contractTransaction.run {
         when (dataCase) {
             CREATE_DATA -> CreateContractTransaction(
@@ -64,7 +64,7 @@ object ContractTransactionResponseMapper {
                 feeAssetId = AssetId.fromBase58(feeAssetId.value),
                 image = ContractImage.fromString(createData.image),
                 imageHash = ContractImageHash.fromString(createData.imageHash),
-                contractName = ContractName.fromString(createData.contractName)
+                contractName = ContractName.fromString(createData.contractName),
             )
             DataCase.CALL_DATA -> CallContractTransaction(
                 id = TxId.fromBase58(id),
@@ -78,10 +78,10 @@ object ContractTransactionResponseMapper {
                 proof = Signature(proofs.toByteArray()),
                 timestamp = Timestamp.fromUtcTimestamp(timestamp),
                 feeAssetId = AssetId.fromBase58(feeAssetId.value),
-                contractVersion = ContractVersion.fromInt(callData.contractVersion)
+                contractVersion = ContractVersion.fromInt(callData.contractVersion),
             )
             null, DataCase.DATA_NOT_SET ->
-                throw IllegalStateException("ContractTransaction.dataCase shouldn't be null or unset")
+                error("ContractTransaction.dataCase shouldn't be null or unset")
         }
     }
 }

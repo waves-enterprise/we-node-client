@@ -49,7 +49,7 @@ class WeAliasServiceApiFeignTest {
         val address = "3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX"
         assertEquals(
             Optional.of(AddressDto(address)),
-            weAliasServiceApiFeign.getAddressByAlias(alias)
+            weAliasServiceApiFeign.getAddressByAlias(alias),
         )
     }
 
@@ -61,7 +61,7 @@ class WeAliasServiceApiFeignTest {
             assertEquals(NodeErrorCode.ALIAS_NOT_EXIST.code, nodeError.error)
             assertEquals(
                 "alias 'alias:R:_non-existent-alias' doesn't exist",
-                nodeError.message
+                nodeError.message,
             )
         }
     }

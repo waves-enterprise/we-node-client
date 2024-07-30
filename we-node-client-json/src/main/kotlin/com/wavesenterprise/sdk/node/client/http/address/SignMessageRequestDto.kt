@@ -4,7 +4,7 @@ import com.wavesenterprise.sdk.node.domain.address.SignMessageRequest
 
 data class SignMessageRequestDto(
     val message: String,
-    val password: String
+    val password: String,
 ) {
     companion object {
         @JvmStatic

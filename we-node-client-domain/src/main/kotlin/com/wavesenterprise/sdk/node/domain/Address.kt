@@ -19,15 +19,17 @@ data class Address(val bytes: ByteArray) : SerializableToBytes {
         @JvmStatic
         fun fromByteArray(bytes: ByteArray): Address =
             Address(bytes)
+
         @JvmStatic
         fun fromBase58(string: String): Address =
             fromByteArray(
-                WeBase58.decode(string)
+                WeBase58.decode(string),
             )
 
         @JvmStatic
         fun String.toDomain(): Address = Address.fromBase58(this)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.address: Address get() = Address(this)
 
         inline val String.base58Address: Address get() = fromBase58(this)
@@ -40,16 +42,14 @@ data class Address(val bytes: ByteArray) : SerializableToBytes {
     override fun getSignatureBytes(networkByte: Byte?): ByteArray {
         val stringAddress = WeBase58.encode(bytes)
         return if (aliasRegex.matches(stringAddress)) {
-            if (networkByte == null) {
-                throw IllegalStateException("Cannot create tx signature. Network byte is required")
-            }
+            checkNotNull(networkByte) { "Cannot create tx signature. Network byte is required" }
             val alias = stringAddress.split(':').last()
             val aliasBytes = strToBytes(alias)
             concatBytes(
                 byteArrayOf(ALIAS_VERSION),
                 byteArrayOf(networkByte),
                 numberToBytes(aliasBytes.size),
-                aliasBytes
+                aliasBytes,
             )
         } else {
             bytes

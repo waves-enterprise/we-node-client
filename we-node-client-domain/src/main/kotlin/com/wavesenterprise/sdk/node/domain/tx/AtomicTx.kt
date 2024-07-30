@@ -20,7 +20,8 @@ data class AtomicTx(
     override val timestamp: Timestamp,
     val proofs: List<Signature>? = null,
     val senderAddress: Address,
-    val fee: Fee, // todo: ask to add field to proto
+    // todo: ask to add field to proto
+    val fee: Fee,
     override val version: TxVersion,
 ) : Tx {
     override fun withId(id: TxId): Tx = copy(id = id)
@@ -49,20 +50,21 @@ data class AtomicTx(
                 }
             }.forEach { (tx, senders) ->
                 val (innerTxSenderAddress, innerTxTrustedSenderAddress) = senders
-                if (innerTxTrustedSenderAddress == null)
+                if (innerTxTrustedSenderAddress == null) {
                     require(innerTxSenderAddress == senderAddress) {
                         "SenderAddress of inner tx must be equal to senderAddress of atomicTx" +
                             " when trustedSender is null" +
                             " failed txId ${tx.id.asBase58String()}"
                         " atomic tx $this"
                     }
-                else
+                } else {
                     require(innerTxTrustedSenderAddress == senderAddress) {
                         "Address of trustedSender must be equal to senderAddress of atomicTx" +
                             " when trustedSender is not null" +
                             " failed txId ${tx.id.asBase58String()}"
                         " atomic tx $this"
                     }
+                }
             }
     }
 }

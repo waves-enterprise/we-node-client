@@ -67,8 +67,8 @@ class FeignBlocksServiceTest {
                         DataEntryDto(
                             key = "action",
                             type = "string",
-                            value = "createContract"
-                        )
+                            value = "createContract",
+                        ),
                     ),
                     version = 2,
                     sender = "3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX",
@@ -82,7 +82,7 @@ class FeignBlocksServiceTest {
                     atomicBadge = null,
                     apiVersion = null,
                     validationPolicy = null,
-                )
+                ),
             ),
             version = 12,
             poaConsensus = PoaConsensusDto(

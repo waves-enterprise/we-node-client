@@ -5,7 +5,7 @@ import com.wavesenterprise.sdk.node.domain.Hash
 import com.wavesenterprise.sdk.node.domain.PolicyId
 
 class PrivacyDataNodesCache(
-    private val cache: LoadingCache<PrivacyDataKey, MutableSet<String>>
+    private val cache: LoadingCache<PrivacyDataKey, MutableSet<String>>,
 ) {
 
     fun get(policyId: PolicyId, policyDataHash: Hash): Set<String> =
@@ -23,6 +23,6 @@ class PrivacyDataNodesCache(
     private fun cacheKey(policyId: PolicyId, policyDataHash: Hash) =
         PrivacyDataKey(
             policyId = policyId,
-            dataHash = policyDataHash
+            dataHash = policyDataHash,
         )
 }

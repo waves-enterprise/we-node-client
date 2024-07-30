@@ -33,11 +33,11 @@ object ExecutableTxMapper {
     internal fun domainInternal(tx: ExecutableTransaction): ExecutableTx {
         val version = TxVersion(tx.version)
         return when (tx.transactionCase) {
-            TransactionCase.CREATE_CONTRACT_TRANSACTION
+            TransactionCase.CREATE_CONTRACT_TRANSACTION,
             -> CreateContractTxMapper.domainInternal(tx.createContractTransaction, version)
-            TransactionCase.CALL_CONTRACT_TRANSACTION
+            TransactionCase.CALL_CONTRACT_TRANSACTION,
             -> CallContractTxMapper.domainInternal(tx.callContractTransaction, version)
-            TransactionCase.UPDATE_CONTRACT_TRANSACTION
+            TransactionCase.UPDATE_CONTRACT_TRANSACTION,
             -> UpdateContractTxMapper.domainInternal(tx.updateContractTransaction, version)
             TransactionCase.TRANSACTION_NOT_SET, null -> error("Transaction not set")
         }

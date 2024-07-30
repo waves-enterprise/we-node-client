@@ -6,6 +6,7 @@ data class TxCount(val value: Int) {
         fun fromInt(value: Int): TxCount =
             TxCount(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val Int.txCount: TxCount get() = TxCount(this)
     }
 }

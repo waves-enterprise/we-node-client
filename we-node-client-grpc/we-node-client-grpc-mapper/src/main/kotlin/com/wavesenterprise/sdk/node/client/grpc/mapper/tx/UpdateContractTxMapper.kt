@@ -64,7 +64,7 @@ object UpdateContractTxMapper {
             id = TxId(tx.id.byteArray()),
             senderPublicKey = PublicKey(tx.senderPublicKey.byteArray()),
             contractId = ContractId(
-                txId = TxId(tx.contractId.byteArray())
+                txId = TxId(tx.contractId.byteArray()),
             ),
             image = ContractImage(tx.image),
             imageHash = ContractImageHash(tx.imageHash),
@@ -72,7 +72,7 @@ object UpdateContractTxMapper {
             timestamp = Timestamp(tx.timestamp),
             feeAssetId = tx.feeAssetIdOrNull?.let {
                 FeeAssetId(
-                    txId = TxId(it.value.byteArray())
+                    txId = TxId(it.value.byteArray()),
                 )
             },
             atomicBadge = tx.atomicBadgeOrNull?.domain(),

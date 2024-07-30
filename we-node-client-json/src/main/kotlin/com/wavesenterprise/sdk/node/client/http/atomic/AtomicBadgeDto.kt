@@ -8,7 +8,7 @@ data class AtomicBadgeDto(val trustedSender: String? = null) {
         @JvmStatic
         fun AtomicBadge.toDto(): AtomicBadgeDto =
             AtomicBadgeDto(
-                trustedSender = trustedSender?.asBase58String()
+                trustedSender = trustedSender?.asBase58String(),
             )
 
         @JvmStatic
@@ -16,7 +16,7 @@ data class AtomicBadgeDto(val trustedSender: String? = null) {
             AtomicBadge(
                 trustedSender = trustedSender?.let {
                     Address.fromBase58(it)
-                }
+                },
             )
     }
 }

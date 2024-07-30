@@ -101,6 +101,7 @@ import com.wavesenterprise.sdk.node.domain.tx.Tx
 import com.wavesenterprise.sdk.node.domain.tx.UpdateContractTx
 import com.wavesenterprise.sdk.node.domain.tx.UpdatePolicyTx
 
+@Suppress("CyclomaticComplexMethod")
 fun <T : Tx, D : TxDto> mapDto(request: SignRequest<T>): SignRequestDto<D> =
     when (request) {
         is AtomicSignRequest -> request.toDto() // todo extract lambda for reuse?
@@ -127,6 +128,7 @@ fun <T : Tx, D : TxDto> mapDto(request: SignRequest<T>): SignRequestDto<D> =
         is CreateContractSignRequest -> request.toDto()
     } as SignRequestDto<D>
 
+@Suppress("CyclomaticComplexMethod")
 fun <T : Tx, D : TxDto> mapDto(tx: T): D =
     when (val tx = tx as Tx) {
         is AtomicTx -> tx.toDto()

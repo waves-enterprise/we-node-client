@@ -29,6 +29,6 @@ object ValidationProofMapper {
     internal fun domainInternal(validationProof: ProtoValidationProof): ValidationProof =
         ValidationProof(
             validatorPublicKey = PublicKey(validationProof.validatorPublicKey.byteArray()),
-            signature = Signature(validationProof.signature.byteArray())
+            signature = Signature(validationProof.signature.byteArray()),
         )
 }

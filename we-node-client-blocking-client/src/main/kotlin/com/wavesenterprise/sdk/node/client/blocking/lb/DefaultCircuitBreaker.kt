@@ -7,20 +7,20 @@ class DefaultCircuitBreaker(
     override val nodeCircuitBreakers: Map<String, NodeCircuitBreaker>,
 ) : CircuitBreaker {
 
-    private val LOG = LoggerFactory.getLogger(DefaultCircuitBreaker::class.java)
+    private val logger = LoggerFactory.getLogger(DefaultCircuitBreaker::class.java)
 
     override fun invocationFailed(nodeName: String, index: Int) {
         with(getCircuitBreakerHandler(nodeName)) {
-            LOG.warn(
+            logger.warn(
                 "Node with index $index, name $nodeName will try " +
                     "to remove from rotation until $breakUntil," +
-                    " sequentialErrorCount $sequentialErrorCount"
+                    " sequentialErrorCount $sequentialErrorCount",
             )
             if (this.invocationFailed(circuitBreakerProperties.minDelay, circuitBreakerProperties.maxDelay)) {
-                LOG.warn(
+                logger.warn(
                     "Node with index $index, name $nodeName " +
                         "successfully removed from rotation until $breakUntil," +
-                        " sequentialErrorCount $sequentialErrorCount"
+                        " sequentialErrorCount $sequentialErrorCount",
                 )
             }
         }
@@ -32,7 +32,7 @@ class DefaultCircuitBreaker(
     }
 
     override fun isClosed(
-        nodeName: String
+        nodeName: String,
     ): Boolean = getCircuitBreakerHandler(nodeName).status() == CircuitBreakerStatus.CLOSED
 
     private fun getCircuitBreakerHandler(nodeName: String) =

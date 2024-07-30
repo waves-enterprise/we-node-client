@@ -17,6 +17,7 @@ data class Alias(val value: String) : SerializableToBytes {
 
         private const val ALIAS_START_INDEX = 8
 
+        @Suppress("MemberNameEqualsClassName")
         inline val String.alias: Alias get() = Alias(this)
     }
 
@@ -26,7 +27,7 @@ data class Alias(val value: String) : SerializableToBytes {
             byteArrayOf(ALIAS_VERSION),
             byteArrayOf(requireNotNull(networkByte)),
             numberToBytes(aliasBytes.size, 2),
-            aliasBytes
+            aliasBytes,
         )
     }
 }

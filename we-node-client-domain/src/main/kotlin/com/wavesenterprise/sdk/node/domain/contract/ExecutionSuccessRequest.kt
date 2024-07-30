@@ -5,5 +5,5 @@ import com.wavesenterprise.sdk.node.domain.TxId
 
 data class ExecutionSuccessRequest(
     val txId: TxId,
-    val results: List<DataEntry>
+    val results: List<DataEntry>,
 )

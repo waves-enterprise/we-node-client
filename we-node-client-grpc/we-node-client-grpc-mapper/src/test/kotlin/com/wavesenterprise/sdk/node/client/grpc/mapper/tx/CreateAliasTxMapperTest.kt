@@ -30,7 +30,7 @@ class CreateAliasTxMapperTest {
             timestamp = 1716881331027L
             feeAssetId = BytesValue.of(ByteString.copyFromUtf8("DnK5Xfi2wXUJx9BjK9X6ZpFdTLdq2GtWH9pWrcxcmrhB"))
             proofs += ByteString.copyFromUtf8(
-                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM"
+                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM",
             )
             senderAddress = ByteString.copyFromUtf8("3N9vL3apA4j2L5PojHW8TYmfHx9Lo2ZaKPB")
         }
@@ -46,7 +46,7 @@ class CreateAliasTxMapperTest {
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) },
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
                     version = txVersion,
-                )
+                ),
             )
         }
     }
@@ -62,7 +62,7 @@ class CreateAliasTxMapperTest {
             timestamp = 1716881331027L
             clearFeeAssetId()
             proofs += ByteString.copyFromUtf8(
-                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM"
+                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM",
             )
             senderAddress = ByteString.copyFromUtf8("3N9vL3apA4j2L5PojHW8TYmfHx9Lo2ZaKPB")
         }
@@ -78,7 +78,7 @@ class CreateAliasTxMapperTest {
                     proofs = grpcTx.proofsList.map { Signature(it.toByteArray()) },
                     senderAddress = Address(grpcTx.senderAddress.toByteArray()),
                     version = txVersion,
-                )
+                ),
             )
         }
     }

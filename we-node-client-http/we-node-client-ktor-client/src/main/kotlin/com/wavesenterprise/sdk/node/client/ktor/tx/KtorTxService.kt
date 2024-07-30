@@ -149,7 +149,7 @@ class KtorTxService(
     private val nodeUrl: URL,
     private val httpClient: HttpClient,
 ) : TxService {
-    @Suppress("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST", "CyclomaticComplexMethod")
     override suspend fun <T : Tx> sign(request: SignRequest<T>): T =
         when (request) {
             is AtomicSignRequest -> signDto(request.toDto()).toDomain()
@@ -184,7 +184,7 @@ class KtorTxService(
             setBody(request)
         }.body()
 
-    @Suppress("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST", "CyclomaticComplexMethod")
     override suspend fun <T : Tx> signAndBroadcast(request: SignRequest<T>): T =
         when (request) {
             is AtomicSignRequest -> signAndBroadcastDto(request.toDto()).toDomain()
@@ -219,7 +219,7 @@ class KtorTxService(
             setBody(request)
         }.body()
 
-    @Suppress("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST", "CyclomaticComplexMethod")
     override suspend fun <T : Tx> broadcast(tx: T): T =
         when (val tx = tx as Tx) {
             is AtomicTx -> broadcastDto(tx.toDto()).toDomain()

@@ -17,17 +17,19 @@ data class LeaseId(val txId: TxId) : SerializableToBytes {
         @JvmStatic
         fun fromByteArray(bytes: ByteArray): LeaseId =
             LeaseId(
-                bytes.txId
+                bytes.txId,
             )
 
         @JvmStatic
         fun fromBase58(string: String): LeaseId =
             fromByteArray(
-                WeBase58.decode(string)
+                WeBase58.decode(string),
             )
 
+        @Suppress("MemberNameEqualsClassName")
         inline val TxId.leaseId: LeaseId get() = LeaseId(this)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.leaseId: LeaseId get() = fromByteArray(this)
 
         inline val String.base58LeaseId: LeaseId get() = fromBase58(this)

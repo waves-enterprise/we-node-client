@@ -18,17 +18,19 @@ data class ContractId(val txId: TxId) : SerializableToBytes {
         @JvmStatic
         fun fromByteArray(bytes: ByteArray): ContractId =
             ContractId(
-                bytes.txId
+                bytes.txId,
             )
 
         @JvmStatic
         fun fromBase58(string: String): ContractId =
             fromByteArray(
-                WeBase58.decode(string)
+                WeBase58.decode(string),
             )
 
+        @Suppress("MemberNameEqualsClassName")
         inline val TxId.contractId: ContractId get() = ContractId(this)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.contractId: ContractId get() = fromByteArray(this)
 
         inline val String.base58ContractId: ContractId get() = fromBase58(this)

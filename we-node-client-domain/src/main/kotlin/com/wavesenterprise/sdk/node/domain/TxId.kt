@@ -14,11 +14,12 @@ data class TxId(val bytes: ByteArray) {
         @JvmStatic
         fun fromBase58(string: String): TxId =
             TxId(
-                WeBase58.decode(string)
+                WeBase58.decode(string),
             )
 
         val EMPTY = TxId(ByteArray(0))
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.txId: TxId get() = fromByteArray(this)
 
         inline val String.base58TxId: TxId get() = fromBase58(this)

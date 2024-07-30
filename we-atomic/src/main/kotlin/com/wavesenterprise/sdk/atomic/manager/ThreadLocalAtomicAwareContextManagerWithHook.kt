@@ -6,7 +6,7 @@ import com.wavesenterprise.sdk.atomic.context.EmptyAtomicAwareContext
 import com.wavesenterprise.sdk.node.domain.sign.AtomicSignRequest
 
 class ThreadLocalAtomicAwareContextManagerWithHook(
-    private val atomicAwareContextManagerHook: AtomicAwareContextManagerHook
+    private val atomicAwareContextManagerHook: AtomicAwareContextManagerHook,
 ) : AtomicAwareContextManager {
     override fun getContext(): AtomicAwareContext = contextHolder.get()
 

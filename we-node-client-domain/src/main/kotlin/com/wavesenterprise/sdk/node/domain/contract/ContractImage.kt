@@ -9,6 +9,7 @@ data class ContractImage(val value: String) : SerializableToBytes {
         fun fromString(value: String): ContractImage =
             ContractImage(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val String.contractImage: ContractImage get() = ContractImage(this)
     }
 

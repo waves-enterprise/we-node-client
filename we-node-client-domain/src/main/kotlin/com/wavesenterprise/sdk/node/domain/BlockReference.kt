@@ -6,6 +6,7 @@ data class BlockReference(val bytes: ByteArray) {
         fun fromByteArray(bytes: ByteArray): BlockReference =
             BlockReference(bytes)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.blockReference: BlockReference get() = BlockReference(this)
     }
 

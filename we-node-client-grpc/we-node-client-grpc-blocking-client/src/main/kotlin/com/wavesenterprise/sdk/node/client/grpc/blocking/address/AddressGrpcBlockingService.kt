@@ -30,14 +30,14 @@ class AddressGrpcBlockingService : AddressService {
 
     override fun signMessage(
         address: Address,
-        request: SignMessageRequest
+        request: SignMessageRequest,
     ): SignMessageResponse {
         TODO("Not yet implemented")
     }
 
     override fun verifyMessageSignature(
         address: Address,
-        request: VerifyMessageSignatureRequest
+        request: VerifyMessageSignatureRequest,
     ): VerifyMessageSignatureResponse {
         TODO("Not yet implemented")
     }

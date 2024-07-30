@@ -18,13 +18,15 @@ class AtomicAwareTxSigner(
                     is AtomicInnerSignRequest -> {
                         signRequest.withAtomicBadge(
                             AtomicBadge(
-                                trustedSender = getSignerAddress()
-                            )
+                                trustedSender = getSignerAddress(),
+                            ),
                         )
                     }
                     else -> throw IllegalArgumentException("Not atomic signable: $signRequest")
                 }
-            } else signRequest
+            } else {
+                signRequest
+            }
             txSigner.sign(signRequestResult)
         }
 }

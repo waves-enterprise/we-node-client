@@ -12,7 +12,7 @@ data class AtomicSignRequestDto(
     val sender: String,
     val password: String?,
     val fee: Long,
-    val transactions: List<AtomicSignInnerTxDto>
+    val transactions: List<AtomicSignInnerTxDto>,
 ) : SignRequestDto<AtomicTxDto> {
     companion object {
         @JvmStatic

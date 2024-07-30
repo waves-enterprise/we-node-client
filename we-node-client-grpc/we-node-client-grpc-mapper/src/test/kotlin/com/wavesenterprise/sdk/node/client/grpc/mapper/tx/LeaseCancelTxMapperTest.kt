@@ -29,7 +29,7 @@ class LeaseCancelTxMapperTest {
             timestamp = 1716881331027L
             leaseId = byteString("leaseId")
             proofs += byteString(
-                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM"
+                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM",
             )
             senderAddress = byteString("3N9vL3apA4j2L5PojHW8TYmfHx9Lo2ZaKPB")
         }
@@ -43,12 +43,12 @@ class LeaseCancelTxMapperTest {
                     fee = Fee(grpcTx.fee),
                     timestamp = Timestamp(grpcTx.timestamp),
                     leaseId = LeaseId(
-                        txId = TxId(grpcTx.leaseId.byteArray())
+                        txId = TxId(grpcTx.leaseId.byteArray()),
                     ),
                     proofs = grpcTx.proofsList.map { Signature(it.byteArray()) },
                     senderAddress = Address(grpcTx.senderAddress.byteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 }

@@ -14,5 +14,4 @@ interface NodeCircuitBreaker {
 enum class CircuitBreakerStatus {
     CLOSED,
     OPEN,
-    ;
 }

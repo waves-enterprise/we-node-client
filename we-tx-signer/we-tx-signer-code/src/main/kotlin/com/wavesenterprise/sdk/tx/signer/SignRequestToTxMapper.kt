@@ -42,6 +42,7 @@ import com.wavesenterprise.sdk.node.domain.sign.UpdatePolicySignRequest
 import com.wavesenterprise.sdk.node.domain.sign.UpdatePolicySignRequest.Companion.toTx
 import com.wavesenterprise.sdk.node.domain.tx.Tx
 
+@Suppress("CyclomaticComplexMethod")
 fun SignRequest<*>.mapToTx(senderPublicKey: PublicKey, chainId: ChainId): Tx =
     when (this) {
         is IssueSignRequest -> toTx(senderPublicKey, chainId)
@@ -66,6 +67,6 @@ fun SignRequest<*>.mapToTx(senderPublicKey: PublicKey, chainId: ChainId): Tx =
         is UpdatePolicySignRequest -> toTx(senderPublicKey)
         is AtomicSignRequest -> toTx(senderPublicKey)
         else -> throw IllegalArgumentException(
-            "The transaction ${this.javaClass.simpleName} does not require signing or is not supported by signer"
+            "The transaction ${this.javaClass.simpleName} does not require signing or is not supported by signer",
         )
     }

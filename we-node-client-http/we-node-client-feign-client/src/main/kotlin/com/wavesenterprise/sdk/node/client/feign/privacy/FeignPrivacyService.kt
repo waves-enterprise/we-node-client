@@ -25,18 +25,20 @@ class FeignPrivacyService(
             broadcast = request.broadcastTx,
         ).toDomain()
 
+    @Suppress("SwallowedException")
     override fun info(request: PolicyItemRequest): Optional<PolicyItemInfoResponse> =
         try {
             Optional.of(
                 wePrivacyServiceApiFeign.getPolicyItemInfo(
                     policyId = request.policyId.asBase58String(),
                     policyItemHash = request.dataHash.asBase58String(),
-                ).toDomain()
+                ).toDomain(),
             )
         } catch (ex: PolicyItemDataIsMissingException) {
             Optional.empty()
         }
 
+    @Suppress("SwallowedException")
     override fun data(request: PolicyItemRequest): Optional<Data> =
         try {
             Optional.of(
@@ -44,8 +46,8 @@ class FeignPrivacyService(
                     bytes = wePrivacyServiceApiFeign.getDataFromPrivacy(
                         policyId = request.policyId.asBase58String(),
                         policyItemHash = request.dataHash.asBase58String(),
-                    )
-                )
+                    ),
+                ),
             )
         } catch (ex: PolicyItemDataIsMissingException) {
             Optional.empty<Data>()

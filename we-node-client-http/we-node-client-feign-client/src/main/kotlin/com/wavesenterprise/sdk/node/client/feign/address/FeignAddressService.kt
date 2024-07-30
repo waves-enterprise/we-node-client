@@ -28,6 +28,7 @@ class FeignAddressService(
     override fun getAddressByPublicKey(publicKey: PublicKey): Address =
         weAddressServiceApiFeign.getAddressByPublicKey(publicKey.asBase58String()).toDomain()
 
+    @Suppress("SwallowedException")
     override fun getAddressValue(address: Address, key: DataKey): Optional<DataEntry> =
         try {
             weAddressServiceApiFeign.getAddressValue(
@@ -43,7 +44,7 @@ class FeignAddressService(
 
     override fun signMessage(
         address: Address,
-        request: SignMessageRequest
+        request: SignMessageRequest,
     ): SignMessageResponse =
         weAddressServiceApiFeign.signMessage(
             address = address.asBase58String(),
@@ -52,7 +53,7 @@ class FeignAddressService(
 
     override fun verifyMessageSignature(
         address: Address,
-        request: VerifyMessageSignatureRequest
+        request: VerifyMessageSignatureRequest,
     ): VerifyMessageSignatureResponse =
         weAddressServiceApiFeign.verifyMessageSignature(
             address = address.asBase58String(),

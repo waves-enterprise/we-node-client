@@ -9,6 +9,7 @@ data class TxVersion(val value: Int) : SerializableToBytes {
         fun fromInt(value: Int): TxVersion =
             TxVersion(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val Int.txVersion: TxVersion get() = TxVersion(this)
     }
 

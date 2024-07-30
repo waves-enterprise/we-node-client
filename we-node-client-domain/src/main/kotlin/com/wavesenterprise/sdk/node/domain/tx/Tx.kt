@@ -50,7 +50,7 @@ sealed interface Tx {
     fun withProof(proof: Signature): Tx
     fun withSenderAddress(senderAddress: Address): Tx
 
-    @Suppress("SpreadOperator")
+    @Suppress("SpreadOperator", "NestedBlockDepth")
     fun getBytes(networkByte: Byte): ByteArray {
         val txVersion = version
         val txVersionBytes = txVersion.getSignatureBytes(networkByte)
@@ -74,7 +74,7 @@ sealed interface Tx {
             val value = field.javaField?.get(this)
             if (txVersion.value >= annotation.sinceVersion) {
                 if (annotation.required && value == null) {
-                    throw IllegalStateException("${field.name} is required for signing in tx ${this::class.simpleName}")
+                    error("${field.name} is required for signing in tx ${this::class.simpleName}")
                 }
                 if (!annotation.required) {
                     if (value == null) {
@@ -101,7 +101,7 @@ sealed interface Tx {
                 if (value != null) {
                     throw IllegalArgumentException(
                         "The tx version $version does not support" +
-                            " the field ${field.name} by tx type - ${this.type()}"
+                            " the field ${field.name} by tx type - ${this.type()}",
                     )
                 }
             }
@@ -112,6 +112,7 @@ sealed interface Tx {
     companion object {
 
         @JvmStatic
+        @Suppress("CyclomaticComplexMethod")
         fun Tx.type(): TxType =
             when (this) {
                 is GenesisTx -> GENESIS

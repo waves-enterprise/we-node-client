@@ -46,8 +46,8 @@ class AtomicBroadcasterTest {
 
         val blockResult = atomicBroadcaster.doInAtomic { TestService().testBlock() }
         assertEquals(TEST_BLOCK_RESULT, blockResult)
-        verify { txSigner.sign(any<AtomicSignRequest>()) wasNot Called }
-        verify { txService.broadcast(any()) wasNot Called }
+        verify { txSigner wasNot Called }
+        verify { txService wasNot Called }
     }
 
     @Test

@@ -17,9 +17,10 @@ data class Data(val bytes: ByteArray) {
         @JvmStatic
         fun fromBase64(string: String): Data =
             Data(
-                BASE_64_DECODER.decode(string)
+                BASE_64_DECODER.decode(string),
             )
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.data: Data get() = Data(this)
 
         inline val String.base64Data: Data get() = fromBase64(this)

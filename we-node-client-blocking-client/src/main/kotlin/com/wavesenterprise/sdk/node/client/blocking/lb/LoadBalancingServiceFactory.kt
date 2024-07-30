@@ -13,6 +13,7 @@ import com.wavesenterprise.sdk.node.client.blocking.tx.TxService
 import com.wavesenterprise.sdk.node.client.blocking.util.NodeUtilsService
 import java.lang.reflect.Proxy
 
+@Suppress("TooManyFunctions")
 class LoadBalancingServiceFactory(
     private val strategy: LoadBalanceStrategy,
     private val retryStrategy: RetryStrategy,

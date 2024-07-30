@@ -32,6 +32,7 @@ import io.grpc.Status
 import io.grpc.StatusRuntimeException
 import java.util.Optional
 
+@Suppress("SpreadOperator")
 class ContractGrpcBlockingService(
     private val channel: Channel,
     private val clientInterceptors: List<ClientInterceptor> = emptyList(),
@@ -73,7 +74,7 @@ class ContractGrpcBlockingService(
                 } else {
                     throw GrpcNodeErrorMapper.mapToGeneralException(ex)
                 }
-            }
+            },
         )
 
     private fun parseDataKeyNotExistException(ex: StatusRuntimeException): DataKeyNotExistException =
@@ -81,7 +82,7 @@ class ContractGrpcBlockingService(
             nodeError = NodeError(
                 error = NodeErrorCode.CONTRACT_NOT_FOUND.code,
                 message = ex.message
-                    ?: ex.trailers.get(Metadata.Key.of(ERROR_CODE_KEY, Metadata.ASCII_STRING_MARSHALLER))
+                    ?: ex.trailers?.get(Metadata.Key.of(ERROR_CODE_KEY, Metadata.ASCII_STRING_MARSHALLER))
                     ?: "",
             ),
             cause = ex,

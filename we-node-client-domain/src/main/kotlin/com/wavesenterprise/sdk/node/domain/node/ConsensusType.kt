@@ -5,5 +5,4 @@ enum class ConsensusType {
     POA,
     POS,
     CFT,
-    ;
 }

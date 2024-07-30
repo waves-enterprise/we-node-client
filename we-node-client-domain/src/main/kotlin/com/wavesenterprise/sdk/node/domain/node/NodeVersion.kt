@@ -6,6 +6,7 @@ data class NodeVersion(val value: String) {
         fun fromString(value: String): NodeVersion =
             NodeVersion(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val String.nodeVersion: NodeVersion get() = NodeVersion(this)
     }
 }

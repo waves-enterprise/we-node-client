@@ -1,9 +1,5 @@
-import com.google.protobuf.gradle.generateProtoTasks
 import com.google.protobuf.gradle.id
-import com.google.protobuf.gradle.ofSourceSet
-import com.google.protobuf.gradle.plugins
 import com.google.protobuf.gradle.protobuf
-import com.google.protobuf.gradle.protoc
 
 val protobufVersion: String by project
 val ioGrpcVersion: String by project
@@ -31,10 +27,9 @@ dependencies {
 }
 
 val grpcJavaPlugin = "grpc"
+val buildDirectory = layout.buildDirectory
 
 protobuf {
-    generatedFilesBaseDir = "$buildDir/generated-sources"
-
     val archPostFix = if (osxArch == "m1") ":osx-x86_64" else ""
 
     protoc {
@@ -63,19 +58,13 @@ sourceSets {
     main {
         java {
             srcDirs(
-                "$buildDir/generated-sources/main/java",
-                "$buildDir/generated-sources/main/grpc",
-                "$buildDir/generated-sources/main/kotlin",
+                "$projectDir/build/generated/source/main/java",
+                "$projectDir/build/generated/source/main/grpc",
+                "$projectDir/build/generated/source/main/kotlin",
             )
         }
         proto {
             "$projectDir/../proto"
         }
-    }
-}
-
-ktlint {
-    filter {
-        exclude { it.file.absolutePath.contains("${File.separator}generated-sources${File.separator}") }
     }
 }

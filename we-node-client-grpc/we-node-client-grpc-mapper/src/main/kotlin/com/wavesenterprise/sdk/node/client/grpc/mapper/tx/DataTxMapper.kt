@@ -34,7 +34,7 @@ object DataTxMapper {
             fee = Fee(tx.fee),
             feeAssetId = tx.feeAssetIdOrNull?.let {
                 FeeAssetId(
-                    txId = TxId(it.value.byteArray())
+                    txId = TxId(it.value.byteArray()),
                 )
             },
             timestamp = Timestamp(tx.timestamp),

@@ -26,9 +26,9 @@ internal class WeContractServiceApiFeignTest {
     private val feignNodeErrorDecoder: FeignNodeErrorDecoder = spyk(
         FeignNodeErrorDecoder(
             FeignNodeErrorMapper(
-                jacksonObjectMapper()
-            )
-        )
+                jacksonObjectMapper(),
+            ),
+        ),
     )
 
     @BeforeAll
@@ -110,7 +110,7 @@ internal class WeContractServiceApiFeignTest {
             assertEquals("image", contractInfoDto.image)
             assertEquals(
                 "b48d1de58c39d2160a4b8a5a9cae90818da1212742ec1f11fba1209bed0a212c",
-                contractInfoDto.imageHash
+                contractInfoDto.imageHash,
             )
             assertEquals(1, contractInfoDto.version)
             assertEquals(true, contractInfoDto.active)
@@ -125,7 +125,7 @@ internal class WeContractServiceApiFeignTest {
             assertEquals("600", this.nodeError.error.toString())
             assertEquals(
                 "Contract 'CgqRPcPnexY533gCh2SSvBXh5bca1qMs7KFGntawHGww' is not found",
-                this.nodeError.message
+                this.nodeError.message,
             )
         }
     }
@@ -142,7 +142,7 @@ internal class WeContractServiceApiFeignTest {
             assertEquals(0, timestamp)
             assertEquals(
                 "64jhcF6DyvDntTDHFhcDaxVEXtd52mqC6uWbEiysxLAsab3NU4jNBWUS4TrAdGfaMwiQ5eybP8zv5MWBBUauk1pA",
-                signature
+                signature,
             )
             assertEquals(TxStatusDto.SUCCESS, status)
         }

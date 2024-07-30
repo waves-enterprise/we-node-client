@@ -25,15 +25,16 @@ class LoadBalancingNodeServiceHandler(
         val methodName = method.name
         logger.debug("Invoking ${proxy.javaClass} method $methodName")
         val clientsWithArgs = strategy.resolve(method, args)
-        if (clientsWithArgs.isEmpty())
+        if (clientsWithArgs.isEmpty()) {
             throw NoNodesToHandleRequestException(
-                "No LoadBalancingServiceFactory is configured to handle request $methodName"
+                "No LoadBalancingServiceFactory is configured to handle request $methodName",
             )
+        }
         logger.debug("Got ${clientsWithArgs.size} nodes to handle invocation of method $methodName")
         return clientsWithArgs.dispatch(method)
     }
 
-    @Suppress("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST", "TooGenericExceptionCaught", "SpreadOperator", "ThrowsCount")
     private fun <T> List<ClientWithArgs>.dispatch(
         method: Method,
     ): T {

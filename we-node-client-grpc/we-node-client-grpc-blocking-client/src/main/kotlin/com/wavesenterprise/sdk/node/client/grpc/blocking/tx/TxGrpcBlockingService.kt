@@ -9,6 +9,7 @@ import com.wavesenterprise.sdk.node.domain.tx.UtxSize
 import io.grpc.Channel
 import java.util.Optional
 
+@Suppress("UnusedPrivateProperty")
 class TxGrpcBlockingService(
     private val channel: Channel,
 ) : TxService, AutoCloseable {

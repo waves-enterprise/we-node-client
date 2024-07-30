@@ -6,6 +6,7 @@ data class Password(val value: String) {
         fun fromString(value: String): Password =
             Password(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val String.password: Password get() = Password(this)
     }
 }

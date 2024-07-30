@@ -7,6 +7,7 @@ import feign.Headers
 import feign.Param
 import feign.RequestLine
 
+@Suppress("TooManyFunctions")
 interface WeBlocksServiceApiFeign {
 
     @Headers("Content-Type: application/json")
@@ -36,7 +37,7 @@ interface WeBlocksServiceApiFeign {
     @RequestLine("GET /blocks/headers/seq/{from}/{to}")
     fun getBlocksHeadersSequence(
         @Param("from") fromHeight: Long,
-        @Param("to") toHeight: Long
+        @Param("to") toHeight: Long,
     ): List<BlockHeadersDto>
 
     @Headers("Content-Type: application/json")

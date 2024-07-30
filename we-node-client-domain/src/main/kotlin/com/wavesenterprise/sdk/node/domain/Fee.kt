@@ -19,8 +19,10 @@ data class Fee(val value: Long) : SerializableToBytes {
         fun fromInt(value: Int): Fee =
             Fee(value.toLong())
 
+        @Suppress("MemberNameEqualsClassName")
         inline val Long.fee: Fee get() = Fee(this)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val Int.fee: Fee get() = Fee(this.toLong())
     }
 

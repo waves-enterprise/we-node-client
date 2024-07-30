@@ -42,6 +42,7 @@ class BlockchainEventsGrpcBlockingService(
                 }
         }
 
+    @Suppress("TooGenericExceptionCaught")
     private fun eventsOrThrow(
         startFrom: StartFrom,
         protoEventsFilters: List<UtilEventsSubscribeOnRequest.EventsFilter>,
@@ -64,13 +65,13 @@ class BlockchainEventsGrpcBlockingService(
         }
 
     private fun eventsFromGenesis(
-        filters: List<UtilEventsSubscribeOnRequest.EventsFilter>
+        filters: List<UtilEventsSubscribeOnRequest.EventsFilter>,
     ): GrpcEventsCall =
         grpcEventsCall(
             SubscribeOnRequest.newBuilder()
                 .setGenesisBlock(GENESIS_BLOCK)
                 .addAllEventsFilters(filters)
-                .build()
+                .build(),
         )
 
     private fun eventsFromBlockSignature(
@@ -81,7 +82,7 @@ class BlockchainEventsGrpcBlockingService(
             SubscribeOnRequest.newBuilder()
                 .setBlockSignature(signature)
                 .addAllEventsFilters(filters)
-                .build()
+                .build(),
         )
 
     private fun eventsFromCurrentEvent(
@@ -91,7 +92,7 @@ class BlockchainEventsGrpcBlockingService(
             SubscribeOnRequest.newBuilder()
                 .setCurrentEvent(CURRENT_EVENT)
                 .addAllEventsFilters(filters)
-                .build()
+                .build(),
         )
 
     private fun grpcEventsCall(

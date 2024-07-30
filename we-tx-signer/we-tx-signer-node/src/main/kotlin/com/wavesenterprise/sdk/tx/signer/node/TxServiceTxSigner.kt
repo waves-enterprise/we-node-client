@@ -17,16 +17,14 @@ class TxServiceTxSigner(
             txService.sign(
                 signRequest
                     .withAddress(senderAddress)
-                    .withPassword(password)
+                    .withPassword(password),
             )
         }
 
     private fun checkSenderAddress(address: Address): Address =
-        if (address == Address.EMPTY) {
-            throw IllegalArgumentException("Sender address can not be empty [senderAddress = `${Address.EMPTY}`")
-        } else {
-            address
-        }
+        require(address != Address.EMPTY) {
+            "Sender address cannot be empty [senderAddress = `${Address.EMPTY}`]"
+        }.let { address }
 
     override fun getSignerAddress(): Address = signCredentialsProvider.credentials().senderAddress
 }

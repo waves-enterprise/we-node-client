@@ -4,5 +4,4 @@ enum class TxStatus {
     FAILURE,
     SUCCESS,
     ERROR,
-    ;
 }

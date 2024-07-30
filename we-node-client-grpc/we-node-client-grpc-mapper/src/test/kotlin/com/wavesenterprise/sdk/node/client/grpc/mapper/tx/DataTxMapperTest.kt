@@ -54,7 +54,7 @@ class DataTxMapperTest {
             }
             timestamp = 1716881331027L
             proofs += byteString(
-                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM"
+                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM",
             )
             senderAddress = byteString("3N9vL3apA4j2L5PojHW8TYmfHx9Lo2ZaKPB")
         }
@@ -68,19 +68,19 @@ class DataTxMapperTest {
                     data = listOf(
                         DataEntry(
                             key = DataKey("key"),
-                            value = DataValue.StringDataValue("value")
+                            value = DataValue.StringDataValue("value"),
                         ),
                         DataEntry(
                             key = DataKey("key"),
-                            value = DataValue.BooleanDataValue(true)
+                            value = DataValue.BooleanDataValue(true),
                         ),
                         DataEntry(
                             key = DataKey("key"),
-                            value = DataValue.IntegerDataValue(1)
+                            value = DataValue.IntegerDataValue(1),
                         ),
                         DataEntry(
                             key = DataKey("key"),
-                            value = DataValue.BinaryDataValue("binaryValue".toByteArray())
+                            value = DataValue.BinaryDataValue("binaryValue".toByteArray()),
                         ),
                     ),
                     fee = Fee(grpcTx.fee),
@@ -90,7 +90,7 @@ class DataTxMapperTest {
                     senderAddress = Address(grpcTx.senderAddress.byteArray()),
                     authorAddress = Address(grpcTx.authorPublicKey.byteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 
@@ -123,7 +123,7 @@ class DataTxMapperTest {
             clearFeeAssetId()
             timestamp = 1716881331027L
             proofs += byteString(
-                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM"
+                "2Gns72hraH5yay3eiWeyHQEA1wTqiiAztaLjHinEYX91FEv62HFW38Hq89GnsEJFHUvo9KHYtBBrb8hgTA9wN7DM",
             )
             senderAddress = byteString("3N9vL3apA4j2L5PojHW8TYmfHx9Lo2ZaKPB")
         }
@@ -137,19 +137,19 @@ class DataTxMapperTest {
                     data = listOf(
                         DataEntry(
                             key = DataKey("key"),
-                            value = DataValue.StringDataValue("value")
+                            value = DataValue.StringDataValue("value"),
                         ),
                         DataEntry(
                             key = DataKey("key"),
-                            value = DataValue.BooleanDataValue(true)
+                            value = DataValue.BooleanDataValue(true),
                         ),
                         DataEntry(
                             key = DataKey("key"),
-                            value = DataValue.IntegerDataValue(1)
+                            value = DataValue.IntegerDataValue(1),
                         ),
                         DataEntry(
                             key = DataKey("key"),
-                            value = DataValue.BinaryDataValue("binaryValue".toByteArray())
+                            value = DataValue.BinaryDataValue("binaryValue".toByteArray()),
                         ),
                     ),
                     fee = Fee(grpcTx.fee),
@@ -159,7 +159,7 @@ class DataTxMapperTest {
                     senderAddress = Address(grpcTx.senderAddress.byteArray()),
                     authorAddress = Address(grpcTx.authorPublicKey.byteArray()),
                     version = txVersion,
-                )
+                ),
             )
     }
 }

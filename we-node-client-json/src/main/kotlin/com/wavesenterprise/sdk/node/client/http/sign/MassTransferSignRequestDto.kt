@@ -22,7 +22,7 @@ data class MassTransferSignRequestDto(
                 sender = senderAddress.asBase58String(),
                 password = password?.value,
                 fee = fee.value,
-                transfers = transfers.map { it.toDto() }
+                transfers = transfers.map { it.toDto() },
             )
     }
 }

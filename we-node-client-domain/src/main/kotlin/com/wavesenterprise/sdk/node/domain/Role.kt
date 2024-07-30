@@ -2,6 +2,7 @@ package com.wavesenterprise.sdk.node.domain
 
 import com.wavesenterprise.sdk.node.domain.sign.SerializableToBytes
 
+@Suppress("MagicNumber")
 enum class Role(val code: Int) : SerializableToBytes {
     MINER(1),
     ISSUER(2),
@@ -14,5 +15,6 @@ enum class Role(val code: Int) : SerializableToBytes {
     SENDER(9),
     CONTRACT_VALIDATOR(10),
     ;
+
     override fun getSignatureBytes(networkByte: Byte?): ByteArray = byteArrayOf(this.code.toByte())
 }

@@ -28,7 +28,7 @@ object BlockchainEventMapper {
                     BlockchainEvent.MicroBlockAppended(
                         txs = txsList.map {
                             it.domain()
-                        }
+                        },
                     )
                 }
 

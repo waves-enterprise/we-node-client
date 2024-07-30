@@ -16,9 +16,10 @@ data class IssueTxName(val bytes: ByteArray) : SerializableToBytes {
         @JvmStatic
         fun fromBase58(string: String): IssueTxName =
             IssueTxName(
-                WeBase58.decode(string)
+                WeBase58.decode(string),
             )
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.issueTxName: IssueTxName get() = IssueTxName(this)
 
         inline val String.base58IssueTxName: IssueTxName get() = fromBase58(this)

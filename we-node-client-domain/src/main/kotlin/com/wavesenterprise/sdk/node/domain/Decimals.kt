@@ -8,6 +8,7 @@ data class Decimals(val value: Byte) : SerializableToBytes {
         fun fromByte(value: Byte): Decimals =
             Decimals(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val Byte.decimals: Decimals get() = Decimals(this)
     }
 

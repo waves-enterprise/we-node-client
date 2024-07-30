@@ -48,7 +48,7 @@ class GrpcTxService(
         stub.transactionInfo(
             transactionInfoRequest {
                 this.txId = txId.asBase58String() // todo: ask why tdId is string
-            }
+            },
         ).domain()
 
     override fun close() {

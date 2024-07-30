@@ -15,16 +15,20 @@ fun BlockchainEventsService.fromGenesis(filtersBuilder: EventsFilterContext.() -
         SubscribeOnRequest(
             startFrom = StartFrom.Genesis,
             filters = EventsFilterContextImpl().apply(filtersBuilder).build(),
-        )
+        ),
     )
 
 @BlockchainEventsDsl
-fun BlockchainEventsService.fromBlock(signature: Signature, filtersBuilder: EventsFilterContext.() -> Unit = {}): Flux<BlockchainEvent> =
+fun BlockchainEventsService.fromBlock(
+    signature: Signature,
+    filtersBuilder: EventsFilterContext.() -> Unit = {
+    },
+): Flux<BlockchainEvent> =
     events(
         SubscribeOnRequest(
             startFrom = StartFrom.BlockSignature(signature),
             filters = EventsFilterContextImpl().apply(filtersBuilder).build(),
-        )
+        ),
     )
 
 @BlockchainEventsDsl
@@ -33,5 +37,5 @@ fun BlockchainEventsService.fromCurrent(filtersBuilder: EventsFilterContext.() -
         SubscribeOnRequest(
             startFrom = StartFrom.Current,
             filters = EventsFilterContextImpl().apply(filtersBuilder).build(),
-        )
+        ),
     )

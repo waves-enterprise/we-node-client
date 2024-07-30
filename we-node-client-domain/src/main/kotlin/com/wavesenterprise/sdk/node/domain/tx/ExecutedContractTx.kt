@@ -18,7 +18,8 @@ data class ExecutedContractTx(
     val tx: ExecutableTx,
     val results: List<DataEntry>,
     val resultsHash: Hash?,
-    val fee: Fee = Fee(0), // TODO: resolve problems with versioning
+    // TODO: resolve problems with versioning
+    val fee: Fee = Fee(0),
     val validationProofs: List<ValidationProof>?,
     override val timestamp: Timestamp,
     override val atomicBadge: AtomicBadge?,

@@ -62,8 +62,8 @@ internal class TxServiceTxSignerTest {
             txServiceTxSigner.sign(createContractSignRequest(senderAddress = Address.EMPTY))
         }.apply {
             assertEquals(
-                "Sender address can not be empty [senderAddress = `${Address.EMPTY}`",
-                this.message
+                "Sender address cannot be empty [senderAddress = `${Address.EMPTY}`]",
+                this.message,
             )
         }
     }

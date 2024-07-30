@@ -45,7 +45,7 @@ data class CallContractSignRequest(
             atomicBadge = atomicBadge,
             proofs = listOf(),
             senderAddress = senderAddress,
-            version = requireNotNull(version)
+            version = requireNotNull(version),
         )
     }
 }

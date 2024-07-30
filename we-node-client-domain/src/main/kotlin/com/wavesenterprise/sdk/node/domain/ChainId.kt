@@ -8,6 +8,7 @@ data class ChainId(val value: Byte) : SerializableToBytes {
         fun fromByte(value: Byte): ChainId =
             ChainId(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val Byte.chainId: ChainId get() = ChainId(this)
     }
 

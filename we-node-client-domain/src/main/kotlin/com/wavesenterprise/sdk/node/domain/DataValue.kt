@@ -7,6 +7,7 @@ sealed interface DataValue {
             fun fromLong(value: Long): IntegerDataValue =
                 IntegerDataValue(value)
 
+            @Suppress("MemberNameEqualsClassName")
             inline val Long.integerDataValue: IntegerDataValue
                 get() = IntegerDataValue(this)
         }
@@ -18,6 +19,7 @@ sealed interface DataValue {
             fun fromBoolean(value: Boolean): BooleanDataValue =
                 BooleanDataValue(value)
 
+            @Suppress("MemberNameEqualsClassName")
             inline val Boolean.booleanDataValue: BooleanDataValue
                 get() = BooleanDataValue(this)
         }
@@ -29,6 +31,7 @@ sealed interface DataValue {
             fun fromByteArray(value: ByteArray): BinaryDataValue =
                 BinaryDataValue(value)
 
+            @Suppress("MemberNameEqualsClassName")
             inline val ByteArray.binaryDataValue: BinaryDataValue
                 get() = BinaryDataValue(this)
         }
@@ -55,6 +58,7 @@ sealed interface DataValue {
             fun fromString(value: String): StringDataValue =
                 StringDataValue(value)
 
+            @Suppress("MemberNameEqualsClassName")
             inline val String.stringDataValue: StringDataValue
                 get() = StringDataValue(this)
         }

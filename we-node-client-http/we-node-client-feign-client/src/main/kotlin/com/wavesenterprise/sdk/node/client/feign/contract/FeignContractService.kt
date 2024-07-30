@@ -42,6 +42,7 @@ class FeignContractService(
             matches = contractKeysRequest.matches,
         ).map { it.toDomain() }
 
+    @Suppress("SwallowedException")
     override fun getContractKey(contractKeyRequest: ContractKeyRequest): Optional<DataEntry> =
         try {
             weContractServiceApiFeign.contractKey(
@@ -52,6 +53,7 @@ class FeignContractService(
             Optional.empty()
         }
 
+    @Suppress("SwallowedException")
     override fun getContractInfo(contractId: ContractId): Optional<ContractInfo> =
         try {
             Optional.of(weContractServiceApiFeign.contractInfo(contractId.asBase58String()).toDomain())

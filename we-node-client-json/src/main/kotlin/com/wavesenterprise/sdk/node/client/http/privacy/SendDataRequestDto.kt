@@ -13,7 +13,8 @@ data class SendDataRequestDto(
     val data: String,
     val info: PolicyItemFileInfoDto,
     val fee: Long,
-    val type: String = "", // TODO
+    // TODO
+    val type: String = "",
     val atomicBadge: AtomicBadgeDto? = null,
     val password: String? = null,
     val version: Int? = null,

@@ -51,19 +51,23 @@ internal class WeTxApiFeignTest {
                 fee = 0L,
                 params = listOf(
                     DataEntryDto(
-                        key = "action", type = "string", value = "registerPerson"
+                        key = "action",
+                        type = "string",
+                        value = "registerPerson",
                     ),
                     DataEntryDto(
-                        key = "arg", type = "string", value = "{\"snils\": \"12345\",\"name\": \"Vasya\",\"age\": 35}"
-                    )
+                        key = "arg",
+                        type = "string",
+                        value = "{\"snils\": \"12345\",\"name\": \"Vasya\",\"age\": 35}",
+                    ),
                 ),
                 version = 2,
                 contractVersion = 1,
                 sender = "3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX",
                 password = null,
                 feeAssetId = null,
-                atomicBadge = null
-            )
+                atomicBadge = null,
+            ),
         )
 
         assertEquals("Gv5RFssBGVZJRDoN5i9s8w6EkMKTzUCiJ5zxeAuXhb8c", signedTxResponse.id)
@@ -79,13 +83,13 @@ internal class WeTxApiFeignTest {
                     DataEntryDto(
                         key = "action",
                         type = "string",
-                        value = "createContractWithInitialValue"
+                        value = "createContractWithInitialValue",
                     ),
                     DataEntryDto(
                         key = "createContract",
                         type = "string",
-                        value = "ID_1"
-                    )
+                        value = "ID_1",
+                    ),
                 ),
                 version = 2,
                 sender = "3M3ybNZvLG7o7rnM4F7ViRPnDTfVggdfmRX",
@@ -95,8 +99,8 @@ internal class WeTxApiFeignTest {
                 apiVersion = null,
                 validationPolicy = null,
                 imageHash = "586d70cb288e82198a924871d75849c263c51b205764fa3e51755e54fcde18e8",
-                image = "registry.weintegrator.com/icore-sc/we-contract-sdk/samples/demo-example:1.0.1"
-            )
+                image = "registry.weintegrator.com/icore-sc/we-contract-sdk/samples/demo-example:1.0.1",
+            ),
         )
 
         assertEquals("5inUANAmDzRfq5f1Yv7HBTm8G4AREPfeKCntaEDDqVbU", createContractTxDto.id)

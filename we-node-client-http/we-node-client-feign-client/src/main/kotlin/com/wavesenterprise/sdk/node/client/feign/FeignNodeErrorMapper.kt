@@ -32,7 +32,7 @@ class FeignNodeErrorMapper(
     private val objectMapper: ObjectMapper,
 ) {
 
-    private val LOG = LoggerFactory.getLogger(FeignNodeErrorMapper::class.java)
+    private val logger = LoggerFactory.getLogger(FeignNodeErrorMapper::class.java)
 
     fun mapToGeneralException(ex: Exception): NodeException {
         val nodeError: NodeError? = tryParseError((ex as FeignException).contentUTF8())
@@ -59,7 +59,7 @@ class FeignNodeErrorMapper(
 
     private fun decodeUnexpectedExceptionWithNodeError(
         error: NodeError,
-        feignException: FeignException
+        feignException: FeignException,
     ): NodeException? =
         when (feignException) {
             is BadRequest -> NodeBadRequestException(nodeError = error, cause = feignException)
@@ -68,11 +68,12 @@ class FeignNodeErrorMapper(
             else -> null
         }
 
+    @Suppress("TooGenericExceptionCaught")
     private fun tryParseError(content: String) =
         try {
             objectMapper.readValue<NodeError>(content)
         } catch (e: Exception) {
-            LOG.warn("Unable to parse node error, response content: $content", e)
+            logger.warn("Unable to parse node error, response content: $content", e)
             null
         }
 }
