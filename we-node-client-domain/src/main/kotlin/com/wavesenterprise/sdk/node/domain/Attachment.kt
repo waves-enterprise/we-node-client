@@ -19,6 +19,7 @@ data class Attachment(val bytes: ByteArray) : SerializableToBytes {
                 WeBase58.decode(string),
             )
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.attachment: Attachment get() = Attachment(this)
 
         inline val String.base58Attachment: Attachment get() = fromBase58(this)

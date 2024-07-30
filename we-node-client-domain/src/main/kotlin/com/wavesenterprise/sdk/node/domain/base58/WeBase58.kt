@@ -73,6 +73,7 @@ object WeBase58 {
      * @throws IOException when decoding failed
      */
     @JvmStatic
+    @Suppress("MagicNumber")
     fun decode(input: String): ByteArray {
         if (input.isEmpty()) {
             return ByteArray(0)

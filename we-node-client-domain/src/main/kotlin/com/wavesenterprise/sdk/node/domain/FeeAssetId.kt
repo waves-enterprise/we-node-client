@@ -26,8 +26,10 @@ data class FeeAssetId(val txId: TxId) : SerializableToBytes {
                 WeBase58.decode(string),
             )
 
+        @Suppress("MemberNameEqualsClassName")
         inline val TxId.feeAssetId: FeeAssetId get() = FeeAssetId(this)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.feeAssetId: FeeAssetId get() = fromByteArray(this)
 
         inline val String.base58FeeAssetId: FeeAssetId get() = fromBase58(this)

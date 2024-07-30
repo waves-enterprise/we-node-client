@@ -19,6 +19,7 @@ data class ScriptName(val bytes: ByteArray) : SerializableToBytes {
                 WeBase58.decode(string),
             )
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.scriptName: ScriptName get() = ScriptName(this)
 
         inline val String.base58ScriptName: ScriptName get() = ScriptName.fromBase58(this)

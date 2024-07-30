@@ -26,8 +26,10 @@ data class LeaseId(val txId: TxId) : SerializableToBytes {
                 WeBase58.decode(string),
             )
 
+        @Suppress("MemberNameEqualsClassName")
         inline val TxId.leaseId: LeaseId get() = LeaseId(this)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.leaseId: LeaseId get() = fromByteArray(this)
 
         inline val String.base58LeaseId: LeaseId get() = fromBase58(this)

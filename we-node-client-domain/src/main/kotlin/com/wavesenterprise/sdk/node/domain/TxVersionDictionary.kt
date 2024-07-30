@@ -18,6 +18,7 @@ object TxVersionDictionary {
         "No transaction $type version supports $features"
     }
 
+    @Suppress("LongMethod", "MagicNumber")
     private fun describeDictionaryTxVersions() = transactions(
         TxType.REGISTER_NODE has versions(
             1 with noFeatures,

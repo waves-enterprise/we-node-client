@@ -9,6 +9,7 @@ data class Amount(val value: Long) : SerializableToBytes {
         fun fromLong(value: Long): Amount =
             Amount(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val Long.amount: Amount get() = Amount(this)
     }
 

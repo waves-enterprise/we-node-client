@@ -16,6 +16,7 @@ data class Signature(val bytes: ByteArray) {
             WeBase58.decode(string)
                 .let(::Signature)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.signature: Signature get() = Signature(this)
 
         inline val String.base58Signature: Signature get() = fromBase58(this)

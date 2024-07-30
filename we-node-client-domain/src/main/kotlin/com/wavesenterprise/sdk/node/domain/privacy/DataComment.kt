@@ -6,6 +6,7 @@ data class DataComment(val value: String) {
         fun fromString(value: String): DataComment =
             DataComment(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val String.dataComment: DataComment get() = DataComment(this)
     }
 }

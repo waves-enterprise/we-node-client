@@ -81,7 +81,7 @@ object ContractTransactionResponseMapper {
                 contractVersion = ContractVersion.fromInt(callData.contractVersion),
             )
             null, DataCase.DATA_NOT_SET ->
-                throw IllegalStateException("ContractTransaction.dataCase shouldn't be null or unset")
+                error("ContractTransaction.dataCase shouldn't be null or unset")
         }
     }
 }

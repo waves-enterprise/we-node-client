@@ -42,6 +42,7 @@ import com.wavesenterprise.sdk.node.domain.sign.UpdatePolicySignRequest
 import com.wavesenterprise.sdk.node.domain.sign.UpdatePolicySignRequest.Companion.toTx
 import com.wavesenterprise.sdk.node.domain.tx.Tx
 
+@Suppress("CyclomaticComplexMethod")
 fun SignRequest<*>.mapToTx(senderPublicKey: PublicKey, chainId: ChainId): Tx =
     when (this) {
         is IssueSignRequest -> toTx(senderPublicKey, chainId)

@@ -6,6 +6,7 @@ data class BlockVersion(val value: Int) {
         fun fromInt(value: Int): BlockVersion =
             BlockVersion(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val Int.blockVersion: BlockVersion get() = BlockVersion(this)
     }
 }

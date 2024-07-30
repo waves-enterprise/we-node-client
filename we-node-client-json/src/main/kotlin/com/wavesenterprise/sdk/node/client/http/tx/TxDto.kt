@@ -46,6 +46,7 @@ sealed interface TxDto {
 
     companion object {
         @JvmStatic
+        @Suppress("CyclomaticComplexMethod")
         fun TxDto.toDomain(): Tx =
             when (this) {
                 is CallContractTxDto -> CallContractTxDto.toDomainInternal(this)

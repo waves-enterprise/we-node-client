@@ -2,6 +2,7 @@ package com.wavesenterprise.sdk.node.domain
 
 import com.wavesenterprise.sdk.node.domain.sign.SerializableToBytes
 
+@Suppress("MagicNumber")
 enum class Role(val code: Int) : SerializableToBytes {
     MINER(1),
     ISSUER(2),

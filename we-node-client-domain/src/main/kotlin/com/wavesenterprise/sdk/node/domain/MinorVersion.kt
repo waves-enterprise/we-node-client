@@ -6,6 +6,7 @@ data class MinorVersion(val value: Int) {
         fun fromInt(value: Int): MinorVersion =
             MinorVersion(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val Int.minorVersion: MinorVersion get() = MinorVersion(this)
     }
 }

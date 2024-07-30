@@ -6,6 +6,7 @@ data class DataAuthor(val value: String) {
         fun fromString(value: String): DataAuthor =
             DataAuthor(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val String.dataAuthor: DataAuthor get() = DataAuthor(this)
     }
 }

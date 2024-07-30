@@ -27,8 +27,10 @@ data class ContractId(val txId: TxId) : SerializableToBytes {
                 WeBase58.decode(string),
             )
 
+        @Suppress("MemberNameEqualsClassName")
         inline val TxId.contractId: ContractId get() = ContractId(this)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.contractId: ContractId get() = fromByteArray(this)
 
         inline val String.base58ContractId: ContractId get() = fromBase58(this)

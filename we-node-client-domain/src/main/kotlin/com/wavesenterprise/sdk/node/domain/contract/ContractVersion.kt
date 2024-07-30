@@ -12,6 +12,7 @@ data class ContractVersion(val value: Int) : SerializableToBytes {
         @JvmStatic
         fun ContractVersion.update() = ContractVersion(this.value + 1)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val Int.contractVersion: ContractVersion get() = ContractVersion(this)
     }
 

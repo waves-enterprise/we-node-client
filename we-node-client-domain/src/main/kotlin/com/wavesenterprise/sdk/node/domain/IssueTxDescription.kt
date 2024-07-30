@@ -19,6 +19,7 @@ data class IssueTxDescription(val bytes: ByteArray) : SerializableToBytes {
                 WeBase58.decode(string),
             )
 
+        @Suppress("MemberNameEqualsClassName")
         inline val ByteArray.issueTxDescription: IssueTxDescription get() = IssueTxDescription(this)
 
         inline val String.base58IssueTxDescription: IssueTxDescription get() = fromBase58(this)

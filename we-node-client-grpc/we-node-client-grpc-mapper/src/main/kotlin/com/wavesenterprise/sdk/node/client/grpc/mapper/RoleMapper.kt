@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.wavesenterprise.sdk.node.client.grpc.mapper
 
 import com.wavesenterprise.sdk.node.domain.Role

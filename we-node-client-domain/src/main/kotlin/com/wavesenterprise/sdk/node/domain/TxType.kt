@@ -1,5 +1,6 @@
 package com.wavesenterprise.sdk.node.domain
 
+@Suppress("MagicNumber")
 enum class TxType(val code: Int) {
     GENESIS(1),
     ISSUE(3),
@@ -29,6 +30,7 @@ enum class TxType(val code: Int) {
     ATOMIC(120),
     ;
 
+    @Suppress("MemberNameEqualsClassName")
     inline val Int.txType: TxType
         get() = fromInt(this)
 

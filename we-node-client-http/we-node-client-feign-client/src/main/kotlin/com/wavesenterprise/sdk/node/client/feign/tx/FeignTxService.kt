@@ -29,6 +29,7 @@ class FeignTxService(
 
     override fun utxInfo(): List<Tx> = weTxApiFeign.utxTxs().map { it.toDomain() }
 
+    @Suppress("SwallowedException")
     override fun txInfo(txId: TxId): Optional<TxInfo> =
         try {
             weTxApiFeign.txInfo(txId.asBase58String()).map {

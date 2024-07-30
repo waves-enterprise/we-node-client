@@ -42,6 +42,7 @@ class BlockchainEventsGrpcBlockingService(
                 }
         }
 
+    @Suppress("TooGenericExceptionCaught")
     private fun eventsOrThrow(
         startFrom: StartFrom,
         protoEventsFilters: List<UtilEventsSubscribeOnRequest.EventsFilter>,

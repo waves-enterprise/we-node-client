@@ -6,6 +6,7 @@ data class Height(val value: Long) {
         fun fromLong(value: Long): Height =
             Height(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val Long.height: Height get() = Height(this)
     }
 }

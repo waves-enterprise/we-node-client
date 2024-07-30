@@ -14,6 +14,7 @@ class FeignAliasService(
     override fun getAliasesByAddress(address: Address): List<Alias> =
         weAliasServiceApiFeign.getAliasesByAddress(address.asBase58String()).map { it.toDomain() }
 
+    @Suppress("SwallowedException")
     override fun getAddressByAlias(alias: Alias): Optional<Address> =
         try {
             weAliasServiceApiFeign.getAddressByAlias(alias.value).map { it.toDomain() }

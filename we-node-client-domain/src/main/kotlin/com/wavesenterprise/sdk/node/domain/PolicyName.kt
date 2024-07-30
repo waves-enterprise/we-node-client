@@ -9,6 +9,7 @@ data class PolicyName(val value: String) : SerializableToBytes {
         fun fromString(value: String): PolicyName =
             PolicyName(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val String.policyName: PolicyName get() = PolicyName(this)
     }
 

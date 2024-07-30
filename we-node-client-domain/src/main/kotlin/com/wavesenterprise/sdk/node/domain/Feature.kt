@@ -6,6 +6,7 @@ data class Feature(val code: Int) {
         fun fromInt(code: Int): Feature =
             Feature(code)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val Int.feature: Feature get() = Feature(this)
     }
 }

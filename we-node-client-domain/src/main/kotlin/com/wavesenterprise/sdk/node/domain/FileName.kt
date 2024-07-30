@@ -6,6 +6,7 @@ data class FileName(val value: String) {
         fun fromString(value: String): FileName =
             FileName(value)
 
+        @Suppress("MemberNameEqualsClassName")
         inline val String.fileName: FileName get() = FileName(this)
     }
 }
